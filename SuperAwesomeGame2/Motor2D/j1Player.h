@@ -29,7 +29,7 @@ public:
 
 	Animation* current_animation = nullptr;
 	Animation* anim_turbo = nullptr;
-	Animation idle;
+	//Animation idle;
 	Animation up;
 	Animation down;
 	Animation upback;
@@ -38,6 +38,19 @@ public:
 	Animation turbo_idle;
 	Animation turbo_up;
 	Animation turbo_down;
+
+	//----- Animations Awesome Game 2 ------
+
+	Animation idle;
+	Animation alert;
+	Animation walk;
+	Animation run;
+	Animation jump;
+	Animation shot;
+	Animation hit;
+	Animation die;
+
+	//---------------------
 
 	Mix_Chunk* helix_sound = nullptr;
 	Mix_Chunk* laser_sound = nullptr;

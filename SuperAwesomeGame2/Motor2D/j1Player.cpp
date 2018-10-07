@@ -24,6 +24,136 @@ j1Player::j1Player() : j1Module()
 	graphics = NULL;
 	current_animation = NULL;
 
+	//------ New Animations Awesome Game 2 ------
+
+	// IDLE
+
+	idle.PushBack({155, 171, 34, 16 });
+	idle.PushBack({ 155, 171, 230, 16 });
+	idle.PushBack({ 156, 170, 441, 17 });
+	idle.PushBack({ 156, 169, 640, 18 });
+	idle.PushBack({ 157, 169, 838, 18 });
+	idle.PushBack({ 157, 169, 1043, 18 });
+	idle.PushBack({ 156, 169, 1235, 18 });
+	idle.PushBack({ 156, 170, 1422, 17 });
+	idle.PushBack({ 155, 171, 1609, 16 });
+	idle.PushBack({ 155, 171, 1785, 16 });
+	idle.loop = true;
+	idle.speed = 0.8f;
+
+	// ALERT
+
+	alert.PushBack({ 155, 171, 34, 264 });
+	alert.PushBack({ 154, 172, 257, 263 });
+	alert.PushBack({ 152, 174, 460, 261 });
+	alert.PushBack({ 152, 175, 653, 260 });
+	alert.PushBack({ 152, 175, 853, 260 });
+	alert.PushBack({ 152, 175, 1059, 260 });
+	alert.PushBack({ 152, 175, 1257, 260 });
+	alert.PushBack({ 152, 174, 1437, 261 });
+	alert.PushBack({ 154, 172, 1612, 263 });
+	alert.PushBack({ 155, 171, 1788, 264 });
+	alert.loop = true;
+	alert.speed = 0.8f;
+
+	// WALK
+
+	walk.PushBack({ 154, 171, 44, 772 });
+	walk.PushBack({ 155, 171, 281, 772 });
+	walk.PushBack({ 155, 171, 476, 772 });
+	walk.PushBack({ 156, 169, 660, 773 });
+	walk.PushBack({ 156, 169, 856, 773 });
+	walk.PushBack({ 156, 169, 1046, 773 });
+	walk.PushBack({ 156, 169, 1262, 773 });
+	walk.PushBack({ 155, 171, 1444 , 772 });
+	walk.PushBack({ 155, 171, 1622, 772 });
+	walk.PushBack({ 154, 171, 1797, 772 });
+	walk.loop = true;
+	walk.speed = 0.8f;
+
+
+	// RUN
+
+	run.PushBack({ 143, 184, 51, 1016 });
+	run.PushBack({ 144, 182, 285, 1018 });
+	run.PushBack({ 148, 179, 479, 1021 });
+	run.PushBack({ 151, 175, 668, 1024 });
+	run.PushBack({ 154, 172, 862, 1027 });
+	run.PushBack({ 154, 172, 1061, 1027 });
+	run.PushBack({ 151, 175, 1281, 1024 });
+	run.PushBack({ 148, 179, 1467, 1021 });
+	run.PushBack({ 144, 182, 1640, 1018 });
+	run.PushBack({ 143, 184, 1816, 1016 });
+	run.loop = true;
+	run.speed = 0.8f;
+
+
+	// JUMP
+
+	jump.PushBack({ 151, 175, 39, 1332 });
+	jump.PushBack({ 150, 177, 275, 1327 });
+	jump.PushBack({ 141, 185, 488, 1320 });
+	jump.PushBack({ 134, 191, 695, 1317 });
+	jump.PushBack({ 145, 182, 881, 1310 });
+	jump.PushBack({ 158, 167, 1063, 1299 });
+	jump.PushBack({ 165, 156, 1251, 1296 });
+	jump.PushBack({ 160, 160, 1444, 1305 });
+	jump.PushBack({ 157, 168, 1627, 1322 });
+	jump.PushBack({ 155, 171, 1813, 1332 });
+	jump.loop = true;
+	jump.speed = 0.8f;
+
+
+	// SHOOT
+
+	shot.PushBack({ 155, 171, 49, 521 });
+	shot.PushBack({ 158, 171, 269, 525 });
+	shot.PushBack({ 160, 161, 460, 531 });
+	shot.PushBack({ 162, 155, 635, 537 });
+	shot.PushBack({ 163, 150, 834, 542 });
+	shot.PushBack({ 163, 148, 1041, 544 });
+	shot.PushBack({ 163, 148, 1241, 544 });
+	shot.PushBack({ 163, 153, 1423, 539 });
+	shot.PushBack({ 159, 165, 1610, 529 });
+	shot.PushBack({ 155, 171, 1791, 521 });
+	shot.loop = true;
+	shot.speed = 0.8f;
+
+
+
+	// HIT
+
+	hit.PushBack({ 157, 169, 41, 1587 });
+	hit.PushBack({ 157, 168, 267, 1588 });
+	hit.PushBack({ 157, 168, 467, 1589 });
+	hit.PushBack({ 158, 166, 665, 1591 });
+	hit.PushBack({ 159, 166, 870, 1593 });
+	hit.PushBack({ 159, 166, 1075, 1593 });
+	hit.PushBack({ 158, 166, 1284, 1591 });
+	hit.PushBack({ 157, 168, 1528, 1589 });
+	hit.PushBack({ 155, 168, 1777, 1588 });
+	hit.PushBack({ 155, 168, 2037, 1588 });
+	hit.loop = true;
+	hit.speed = 0.8f;
+
+
+	// DIE
+
+	die.PushBack({ 156, 169, 44, 1879 });
+	die.PushBack({ 161, 160, 245, 1889 });
+	die.PushBack({ 163, 150, 431, 1900 });
+	die.PushBack({ 164, 149, 616, 1901 });
+	die.PushBack({ 164, 147, 807, 1903 });
+	die.PushBack({ 164, 143, 1003, 1905 });
+	die.PushBack({ 179, 136, 1202, 1910 });
+	die.PushBack({ 196, 133, 1417, 1914 });
+	die.PushBack({ 174, 151, 1643, 1943 });
+	die.PushBack({ 151, 174, 1860, 1955 });
+	die.loop = true;
+	die.speed = 0.8f;
+
+	//-------------------------------------
+
 	/*// Idle animation
 	idle.PushBack({ 94, 108, SHIP_WIDTH, SHIP_HEIGHT });
 
