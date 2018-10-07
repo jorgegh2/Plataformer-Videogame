@@ -3,6 +3,15 @@
  <tileset firstgid="1" source="TilsetLevel1/TilesetLevel1.tsx"/>
  <tileset firstgid="51" source="TilsetLevel1/TilesetObjectsLevel1.tsx"/>
  <tileset firstgid="101" source="TilsetLevel1/BG12.tsx"/>
+ <tileset firstgid="136" name="Tileset128x128" tilewidth="128" tileheight="128" tilecount="50" columns="10">
+  <image source="TilsetLevel1/platforms/Tileset128x128.png" trans="ff00ff" width="1280" height="640"/>
+ </tileset>
+ <tileset firstgid="186" name="TilesetObjects128x128" tilewidth="128" tileheight="128" tilecount="50" columns="10">
+  <image source="TilsetLevel1/Objects/TilesetObjects128x128.png" trans="ff00ff" width="1280" height="640"/>
+ </tileset>
+ <tileset firstgid="236" name="BG" tilewidth="128" tileheight="128" tilecount="35" columns="7">
+  <image source="TilsetLevel1/BG/BG.png" trans="ff00ff" width="1000" height="750"/>
+ </tileset>
  <layer id="2" name="bg" width="212" height="18">
   <data>
    <tile gid="104"/>

@@ -4,6 +4,15 @@
  <tileset firstgid="51" source="TilesetLevel2/Tilesetlevel1.tsx"/>
  <tileset firstgid="101" source="TilesetLevel2/TilesetWinterObjects.tsx"/>
  <tileset firstgid="201" source="TilesetLevel2/BG2.tsx"/>
+ <tileset firstgid="285" name="TilesetWinter128x128" tilewidth="128" tileheight="128" tilecount="50" columns="10">
+  <image source="TilesetLevel2/Platforms/TilesetWinter128x128.png" trans="ff00ff" width="1280" height="640"/>
+ </tileset>
+ <tileset firstgid="335" name="TilesetWinterObjects128x128" tilewidth="128" tileheight="128" tilecount="100" columns="10">
+  <image source="TilesetLevel2/Objects/TilesetWinterObjects128x128.png" trans="ff00ff" width="1280" height="1280"/>
+ </tileset>
+ <tileset firstgid="435" name="BG" tilewidth="128" tileheight="128" tilecount="84" columns="14">
+  <image source="TilesetLevel2/BG/BG.png" trans="ff00ff" width="1800" height="893"/>
+ </tileset>
  <layer id="8" name="bg" width="212" height="18">
   <data>
    <tile gid="212"/>
