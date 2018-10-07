@@ -14,6 +14,9 @@ class j1Audio;
 class j1Scene;
 class j1Map;
 class j1Collision;
+class j1Particles;
+class j1FadeToBlack;
+class j1Player;
 
 class j1App
 {
@@ -85,6 +88,9 @@ public:
 	j1Scene*			scene;
 	j1Map*				map;
 	j1Collision*		collision;
+	j1Player*			player;
+	j1FadeToBlack*		fadeToBlack;
+	j1Particles*		particles;
 
 private:
 
