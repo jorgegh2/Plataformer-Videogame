@@ -102,7 +102,6 @@ iPoint j1Map::WorldToMap(int x, int y) const
 SDL_Rect TileSet::GetTileRect(int id) const
 {
 	SDL_Rect rect = {0, 0, 0, 0};
-	// TODO 7(old): Create a method that receives a tile id and returns it's Rect
 	int relative_id = id - firstgid;
 	rect.w = tile_width;
 	rect.h = tile_height;
@@ -194,6 +193,18 @@ bool j1Map::Load(const char* file_name)
 
 		if(ret == true)
 			data.layers.add(lay);
+	}
+
+	// Load Objects info ----------------------------------------------
+	pugi::xml_node objects;
+	for (objects = map_file.child("map").child("objectgroup").child("object"); objects && ret; objects = objects.next_sibling("object"))
+	{
+		MapObjects* obj = new MapObjects();
+
+		ret = LoadObjects(objects, obj);
+
+		if (ret == true)
+			data.objects.add(obj);
 	}
 
 	if(ret == true)
@@ -387,4 +398,27 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	}
 
 	return ret;
+
 }
+
+bool j1Map::LoadObjects(pugi::xml_node& node, MapObjects* object)
+{
+	object->id = node.attribute("id").as_int();
+	object->name = "Colliders";
+	if (node.attribute("name"))
+	{
+		object->name = node.attribute("name").as_string();
+		object->StartPoint = { node.attribute("x").as_int(), node.attribute("y").as_int() };
+		object->RectCollider = { 0,0,0,0 };
+	}
+	else
+	{
+		object->RectCollider = { node.attribute("x").as_int(),
+								 node.attribute("y").as_int(),
+							 	 node.attribute("width").as_int(),
+								 node.attribute("height").as_int() };
+	}
+
+	return true;
+}
+

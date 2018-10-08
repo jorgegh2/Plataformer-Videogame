@@ -50,6 +50,14 @@ struct TileSet
 	int					offset_y;
 };
 
+struct MapObjects
+{
+	p2SString			name;
+	int					id;
+	SDL_Rect			RectCollider;
+	iPoint				StartPoint;
+};
+
 enum MapTypes
 {
 	MAPTYPE_UNKNOWN = 0,
@@ -68,6 +76,7 @@ struct MapData
 	MapTypes			type;
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;
+	p2List<MapObjects*>	objects;
 };
 
 // ----------------------------------------------------
@@ -102,6 +111,7 @@ private:
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
+	bool LoadObjects(pugi::xml_node& node, MapObjects* object);
 
 public:
 
