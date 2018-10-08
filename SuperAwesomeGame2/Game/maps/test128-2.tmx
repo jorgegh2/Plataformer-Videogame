@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.1" tiledversion="2018.09.12" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="128" tileheight="128" infinite="0" nextlayerid="5" nextobjectid="1">
+<map version="1.1" tiledversion="2018.09.12" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="128" tileheight="128" infinite="0" nextlayerid="6" nextobjectid="5">
  <tileset firstgid="1" name="Tileset128x128" tilewidth="128" tileheight="128" tilecount="50" columns="10">
   <image source="Tileset128x128.png" width="1280" height="640"/>
  </tileset>
@@ -1637,4 +1637,11 @@
    <tile/>
   </data>
  </layer>
+ <objectgroup color="#5555ff" id="5" name="Colliders">
+  <object id="1" x="8" y="1916" width="884" height="652"/>
+  <object id="2" x="1288" y="1924" width="1272" height="636"/>
+  <object id="3" name="StartPoint" x="320" y="1872">
+   <point/>
+  </object>
+ </objectgroup>
 </map>
