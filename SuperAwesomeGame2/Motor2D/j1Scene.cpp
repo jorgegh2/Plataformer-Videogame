@@ -34,11 +34,8 @@ bool j1Scene::Start()
 	//App->map->Load("hello2.tmx");
 	//App->map->Load("iso.tmx");
 
-<<<<<<< HEAD
-	App->map->Load("test128-2.tmx");
-	
-=======
-	App->map->Load("test128-2.tmx"); //DONT WORK CAUSE THE INTERN STRUCTURE IS DIFFERENT!!
+
+	App->map->Load("test128-2.tmx"); 
 	p2List_item<MapObjects*>* item_object = nullptr;
 	for (item_object = App->map->data.objects.start; item_object; item_object = item_object->next)
 	{
@@ -59,7 +56,6 @@ bool j1Scene::Start()
 		}
 	}*/
 
->>>>>>> c0e7b84441da004586afbb85fb2d4c3c21255d36
 	return true;
 }
 
