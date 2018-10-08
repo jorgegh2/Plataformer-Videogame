@@ -31,7 +31,7 @@ public:
 	Animation* anim_turbo = nullptr;
 	//Animation idle;
 
-	float jumpforce = 20.0f;
+	float jumpforce = 25.0f;
 	fPoint acceleration = {0,0};
 	Animation up;
 	Animation down;

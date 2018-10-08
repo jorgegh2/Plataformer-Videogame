@@ -35,7 +35,7 @@ bool j1Scene::Start()
 	//App->map->Load("iso.tmx");
 
 
-	App->map->Load("test128-2.tmx"); 
+	App->map->Load("Level11.tmx"); 
 	p2List_item<MapObjects*>* item_object = nullptr;
 	for (item_object = App->map->data.objects.start; item_object; item_object = item_object->next)
 	{
