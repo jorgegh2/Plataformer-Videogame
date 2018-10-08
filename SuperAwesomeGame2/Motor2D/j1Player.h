@@ -21,8 +21,6 @@ public:
 
 	void OnCollision(Collider*, Collider*);
 
-	void PlayerSpawn();
-
 public:
 
 	SDL_Texture * graphics = nullptr;
@@ -58,7 +56,7 @@ public:
 	Mix_Chunk* player_death = nullptr;
 	Mix_Chunk* change_weapon_sound = nullptr;
 
-	iPoint position;
+	fPoint position;
 	fPoint location;
 	bool destroyed = true;
 	bool god_mode = false;

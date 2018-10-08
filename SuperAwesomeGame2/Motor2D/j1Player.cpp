@@ -1,7 +1,7 @@
 //#include "Globals.h"
 #include "j1App.h"
-//#include "ModuleTextures.h"
-//#include "ModuleInput.h"
+#include "j1Textures.h"
+#include "j1Input.h"
 //#include "ModulePlayersMenu.h"
 //#include "ModuleRender.h"
 #include "j1Player.h"
@@ -19,6 +19,10 @@
 #include "p2Log.h"
 
 
+#include "j1Render.h"
+
+
+
 j1Player::j1Player() : j1Module()
 {
 	graphics = NULL;
@@ -28,18 +32,18 @@ j1Player::j1Player() : j1Module()
 
 	// IDLE
 
-	idle.PushBack({155, 171, 34, 16 });
-	idle.PushBack({ 155, 171, 230, 16 });
-	idle.PushBack({ 156, 170, 441, 17 });
-	idle.PushBack({ 156, 169, 640, 18 });
-	idle.PushBack({ 157, 169, 838, 18 });
-	idle.PushBack({ 157, 169, 1043, 18 });
-	idle.PushBack({ 156, 169, 1235, 18 });
-	idle.PushBack({ 156, 170, 1422, 17 });
-	idle.PushBack({ 155, 171, 1609, 16 });
-	idle.PushBack({ 155, 171, 1785, 16 });
+	idle.PushBack({ 34, 16, 155, 171 });
+	idle.PushBack({ 230, 16, 155, 171 });
+	idle.PushBack({ 441, 17, 156, 170 });
+	idle.PushBack({ 640, 18, 156, 169 });
+	idle.PushBack({ 838, 18, 157, 169 });
+	idle.PushBack({ 1043, 18, 157, 169 });
+	idle.PushBack({ 1235, 18, 156, 169 });
+	idle.PushBack({ 1422, 17, 156, 170 });
+	idle.PushBack({ 1609, 16, 155, 171 });
+	idle.PushBack({ 1785, 16, 155, 171 });
 	idle.loop = true;
-	idle.speed = 0.8f;
+	idle.speed = 0.01f;
 
 	// ALERT
 
@@ -199,8 +203,8 @@ bool j1Player::Start()
 {
 	LOG("Loading player textures");
 	bool ret = true;
-	/*graphics = App->textures->Load("Images/Ship/ships.png"); // arcade version
-
+	graphics = App->tex->Load("assets/Archer/Archer2.png"); 
+	/*
 	laser_sound = App->audio->LoadSoundEffect("Music/Sounds_effects/Laser_Shot_Type-3_(Main_Ships).wav");
 	basic_attack_sound = App->audio->LoadSoundEffect("Music/Sounds_effects/Laser_Shot_Type-1_(Main_Ships).wav");
 	helix_sound = App->audio->LoadSoundEffect("Music/Sounds_effects/Laser_Shot_Type-4_(Main_Ships).wav");
@@ -236,10 +240,71 @@ bool j1Player::CleanUp()
 // Update: draw background
 bool j1Player::Update(float dt)
 {
+	current_animation = &idle;
+	float speed = 0.5;
 
-	/*anim_turbo = &turbo_idle;
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+	{
+		position.x -= speed;
+	}
+	
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
+		position.x += speed;
+	}
+	
+	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
+	/*
+	if ((App->input->keyboard[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT || player_down == true) && position.y < App->render->camera.y / SCREEN_SIZE + SCREEN_HEIGHT - SHIP_HEIGHT)
+	{
+		location.y += speed;
+		player_idle = true;
+		reverse = false;
+		if (current_animation != &down)
+		{
+			down.Reset();
+			current_animation = &down;
+		}
 
-	int speed = 2;
+	}
+
+	else if (App->input->keyboard[SDL_SCANCODE_S] == KEY_STATE::KEY_UP || (player_idle == true && player_down == false && reverse == false))
+		if (current_animation != &downback)
+		{
+			downback.Reset();
+			current_animation = &downback;
+			player_idle = false;
+
+		}
+
+	if ((App->input->keyboard[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT || player_up == true) && position.y > App->render->camera.y / SCREEN_SIZE)
+	{
+		location.y -= speed;
+		player_idle = true;
+		reverse = true;
+		if (current_animation != &up)
+		{
+			up.Reset();
+			current_animation = &up;
+			//anim_turbo = &turbo_up;
+
+		}
+	}
+
+	else if (App->input->keyboard[SDL_SCANCODE_W] == KEY_STATE::KEY_UP || (player_idle == true && player_up == false && reverse == true))
+		if (current_animation != &upback)
+		{
+			upback.Reset();
+			current_animation = &upback;
+			//anim_turbo = &turbo_up;
+			player_idle = false;
+
+		}
+	
+
+	//anim_turbo = &turbo_idle;
+
+	
 
 	if (destroyed == false) {
 		if (SDL_GameControllerGetAxis(App->input->controller1, SDL_CONTROLLER_AXIS_LEFTY) > 5000 && player_down == false)
@@ -261,61 +326,7 @@ bool j1Player::Update(float dt)
 		}
 
 	
-		if ((App->input->keyboard[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT || (SDL_GameControllerGetAxis(App->input->controller1, SDL_CONTROLLER_AXIS_LEFTX) < -5000)) && position.x > App->render->camera.x / SCREEN_SIZE)
-		{
-			location.x -= speed;
-		}
-
-		if ((App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT || (SDL_GameControllerGetAxis(App->input->controller1, SDL_CONTROLLER_AXIS_LEFTX) > 5000)) && position.x < App->render->camera.x / SCREEN_SIZE + SCREEN_WIDTH - SHIP_WIDTH)
-		{
-			location.x += speed;
-		}
-
-		if ((App->input->keyboard[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT || player_down == true) && position.y < App->render->camera.y / SCREEN_SIZE + SCREEN_HEIGHT - SHIP_HEIGHT)
-		{
-			location.y += speed;
-			player_idle = true;
-			reverse = false;
-			if (current_animation != &down)
-			{
-				down.Reset();
-				current_animation = &down;
-			}
-
-		}
-
-		else if (App->input->keyboard[SDL_SCANCODE_S] == KEY_STATE::KEY_UP || (player_idle == true && player_down == false && reverse == false))
-			if (current_animation != &downback)
-			{
-				downback.Reset();
-				current_animation = &downback;
-				player_idle = false;
-
-			}
-
-		if ((App->input->keyboard[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT || player_up == true) && position.y > App->render->camera.y / SCREEN_SIZE)
-		{
-			location.y -= speed;
-			player_idle = true;
-			reverse = true;
-			if (current_animation != &up)
-			{
-				up.Reset();
-				current_animation = &up;
-				//anim_turbo = &turbo_up;
-
-			}
-		}
-
-		else if (App->input->keyboard[SDL_SCANCODE_W] == KEY_STATE::KEY_UP || (player_idle == true && player_up == false && reverse == true))
-			if (current_animation != &upback)
-			{
-				upback.Reset();
-				current_animation = &upback;
-				//anim_turbo = &turbo_up;
-				player_idle = false;
-
-			}
+		
 
 
 		// Player controls input
