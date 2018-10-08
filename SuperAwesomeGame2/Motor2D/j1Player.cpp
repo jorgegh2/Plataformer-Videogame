@@ -16,6 +16,7 @@
 //#include "ModuleFonts.h"
 //#include "UI.h"
 //#include "ModulePowerUp.h"
+#include "Time.h"
 #include "p2Log.h"
 
 
@@ -204,6 +205,8 @@ bool j1Player::Start()
 	LOG("Loading player textures");
 	bool ret = true;
 	graphics = App->tex->Load("assets/Archer/Archer2.png"); 
+
+	jstate = NONE;
 	/*
 	laser_sound = App->audio->LoadSoundEffect("Music/Sounds_effects/Laser_Shot_Type-3_(Main_Ships).wav");
 	basic_attack_sound = App->audio->LoadSoundEffect("Music/Sounds_effects/Laser_Shot_Type-1_(Main_Ships).wav");
@@ -241,17 +244,42 @@ bool j1Player::CleanUp()
 bool j1Player::Update(float dt)
 {
 	current_animation = &idle;
-	float speed = 0.5;
+	float speed = 1.0f;
+	float gravity = 0.8f;
+
+	position.y += gravity;
+
+	
+
+	//Horizontal movement
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
+		
 		position.x -= speed;
 	}
 	
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
+		
 		position.x += speed;
 	}
+
+	//Jump
+
+	if (jstate == JUMP) {
+		if (acceleration.y < 0.5)acceleration.y += gravity;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		jstate = JUMP;
+		acceleration.y -= jumpforce;
+		
+	}
+
+	position.y += acceleration.y;
+
 	
 	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
 	/*

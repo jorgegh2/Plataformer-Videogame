@@ -9,6 +9,8 @@ struct SDL_Texture;
 struct Mix_Chunk;
 struct Collider;
 
+
+enum state {NONE, JUMP, ONFLOOR};
 class j1Player : public j1Module
 {
 public:
@@ -22,12 +24,15 @@ public:
 	void OnCollision(Collider*, Collider*);
 
 public:
-
+	state jstate;
 	SDL_Texture * graphics = nullptr;
 
 	Animation* current_animation = nullptr;
 	Animation* anim_turbo = nullptr;
 	//Animation idle;
+
+	float jumpforce = 20.0f;
+	fPoint acceleration = {0,0};
 	Animation up;
 	Animation down;
 	Animation upback;
