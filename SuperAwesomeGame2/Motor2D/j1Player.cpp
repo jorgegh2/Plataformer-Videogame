@@ -7,7 +7,7 @@
 #include "j1Player.h"
 //#include "SDL\include\SDL.h"
 //#include "ModuleParticles.h"
-//#include "ModuleCollision.h"
+#include "j1Collision.h"
 //#include "ModuleFadeToBlack.h"
 //#include "Level01.h"
 //#include "ModuleGameOver.h"
@@ -18,7 +18,7 @@
 //#include "ModulePowerUp.h"
 #include "Time.h"
 #include "p2Log.h"
-
+#include "j1Map.h"
 
 #include "j1Render.h"
 
@@ -206,6 +206,27 @@ bool j1Player::Start()
 	bool ret = true;
 	graphics = App->tex->Load("assets/Archer/Archer2.png"); 
 
+	p2List_item<MapObjects*>* item_object = nullptr;
+	iPoint StartPoint;
+	for (item_object = App->map->data.objects.start; item_object; item_object = item_object->next)
+	{
+		if (item_object->data->StartPoint.x != 0 && item_object->data->StartPoint.y != 0)
+		{
+			StartPoint.x = item_object->data->StartPoint.x;
+			StartPoint.y = item_object->data->StartPoint.y;
+
+		}
+	}
+
+
+	position.x = StartPoint.x;
+	position.y = StartPoint.y;
+
+	c_player = App->collision->AddCollider({ StartPoint.x, StartPoint.y, 27, 17 }, COLLIDER_PLAYER, this);
+
+
+
+
 	jstate = NONE;
 	/*
 	laser_sound = App->audio->LoadSoundEffect("Music/Sounds_effects/Laser_Shot_Type-3_(Main_Ships).wav");
@@ -282,6 +303,7 @@ bool j1Player::Update(float dt)
 
 	
 	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
+	c_player->SetPos(position.x, position.y);
 	/*
 	if ((App->input->keyboard[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT || player_down == true) && position.y < App->render->camera.y / SCREEN_SIZE + SCREEN_HEIGHT - SHIP_HEIGHT)
 	{
