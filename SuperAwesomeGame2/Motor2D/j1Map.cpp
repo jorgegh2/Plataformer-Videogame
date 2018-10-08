@@ -32,18 +32,37 @@ void j1Map::Draw()
 		return;
 
 	// TODO 5(old): Prepare the loop to draw all tilesets + Blit
-	MapLayer* layer = data.layers.start->data;
-	TileSet* tileset = data.tilesets.start->data;
+	/*p2List_item<MapLayer*>* layer = data.layers.start;
+	p2List_item<TileSet*>* tileset = nullptr;
 	iPoint coordenadas;
+	//start from the end because the tileset order are inverted
+	for (tileset = data.tilesets.end; tileset; tileset = tileset->prev) {
+		while (layer != NULL)
+		{
+			for (uint i = 0; i < layer->data->width; i++) {
+				for (uint j = 0; j < layer->data->height; j++) {
+					uint id = layer->data->data[layer->data->Get(i, j)];
+					SDL_Rect rect = tileset->data->GetTileRect(id);
+					coordenadas = MapToWorld(i, j);
+					App->render->Blit(tileset->data->texture, coordenadas.x, coordenadas.y, &rect);
+				}
+			}
+			layer = layer->next;
+		}
+	}*/
 
-
-
-	for (uint i = 0; i < layer->width; i++) {
-		for (uint j = 0; j < layer->height; j++) {
-			uint id = layer->data[layer->Get(i, j)];
-			SDL_Rect rect = tileset->GetTileRect(id);
-			coordenadas = MapToWorld(i, j);
-			App->render->Blit(tileset->texture, coordenadas.x, coordenadas.y, &rect);
+	p2List_item<TileSet*>* item_tileset = nullptr;
+	p2List_item<MapLayer*>* item_layer = nullptr;
+	uint id = 0;
+	for (item_tileset = data.tilesets.end; item_tileset; item_tileset = item_tileset->prev) {
+		for (item_layer = data.layers.start; item_layer; item_layer = item_layer->next) {
+			for (uint i = 0; i < item_layer->data->height; i++) {
+				for (uint j = 0; j < item_layer->data->width; j++) {
+					id = item_layer->data->data[item_layer->data->Get(j, i)];
+					if (id != 0)
+						App->render->Blit(item_tileset->data->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &item_tileset->data->GetTileRect(id));
+				}
+			}
 		}
 	}
 
@@ -344,6 +363,9 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->name = node.attribute("name").as_string();
 	layer->width = node.attribute("width").as_int();
 	layer->height = node.attribute("height").as_int();
+
+	
+
 	pugi::xml_node layer_data = node.child("data");
 
 	if(layer_data == NULL)

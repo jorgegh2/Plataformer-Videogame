@@ -13,6 +13,7 @@ struct MapLayer
 	int			width;
 	int			height;
 	uint*		data;
+	uint		tileset_used; //pick what tileset need
 
 	MapLayer() : data(NULL)
 	{}
