@@ -43,7 +43,7 @@ j1Player::j1Player() : j1Module()
 	idle.PushBack({ 1609, 16, 155, 171 });
 	idle.PushBack({ 1785, 16, 155, 171 });
 	idle.loop = true;
-	idle.speed = 0.01f;
+	idle.speed = 0.05f;
 
 	// ALERT
 
@@ -58,7 +58,7 @@ j1Player::j1Player() : j1Module()
 	alert.PushBack({ 1612, 263, 154, 172 });
 	alert.PushBack({ 1788, 264, 155, 171 });
 	alert.loop = true;
-	alert.speed = 0.8f;
+	alert.speed = 0.05f;
 
 	// WALK
 
@@ -73,7 +73,7 @@ j1Player::j1Player() : j1Module()
 	walk.PushBack({ 1622, 772, 155, 171 });
 	walk.PushBack({ 1797, 772, 154, 171 });
 	walk.loop = true;
-	walk.speed = 0.8f;
+	walk.speed = 0.05f;
 
 
 	// RUN
@@ -89,7 +89,7 @@ j1Player::j1Player() : j1Module()
 	run.PushBack({ 1640, 1018, 144, 182 });
 	run.PushBack({ 1816, 1016, 143, 184 });
 	run.loop = true;
-	run.speed = 0.8f;
+	run.speed = 0.05f;
 
 
 	// JUMP
@@ -105,7 +105,7 @@ j1Player::j1Player() : j1Module()
 	jump.PushBack({ 1627, 1322, 157, 168 });
 	jump.PushBack({ 1813, 1332, 155, 171 });
 	jump.loop = true;
-	jump.speed = 0.8f;
+	jump.speed = 0.05f;
 
 
 	// SHOOT
@@ -121,7 +121,7 @@ j1Player::j1Player() : j1Module()
 	shot.PushBack({ 1610, 529, 159, 165 });
 	shot.PushBack({ 1791, 521, 155, 171 });
 	shot.loop = true;
-	shot.speed = 0.8f;
+	shot.speed = 0.05f;
 
 
 
@@ -138,7 +138,7 @@ j1Player::j1Player() : j1Module()
 	hit.PushBack({ 1777, 1588, 155, 168 });
 	hit.PushBack({ 2037, 1588, 155, 168 });
 	hit.loop = true;
-	hit.speed = 0.8f;
+	hit.speed = 0.05f;
 
 
 	// DIE
@@ -154,7 +154,7 @@ j1Player::j1Player() : j1Module()
 	die.PushBack({ 1643, 1943, 174, 151 });
 	die.PushBack({ 1860, 1955, 151, 174 });
 	die.loop = true;
-	die.speed = 0.8f;
+	die.speed = 0.05f;
 
 	//-------------------------------------
 
@@ -243,7 +243,7 @@ bool j1Player::Update(float dt)
 	current_animation = &idle;
 	float speed = 0.5;
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		position.x -= speed;
 	}
