@@ -60,7 +60,12 @@ void j1Map::Draw()
 				for (uint j = 0; j < item_layer->data->width; j++) {
 					id = item_layer->data->data[item_layer->data->Get(j, i)];
 					if (id != 0)
+					{
 						App->render->Blit(item_tileset->data->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &item_tileset->data->GetTileRect(id));
+						/*if (item_tileset->data->name == "TilesetWinterObjects128x128") {
+							App->render->Blit(item_tileset->data->texture, MapToWorld(j, i).x, MapToWorld(j, i).y + 10, &item_tileset->data->GetTileRect(id));
+						}*/
+					}
 				}
 			}
 		}
@@ -403,6 +408,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 
 bool j1Map::LoadObjects(pugi::xml_node& node, MapObjects* object)
 {
+	
 	object->id = node.attribute("id").as_int();
 	object->name = "Colliders";
 	if (node.attribute("name"))
@@ -417,6 +423,7 @@ bool j1Map::LoadObjects(pugi::xml_node& node, MapObjects* object)
 								 node.attribute("y").as_int(),
 							 	 node.attribute("width").as_int(),
 								 node.attribute("height").as_int() };
+		//object->Collider_type = 
 	}
 
 	return true;

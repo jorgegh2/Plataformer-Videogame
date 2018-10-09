@@ -28,6 +28,9 @@ public:
 	SDL_Texture * graphics = nullptr;
 	float gravity;
 	float speed;
+	bool locked_to_right = false;
+	bool locked_to_left = false;
+	uint margen = 3;
 
 	Animation* current_animation = nullptr;
 	Animation* anim_turbo = nullptr;

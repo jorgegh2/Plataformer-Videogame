@@ -267,20 +267,15 @@ bool j1Player::Update(float dt)
 	current_animation = &idle;
 	
 	
-
-	
-
-	
-
 	//Horizontal movement
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !locked_to_left)
 	{
 		
 		position.x -= speed;
 	}
 	
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !locked_to_right)
 	{
 		
 		position.x += speed;
@@ -312,7 +307,8 @@ bool j1Player::Update(float dt)
 
 	position.y += acceleration.y;
 
-	
+	locked_to_left = false;
+	locked_to_right = false;
 	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
 	c_player->SetPos(position.x, position.y);
 	/*
@@ -453,39 +449,37 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	if (c_player != nullptr && c_player == c1/* && App->fade->IsFading() == false && c2 != App->power_up->c_power_up*/)
 	{
 		
-
-		if (c1->rect.y + c1->rect.h - c2->rect.y >= 1 )
+		if (c1->rect.y + c1->rect.h - c2->rect.y <= margen /*c1->rect.y + c1->rect.h >= c2->rect.y*/)
 		{
 			//(r.x + r.w <= rect.x) || (r.x >= rect.x + rect.w) || (r.y + r.h <= rect.y) || (r.y >= rect.y + rect.h)
 			jstate = ONFLOOR;
 			acceleration.y = 0.0f;
-			/*if (c1->rect.x + c1->rect.w >= c2->rect.x)
-			{
-				speed = 0.0f;
-			}*/
+		}
+
+		else if (c2->rect.x + c2->rect.w - c1->rect.x <= margen)
+		{
+			locked_to_left = true;
+		}
+			
+
+		else if (c1->rect.x + c1->rect.w - c2->rect.x <= margen)
+		{
+			locked_to_right = true;
 		}
 
 		
-		//code
-		/*   if (!god_mode) {
-			App->audio->PlaySoundEffect(player_death);
-			App->particles->AddParticle(App->particles->explosion, position.x, position.y);
-			life--;
-			destroyed = true;
-			powerup_desincrement = true;
-			PlayerSpawn();
-			if (life <= 0) {
-				App->UI->time_dead = 0;
-				App->UI->Cuenta_atras_number = 9;
-				App->UI->time_dead_init = SDL_GetTicks();
-
-				//App->player->Disable();
-				//App->fade->FadeToBlack(App->level01, App->game_over, 1);
-			}
+		/*if (c1->rect.y + c1->rect.h - c2->rect.y >= 1 && c1->rect.y + c1->rect.h - c2->rect.y <= 3// && acceleration.y >= 0)
+		{
+			//(r.x + r.w <= rect.x) || (r.x >= rect.x + rect.w) || (r.y + r.h <= rect.y) || (r.y >= rect.y + rect.h)
+			jstate = ONFLOOR;
+			acceleration.y = 0.0f;
+			
+		}
+		else if (c1->rect.x + c1->rect.w >= c2->rect.x)
+		{
+			speed = 0.0f;
 		}*/
+		
+		
 	}
-	/*if (c_player != nullptr && c_player == c1 && App->fade->IsFading() == false && c2 == App->power_up->c_power_up)
-	{
-		App->power_up->Disable();
-	}*/
 }
