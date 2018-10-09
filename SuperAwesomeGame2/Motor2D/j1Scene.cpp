@@ -35,12 +35,12 @@ bool j1Scene::Start()
 	//App->map->Load("iso.tmx");
 
 
-	App->map->Load("Level22.tmx"); 
+	App->map->Load("Level2.tmx"); 
 
 	p2List_item<MapObjects*>* item_object = nullptr;
 	for (item_object = App->map->data.objects.start; item_object; item_object = item_object->next)
 	{
-		App->collision->AddCollider(item_object->data->RectCollider, COLLIDER_WALL, nullptr);
+		App->collision->AddCollider(item_object->data->RectCollider, item_object->data->Collider_type, nullptr);
 	}
 
 	/*

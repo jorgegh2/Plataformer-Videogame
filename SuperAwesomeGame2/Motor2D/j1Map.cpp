@@ -5,6 +5,7 @@
 #include "j1Textures.h"
 #include "j1Map.h"
 #include <math.h>
+#include "j1Collision.h"
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
@@ -204,6 +205,7 @@ bool j1Map::Load(const char* file_name)
 	pugi::xml_node objects;
 	for (objects = map_file.child("map").child("objectgroup").child("object"); objects && ret; objects = objects.next_sibling("object"))
 	{
+
 		MapObjects* obj = new MapObjects();
 
 		ret = LoadObjects(objects, obj);
@@ -408,7 +410,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 
 bool j1Map::LoadObjects(pugi::xml_node& node, MapObjects* object)
 {
-	
+	pugi::xml_node node_property = node.child("properties").child("property");
 	object->id = node.attribute("id").as_int();
 	object->name = "Colliders";
 	if (node.attribute("name"))
@@ -423,9 +425,31 @@ bool j1Map::LoadObjects(pugi::xml_node& node, MapObjects* object)
 								 node.attribute("y").as_int(),
 							 	 node.attribute("width").as_int(),
 								 node.attribute("height").as_int() };
-		//object->Collider_type = 
+	
+		object->Collider_type = DefineType(node_property.attribute("value").as_int());
 	}
 
 	return true;
+}
+
+COLLIDER_TYPE j1Map::DefineType(int type_as_int)
+{
+	switch (type_as_int)
+	{
+	case 0:
+		return COLLIDER_FLOOR;
+	case 1:
+		return COLLIDER_PLATAFORM;
+	case 2:
+		return COLLIDER_WATER;
+	case 3:
+		return COLLIDER_START_WALL;
+	case 4:
+		return COLLIDER_FINISH_LEVEL;
+	case 5:
+		return COLLIDER_PLAYER;
+	default:
+		return COLLIDER_NONE;
+	}
 }
 

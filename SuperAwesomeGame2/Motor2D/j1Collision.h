@@ -8,14 +8,13 @@
 enum COLLIDER_TYPE
 {
 	COLLIDER_NONE = -1,
-	COLLIDER_WALL,
+	COLLIDER_FLOOR,
+	COLLIDER_PLATAFORM,
+	COLLIDER_WATER,
+	COLLIDER_START_WALL,
+	COLLIDER_FINISH_LEVEL,
 	COLLIDER_PLAYER,
-	COLLIDER_PLAYER_2,
-	COLLIDER_ENEMY,
-	COLLIDER_PLAYER_SHOT,
-	COLLIDER_PLAYER_SHOT_2,
-	COLLIDER_ENEMY_SHOT,
-	COLLIDER_POWER_UP,
+
 
 	COLLIDER_MAX
 };
@@ -40,6 +39,7 @@ struct Collider
 	}
 
 	bool CheckCollision(const SDL_Rect& r) const;
+	
 };
 
 class j1Collision : public j1Module
@@ -62,6 +62,7 @@ private:
 	Collider * colliders[MAX_COLLIDERS];
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
 	bool debug = false;
+	COLLIDER_TYPE DefineType(int type_as_int);
 };
 
 #endif // __j1Collision_H__
