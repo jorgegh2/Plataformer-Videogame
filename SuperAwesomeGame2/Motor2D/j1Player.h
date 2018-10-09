@@ -26,6 +26,8 @@ public:
 public:
 	state jstate;
 	SDL_Texture * graphics = nullptr;
+	float gravity;
+	float speed;
 
 	Animation* current_animation = nullptr;
 	Animation* anim_turbo = nullptr;

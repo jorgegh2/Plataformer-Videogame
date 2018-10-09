@@ -224,8 +224,8 @@ bool j1Player::Start()
 
 	c_player = App->collision->AddCollider({ StartPoint.x, StartPoint.y, 27, 17 }, COLLIDER_PLAYER, this);
 
-
-
+	gravity = 0.8f;
+	speed = 1.0f;
 
 	jstate = NONE;
 	/*
@@ -265,10 +265,10 @@ bool j1Player::CleanUp()
 bool j1Player::Update(float dt)
 {
 	current_animation = &idle;
-	float speed = 1.0f;
-	float gravity = 0.8f;
+	
+	
 
-	position.y += gravity;
+	
 
 	
 
@@ -288,8 +288,19 @@ bool j1Player::Update(float dt)
 
 	//Jump
 
-	if (jstate == JUMP) {
-		if (acceleration.y < 0.5)acceleration.y += gravity;
+	if (jstate == JUMP) 
+	{
+		position.y += gravity;
+		if (acceleration.y < 0.5)
+		{
+			acceleration.y += gravity;
+		}
+		speed = 1.0f;
+	}
+
+	if (jstate == ONFLOOR)
+	{
+		jstate = JUMP;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
@@ -348,454 +359,13 @@ bool j1Player::Update(float dt)
 			current_animation = &upback;
 			//anim_turbo = &turbo_up;
 			player_idle = false;
-
 		}
-	
 
 	//anim_turbo = &turbo_idle;
 
 	
 
-	if (destroyed == false) {
-		if (SDL_GameControllerGetAxis(App->input->controller1, SDL_CONTROLLER_AXIS_LEFTY) > 5000 && player_down == false)
-		{
-			player_down = true;
-		}
-		if (SDL_GameControllerGetAxis(App->input->controller1, SDL_CONTROLLER_AXIS_LEFTY) > 5000 == false)
-		{
-			player_down = false;
-		}
-
-		if (SDL_GameControllerGetAxis(App->input->controller1, SDL_CONTROLLER_AXIS_LEFTY) < -5000 && player_up == false)
-		{
-			player_up = true;
-		}
-		if (SDL_GameControllerGetAxis(App->input->controller1, SDL_CONTROLLER_AXIS_LEFTY) < -5000 == false)
-		{
-			player_up = false;
-		}
-
 	
-		
-
-
-		// Player controls input
-
-		//pressed 
-		if (SDL_GameControllerGetButton(App->input->controller1, SDL_CONTROLLER_BUTTON_A) && a_pressed == false)
-		{
-			shoot = true;
-			a_pressed = true;
-		}
-		
-		if (SDL_GameControllerGetButton(App->input->controller1, SDL_CONTROLLER_BUTTON_B) && b_pressed == false)
-		{
-			change = true;
-			b_pressed = true;
-		}
-
-		//not pressed
-
-		if (SDL_GameControllerGetButton(App->input->controller1, SDL_CONTROLLER_BUTTON_A) == false)
-		{
-			a_pressed = false;
-		}
-		if (SDL_GameControllerGetButton(App->input->controller1, SDL_CONTROLLER_BUTTON_X) == false)
-		{
-			x_pressed = false;
-		}
-		if (SDL_GameControllerGetButton(App->input->controller1, SDL_CONTROLLER_BUTTON_B) == false)
-		{
-			b_pressed = false;
-		}
-
-		// Change player weapon
-
-		if (App->input->keyboard[SDL_SCANCODE_C] == KEY_STATE::KEY_DOWN || change == true)
-		{
-			change = false;
-			switch (change_weapon) {
-
-			case CHANGE_WEAPON::BASIC_ATTACK:
-				change_weapon = CHANGE_WEAPON::LASER;
-				App->audio->PlaySoundEffect(change_weapon_sound);
-
-				break;
-
-			case CHANGE_WEAPON::LASER:
-				change_weapon = CHANGE_WEAPON::BACK_SHOOT;
-				App->audio->PlaySoundEffect(change_weapon_sound);
-
-				break;
-
-			case CHANGE_WEAPON::BACK_SHOOT:
-				change_weapon = CHANGE_WEAPON::HELIX;
-				App->audio->PlaySoundEffect(change_weapon_sound);
-
-				break;
-
-			case CHANGE_WEAPON::HELIX:
-				change_weapon = CHANGE_WEAPON::BASIC_ATTACK;
-				App->audio->PlaySoundEffect(change_weapon_sound);
-
-				break;
-			}
-		}
-
-
-		// POWERUP
-		if (App->input->keyboard[SDL_SCANCODE_X] == KEY_STATE::KEY_DOWN || powerup == true)
-		{
-			powerup = false;
-			switch (power_up) {
-
-			case POWER_UPS::POWER_UP_BASIC:
-				power_up = POWER_UPS::POWER_UP_1;
-				App->UI->n_powerup = 2;
-				break;
-
-			case POWER_UPS::POWER_UP_1:
-				power_up = POWER_UPS::POWER_UP_2;
-				App->UI->n_powerup = 3;
-				break;
-
-			case POWER_UPS::POWER_UP_2:
-				power_up = POWER_UPS::POWER_UP_3;
-				App->UI->n_powerup = 4;
-				break;
-
-			case POWER_UPS::POWER_UP_3:
-				power_up = POWER_UPS::POWER_UP_4;
-				App->UI->n_powerup = 5;
-				break;
-
-			case POWER_UPS::POWER_UP_4:
-				power_up = POWER_UPS::POWER_UP_5;
-				App->UI->n_powerup = 6;
-				break;
-
-			case POWER_UPS::POWER_UP_5:
-				power_up = POWER_UPS::POWER_UP_6;
-				App->UI->n_powerup = 7;
-				break;
-
-				
-			}
-		}
-		//cunado muere el jugador el power up se desincrementa
-		if (powerup_desincrement == true)
-		{
-			powerup_desincrement = false;
-			switch (power_up) {
-
-
-			case POWER_UPS::POWER_UP_1:
-				power_up = POWER_UPS::POWER_UP_BASIC;
-				App->UI->n_powerup = 1;
-				break;
-
-			case POWER_UPS::POWER_UP_2:
-				power_up = POWER_UPS::POWER_UP_1;
-				App->UI->n_powerup = 2;
-				break;
-
-			case POWER_UPS::POWER_UP_3:
-				power_up = POWER_UPS::POWER_UP_2;
-				App->UI->n_powerup = 3;
-				break;
-
-			case POWER_UPS::POWER_UP_4:
-				power_up = POWER_UPS::POWER_UP_3;
-				App->UI->n_powerup = 4;
-				break;
-
-			case POWER_UPS::POWER_UP_5:
-				power_up = POWER_UPS::POWER_UP_4;
-				App->UI->n_powerup = 5;
-				break;
-
-			case POWER_UPS::POWER_UP_6:
-				power_up = POWER_UPS::POWER_UP_5;
-				App->UI->n_powerup = 6;
-				break;
-			}
-		}
-		//
-		//////////
-
-		// Shoot 
-		if (Reset_time_bullets) {
-			Bullet_time_init = SDL_GetTicks();
-			Reset_time_bullets = false;
-		}
-		Bullet_delay = SDL_GetTicks() - Bullet_time_init;
-
-		if ((App->input->keyboard[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || shoot == true) && Bullet_delay >= 100)
-		{
-			Bullet_delay = 0;
-			Reset_time_bullets = true;
-			shoot = false;
-			switch (power_up) {
-			case POWER_UPS::POWER_UP_BASIC:
-				switch (change_weapon) {
-
-				case CHANGE_WEAPON::BASIC_ATTACK:
-					App->particles->AddParticle(App->particles->basic_shoot_0_down, position.x + 15, position.y + 11, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->basic_shoot_0_up, position.x + 15, position.y + 7, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(basic_attack_sound);
-					//App->UI->score += 100;
-					break;
-
-				case CHANGE_WEAPON::LASER:
-					App->particles->AddParticle(App->particles->laser_0, position.x + 20, position.y + 10, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(laser_sound);
-					break;
-
-				case CHANGE_WEAPON::BACK_SHOOT:
-					App->particles->AddParticle(App->particles->back_shoot_0, position.x + 20, position.y + 10, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_0_back, position.x + 15, position.y + 10, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(laser_sound);
-					break;
-
-				case CHANGE_WEAPON::HELIX:
-					App->particles->AddParticle(App->particles->helix_01_1, position.x + 20, position.y + 11, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->helix_01_2, position.x + 20, position.y + 7, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(helix_sound);
-					break;
-				}
-
-				break;
-
-			case POWER_UPS::POWER_UP_1:
-				switch (change_weapon) {
-
-				case CHANGE_WEAPON::BASIC_ATTACK:
-					App->particles->AddParticle(App->particles->basic_shoot_1_down, position.x + 20, position.y + 12, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->basic_shoot_1_up, position.x + 20, position.y + 4, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->basic_shoot_1, position.x + 26, position.y + 10, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(basic_attack_sound);
-					break;
-
-				case CHANGE_WEAPON::LASER:
-					App->particles->AddParticle(App->particles->laser_1, position.x + 12, position.y - 2, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->laser_1_5, position.x + 12, position.y + 7, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(laser_sound);
-					break;
-
-				case CHANGE_WEAPON::BACK_SHOOT:
-					App->particles->AddParticle(App->particles->back_shoot_0, position.x + 20, position.y + 10, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_0_back, position.x + 15, position.y + 7, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_0_back, position.x + 15, position.y + 13, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(laser_sound);
-					break;
-
-				case CHANGE_WEAPON::HELIX:
-					App->particles->AddParticle(App->particles->helix_01_1, position.x + 13, position.y + 11, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->helix_01_2, position.x + 13, position.y + 7, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->helix_01_3, position.x + 26, position.y + 9, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(helix_sound);
-					break;
-				}
-
-
-
-
-				break;
-
-			case POWER_UPS::POWER_UP_2:
-				switch (change_weapon) {
-
-				case CHANGE_WEAPON::BASIC_ATTACK:
-					App->particles->AddParticle(App->particles->basic_shoot_2_down, position.x + 20, position.y + 12, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->basic_shoot_2_up, position.x + 20, position.y + 0, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->basic_shoot_2, position.x + 22, position.y + 9, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(basic_attack_sound);
-					break;
-
-				case CHANGE_WEAPON::LASER:
-					App->particles->AddParticle(App->particles->laser_1, position.x + 12, position.y - 2, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->laser_1_5, position.x + 12, position.y + 7, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->laser_2, position.x + 5, position.y - 2, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->laser_2_5, position.x + 5, position.y + 7, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(laser_sound);
-					break;
-
-				case CHANGE_WEAPON::BACK_SHOOT:
-					App->particles->AddParticle(App->particles->back_shoot_0, position.x + 20, position.y + 7, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_0, position.x + 20, position.y + 13, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_2_diagonal_up, position.x + 10, position.y + 7, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_2_diagonal_down, position.x + 10, position.y + 8, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(laser_sound);
-					break;
-
-				case CHANGE_WEAPON::HELIX:
-					App->particles->AddParticle(App->particles->helix_02_1, position.x + 13, position.y + 11, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->helix_02_2, position.x + 13, position.y + 7, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->helix_02_3, position.x + 26, position.y + 9, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(helix_sound);
-					break;
-				}
-
-				break;
-			case POWER_UPS::POWER_UP_3:
-				switch (change_weapon) {
-
-				case CHANGE_WEAPON::BASIC_ATTACK:
-					App->particles->AddParticle(App->particles->basic_shoot_3_down, position.x + 20, position.y + 12, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->basic_shoot_3_up, position.x + 20, position.y - 2, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->basic_shoot_2, position.x + 24, position.y + 9, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(basic_attack_sound);
-					break;
-
-				case CHANGE_WEAPON::LASER:
-					App->particles->AddParticle(App->particles->laser_3_up, position.x + 12, position.y - 2, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->laser_3_down, position.x + 12, position.y + 7, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->laser_3_up_back, position.x + 5, position.y - 2, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->laser_3_down_back, position.x + 5, position.y + 7, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(laser_sound);
-					break;
-
-				case CHANGE_WEAPON::BACK_SHOOT:
-					App->particles->AddParticle(App->particles->back_shoot_0, position.x + 20, position.y + 7, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_0, position.x + 20, position.y + 13, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_2_diagonal_up, position.x + 10, position.y + 7, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_2_diagonal_down, position.x + 10, position.y + 8, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_3_back, position.x, position.y + 8, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(laser_sound);
-					break;
-
-				case CHANGE_WEAPON::HELIX:
-					App->particles->AddParticle(App->particles->helix_03_1, position.x + 10, position.y + 13, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->helix_03_2, position.x + 10, position.y + 5, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->helix_02_1, position.x + 23, position.y + 13, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->helix_02_2, position.x + 23, position.y + 5, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(helix_sound);
-					break;
-				}
-				break;
-
-			case POWER_UPS::POWER_UP_4:
-				switch (change_weapon) {
-
-				case CHANGE_WEAPON::BASIC_ATTACK:
-					App->particles->AddParticle(App->particles->basic_shoot_3_down, position.x + 20, position.y + 12, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->basic_shoot_3_up, position.x + 20, position.y - 3, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->basic_shoot_4_down, position.x + 20, position.y + 12, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->basic_shoot_4_up, position.x + 20, position.y + 4, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(basic_attack_sound);
-					break;
-
-				case CHANGE_WEAPON::LASER:
-					App->particles->AddParticle(App->particles->laser_4_up, position.x + 5, position.y - 10, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->laser_4_down, position.x + 5, position.y + 4, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->laser_4_up_back, position.x - 10, position.y - 10, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->laser_4_down_back, position.x - 10, position.y + 4, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(laser_sound);
-					break;
-
-				case CHANGE_WEAPON::BACK_SHOOT:
-					App->particles->AddParticle(App->particles->back_shoot_0, position.x + 20, position.y + 7, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_0, position.x + 20, position.y + 13, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_3_diagonal_up, position.x + 10, position.y + 7, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_3_diagonal_down, position.x + 10, position.y + 8, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_3_back, position.x, position.y + 8, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(laser_sound);
-					break;
-
-				case CHANGE_WEAPON::HELIX:
-					App->particles->AddParticle(App->particles->helix_04_1, position.x + 23, position.y + 13, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->helix_04_2, position.x + 23, position.y + 5, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->helix_03_1, position.x + 10, position.y + 13, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->helix_03_2, position.x + 10, position.y + 5, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(helix_sound);
-					break;
-				}
-				break;
-
-			case POWER_UPS::POWER_UP_5:
-				switch (change_weapon) {
-
-				case CHANGE_WEAPON::BASIC_ATTACK:
-					App->particles->AddParticle(App->particles->basic_shoot_3_down, position.x + 20, position.y + 12, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->basic_shoot_3_up, position.x + 20, position.y - 5, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->basic_shoot_5_down, position.x + 20, position.y + 10, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->basic_shoot_5_up, position.x + 20, position.y, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(basic_attack_sound);
-					break;
-
-				case CHANGE_WEAPON::LASER:
-					App->particles->AddParticle(App->particles->laser_5_up, position.x + 5, position.y - 10, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->laser_5_down, position.x + 5, position.y + 4, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->laser_5_up_back, position.x - 10, position.y - 10, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->laser_5_down_back, position.x - 10, position.y + 4, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(laser_sound);
-					break;
-
-				case CHANGE_WEAPON::BACK_SHOOT:
-					App->particles->AddParticle(App->particles->back_shoot_0_5, position.x + 17, position.y + 11, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_0_up, position.x + 14, position.y + 1, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_0_down, position.x + 14, position.y + 12, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_3_diagonal_up, position.x + 10, position.y + 7, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_3_diagonal_down, position.x + 10, position.y + 8, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_3_back, position.x, position.y + 8, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(laser_sound);
-					break;
-
-
-				case CHANGE_WEAPON::HELIX:
-					App->particles->AddParticle(App->particles->helix_05_3, position.x + 26, position.y + 9, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->helix_05_1, position.x + 23, position.y + 13, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->helix_05_2, position.x + 23, position.y + 5, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->helix_03_1, position.x + 10, position.y + 13, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->helix_03_2, position.x + 10, position.y + 5, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(helix_sound);
-					break;
-				}
-				break;
-
-			case POWER_UPS::POWER_UP_6:
-				switch (change_weapon) {
-
-				case CHANGE_WEAPON::BASIC_ATTACK:
-					App->particles->AddParticle(App->particles->basic_shoot_6_down, position.x + 20, position.y + 12, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->basic_shoot_6_up, position.x + 20, position.y - 11, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->basic_shoot_5_down, position.x + 20, position.y + 12, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->basic_shoot_5_up, position.x + 20, position.y - 1, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(basic_attack_sound);
-					break;
-
-				case CHANGE_WEAPON::LASER:
-					App->particles->AddParticle(App->particles->laser_6_up, position.x + 5, position.y - 30, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->laser_6_down, position.x + 5, position.y, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->laser_6_up_back, position.x - 25, position.y - 30, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->laser_6_down_back, position.x - 25, position.y, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(laser_sound);
-					break;
-
-				case CHANGE_WEAPON::BACK_SHOOT:
-					App->particles->AddParticle(App->particles->back_shoot_1_5, position.x + 20, position.y + 9, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_0_up, position.x + 14, position.y + 1, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_0_down, position.x + 14, position.y + 12, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_3_diagonal_up, position.x + 10, position.y + 7, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_3_diagonal_down, position.x + 10, position.y + 8, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->back_shoot_3_back, position.x, position.y + 8, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(laser_sound);
-					break;
-
-				case CHANGE_WEAPON::HELIX:
-					App->particles->AddParticle(App->particles->helix_05_3, position.x + 26, position.y + 9, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->helix_05_1, position.x + 23, position.y + 13, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->helix_05_2, position.x + 23, position.y + 5, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->helix_06_1, position.x + 10, position.y + 13, COLLIDER_PLAYER_SHOT);
-					App->particles->AddParticle(App->particles->helix_06_2, position.x + 10, position.y + 5, COLLIDER_PLAYER_SHOT);
-					App->audio->PlaySoundEffect(helix_sound);
-					break;
-
-				}
-			}
-		}
-	}
-	*/
 	//GOD MODE
 /*
 	if (App->input->keyboard[SDL_SCANCODE_F5] == KEY_STATE::KEY_DOWN) {
@@ -880,10 +450,24 @@ bool j1Player::Update(float dt)
 
 void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
-	/*if (c_player != nullptr && c_player == c1 && App->fade->IsFading() == false && c2 != App->power_up->c_power_up)
+	if (c_player != nullptr && c_player == c1/* && App->fade->IsFading() == false && c2 != App->power_up->c_power_up*/)
 	{
+		
+
+		if (c1->rect.y + c1->rect.h - c2->rect.y >= 1 )
+		{
+			//(r.x + r.w <= rect.x) || (r.x >= rect.x + rect.w) || (r.y + r.h <= rect.y) || (r.y >= rect.y + rect.h)
+			jstate = ONFLOOR;
+			acceleration.y = 0.0f;
+			/*if (c1->rect.x + c1->rect.w >= c2->rect.x)
+			{
+				speed = 0.0f;
+			}*/
+		}
+
+		
 		//code
-		if (!god_mode) {
+		/*   if (!god_mode) {
 			App->audio->PlaySoundEffect(player_death);
 			App->particles->AddParticle(App->particles->explosion, position.x, position.y);
 			life--;
@@ -898,9 +482,9 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 				//App->player->Disable();
 				//App->fade->FadeToBlack(App->level01, App->game_over, 1);
 			}
-		}
+		}*/
 	}
-	if (c_player != nullptr && c_player == c1 && App->fade->IsFading() == false && c2 == App->power_up->c_power_up)
+	/*if (c_player != nullptr && c_player == c1 && App->fade->IsFading() == false && c2 == App->power_up->c_power_up)
 	{
 		App->power_up->Disable();
 	}*/
