@@ -27,6 +27,7 @@ public:
 	
 	state jstate;
 	SDL_Texture * graphics = nullptr;
+	
 	float gravity;
 	float speed;
 	bool locked_to_right = false;

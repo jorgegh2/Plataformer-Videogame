@@ -226,7 +226,7 @@ bool j1Player::Start()
 
 	gravity = 1.0f;
 	speed = 4.0f;
-
+	
 	jstate = NONE;
 	/*
 	laser_sound = App->audio->LoadSoundEffect("Music/Sounds_effects/Laser_Shot_Type-3_(Main_Ships).wav");
@@ -286,9 +286,11 @@ bool j1Player::Update(float dt)
 	if (jstate == JUMP) 
 	{
 		position.y += acceleration.y;
+		
 		if (acceleration.y < 0.5)
 		{
 			acceleration.y += gravity;
+			acceleration.x += speed;
 			
 		}
 		speed = 6.0f;
@@ -312,7 +314,7 @@ bool j1Player::Update(float dt)
 	{
 		jstate = JUMP;
 		acceleration.x -= speed;
-		position.x += acceleration.x;
+		position.x -= speed;
 		gravity = 6.0f;
 
 	}
@@ -321,7 +323,7 @@ bool j1Player::Update(float dt)
 	{
 		jstate = JUMP;
 		acceleration.x += speed;
-		position.x += acceleration.x;
+		position.x += speed;
 		gravity = 6.0f;
 
 	}
@@ -333,6 +335,7 @@ bool j1Player::Update(float dt)
 	locked_to_right = false;
 	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
 	c_player->SetPos(position.x, position.y);
+
 	/*
 	if ((App->input->keyboard[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT || player_down == true) && position.y < App->render->camera.y / SCREEN_SIZE + SCREEN_HEIGHT - SHIP_HEIGHT)
 	{
