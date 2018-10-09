@@ -6,6 +6,8 @@
 #include "p2Point.h"
 #include "j1Module.h"
 
+
+enum COLLIDER_TYPE;
 // ----------------------------------------------------
 struct MapLayer
 {
@@ -56,6 +58,8 @@ struct MapObjects
 	int					id;
 	SDL_Rect			RectCollider;
 	iPoint				StartPoint;
+	COLLIDER_TYPE		Collider_type;
+
 };
 
 enum MapTypes
