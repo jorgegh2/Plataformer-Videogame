@@ -59,6 +59,7 @@ struct MapObjects
 	SDL_Rect			RectCollider;
 	iPoint				StartPoint;
 	COLLIDER_TYPE		Collider_type;
+	
 
 };
 
@@ -108,6 +109,7 @@ public:
 	// Coordinate translation methods
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
+	COLLIDER_TYPE DefineType(int type_as_int);
 
 private:
 
