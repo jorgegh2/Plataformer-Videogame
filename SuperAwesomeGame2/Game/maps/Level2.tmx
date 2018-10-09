@@ -38646,7 +38646,7 @@
   <properties>
    <property name="Order" type="int" value="7"/>
   </properties>
-  <object id="1" x="-1.39394" y="2942.36" width="1792.3" height="384.909">
+  <object id="1" type="0" x="-1.39394" y="2942.36" width="1792.3" height="384.909">
    <properties>
     <property name="Ctype" type="int" value="0"/>
    </properties>

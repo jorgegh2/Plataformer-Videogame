@@ -222,10 +222,10 @@ bool j1Player::Start()
 	position.x = StartPoint.x;
 	position.y = StartPoint.y;
 
-	c_player = App->collision->AddCollider({ StartPoint.x, StartPoint.y, 27, 17 }, COLLIDER_PLAYER, this);
+	c_player = App->collision->AddCollider({ StartPoint.x, StartPoint.y, 155, 170 }, COLLIDER_PLAYER, this);
 
-	gravity = 0.8f;
-	speed = 1.0f;
+	gravity = 1.0f;
+	speed = 4.0f;
 
 	jstate = NONE;
 	/*
@@ -290,7 +290,7 @@ bool j1Player::Update(float dt)
 		{
 			acceleration.y += gravity;
 		}
-		speed = 1.0f;
+		speed = 6.0f;
 	}
 
 	if (jstate == ONFLOOR)
@@ -302,6 +302,7 @@ bool j1Player::Update(float dt)
 	{
 		jstate = JUMP;
 		acceleration.y -= jumpforce;
+		gravity = 5.0f;
 		
 	}
 
@@ -449,7 +450,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	if (c_player != nullptr && c_player == c1/* && App->fade->IsFading() == false && c2 != App->power_up->c_power_up*/)
 	{
 		
-		if (c1->rect.y + c1->rect.h - c2->rect.y <= margen /*c1->rect.y + c1->rect.h >= c2->rect.y*/)
+		if (c1->rect.y + c1->rect.h - c2->rect.y <= c2->rect.y /*c1->rect.y + c1->rect.h >= c2->rect.y*/)
 		{
 			//(r.x + r.w <= rect.x) || (r.x >= rect.x + rect.w) || (r.y + r.h <= rect.y) || (r.y >= rect.y + rect.h)
 			jstate = ONFLOOR;
