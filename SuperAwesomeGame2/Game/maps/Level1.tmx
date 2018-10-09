@@ -33188,7 +33188,7 @@
     <property name="Ctype" type="int" value="1"/>
    </properties>
   </object>
-  <object id="18" name="StartPoint1" x="315.152" y="2860.61">
+  <object id="18" name="StartPoint1" x="315.819" y="2814.61">
    <point/>
   </object>
   <object id="19" x="14850.5" y="1825.15" width="381.818" height="96.9697">
