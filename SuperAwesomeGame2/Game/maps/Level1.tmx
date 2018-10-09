@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.1" tiledversion="2018.09.12" orientation="orthogonal" renderorder="right-down" width="212" height="26" tilewidth="128" tileheight="128" infinite="0" nextlayerid="8" nextobjectid="37">
+<map version="1.1" tiledversion="2018.09.12" orientation="orthogonal" renderorder="right-down" width="212" height="26" tilewidth="128" tileheight="128" infinite="0" nextlayerid="8" nextobjectid="47">
  <tileset firstgid="1" name="Tileset128x128" tilewidth="128" tileheight="128" tilecount="50" columns="10">
   <image source="TilsetLevel1/platforms/Tileset128x128.png" trans="ff00ff" width="1280" height="640"/>
  </tileset>
@@ -33120,46 +33120,227 @@
    <tile/>
   </data>
  </layer>
- <objectgroup id="2" name="Colliders" visible="0">
+ <objectgroup id="2" name="Colliders">
   <properties>
    <property name="Order" type="int" value="6"/>
   </properties>
-  <object id="1" x="3.0303" y="2948.48" width="1018.18" height="384.848"/>
-  <object id="2" x="1405.15" y="2945.45" width="640.303" height="387.879"/>
-  <object id="3" x="2430.3" y="2939.39" width="1409.09" height="387.879"/>
-  <object id="4" x="3072.73" y="2557.58" width="763.636" height="378.788"/>
-  <object id="5" x="4220.3" y="2327.27" width="767.576" height="100"/>
-  <object id="6" x="5378.79" y="2084.85" width="381.818" height="84.8485"/>
-  <object id="7" x="6148.48" y="1827.27" width="375.758" height="87.8788"/>
-  <object id="8" x="6787.88" y="2075.76" width="760.606" height="96.9697"/>
-  <object id="9" x="7933.33" y="2560.61" width="1021.21" height="763.636"/>
-  <object id="10" x="8321.21" y="2166.67" width="381.818" height="60.6061"/>
-  <object id="11" x="8957.58" y="2686.79" width="636.364" height="634.424"/>
-  <object id="12" x="9600" y="2945.45" width="763.636" height="381.818"/>
-  <object id="13" x="10754.5" y="2721.21" width="251.515" height="90.9091"/>
-  <object id="14" x="11384.8" y="2467.58" width="266.667" height="93.03"/>
-  <object id="15" x="12033.3" y="2209.09" width="251.515" height="87.8788"/>
-  <object id="16" x="12672.7" y="2049.39" width="1784.85" height="768.788"/>
-  <object id="17" x="13312.1" y="1663.52" width="1015.15" height="51.6364"/>
+  <object id="1" x="3.0303" y="2945.48" width="1018.18" height="387.848">
+   <properties>
+    <property name="Ctype" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="2" x="1405.15" y="2945.45" width="640.303" height="387.879">
+   <properties>
+    <property name="Ctype" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="3" x="2430.3" y="2944.39" width="1409.09" height="382.879">
+   <properties>
+    <property name="Ctype" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="4" x="3072.73" y="2559.58" width="763.636" height="381.788">
+   <properties>
+    <property name="Ctype" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="5" x="4223.3" y="2336.27" width="768.576" height="93">
+   <properties>
+    <property name="Ctype" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="6" x="5376.12" y="2081.52" width="384.485" height="91.5152">
+   <properties>
+    <property name="Ctype" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="7" x="6143.81" y="1827.27" width="383.091" height="91.8788">
+   <properties>
+    <property name="Ctype" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="8" x="6782.88" y="2083.76" width="769.606" height="88.9697">
+   <properties>
+    <property name="Ctype" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="9" x="7933.33" y="2560.61" width="1021.21" height="765.636">
+   <properties>
+    <property name="Ctype" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="10" x="8321.21" y="2175.34" width="381.818" height="51.9394">
+   <properties>
+    <property name="Ctype" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="11" x="8957.58" y="2686.79" width="642.364" height="640.424">
+   <properties>
+    <property name="Ctype" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="12" x="9601" y="2945.45" width="762.636" height="381.818">
+   <properties>
+    <property name="Ctype" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="13" x="10754.5" y="2721.21" width="251.515" height="90.9091">
+   <properties>
+    <property name="Ctype" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="14" x="11384.8" y="2467.58" width="266.667" height="93.03">
+   <properties>
+    <property name="Ctype" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="15" x="12033.3" y="2209.09" width="251.515" height="91.8788">
+   <properties>
+    <property name="Ctype" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="16" x="12672.7" y="2049.39" width="1784.85" height="768.788">
+   <properties>
+    <property name="Ctype" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="17" x="13312.1" y="1663.52" width="1015.15" height="51.6364">
+   <properties>
+    <property name="Ctype" type="int" value="1"/>
+   </properties>
+  </object>
   <object id="18" name="StartPoint1" x="315.152" y="2860.61">
    <point/>
   </object>
-  <object id="19" x="14850.5" y="1825.15" width="381.818" height="96.9697"/>
-  <object id="20" x="15612.1" y="1569.64" width="387.879" height="96.9697"/>
-  <object id="21" x="15485" y="2081.82" width="381.697" height="87.8788"/>
-  <object id="22" x="16386" y="1824" width="380" height="98"/>
-  <object id="23" x="16128" y="2336" width="382" height="96"/>
-  <object id="24" x="17154" y="2432" width="890" height="70"/>
-  <object id="26" x="16766" y="2812" width="2174" height="512"/>
-  <object id="27" x="19328" y="2814" width="1282" height="516"/>
-  <object id="28" x="20608" y="2944" width="764" height="384"/>
-  <object id="29" x="21758" y="2944" width="382" height="384"/>
-  <object id="30" x="22528" y="2720" width="382" height="94"/>
-  <object id="31" x="23296" y="2460" width="256" height="98"/>
-  <object id="32" x="23552" y="2078" width="254" height="98"/>
-  <object id="33" x="23934" y="2336" width="260" height="94"/>
-  <object id="34" x="24190" y="1950" width="260" height="96"/>
-  <object id="35" x="24826" y="1822" width="260" height="100"/>
-  <object id="36" x="25468" y="2810" width="1668" height="520"/>
+  <object id="19" x="14850.5" y="1825.15" width="381.818" height="96.9697">
+   <properties>
+    <property name="Ctype" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="20" x="15612.1" y="1569.64" width="387.879" height="96.9697">
+   <properties>
+    <property name="Ctype" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="21" x="15485" y="2081.82" width="381.697" height="87.8788">
+   <properties>
+    <property name="Ctype" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="22" x="16386" y="1824" width="380" height="98">
+   <properties>
+    <property name="Ctype" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="23" x="16128" y="2336" width="382" height="96">
+   <properties>
+    <property name="Ctype" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="24" x="17154" y="2432" width="890" height="70">
+   <properties>
+    <property name="Ctype" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="26" x="16766" y="2816" width="2174" height="508">
+   <properties>
+    <property name="Ctype" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="27" x="19328" y="2814" width="1282" height="516">
+   <properties>
+    <property name="Ctype" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="28" x="20608" y="2944" width="764" height="384">
+   <properties>
+    <property name="Ctype" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="29" x="21758" y="2944" width="382" height="384">
+   <properties>
+    <property name="Ctype" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="30" x="22528" y="2720" width="382" height="94">
+   <properties>
+    <property name="Ctype" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="31" x="23296" y="2466" width="256" height="92">
+   <properties>
+    <property name="Ctype" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="32" x="23552" y="2078" width="254" height="98">
+   <properties>
+    <property name="Ctype" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="33" x="23934" y="2336" width="260" height="94">
+   <properties>
+    <property name="Ctype" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="34" x="24190" y="1950" width="260" height="96">
+   <properties>
+    <property name="Ctype" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="35" x="24826" y="1822" width="260" height="100">
+   <properties>
+    <property name="Ctype" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="36" x="25468" y="2815" width="1668" height="515">
+   <properties>
+    <property name="Ctype" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="37" x="1026" y="3014" width="376" height="316">
+   <properties>
+    <property name="Ctype" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="38" x="2052" y="3015" width="376" height="316">
+   <properties>
+    <property name="Ctype" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="39" x="3842" y="3010" width="4090" height="316">
+   <properties>
+    <property name="Ctype" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="40" x="10367" y="3011" width="6402" height="316">
+   <properties>
+    <property name="Ctype" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="41" x="18944" y="3011.33" width="381.333" height="316">
+   <properties>
+    <property name="Ctype" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="42" x="21377" y="3011" width="376" height="316">
+   <properties>
+    <property name="Ctype" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="43" x="22143" y="3012" width="3323.33" height="316">
+   <properties>
+    <property name="Ctype" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="44" x="3.0303" y="2172.73" width="100" height="772.727">
+   <properties>
+    <property name="Ctype" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="46" x="27009.1" y="2039.39" width="124.242" height="772.727">
+   <properties>
+    <property name="Ctype" type="int" value="4"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
