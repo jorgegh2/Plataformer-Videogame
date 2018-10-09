@@ -7,9 +7,6 @@
   <image source="TilsetLevel1/Objects/TilesetObjects128x128.png" trans="ff00ff" width="1280" height="640"/>
  </tileset>
  <layer id="7" name="bg" width="212" height="26">
-  <properties>
-   <property name="Order" type="int" value="5"/>
-  </properties>
   <data>
    <tile/>
    <tile/>
@@ -5526,9 +5523,6 @@
   </data>
  </layer>
  <layer id="3" name="water" width="212" height="26">
-  <properties>
-   <property name="Order" type="int" value="1"/>
-  </properties>
   <data>
    <tile/>
    <tile/>
@@ -11045,9 +11039,6 @@
   </data>
  </layer>
  <layer id="1" name="platforms" width="212" height="26">
-  <properties>
-   <property name="Order" type="int" value="0"/>
-  </properties>
   <data>
    <tile/>
    <tile/>
@@ -16564,9 +16555,6 @@
   </data>
  </layer>
  <layer id="4" name="tree1" width="212" height="26">
-  <properties>
-   <property name="Order" type="int" value="2"/>
-  </properties>
   <data>
    <tile/>
    <tile/>
@@ -22083,9 +22071,6 @@
   </data>
  </layer>
  <layer id="5" name="tree2" width="212" height="26">
-  <properties>
-   <property name="Order" type="int" value="3"/>
-  </properties>
   <data>
    <tile/>
    <tile/>
@@ -27602,9 +27587,6 @@
   </data>
  </layer>
  <layer id="6" name="decos" width="212" height="26">
-  <properties>
-   <property name="Order" type="int" value="4"/>
-  </properties>
   <data>
    <tile/>
    <tile/>
@@ -33121,9 +33103,6 @@
   </data>
  </layer>
  <objectgroup id="2" name="Colliders">
-  <properties>
-   <property name="Order" type="int" value="6"/>
-  </properties>
   <object id="1" x="3.0303" y="2945.48" width="1018.18" height="387.848">
    <properties>
     <property name="Ctype" type="int" value="0"/>

@@ -10,9 +10,6 @@
   <image source="TilesetLevel2/Objects/TilesetWinterObjects128x128.png" trans="ff00ff" width="1280" height="1280"/>
  </tileset>
  <layer id="2" name="bg" width="212" height="26">
-  <properties>
-   <property name="Order" type="int" value="6"/>
-  </properties>
   <data>
    <tile/>
    <tile/>
@@ -5529,9 +5526,6 @@
   </data>
  </layer>
  <layer id="5" name="water" width="212" height="26">
-  <properties>
-   <property name="Order" type="int" value="5"/>
-  </properties>
   <data>
    <tile/>
    <tile/>
@@ -11048,9 +11042,6 @@
   </data>
  </layer>
  <layer id="8" name="platforms2" width="212" height="26">
-  <properties>
-   <property name="Order" type="int" value="1"/>
-  </properties>
   <data>
    <tile/>
    <tile/>
@@ -16567,9 +16558,6 @@
   </data>
  </layer>
  <layer id="1" name="platforms" width="212" height="26">
-  <properties>
-   <property name="Order" type="int" value="0"/>
-  </properties>
   <data>
    <tile/>
    <tile/>
@@ -22086,9 +22074,6 @@
   </data>
  </layer>
  <layer id="3" name="tree1" width="212" height="26">
-  <properties>
-   <property name="Order" type="int" value="2"/>
-  </properties>
   <data>
    <tile/>
    <tile/>
@@ -27605,9 +27590,6 @@
   </data>
  </layer>
  <layer id="4" name="tree2" width="212" height="26">
-  <properties>
-   <property name="Order" type="int" value="3"/>
-  </properties>
   <data>
    <tile/>
    <tile/>
@@ -33124,9 +33106,6 @@
   </data>
  </layer>
  <layer id="6" name="decos" width="212" height="26">
-  <properties>
-   <property name="Order" type="int" value="4"/>
-  </properties>
   <data>
    <tile/>
    <tile/>
@@ -38643,10 +38622,7 @@
   </data>
  </layer>
  <objectgroup id="7" name="colliders">
-  <properties>
-   <property name="Order" type="int" value="7"/>
-  </properties>
-  <object id="1" type="1" x="-1.39394" y="2942.36" width="1792.3" height="384.909">
+  <object id="1" x="-1.39394" y="2942.36" width="1792.3" height="384.909">
    <properties>
     <property name="Ctype" type="int" value="0"/>
    </properties>
@@ -38841,17 +38817,17 @@
   </object>
   <object id="42" x="-2" y="2170" width="128" height="770">
    <properties>
-    <property name="Ctype" type="int" value="4"/>
+    <property name="Ctype" type="int" value="3"/>
    </properties>
   </object>
   <object id="43" x="27008" y="1408" width="128" height="768">
    <properties>
-    <property name="Ctype" type="int" value="3"/>
+    <property name="Ctype" type="int" value="4"/>
    </properties>
   </object>
   <object id="44" x="27020" y="2432.67" width="116" height="379.333">
    <properties>
-    <property name="Ctype" type="int" value="3"/>
+    <property name="Ctype" type="int" value="4"/>
    </properties>
   </object>
  </objectgroup>

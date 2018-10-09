@@ -285,12 +285,14 @@ bool j1Player::Update(float dt)
 
 	if (jstate == JUMP) 
 	{
-		position.y += gravity;
+		position.y += acceleration.y;
 		if (acceleration.y < 0.5)
 		{
 			acceleration.y += gravity;
+			
 		}
 		speed = 6.0f;
+		
 	}
 
 	if (jstate == ONFLOOR)
@@ -302,11 +304,30 @@ bool j1Player::Update(float dt)
 	{
 		jstate = JUMP;
 		acceleration.y -= jumpforce;
-		gravity = 5.0f;
+		gravity = 6.0f;
 		
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !locked_to_left)
+	{
+		jstate = JUMP;
+		acceleration.x -= speed;
+		position.x += acceleration.x;
+		gravity = 6.0f;
+
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !locked_to_left)
+	{
+		jstate = JUMP;
+		acceleration.x += speed;
+		position.x += acceleration.x;
+		gravity = 6.0f;
+
+	}
+
 	position.y += acceleration.y;
+	
 
 	locked_to_left = false;
 	locked_to_right = false;
