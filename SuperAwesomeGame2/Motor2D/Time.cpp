@@ -18,7 +18,7 @@ void Timer::Release() {
 
 }
 
-Timer::Timer() {
+Timer::Timer() : j1Module(){
 
 	Reset();
 	mTimeScale = 1.0f;
@@ -53,8 +53,9 @@ float Timer::TimeScale() {
 	return mTimeScale;
 }
 
-void Timer::Update() {
+bool Timer::Update(float dt) {
 
 	mElapsedTicks = SDL_GetTicks() - mStartTicks;
 	mDelataTime = mElapsedTicks * 0.001f;
+	return true;
 }

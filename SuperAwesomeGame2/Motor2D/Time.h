@@ -2,8 +2,9 @@
 #define _TIME_H
 
 #include "SDL/include/SDL.h"
+#include "j1Module.h"
 
-class Timer {
+class Timer : public j1Module {
 
 private:
 
@@ -25,9 +26,7 @@ public:
 	void TimeScale(float t);
 	float TimeScale();
 
-	void Update();
-
-private:
+	bool Update(float dt);
 
 	Timer();
 	~Timer();

@@ -17,6 +17,7 @@ class j1Collision;
 class j1Particles;
 class j1FadeToBlack;
 class j1Player;
+class Timer;
 
 class j1App
 {
@@ -91,6 +92,7 @@ public:
 	j1Player*			player;
 	j1FadeToBlack*		fadeToBlack;
 	j1Particles*		particles;
+	Timer*				time;
 
 private:
 
