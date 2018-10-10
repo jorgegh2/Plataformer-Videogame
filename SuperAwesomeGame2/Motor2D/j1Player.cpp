@@ -265,21 +265,24 @@ bool j1Player::CleanUp()
 bool j1Player::Update(float dt)
 {
 	current_animation = &idle;
-	
+	Distance d = App->collision->FinalDistance;
 	
 	//Horizontal movement
+	//if (d.Modulo > speed) 
+	//{
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !locked_to_left)
+		{
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !locked_to_left)
-	{
-		
-		position.x -= speed;
-	}
+			position.x -= speed;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !locked_to_right)
+		{
+
+			position.x += speed;
+		}
+	//}
 	
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !locked_to_right)
-	{
-		
-		position.x += speed;
-	}
 
 	//Jump
 
@@ -328,13 +331,16 @@ bool j1Player::Update(float dt)
 
 	}
 
-	position.y += acceleration.y;
+	if(acceleration.y > d.Modulo && acceleration.y > 0) 
+	 position.y += d.Modulo;
+	else position.y += acceleration.y;
 	
 
 	locked_to_left = false;
 	locked_to_right = false;
 	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
 	c_player->SetPos(position.x, position.y);
+	
 
 	/*
 	if ((App->input->keyboard[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT || player_down == true) && position.y < App->render->camera.y / SCREEN_SIZE + SCREEN_HEIGHT - SHIP_HEIGHT)

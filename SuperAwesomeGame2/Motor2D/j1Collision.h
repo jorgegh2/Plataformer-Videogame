@@ -18,7 +18,14 @@ enum COLLIDER_TYPE
 
 	COLLIDER_MAX
 };
-
+struct Distance
+{
+	float Modulo;
+	bool positiveX = false;
+	bool negativeX = false;
+	bool positiveY = false;
+	bool negativeY = false;
+};
 struct Collider
 {
 	SDL_Rect rect;
@@ -39,8 +46,11 @@ struct Collider
 	}
 
 	bool CheckCollision(const SDL_Rect& r) const;
+	Distance DistanceToNearestCollider(SDL_Rect& collider_rect) const;
 	
 };
+
+
 
 class j1Collision : public j1Module
 {
@@ -55,6 +65,10 @@ public:
 
 	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback = nullptr);
 	void DebugDraw();
+
+	Distance distance;
+	Distance FinalDistance;
+	
 	
 
 private:
