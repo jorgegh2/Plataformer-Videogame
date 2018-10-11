@@ -224,9 +224,15 @@ bool j1Player::Start()
 
 	c_player = App->collision->AddCollider({ StartPoint.x, StartPoint.y, 155, 170 }, COLLIDER_PLAYER, this);
 
-	gravity = 1.0f;
-	speed = 4.0f;
+	/*gravity = 1.0f;
 	
+	*/
+	speed = { 4,4 };
+	App->time->DeltaTime();
+	/*fPoint jumpforce;
+	fPoint speed;
+	fPoint acceleration;
+	fPoint gravity;*/
 	jstate = NONE;
 	/*
 	laser_sound = App->audio->LoadSoundEffect("Music/Sounds_effects/Laser_Shot_Type-3_(Main_Ships).wav");
@@ -268,25 +274,80 @@ bool j1Player::Update(float dt)
 	Distance d = App->collision->FinalDistance;
 	
 	//Horizontal movement
+
 	//if (d.Modulo > speed) 
 	//{
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !locked_to_left)
 		{
 
-			position.x -= speed;
+			position.x -= speed.x;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !locked_to_right)
 		{
 
-			position.x += speed;
+			position.x += speed.x;
 		}
 	//}
 	
 
 	//Jump
 
-	if (jstate == JUMP) 
+		myGravity = 2.0f;
+		maxFallSpeed = -5.0f;
+		jumpForce = 5.0f;
+		currentJumpForce = 0.0f;
+		deltaTime = App->time->DeltaTime();
+
+		if(jstate!= ONFLOOR)position.y += myGravity;
+			
+
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		{
+			jstate = JUMP;
+			currentJumpForce = jumpForce;
+		}
+
+		if (jstate == JUMP) 
+		{
+			position.y -= currentJumpForce * deltaTime;
+			
+			jstate = ONAIR;
+
+			if (currentJumpForce > maxFallSpeed)
+			{
+				jumpForce -= myGravity * deltaTime;
+			}
+			else 
+			{
+				currentJumpForce = maxFallSpeed;
+			}
+
+			if (jstate == ONAIR) 
+			{
+				jstate = LANDING;
+				position.y -= myGravity * deltaTime;
+				
+			}
+
+			if (jstate == LANDING) {
+
+				speed.y -= currentJumpForce * deltaTime;
+				jstate = ONFLOOR;
+				
+
+			}
+
+			if (jstate == ONFLOOR) 
+			{
+				jstate = NONE;
+			}
+		}
+
+		
+
+
+	/*if (jstate == JUMP) 
 	{
 		position.y += acceleration.y;
 		
@@ -296,7 +357,7 @@ bool j1Player::Update(float dt)
 			acceleration.x += speed;
 			
 		}
-		speed = 6.0f;
+		
 		
 	}
 
@@ -309,31 +370,15 @@ bool j1Player::Update(float dt)
 	{
 		jstate = JUMP;
 		acceleration.y -= jumpforce;
-		gravity = 6.0f;
-		
-	}
+	
+	}*/
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !locked_to_left)
-	{
-		jstate = JUMP;
-		acceleration.x -= speed;
-		position.x -= speed;
-		gravity = 6.0f;
+	
 
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !locked_to_left)
-	{
-		jstate = JUMP;
-		acceleration.x += speed;
-		position.x += speed;
-		gravity = 6.0f;
-
-	}
-
-	if(acceleration.y > d.Modulo && acceleration.y > 0) 
+	/*if(acceleration.y > d.Modulo && acceleration.y > 0) 
 	 position.y += d.Modulo;
-	else position.y += acceleration.y;
+	else*/ 
+		
 	
 
 	locked_to_left = false;
@@ -484,7 +529,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		{
 			//(r.x + r.w <= rect.x) || (r.x >= rect.x + rect.w) || (r.y + r.h <= rect.y) || (r.y >= rect.y + rect.h)
 			jstate = ONFLOOR;
-			acceleration.y = 0.0f;
+			//acceleration.y = 0.0f;
 		}
 
 		else if (c2->rect.x + c2->rect.w - c1->rect.x <= margen)

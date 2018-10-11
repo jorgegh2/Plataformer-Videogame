@@ -10,7 +10,7 @@ struct Mix_Chunk;
 struct Collider;
 
 
-enum state {NONE, JUMP, ONFLOOR};
+enum state {NONE, JUMP, ONFLOOR, ONAIR, LANDING};
 class j1Player : public j1Module
 {
 public:
@@ -28,8 +28,9 @@ public:
 	state jstate;
 	SDL_Texture * graphics = nullptr;
 	
-	float gravity;
-	float speed;
+	//float gravity;
+	//float speed;
+
 	bool locked_to_right = false;
 	bool locked_to_left = false;
 	uint margen = 3;
@@ -38,8 +39,17 @@ public:
 	Animation* anim_turbo = nullptr;
 	//Animation idle;
 
-	float jumpforce = 50.0f;
-	fPoint acceleration = {0,0};
+	/*fPoint jumpforce = { 0,10 };
+	
+	fPoint acceleration = { 2,2 };
+	fPoint gravity = { 0,2 };*/
+	fPoint speed;
+	float myGravity;
+	float maxFallSpeed;
+	float jumpForce;
+	float currentJumpForce;
+	float deltaTime;
+
 	Animation up;
 	Animation down;
 	Animation upback;
