@@ -32,6 +32,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	const char* level;
+	bool a = true;
+
 private:
 };
 

@@ -9,6 +9,7 @@
 #include "j1Map.h"
 #include "j1Scene.h"
 #include "j1Collision.h"
+#include "j1FadeToBlack.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -35,11 +36,15 @@ bool j1Scene::Start()
 	//App->map->Load("iso.tmx");
 
 	const char* path = "audio/music/PimPoy.wav";
-	j1Audio Mix_LoadWAV(const char *path);
+	
+	
+	//j1Audio Mix_LoadWAV(const char *path);
 	App->audio->PlayMusic(path);
-
-
-	App->map->Load("Level2.tmx"); 
+	if (a) level = "Level2.tmx";
+	else level = "Level1.tmx";
+	/*const char* level = "Level1.tmx";
+	const char* level = "Level2.tmx";*/
+	App->map->Load(level); 
 
 	p2List_item<MapObjects*>* item_object = nullptr;
 	for (item_object = App->map->data.objects.start; item_object; item_object = item_object->next)
@@ -103,6 +108,17 @@ bool j1Scene::Update(float dt)
 					map_coordinates.x, map_coordinates.y);
 
 	App->win->SetTitle(title.GetString());
+
+
+	if (App->input->GetKey(SDL_SCANCODE_F4))
+	{
+		//level = "Level1.tmx";
+		a = !a;
+		enabled = false;
+		App->fadeToBlack->FadeToBlack(App->map, this);
+		App->collision->CleanUp();
+	}
+
 	return true;
 }
 

@@ -144,9 +144,19 @@ bool j1Map::CleanUp()
 	}
 	data.layers.clear();
 
+	p2List_item<MapObjects*>* item3;
+	item3 = data.objects.start;
+
+	while (item3 != NULL)
+	{
+		RELEASE(item3->data);
+		item3 = item3->next;
+	}
+	data.objects.clear();
+
 	// Clean up the pugui tree
 	map_file.reset();
-
+	
 	return true;
 }
 
