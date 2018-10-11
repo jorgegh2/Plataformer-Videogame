@@ -39,12 +39,12 @@ bool j1Scene::Start()
 	
 	
 	//j1Audio Mix_LoadWAV(const char *path);
-	App->audio->PlayMusic(path);
-	if (a) level = "Level2.tmx";
-	else level = "Level1.tmx";
+	//App->audio->PlayMusic(path);
+	/*if (a) level = "Level2.tmx";
+	else level = "Level1.tmx";*/
 	/*const char* level = "Level1.tmx";
 	const char* level = "Level2.tmx";*/
-	App->map->Load(level); 
+	App->map->Load("Level2.tmx"); 
 
 	p2List_item<MapObjects*>* item_object = nullptr;
 	for (item_object = App->map->data.objects.start; item_object; item_object = item_object->next)
@@ -112,11 +112,12 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F4))
 	{
-		//level = "Level1.tmx";
-		a = !a;
+		level = "Level2.tmx";
+		//a = !a;
 		enabled = false;
-		App->fadeToBlack->FadeToBlack(App->map, this);
 		App->collision->CleanUp();
+		App->fadeToBlack->FadeToBlack(App->map, this);
+		
 	}
 
 	return true;

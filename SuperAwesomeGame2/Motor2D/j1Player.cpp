@@ -218,17 +218,17 @@ bool j1Player::Start()
 		}
 	}
 
-
+	speed.y = 0;
 	position.x = StartPoint.x;
 	position.y = StartPoint.y;
 
 	c_player = App->collision->AddCollider({ StartPoint.x, StartPoint.y, 155, 170 }, COLLIDER_PLAYER, this);
-
+	myGravity = 5;
 	/*gravity = 1.0f;
 	
 	*/
-	speed = { 4,4 };
-	App->time->DeltaTime();
+	speed = { 8,0 };
+	///App->time->DeltaTime();
 	/*fPoint jumpforce;
 	fPoint speed;
 	fPoint acceleration;
@@ -293,7 +293,40 @@ bool j1Player::Update(float dt)
 
 	//Jump
 
-		myGravity = 2.0f;
+		
+
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		{
+			jstate = JUMP;
+			myGravity = 1;
+			App->time->Reset();
+			speed.y = -15;
+
+		}
+
+		/*if (jstate == JUMP)
+		{
+			
+			//jstate == ONAIR;
+		}*/
+
+		else if (jstate != NONE && jstate != JUMP)
+		{
+			myGravity = 0;
+			speed.y = 0;
+		}
+
+		speed.y = speed.y + myGravity * App->time->DeltaTime();
+		position.y += speed.y;
+		c_player->SetPos(position.x, position.y);
+		if (jstate == ONAIR)
+		{
+
+		}
+		//position.y += speed.y;
+
+
+		/*myGravity = 2.0f;
 		maxFallSpeed = -5.0f;
 		jumpForce = 5.0f;
 		currentJumpForce = 0.0f;
@@ -343,7 +376,7 @@ bool j1Player::Update(float dt)
 				jstate = NONE;
 			}
 		}
-
+		*/
 		
 
 
@@ -384,7 +417,7 @@ bool j1Player::Update(float dt)
 	locked_to_left = false;
 	locked_to_right = false;
 	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
-	c_player->SetPos(position.x, position.y);
+	
 	
 
 	/*
@@ -524,7 +557,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c_player != nullptr && c_player == c1/* && App->fade->IsFading() == false && c2 != App->power_up->c_power_up*/)
 	{
-		
+		jstate = ONFLOOR;
 		if (c1->rect.y + c1->rect.h - c2->rect.y <= c2->rect.y /*c1->rect.y + c1->rect.h >= c2->rect.y*/)
 		{
 			//(r.x + r.w <= rect.x) || (r.x >= rect.x + rect.w) || (r.y + r.h <= rect.y) || (r.y >= rect.y + rect.h)

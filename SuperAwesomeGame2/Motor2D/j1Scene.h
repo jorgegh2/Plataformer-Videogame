@@ -32,7 +32,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	const char* level;
+	const char* level = "Level2.tmx";
 	bool a = true;
 
 private:
