@@ -3,6 +3,11 @@
 
 #include <stdio.h>
 
+//window
+
+#define WIDTH_CANVAS 250;
+#define HEIGHT_CANVAS 500;
+
 //  NULL just in case ----------------------
 
 #ifdef NULL
