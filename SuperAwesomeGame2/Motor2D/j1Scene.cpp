@@ -34,6 +34,10 @@ bool j1Scene::Start()
 	//App->map->Load("hello2.tmx");
 	//App->map->Load("iso.tmx");
 
+	const char* path = "audio/music/PimPoy.wav";
+	j1Audio Mix_LoadWAV(const char *path);
+	App->audio->PlayMusic(path);
+
 
 	App->map->Load("Level2.tmx"); 
 
