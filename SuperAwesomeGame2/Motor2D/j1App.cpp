@@ -49,12 +49,13 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(fadeToBlack);
 	AddModule(particles);
-	AddModule(collision);
+	AddModule(render);
 	AddModule(player);
+	AddModule(collision);
 	AddModule(time);
 
 	// render last to swap buffer
-	AddModule(render);
+	
 }
 
 // Destructor
