@@ -105,7 +105,7 @@ bool j1Collision::PreUpdate()
 			}
 			if (c2->type == COLLIDER_PLAYER)
 			{
-				distance = c2->DistanceToNearestCollider(c1->rect);
+	   			distance = c2->DistanceToNearestCollider(c1->rect);
 				if (i == 0) FinalDistance = distance;
 				else if (FinalDistance.Modulo > distance.Modulo)
 				{
@@ -240,25 +240,39 @@ COLLIDER_TYPE j1Collision::DefineType(int type_as_int)
 Distance Collider::DistanceToNearestCollider(SDL_Rect& collider_rect) const
 {
 	Distance ret;
-	if ((collider_rect.x + collider_rect.w <= rect.x))
+	ret.Modulo = 10000;
+	if (collider_rect.x + collider_rect.w <= rect.x)
 	{
-		ret.negativeX = true;
-		ret.Modulo = rect.x - (collider_rect.x + collider_rect.w);
+		if (collider_rect.y + collider_rect.h > rect.y && collider_rect.y < rect.y + rect.h)
+		{
+			ret.negativeX = true;
+			ret.Modulo = rect.x - (collider_rect.x + collider_rect.w);
+		}
 	}
 	if (collider_rect.x >= rect.x + rect.w)
 	{
-		ret.positiveX = true;
-		ret.Modulo = collider_rect.x - (rect.x + rect.w);
+		if (collider_rect.y + collider_rect.h > rect.y && collider_rect.y < rect.y + rect.h)
+		{
+			ret.positiveX = true;
+			ret.Modulo = collider_rect.x - (rect.x + rect.w);
+		}
 	}
 	if (collider_rect.y + collider_rect.h <= rect.y)
 	{
-		ret.negativeY = true;
-		ret.Modulo = rect.y - (collider_rect.y + collider_rect.h);
+		if (collider_rect.x + collider_rect.w > rect.x && collider_rect.x < rect.x + rect.w)
+		{
+			ret.negativeY = true;
+			ret.Modulo = rect.y - (collider_rect.y + collider_rect.h);
+		}
 	}
 	if (collider_rect.y >= rect.y + rect.h)
 	{
-		ret.positiveY = true;
-		ret.Modulo = collider_rect.y - (rect.y + rect.h);
+		
+		if (collider_rect.x + collider_rect.w > rect.x && collider_rect.x < rect.x + rect.w)
+		{
+			ret.positiveY = true;
+			ret.Modulo = collider_rect.y - (rect.y + rect.h);
+		}
 	}
 
 	return ret;

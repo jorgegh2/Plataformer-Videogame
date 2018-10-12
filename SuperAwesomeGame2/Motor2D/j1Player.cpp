@@ -19,7 +19,7 @@
 #include "Time.h"
 #include "p2Log.h"
 #include "j1Map.h"
-
+#include "j1Window.h"
 #include "j1Render.h"
 
 
@@ -313,8 +313,6 @@ bool j1Player::Update(float dt)
 		
 		*/
 
-		c_player->SetPos(position.x, position.y);
-		App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
 		
 		switch (jstate)
 		{
@@ -340,17 +338,32 @@ bool j1Player::Update(float dt)
 			{
 				jstate = JUMP;
 			}
-			else jstate = ONAIR;
+			//else jstate = ONAIR;
 
 			break;
 
 		case ONAIR:
 			
 				speed.y = speed.y + myGravity * App->time->DeltaTime();
-				position.y += speed.y;
+				if (speed.y < d.Modulo)
+					position.y += speed.y;
+				else
+				{
+					position.y += d.Modulo;
+					jstate = ONFLOOR;
+				}
 			
 			break;
 		}
+		
+		App->render->camera.x = -App->player->position.x * App->win->GetScale() + WIDTH_CANVAS;
+		App->render->camera.y = -App->player->position.y * App->win->GetScale() + HEIGHT_CANVAS;
+
+ 		c_player->SetPos(position.x, position.y);
+		App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
+
+	
+
 
 	/*if(acceleration.y > d.Modulo && acceleration.y > 0) 
 	 position.y += d.Modulo;
@@ -496,8 +509,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c_player != nullptr && c_player == c1 && jstate != JUMP/* && App->fade->IsFading() == false && c2 != App->power_up->c_power_up*/)
 	{
-		jstate = ONFLOOR;
-		if (c1->rect.y + c1->rect.h - c2->rect.y <= c2->rect.y /*c1->rect.y + c1->rect.h >= c2->rect.y*/)
+	//	jstate = ONFLOOR;
+   		if (c1->rect.y + c1->rect.h - c2->rect.y <= c2->rect.y /*c1->rect.y + c1->rect.h >= c2->rect.y*/)
 		{
 			//(r.x + r.w <= rect.x) || (r.x >= rect.x + rect.w) || (r.y + r.h <= rect.y) || (r.y >= rect.y + rect.h)
 			jstate = ONFLOOR;
