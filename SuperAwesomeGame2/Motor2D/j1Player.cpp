@@ -282,16 +282,18 @@ bool j1Player::Update(float dt)
 
 	//if (d.Modulo > speed) 
 	//{
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !locked_to_left)
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-
-			position.x -= speed.x;
+			if (d.Modulo < speed.x && d.negativeX)
+				position.x -= d.Modulo;
+			else position.x -= speed.x;
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !locked_to_right)
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-
-			position.x += speed.x;
+			if (d.Modulo < speed.x && d.positiveX)
+				position.x += d.Modulo;
+			else position.x += speed.x;
 		}
 	//}
 	
@@ -350,13 +352,16 @@ bool j1Player::Update(float dt)
 		case ONAIR:
 			
 				speed.y = speed.y + myGravity * App->time->DeltaTime();
-				if (speed.y < d.Modulo)
-					position.y += speed.y;
-				else
-				{
-					position.y += d.Modulo;
-					jstate = ONFLOOR;
-				}
+				
+					//if (speed.y < d.Modulo)
+						
+					if (speed.y > d.Modulo && d.positiveY)
+					{
+						position.y += d.Modulo;
+						jstate = ONFLOOR;
+					}
+					else position.y += speed.y;
+				
 				
 			
 			break;

@@ -246,6 +246,9 @@ Distance Collider::DistanceToNearestCollider(SDL_Rect& collider_rect) const
 		if (collider_rect.y + collider_rect.h > rect.y && collider_rect.y < rect.y + rect.h)
 		{
 			ret.negativeX = true;
+			ret.negativeY = false;
+			ret.positiveX = false;
+			ret.positiveY = false;
 			ret.Modulo = rect.x - (collider_rect.x + collider_rect.w);
 		}
 	}
@@ -254,6 +257,9 @@ Distance Collider::DistanceToNearestCollider(SDL_Rect& collider_rect) const
 		if (collider_rect.y + collider_rect.h > rect.y && collider_rect.y < rect.y + rect.h)
 		{
 			ret.positiveX = true;
+			ret.negativeX = false;
+			ret.negativeY = false;
+			ret.positiveY = false;
 			ret.Modulo = collider_rect.x - (rect.x + rect.w);
 		}
 	}
@@ -262,6 +268,9 @@ Distance Collider::DistanceToNearestCollider(SDL_Rect& collider_rect) const
 		if (collider_rect.x + collider_rect.w > rect.x && collider_rect.x < rect.x + rect.w)
 		{
 			ret.negativeY = true;
+			ret.positiveX = false;
+			ret.positiveY = false;
+			ret.negativeX = false;
 			ret.Modulo = rect.y - (collider_rect.y + collider_rect.h);
 		}
 	}
@@ -271,6 +280,9 @@ Distance Collider::DistanceToNearestCollider(SDL_Rect& collider_rect) const
 		if (collider_rect.x + collider_rect.w > rect.x && collider_rect.x < rect.x + rect.w)
 		{
 			ret.positiveY = true;
+			ret.negativeX = false;
+			ret.negativeY = false;
+			ret.positiveX = false;
 			ret.Modulo = collider_rect.y - (rect.y + rect.h);
 		}
 	}
