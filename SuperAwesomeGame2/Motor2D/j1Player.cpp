@@ -223,7 +223,7 @@ bool j1Player::Start()
 	position.y = StartPoint.y;
 
 	c_player = App->collision->AddCollider({ StartPoint.x, StartPoint.y, 155, 170 }, COLLIDER_PLAYER, this);
-	myGravity = 5;
+	myGravity = 1;
 	/*gravity = 1.0f;
 	
 	*/
@@ -293,9 +293,7 @@ bool j1Player::Update(float dt)
 
 	//Jump
 
-		
-
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		/*if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
 			jstate = JUMP;
 			myGravity = 1;
@@ -303,13 +301,6 @@ bool j1Player::Update(float dt)
 			speed.y = -15;
 
 		}
-
-		/*if (jstate == JUMP)
-		{
-			
-			//jstate == ONAIR;
-		}*/
-
 		else if (jstate != NONE && jstate != JUMP)
 		{
 			myGravity = 0;
@@ -319,107 +310,55 @@ bool j1Player::Update(float dt)
 		speed.y = speed.y + myGravity * App->time->DeltaTime();
 		position.y += speed.y;
 		c_player->SetPos(position.x, position.y);
-		if (jstate == ONAIR)
-		{
-
-		}
-		//position.y += speed.y;
-
-
-		/*myGravity = 2.0f;
-		maxFallSpeed = -5.0f;
-		jumpForce = 5.0f;
-		currentJumpForce = 0.0f;
-		deltaTime = App->time->DeltaTime();
-
-		if(jstate!= ONFLOOR)position.y += myGravity;
-			
-
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-		{
-			jstate = JUMP;
-			currentJumpForce = jumpForce;
-		}
-
-		if (jstate == JUMP) 
-		{
-			position.y -= currentJumpForce * deltaTime;
-			
-			jstate = ONAIR;
-
-			if (currentJumpForce > maxFallSpeed)
-			{
-				jumpForce -= myGravity * deltaTime;
-			}
-			else 
-			{
-				currentJumpForce = maxFallSpeed;
-			}
-
-			if (jstate == ONAIR) 
-			{
-				jstate = LANDING;
-				position.y -= myGravity * deltaTime;
-				
-			}
-
-			if (jstate == LANDING) {
-
-				speed.y -= currentJumpForce * deltaTime;
-				jstate = ONFLOOR;
-				
-
-			}
-
-			if (jstate == ONFLOOR) 
-			{
-				jstate = NONE;
-			}
-		}
+		
 		*/
-		
 
-
-	/*if (jstate == JUMP) 
-	{
-		position.y += acceleration.y;
+		c_player->SetPos(position.x, position.y);
+		App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
 		
-		if (acceleration.y < 0.5)
+		switch (jstate)
 		{
-			acceleration.y += gravity;
-			acceleration.x += speed;
+		case NONE:
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+			{
+				jstate = JUMP;
+			}
+			break;
+
+		case JUMP:
+				App->time->Reset();
+				speed.y = -15;
+				jstate = ONAIR;
+				//Change this when have better colider detection
+				speed.y = speed.y + myGravity * App->time->DeltaTime();
+				position.y += speed.y;
+			break;
+
+		case ONFLOOR:
+
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+			{
+				jstate = JUMP;
+			}
+			else jstate = ONAIR;
+
+			break;
+
+		case ONAIR:
 			
+				speed.y = speed.y + myGravity * App->time->DeltaTime();
+				position.y += speed.y;
+			
+			break;
 		}
-		
-		
-	}
-
-	if (jstate == ONFLOOR)
-	{
-		jstate = JUMP;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
-		jstate = JUMP;
-		acceleration.y -= jumpforce;
-	
-	}*/
-
-	
 
 	/*if(acceleration.y > d.Modulo && acceleration.y > 0) 
 	 position.y += d.Modulo;
 	else*/ 
 		
-	
-
 	locked_to_left = false;
 	locked_to_right = false;
-	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
 	
-	
-
 	/*
 	if ((App->input->keyboard[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT || player_down == true) && position.y < App->render->camera.y / SCREEN_SIZE + SCREEN_HEIGHT - SHIP_HEIGHT)
 	{
@@ -555,7 +494,7 @@ bool j1Player::Update(float dt)
 
 void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
-	if (c_player != nullptr && c_player == c1/* && App->fade->IsFading() == false && c2 != App->power_up->c_power_up*/)
+	if (c_player != nullptr && c_player == c1 && jstate != JUMP/* && App->fade->IsFading() == false && c2 != App->power_up->c_power_up*/)
 	{
 		jstate = ONFLOOR;
 		if (c1->rect.y + c1->rect.h - c2->rect.y <= c2->rect.y /*c1->rect.y + c1->rect.h >= c2->rect.y*/)

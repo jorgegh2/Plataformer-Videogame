@@ -10,7 +10,7 @@ struct Mix_Chunk;
 struct Collider;
 
 
-enum state {NONE, JUMP, ONFLOOR, ONAIR, LANDING};
+enum state {NONE, JUMP, ONFLOOR, ONAIR};
 class j1Player : public j1Module
 {
 public:
