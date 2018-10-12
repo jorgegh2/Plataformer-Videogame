@@ -224,6 +224,10 @@ bool j1Player::Start()
 
 	c_player = App->collision->AddCollider({ StartPoint.x, StartPoint.y, 155, 170 }, COLLIDER_PLAYER, this);
 	myGravity = 1;
+
+	App->render->camera.x = -position.x * App->win->GetScale() + WIDTH_CANVAS;
+	App->render->camera.y = -position.y * App->win->GetScale() + HEIGHT_CANVAS;
+
 	/*gravity = 1.0f;
 	
 	*/
@@ -355,14 +359,56 @@ bool j1Player::Update(float dt)
 			
 			break;
 		}
+		/*uint winwidth;
+		uint winheight;
+		App->win->GetWindowSize(winwidth, winheight);*/
+
 		
-		App->render->camera.x = -App->player->position.x * App->win->GetScale() + WIDTH_CANVAS;
-		App->render->camera.y = -App->player->position.y * App->win->GetScale() + HEIGHT_CANVAS;
+
+		//if(c_player->rect.x <= App->render->camera.x + 250){
+
+		//	App->render->camera.x = -1 * (App->player->position.x * App->win->GetScale() - 250);
+		//}
+		//if (c_player->rect.x + c_player->rect.w > (App->render->camera.x + App->render->camera.w) - 250) {
+
+		//	App->render->camera.x = -(App->player->position.x + c_player->rect.w) * App->win->GetScale() + App->render->camera.w - 250;
+		//	//App->render->camera.x = -App->player->position.x - App->render->camera.w * App->win->GetScale() + WIDTH_CANVAS;
+		//}
+		
+		
+		
+
+		
 
  		c_player->SetPos(position.x, position.y);
 		App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
+		SDL_Rect offSet{ (-App->render->camera.x/ App->win->GetScale()) + 200, (-App->render->camera.y / App->win->GetScale()) + 600, 800, 600 };
+		App->render->DrawQuad(offSet, 255, 255, 255, 80);
 
-	
+		if (position.x + c_player->rect.w > offSet.w + offSet.x)
+		{
+
+			App->render->camera.x = -(position.x * App->win->GetScale() -423);
+
+		}
+		else if (position.x < offSet.x)
+		{
+			App->render->camera.x = -(position.x * App->win->GetScale() - 100);
+		}
+
+
+		if (position.y < offSet.y)
+		{
+
+			App->render->camera.y = -(position.y * App->win->GetScale() - 300);
+
+		}
+		else if (position.y + c_player->rect.h > offSet.y + offSet.h)
+		{
+			App->render->camera.y = -(position.y * App->win->GetScale() - 515);
+		}
+
+
 
 
 	/*if(acceleration.y > d.Modulo && acceleration.y > 0) 

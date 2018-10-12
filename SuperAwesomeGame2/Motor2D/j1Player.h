@@ -95,6 +95,7 @@ public:
 
 
 	Collider* c_player = nullptr;
+	Collider* offSet = nullptr;
 
 	// Vars to check if the buttons are still pressed
 	bool a_pressed = false;
