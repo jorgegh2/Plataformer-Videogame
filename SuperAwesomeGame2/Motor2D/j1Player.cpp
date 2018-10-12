@@ -218,7 +218,7 @@ bool j1Player::Start()
 		}
 	}
 
-	speed.y = 0;
+	
 	position.x = StartPoint.x;
 	position.y = StartPoint.y;
 
@@ -276,6 +276,7 @@ bool j1Player::Update(float dt)
 {
 	current_animation = &idle;
 	Distance d = App->collision->FinalDistance;
+
 	
 	//Horizontal movement
 
@@ -356,9 +357,11 @@ bool j1Player::Update(float dt)
 					position.y += d.Modulo;
 					jstate = ONFLOOR;
 				}
+				
 			
 			break;
 		}
+		if (d.Modulo != 0.0f) jstate = ONAIR;
 		/*uint winwidth;
 		uint winheight;
 		App->win->GetWindowSize(winwidth, winheight);*/
