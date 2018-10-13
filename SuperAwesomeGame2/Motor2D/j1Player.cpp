@@ -299,9 +299,9 @@ bool j1Player::Update(float dt)
 
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && dashCount < 1 && jstate == ONAIR && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT && dashCount < 1 && jstate == ONAIR && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		App->time->Reset();
+		if (dashCount == 0) App->time->Reset();
 		dashCount = 1;
 		current_animation = &hit;
 		if (velocityX < 0) 
@@ -309,12 +309,12 @@ bool j1Player::Update(float dt)
 			position.x -= speed.x * App->time->DeltaTime();
 			//velocityX = -speed.x;
 		}
-		jstate = LANDING;
+		
 		
 	}
-	else if(App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && dashCount < 1 && jstate == ONAIR && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	else if(App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT && dashCount < 1 && jstate == ONAIR && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		App->time->Reset();
+		if (dashCount == 0) App->time->Reset();
 		dashCount = 1;
 		current_animation = &hit;
 		if (velocityX > 0) 
@@ -322,7 +322,7 @@ bool j1Player::Update(float dt)
 			position.x += speed.x * App->time->DeltaTime();
 			//velocityX = speed.x;
 		}
-		jstate = LANDING;
+		
 		
 	}
 
@@ -371,14 +371,17 @@ bool j1Player::Update(float dt)
 		{
 			jstate = JUMP;
 			current_animation = &jump;
+			current_animation->Reset();
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			jstate = JUMP;
 			current_animation = &jump;
+			current_animation->Reset();
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 			jstate = JUMP;
 			current_animation = &jump;
+			current_animation->Reset();
 		}
 		jumpCount = 0;
 		dashCount = 0;
@@ -408,6 +411,7 @@ bool j1Player::Update(float dt)
 				speed.y = speed.y + myGravity * App->time->DeltaTime();
 				position.y += speed.y;
 				current_animation = &jump;
+				current_animation->Reset();
 				jumpCount = 1;
 				
 			}
