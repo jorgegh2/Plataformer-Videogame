@@ -135,6 +135,8 @@ private:
 public:
 
 	MapData data;
+	int speedLayer;
+	int positionX_Layer2;
 
 private:
 

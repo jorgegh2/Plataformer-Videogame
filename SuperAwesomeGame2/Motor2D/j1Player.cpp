@@ -276,7 +276,7 @@ bool j1Player::CleanUp()
 // Update: draw background
 bool j1Player::Update(float dt)
 {
-
+	velocityX = 0;
 	//Distance d = App->collision->FinalDistance;
 	Distance d = App->collision->dPositiveY;
 	Distance d_negativeX = App->collision->dNegativeX;

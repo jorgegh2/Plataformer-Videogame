@@ -35,17 +35,35 @@ void j1Map::Draw()
 		return;
 
 	p2List_item <ImageLayers*>* item_imgLayer = nullptr;
+
 	
-	int speedLayer = 10;
+	
+
 	for (item_imgLayer = data.image_layers.start; item_imgLayer; item_imgLayer = item_imgLayer->next){
+
+		//All image_width are the same, it does not matter which one to use
 		
+
 		SDL_Rect rect = { 0, 0, item_imgLayer->data->image_width, item_imgLayer->data->image_height };
+	
 		App->render->Blit(item_imgLayer->data->texture, item_imgLayer->data->position_x, item_imgLayer->data->position_y, &rect, SDL_FLIP_NONE);
+		App->render->Blit(item_imgLayer->data->texture, item_imgLayer->data->position_x + data.image_layers.start->data->image_width -2, item_imgLayer->data->position_y, &rect, SDL_FLIP_NONE);
+
+		if (item_imgLayer->data->position_x + data.image_layers.start->data->image_width < -App->render->camera.x *2)
+		{
+			item_imgLayer->data->position_x += item_imgLayer->data->image_width;
+		}
+		if ((-App->render->camera.x + App->render->camera.w )* 2 < item_imgLayer->data->position_x + data.image_layers.start->data->image_width)
+		{
+			item_imgLayer->data->position_x -= item_imgLayer->data->image_width;
+		}
 		
 
 		if (item_imgLayer->data->name == "Capa de Imagen 1")
 		{
 			speedLayer = 1;
+
+
 			
 
 		}
@@ -75,6 +93,7 @@ void j1Map::Draw()
 
 			item_imgLayer->data->position_x += speedLayer;
 		}
+		
 	}
 
 	// TODO 5(old): Prepare the loop to draw all tilesets + Blit
