@@ -62,6 +62,15 @@ struct MapObjects
 	
 
 };
+struct ImageLayers
+{
+	p2SString			name;
+	SDL_Texture*		texture;
+	int					image_width;
+	int					image_height;
+
+
+};
 
 enum MapTypes
 {
@@ -82,6 +91,7 @@ struct MapData
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;
 	p2List<MapObjects*>	objects;
+	p2List<ImageLayers*>	image_layers;
 };
 
 // ----------------------------------------------------
@@ -118,6 +128,7 @@ private:
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadObjects(pugi::xml_node& node, MapObjects* object);
+	bool LoadImageLayers(pugi::xml_node& node, ImageLayers* object);
 
 public:
 

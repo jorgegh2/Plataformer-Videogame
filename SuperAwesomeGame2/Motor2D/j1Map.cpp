@@ -154,6 +154,16 @@ bool j1Map::CleanUp()
 	}
 	data.objects.clear();
 
+	p2List_item<ImageLayers*>* item4;
+	item4 = data.image_layers.start;
+
+	while (item4 != NULL)
+	{
+		RELEASE(item4->data);
+		item4 = item4->next;
+	}
+	data.image_layers.clear();
+
 	// Clean up the pugui tree
 	map_file.reset();
 	
@@ -222,6 +232,19 @@ bool j1Map::Load(const char* file_name)
 
 		if (ret == true)
 			data.objects.add(obj);
+	}
+
+	// Load Image Layers info ----------------------------------------------
+	pugi::xml_node imgLayers;
+	for (imgLayers = map_file.child("map").child("imagelayer").child("image"); imgLayers && ret; imgLayers = imgLayers.next_sibling("imagelayer"))
+	{
+
+		ImageLayers* imgLayer = new ImageLayers();
+
+		ret = LoadImageLayers(imgLayers, imgLayer);
+
+		if (ret == true)
+			data.image_layers.add(imgLayer);
 	}
 
 	if(ret == true)
@@ -379,6 +402,48 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 
 		set->num_tiles_width = set->tex_width / set->tile_width;
 		set->num_tiles_height = set->tex_height / set->tile_height;
+	}
+
+	return ret;
+}
+
+bool j1Map::LoadImageLayers(pugi::xml_node& imagelayer_node, ImageLayers* set)
+{
+	bool ret = true;
+	set->name = imagelayer_node.attribute("name").as_string();
+	pugi::xml_node image = imagelayer_node.child("image");
+	set->image_width = image.attribute("width").as_int();
+	set->image_height = image.attribute("height").as_int();
+	set->texture = App->tex->Load(PATH(folder.GetString(), image.attribute("source").as_string()));
+	
+	//pugi::xml_node image = imagelayer_node.child("image");
+
+	if (image == NULL)
+	{
+		LOG("Error parsing imagelayer xml file: Cannot find 'image' tag.");
+		ret = false;
+	}
+	else
+	{
+		set->texture = App->tex->Load(PATH(folder.GetString(), image.attribute("source").as_string()));
+		int w, h;
+		SDL_QueryTexture(set->texture, NULL, NULL, &w, &h);
+		set->image_width = image.attribute("width").as_int();
+
+		if (set->image_width <= 0)
+		{
+			set->image_width = w;
+		}
+
+		set->image_height = image.attribute("height").as_int();
+
+		if (set->image_height <= 0)
+		{
+			set->image_height = h;
+		}
+
+		/*set->num_tiles_width = set->tex_width / set->tile_width;
+		set->num_tiles_height = set->tex_height / set->tile_height;*/
 	}
 
 	return ret;
