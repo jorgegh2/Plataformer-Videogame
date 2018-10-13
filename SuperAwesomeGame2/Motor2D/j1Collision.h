@@ -20,6 +20,7 @@ enum COLLIDER_TYPE
 };
 struct Distance
 {
+	COLLIDER_TYPE nearestColliderType;
 	float Modulo;
 	bool positiveX = false;
 	bool negativeX = false;
@@ -46,7 +47,7 @@ struct Collider
 	}
 
 	bool CheckCollision(const SDL_Rect& r) const;
-	Distance DistanceToNearestCollider(SDL_Rect& collider_rect) const;
+	Distance DistanceToNearestCollider(SDL_Rect& collider_rect, COLLIDER_TYPE& collider_type) const;
 	
 };
 
@@ -67,10 +68,11 @@ public:
 	void DebugDraw();
 
 	Distance distance;
-	float dNegativeX = 10000;
-	float dPositiveX = 10000;
-	float dNegativeY = 10000;
-	float dPositiveY = 10000;
+	Distance dNegativeX;
+	Distance dPositiveX;
+	Distance dNegativeY;
+	Distance dPositiveY;
+	COLLIDER_TYPE collider_type;
 //	Distance FinalDistance;
 	
 	

@@ -78,10 +78,10 @@ bool j1Collision::PreUpdate()
 	// Calculate collisions
 	Collider* c1;
 	Collider* c2;
-	dNegativeX = 10000;
-	dPositiveX = 10000;
-	dNegativeY = 10000;
-	dPositiveY = 10000;
+	dNegativeX.Modulo = 10000;
+	dPositiveX.Modulo = 10000;
+	dNegativeY.Modulo = 10000;
+	dPositiveY.Modulo = 10000;
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		// skip empty colliders
@@ -109,23 +109,28 @@ bool j1Collision::PreUpdate()
 			}
 			if (c2->type == COLLIDER_PLAYER)
 			{
-	   			distance = c2->DistanceToNearestCollider(c1->rect);
+				
+	   			distance = c2->DistanceToNearestCollider(c1->rect, c1->type);
 				//if (i == 0) FinalDistance = distance;
-				if (distance.negativeX && distance.Modulo < dNegativeX)
+				if (distance.negativeX && distance.Modulo < dNegativeX.Modulo)
 				{
-					dNegativeX = distance.Modulo;
+					dNegativeX.Modulo = distance.Modulo;
+					dNegativeX.nearestColliderType = distance.nearestColliderType;
 				}
-				else if (distance.positiveX && distance.Modulo < dPositiveX)
+				else if (distance.positiveX && distance.Modulo < dPositiveX.Modulo)
 				{
-					dPositiveX = distance.Modulo;
+					dPositiveX.Modulo = distance.Modulo;
+					dPositiveX.nearestColliderType = distance.nearestColliderType;
 				}
-				else if (distance.negativeY && distance.Modulo < dNegativeY)
+				else if (distance.negativeY && distance.Modulo < dNegativeY.Modulo)
 				{
-					dNegativeY = distance.Modulo;
+					dNegativeY.Modulo = distance.Modulo;
+					dNegativeY.nearestColliderType = distance.nearestColliderType;
 				}
-				else if (distance.positiveY && distance.Modulo < dPositiveY)
+				else if (distance.positiveY && distance.Modulo < dPositiveY.Modulo)
 				{
-					dPositiveY = distance.Modulo;
+					dPositiveY.Modulo = distance.Modulo;
+					dPositiveY.nearestColliderType = distance.nearestColliderType;
 				}
 				/*else if (FinalDistance.Modulo > distance.Modulo)
 				{
@@ -257,9 +262,10 @@ COLLIDER_TYPE j1Collision::DefineType(int type_as_int)
 		return COLLIDER_NONE;
 	}
 }
-Distance Collider::DistanceToNearestCollider(SDL_Rect& collider_rect) const
+Distance Collider::DistanceToNearestCollider(SDL_Rect& collider_rect, COLLIDER_TYPE& collider_type) const
 {
 	Distance ret;
+	ret.nearestColliderType = collider_type;
 	ret.Modulo = 10000;
 	if (collider_rect.x + collider_rect.w <= rect.x)
 	{

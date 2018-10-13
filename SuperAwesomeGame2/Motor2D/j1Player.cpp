@@ -278,28 +278,32 @@ bool j1Player::Update(float dt)
 {
 
 	//Distance d = App->collision->FinalDistance;
-	float d = App->collision->dPositiveY;
-	float d_negativeX = App->collision->dNegativeX;
-	float d_positiveX = App->collision->dPositiveX;
-	float d_negativeY = App->collision->dNegativeY;
+	Distance d = App->collision->dPositiveY;
+	Distance d_negativeX = App->collision->dNegativeX;
+	Distance d_positiveX = App->collision->dPositiveX;
+	Distance d_negativeY = App->collision->dNegativeY;
 	current_animation = &idle;
 
 
 	//Horizontal movement
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !locked_to_left)
 	{
-		if(d_negativeX > speed.x)
-			position.x -= speed.x;
-		else position.x -= d_negativeX;
+		if (d_negativeX.Modulo < speed.x && d_negativeX.nearestColliderType != COLLIDER_PLATAFORM)
+			position.x -= d_negativeX.Modulo;
+					
+		else position.x -= speed.x;
 		velocityX = -speed.x;
 		current_animation = &walk;
 
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !locked_to_right)
 	{
-		if (d_positiveX > speed.x)
-			position.x += speed.x;
-		else position.x += d_positiveX;
+		if (d_positiveX.Modulo < speed.x && d_positiveX.nearestColliderType != COLLIDER_PLATAFORM)
+			position.x += d_positiveX.Modulo;
+
+		else position.x += speed.x;
+		
+		
 		//position.x += speed.x;
 		velocityX = speed.x;
 		current_animation = &walk;
@@ -406,22 +410,26 @@ bool j1Player::Update(float dt)
 			speed.y = speed.y + myGravity * App->time->DeltaTime();
 			if (speed.y >= 0) 
 			{
-				if (speed.y < d)
+				if (speed.y < d.Modulo)
 					position.y += speed.y;
 				else
 				{
-					position.y += d;
+					position.y += d.Modulo;
 					jstate = ONFLOOR;
 				}
 			}
 			else
 			{
-				if (speed.y > -d_negativeY)
-					position.y += speed.y;
+				if (speed.y < -d_negativeY.Modulo && d_negativeY.nearestColliderType != COLLIDER_PLATAFORM)
+				{
+					position.y -= d_negativeY.Modulo;
+					speed.y = 0;
+				}
 				else
 				{
-					position.y -= d_negativeY;
-					speed.y = 0;
+					
+					position.y += speed.y;
+					
 					//App->time->Reset();
 				}
 			}
@@ -467,7 +475,7 @@ bool j1Player::Update(float dt)
 
 		break;
 	}
-	if (d != 0.0f) jstate = ONAIR;
+	if (d.Modulo != 0.0f) jstate = ONAIR;
 	/*uint winwidth;
 	uint winheight;
 	App->win->GetWindowSize(winwidth, winheight);*/
@@ -662,40 +670,40 @@ bool j1Player::Update(float dt)
 
 void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
-	if (c_player != nullptr && c_player == c1 && jstate != JUMP/* && App->fade->IsFading() == false && c2 != App->power_up->c_power_up*/)
-	{
-		//	jstate = ONFLOOR;
-		if (c1->rect.y + c1->rect.h - c2->rect.y <= c2->rect.y /*c1->rect.y + c1->rect.h >= c2->rect.y*/)
-		{
-			//(r.x + r.w <= rect.x) || (r.x >= rect.x + rect.w) || (r.y + r.h <= rect.y) || (r.y >= rect.y + rect.h)
-			jstate = ONFLOOR;
-			//acceleration.y = 0.0f;
-		}
+	//if (c_player != nullptr && c_player == c1 && jstate != JUMP/* && App->fade->IsFading() == false && c2 != App->power_up->c_power_up*/)
+	//{
+	//	//	jstate = ONFLOOR;
+	//	if (c1->rect.y + c1->rect.h - c2->rect.y <= c2->rect.y /*c1->rect.y + c1->rect.h >= c2->rect.y*/)
+	//	{
+	//		//(r.x + r.w <= rect.x) || (r.x >= rect.x + rect.w) || (r.y + r.h <= rect.y) || (r.y >= rect.y + rect.h)
+	//		jstate = ONFLOOR;
+	//		//acceleration.y = 0.0f;
+	//	}
 
-		else if (c2->rect.x + c2->rect.w - c1->rect.x <= margen)
-		{
-			locked_to_left = true;
-		}
-
-
-		else if (c1->rect.x + c1->rect.w - c2->rect.x <= margen)
-		{
-			locked_to_right = true;
-		}
+	//	else if (c2->rect.x + c2->rect.w - c1->rect.x <= margen)
+	//	{
+	//		locked_to_left = true;
+	//	}
 
 
-		/*if (c1->rect.y + c1->rect.h - c2->rect.y >= 1 && c1->rect.y + c1->rect.h - c2->rect.y <= 3// && acceleration.y >= 0)
-		{
-			//(r.x + r.w <= rect.x) || (r.x >= rect.x + rect.w) || (r.y + r.h <= rect.y) || (r.y >= rect.y + rect.h)
-			jstate = ONFLOOR;
-			acceleration.y = 0.0f;
-
-		}
-		else if (c1->rect.x + c1->rect.w >= c2->rect.x)
-		{
-			speed = 0.0f;
-		}*/
+	//	else if (c1->rect.x + c1->rect.w - c2->rect.x <= margen)
+	//	{
+	//		locked_to_right = true;
+	//	}
 
 
-	}
+	//	/*if (c1->rect.y + c1->rect.h - c2->rect.y >= 1 && c1->rect.y + c1->rect.h - c2->rect.y <= 3// && acceleration.y >= 0)
+	//	{
+	//		//(r.x + r.w <= rect.x) || (r.x >= rect.x + rect.w) || (r.y + r.h <= rect.y) || (r.y >= rect.y + rect.h)
+	//		jstate = ONFLOOR;
+	//		acceleration.y = 0.0f;
+
+	//	}
+	//	else if (c1->rect.x + c1->rect.w >= c2->rect.x)
+	//	{
+	//		speed = 0.0f;
+	//	}*/
+	//	
+
+	//}
 }
