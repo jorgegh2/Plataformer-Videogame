@@ -47,7 +47,7 @@ void j1Map::Draw()
 		SDL_Rect rect = { 0, 0, item_imgLayer->data->image_width, item_imgLayer->data->image_height };
 	
 		App->render->Blit(item_imgLayer->data->texture, item_imgLayer->data->position_x, item_imgLayer->data->position_y, &rect, SDL_FLIP_NONE);
-		App->render->Blit(item_imgLayer->data->texture, item_imgLayer->data->position_x + data.image_layers.start->data->image_width -2, item_imgLayer->data->position_y, &rect, SDL_FLIP_NONE);
+		App->render->Blit(item_imgLayer->data->texture, item_imgLayer->data->position_x + data.image_layers.start->data->image_width -3, item_imgLayer->data->position_y, &rect, SDL_FLIP_NONE);
 
 		if (item_imgLayer->data->position_x + data.image_layers.start->data->image_width < -App->render->camera.x *2)
 		{
