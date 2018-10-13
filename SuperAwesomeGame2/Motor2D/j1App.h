@@ -18,6 +18,8 @@ class j1Particles;
 class j1FadeToBlack;
 class j1Player;
 class Timer;
+class j1Scene_Forest;
+class j1Scene_Winter;
 
 class j1App
 {
@@ -93,6 +95,8 @@ public:
 	j1FadeToBlack*		fadeToBlack;
 	j1Particles*		particles;
 	Timer*				time;
+	j1Scene_Forest*		map_forest;
+	j1Scene_Winter*		map_winter;
 
 private:
 

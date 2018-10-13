@@ -1,27 +1,24 @@
-#ifndef __j1SCENE_H__
-#define __j1SCENE_H__
+#ifndef __j1SCENE_FOREST_H__
+#define __j1SCENE_FOREST_H__
 
-#include "j1Module.h"
+#include "j1Scene.h"
 
-struct SDL_Texture;
 
-class j1Scene : public j1Module
+
+class j1Scene_Forest : public j1Scene
 {
 public:
 
-	j1Scene();
+	j1Scene_Forest();
 
 	// Destructor
-	virtual ~j1Scene();
+	virtual ~j1Scene_Forest();
 
 	// Called before render is available
 	bool Awake();
 
 	// Called before the first frame
 	bool Start();
-
-	// Called before all Updates
-	bool PreUpdate();
 
 	// Called each loop iteration
 	bool Update(float dt);
@@ -32,12 +29,10 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void SetAllColliders();
-
-	const char* level = "Level2.tmx";
-	bool a = true;
+	
+	
 
 private:
 };
 
-#endif // __j1SCENE_H__
+#endif // __j1SCENE_FOREST_H__
