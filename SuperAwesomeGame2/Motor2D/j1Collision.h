@@ -67,7 +67,11 @@ public:
 	void DebugDraw();
 
 	Distance distance;
-	Distance FinalDistance;
+	float dNegativeX = 10000;
+	float dPositiveX = 10000;
+	float dNegativeY = 10000;
+	float dPositiveY = 10000;
+//	Distance FinalDistance;
 	
 	
 

@@ -277,23 +277,30 @@ bool j1Player::CleanUp()
 bool j1Player::Update(float dt)
 {
 
-	Distance d = App->collision->FinalDistance;
+	//Distance d = App->collision->FinalDistance;
+	float d = App->collision->dPositiveY;
+	float d_negativeX = App->collision->dNegativeX;
+	float d_positiveX = App->collision->dPositiveX;
+	float d_negativeY = App->collision->dNegativeY;
 	current_animation = &idle;
 
 
 	//Horizontal movement
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !locked_to_left)
 	{
-
-		position.x -= speed.x;
+		if(d_negativeX > speed.x)
+			position.x -= speed.x;
+		else position.x -= d_negativeX;
 		velocityX = -speed.x;
 		current_animation = &walk;
 
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !locked_to_right)
 	{
-
-		position.x += speed.x;
+		if (d_positiveX > speed.x)
+			position.x += speed.x;
+		else position.x += d_positiveX;
+		//position.x += speed.x;
 		velocityX = speed.x;
 		current_animation = &walk;
 
@@ -301,11 +308,12 @@ bool j1Player::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && dashCount < 1 && jstate == ONAIR && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		App->time->Reset();
+		if(dashCount == 0) App->time->Reset();
 		dashCount = 1;
 		current_animation = &hit;
 		if (velocityX < 0) 
 		{
+
 			position.x -= speed.x * App->time->DeltaTime();
 			//velocityX = -speed.x;
 		}
@@ -322,7 +330,7 @@ bool j1Player::Update(float dt)
 			position.x += speed.x * App->time->DeltaTime();
 			//velocityX = speed.x;
 		}
-		jstate = LANDING;
+		else jstate = LANDING;
 		
 	}
 
@@ -333,7 +341,7 @@ bool j1Player::Update(float dt)
 	//Jump
 	switch (jstate)
 	{
-	case NONE:
+	/*case NONE:
 		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
 			jstate = JUMP;
@@ -350,7 +358,7 @@ bool j1Player::Update(float dt)
 		}
 
 
-		break;
+		break;*/
 
 	case JUMP:
 		if (dashCount == 0)
@@ -359,8 +367,8 @@ bool j1Player::Update(float dt)
 		speed.y = -15;
 		jstate = ONAIR;
 		//Change this when have better colider detection
-		speed.y = speed.y + myGravity * App->time->DeltaTime();
-		position.y += speed.y;
+		/*speed.y = speed.y + myGravity * App->time->DeltaTime();
+		position.y += speed.y;*/
 		}
 		
 		break;
@@ -369,19 +377,24 @@ bool j1Player::Update(float dt)
 
 		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
+			
 			jstate = JUMP;
 			current_animation = &jump;
+			current_animation->Reset();
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			jstate = JUMP;
 			current_animation = &jump;
+			current_animation->Reset();
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 			jstate = JUMP;
 			current_animation = &jump;
+			current_animation->Reset();
 		}
 		jumpCount = 0;
 		dashCount = 0;
+		App->time->Reset();
 
 
 		//else jstate = ONAIR;
@@ -391,23 +404,40 @@ bool j1Player::Update(float dt)
 	case ONAIR:
 
 			speed.y = speed.y + myGravity * App->time->DeltaTime();
-			if (speed.y < d.Modulo)
-				position.y += speed.y;
+			if (speed.y >= 0) 
+			{
+				if (speed.y < d)
+					position.y += speed.y;
+				else
+				{
+					position.y += d;
+					jstate = ONFLOOR;
+				}
+			}
 			else
 			{
-				position.y += d.Modulo;
-				jstate = ONFLOOR;
+				if (speed.y > -d_negativeY)
+					position.y += speed.y;
+				else
+				{
+					position.y -= d_negativeY;
+					speed.y = 0;
+					//App->time->Reset();
+				}
 			}
 			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumpCount < 1)
 			{
+
 				jstate = JUMP;
+				
 				App->time->Reset();
 				speed.y = -15;
 				jstate = ONAIR;
 				//Change this when have better colider detection
-				speed.y = speed.y + myGravity * App->time->DeltaTime();
-				position.y += speed.y;
+				/*speed.y = speed.y + myGravity * App->time->DeltaTime();
+				position.y += speed.y;*/
 				current_animation = &jump;
+				current_animation->Reset();
 				jumpCount = 1;
 				
 			}
@@ -430,13 +460,14 @@ bool j1Player::Update(float dt)
 		
 		
 		current_animation = &fall;
-		jstate = ONAIR;
+
+		//jstate = ONAIR;
 		/*speed.y = speed.y + myGravity * App->time->DeltaTime();
 		position.y += speed.y;*/
 
 		break;
 	}
-	if (d.Modulo != 0.0f) jstate = ONAIR;
+	if (d != 0.0f) jstate = ONAIR;
 	/*uint winwidth;
 	uint winheight;
 	App->win->GetWindowSize(winwidth, winheight);*/

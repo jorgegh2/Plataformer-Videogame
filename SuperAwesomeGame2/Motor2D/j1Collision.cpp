@@ -78,6 +78,10 @@ bool j1Collision::PreUpdate()
 	// Calculate collisions
 	Collider* c1;
 	Collider* c2;
+	dNegativeX = 10000;
+	dPositiveX = 10000;
+	dNegativeY = 10000;
+	dPositiveY = 10000;
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		// skip empty colliders
@@ -106,12 +110,28 @@ bool j1Collision::PreUpdate()
 			if (c2->type == COLLIDER_PLAYER)
 			{
 	   			distance = c2->DistanceToNearestCollider(c1->rect);
-				if (i == 0) FinalDistance = distance;
-				else if (FinalDistance.Modulo > distance.Modulo)
+				//if (i == 0) FinalDistance = distance;
+				if (distance.negativeX && distance.Modulo < dNegativeX)
+				{
+					dNegativeX = distance.Modulo;
+				}
+				else if (distance.positiveX && distance.Modulo < dPositiveX)
+				{
+					dPositiveX = distance.Modulo;
+				}
+				else if (distance.negativeY && distance.Modulo < dNegativeY)
+				{
+					dNegativeY = distance.Modulo;
+				}
+				else if (distance.positiveY && distance.Modulo < dPositiveY)
+				{
+					dPositiveY = distance.Modulo;
+				}
+				/*else if (FinalDistance.Modulo > distance.Modulo)
 				{
 					FinalDistance = distance;
 				}
-				/*if (distanceX)
+				if (distanceX)
 				{
 
 				}
@@ -289,4 +309,32 @@ Distance Collider::DistanceToNearestCollider(SDL_Rect& collider_rect) const
 
 	return ret;
 }
+
+/*float 
+{
+		if (collider_rect.x + collider_rect.w <= rect.x)
+	{
+		if (collider_rect.y + collider_rect.h > rect.y && collider_rect.y < rect.y + rect.h)
+		{
+			ret.negativeX = true;
+			ret.negativeY = false;
+			ret.positiveX = false;
+			ret.positiveY = false;
+			ret.Modulo = rect.x - (collider_rect.x + collider_rect.w);
+		}
+	}
+	if (collider_rect.x >= rect.x + rect.w)
+	{
+		if (collider_rect.y + collider_rect.h > rect.y && collider_rect.y < rect.y + rect.h)
+		{
+			ret.positiveX = true;
+			ret.negativeX = false;
+			ret.negativeY = false;
+			ret.positiveY = false;
+			ret.Modulo = collider_rect.x - (rect.x + rect.w);
+		}
+	}
+}*/
+
+
 
