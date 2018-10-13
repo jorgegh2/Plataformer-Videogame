@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.1" tiledversion="2018.09.12" orientation="orthogonal" renderorder="right-down" width="212" height="27" tilewidth="128" tileheight="128" infinite="0" nextlayerid="21" nextobjectid="45">
+<map version="1.1" tiledversion="2018.09.12" orientation="orthogonal" renderorder="right-down" width="212" height="27" tilewidth="128" tileheight="128" infinite="0" nextlayerid="23" nextobjectid="45">
  <tileset firstgid="1" name="TilesetWinter128x128" tilewidth="128" tileheight="128" tilecount="50" columns="10">
   <image source="TilesetLevel2/Platforms/TilesetWinter128x128.png" trans="ff00ff" width="1280" height="640"/>
  </tileset>
@@ -18,6 +18,15 @@
  <tileset firstgid="1146" name="TILE ARBRES+CAMI2" tilewidth="128" tileheight="128" tilecount="350" columns="35">
   <image source="TilesetLevel2/BG/TILE ARBRES+CAMI2.png" trans="ff00ff" width="4500" height="1318"/>
  </tileset>
+ <imagelayer id="20" name="Capa de Imagen 1">
+  <image source="TilesetLevel2/BG/TILE CEL2.png" width="4500" height="2233"/>
+ </imagelayer>
+ <imagelayer id="22" name="Capa de Imagen 2" offsetx="0" offsety="1400">
+  <image source="TilesetLevel2/BG/TILE MUNTAÑES+ARBRES2.png" width="4500" height="1363"/>
+ </imagelayer>
+ <imagelayer id="21" name="Capa de Imagen 3 " offsetx="0" offsety="1800">
+  <image source="TilesetLevel2/BG/TILE ARBRES+CAMI2.png" width="4500" height="1318"/>
+ </imagelayer>
  <layer id="11" name="bg1" width="212" height="27" visible="0">
   <data>
    <tile gid="201"/>
@@ -51780,7 +51789,4 @@
    </properties>
   </object>
  </objectgroup>
- <imagelayer id="20" name="Capa de Imagen 1" offsetx="161" offsety="0">
-  <image source="TilesetLevel2/BG/TILE CEL2.png" width="4500" height="2233"/>
- </imagelayer>
 </map>
