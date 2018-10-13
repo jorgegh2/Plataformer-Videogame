@@ -108,6 +108,12 @@ j1Player::j1Player() : j1Module()
 	jump.loop = true;
 	jump.speed = 0.1f;
 
+	// fALLING
+
+	fall.PushBack({ 1251, 1296, 165, 156 });
+	fall.PushBack({ 1444, 1305, 160, 160 });
+	fall.loop = false;
+	fall.speed = 0.05f;
 
 	// SHOOT
 
@@ -228,6 +234,7 @@ bool j1Player::Start()
 
 	speed = { 8,0 };
 	myGravity = 1;
+	dashCount = 0;
 	///App->time->DeltaTime();
 	jstate = NONE;
 	current_animation = &idle;
@@ -292,6 +299,33 @@ bool j1Player::Update(float dt)
 
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && dashCount < 1 && jstate == ONAIR && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{
+		App->time->Reset();
+		dashCount = 1;
+		current_animation = &hit;
+		if (velocityX < 0) 
+		{
+			position.x -= speed.x * App->time->DeltaTime();
+			//velocityX = -speed.x;
+		}
+		jstate = LANDING;
+		
+	}
+	else if(App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && dashCount < 1 && jstate == ONAIR && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
+		App->time->Reset();
+		dashCount = 1;
+		current_animation = &hit;
+		if (velocityX > 0) 
+		{
+			position.x += speed.x * App->time->DeltaTime();
+			//velocityX = speed.x;
+		}
+		jstate = LANDING;
+		
+	}
+
 	//Flip player sprite if x speed is negative
 	if (velocityX < 0)flip = SDL_FLIP_HORIZONTAL;
 	if (velocityX > 0)flip = SDL_FLIP_NONE;
@@ -319,12 +353,16 @@ bool j1Player::Update(float dt)
 		break;
 
 	case JUMP:
+		if (dashCount == 0)
+		{
 		App->time->Reset();
 		speed.y = -15;
 		jstate = ONAIR;
 		//Change this when have better colider detection
 		speed.y = speed.y + myGravity * App->time->DeltaTime();
 		position.y += speed.y;
+		}
+		
 		break;
 
 	case ONFLOOR:
@@ -342,6 +380,8 @@ bool j1Player::Update(float dt)
 			jstate = JUMP;
 			current_animation = &jump;
 		}
+		jumpCount = 0;
+		dashCount = 0;
 
 
 		//else jstate = ONAIR;
@@ -350,15 +390,49 @@ bool j1Player::Update(float dt)
 
 	case ONAIR:
 
-		speed.y = speed.y + myGravity * App->time->DeltaTime();
-		if (speed.y < d.Modulo)
-			position.y += speed.y;
-		else
-		{
-			position.y += d.Modulo;
-			jstate = ONFLOOR;
+			speed.y = speed.y + myGravity * App->time->DeltaTime();
+			if (speed.y < d.Modulo)
+				position.y += speed.y;
+			else
+			{
+				position.y += d.Modulo;
+				jstate = ONFLOOR;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumpCount < 1)
+			{
+				jstate = JUMP;
+				App->time->Reset();
+				speed.y = -15;
+				jstate = ONAIR;
+				//Change this when have better colider detection
+				speed.y = speed.y + myGravity * App->time->DeltaTime();
+				position.y += speed.y;
+				current_animation = &jump;
+				jumpCount = 1;
+				
+			}
+		
+		
+		/*else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			jstate = JUMP;
+			current_animation = &jump;
 		}
+		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			jstate = JUMP;
+			current_animation = &jump;
+		}*/
 		current_animation = &jump;
+		
+
+		break;
+
+	case LANDING:
+		
+		
+		current_animation = &fall;
+		jstate = ONAIR;
+		/*speed.y = speed.y + myGravity * App->time->DeltaTime();
+		position.y += speed.y;*/
 
 		break;
 	}

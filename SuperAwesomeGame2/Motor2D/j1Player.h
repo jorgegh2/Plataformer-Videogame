@@ -12,7 +12,7 @@ struct Mix_Chunk;
 struct Collider;
 
 
-enum state {NONE, JUMP, ONFLOOR, ONAIR, WALK};
+enum state {NONE, JUMP, ONFLOOR, ONAIR, LANDING};
 
 class j1Player : public j1Module
 {
@@ -45,6 +45,8 @@ public:
 	fPoint speed;
 	float velocityX;
 	float myGravity;
+	int jumpCount;
+	int dashCount;
 	/*float maxFallSpeed;
 	float jumpForce;
 	float currentJumpForce;*/
@@ -66,6 +68,7 @@ public:
 	Animation walk;
 	Animation run;
 	Animation jump;
+	Animation fall;
 	Animation shot;
 	Animation hit;
 	Animation die;
