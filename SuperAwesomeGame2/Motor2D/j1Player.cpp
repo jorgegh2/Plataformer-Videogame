@@ -44,7 +44,7 @@ j1Player::j1Player() : j1Module()
 	idle.PushBack({ 1609, 16, 155, 171 });
 	idle.PushBack({ 1785, 16, 155, 171 });
 	idle.loop = true;
-	idle.speed = 0.05f;
+	idle.speed = 0.3f;
 
 	// ALERT
 
@@ -74,7 +74,7 @@ j1Player::j1Player() : j1Module()
 	walk.PushBack({ 1622, 772, 155, 171 });
 	walk.PushBack({ 1797, 772, 154, 171 });
 	walk.loop = true;
-	walk.speed = 0.05f;
+	walk.speed = 0.5f;
 
 
 	// RUN
@@ -106,7 +106,7 @@ j1Player::j1Player() : j1Module()
 	jump.PushBack({ 1627, 1322, 157, 168 });
 	jump.PushBack({ 1813, 1332, 155, 171 });
 	jump.loop = true;
-	jump.speed = 0.05f;
+	jump.speed = 0.1f;
 
 
 	// SHOOT
@@ -204,7 +204,7 @@ bool j1Player::Start()
 {
 	LOG("Loading player textures");
 	bool ret = true;
-	graphics = App->tex->Load("assets/Archer/Archer2.png"); 
+	graphics = App->tex->Load("assets/Archer/Archer2.png");
 
 	p2List_item<MapObjects*>* item_object = nullptr;
 	iPoint StartPoint;
@@ -218,26 +218,20 @@ bool j1Player::Start()
 		}
 	}
 
-	
 	position.x = StartPoint.x;
 	position.y = StartPoint.y;
 
 	c_player = App->collision->AddCollider({ StartPoint.x, StartPoint.y, 155, 170 }, COLLIDER_PLAYER, this);
-	myGravity = 1;
 
 	App->render->camera.x = -position.x * App->win->GetScale() + WIDTH_CANVAS;
 	App->render->camera.y = -position.y * App->win->GetScale() + HEIGHT_CANVAS;
 
-	/*gravity = 1.0f;
-	
-	*/
 	speed = { 8,0 };
+	myGravity = 1;
 	///App->time->DeltaTime();
-	/*fPoint jumpforce;
-	fPoint speed;
-	fPoint acceleration;
-	fPoint gravity;*/
 	jstate = NONE;
+	current_animation = &idle;
+
 	/*
 	laser_sound = App->audio->LoadSoundEffect("Music/Sounds_effects/Laser_Shot_Type-3_(Main_Ships).wav");
 	basic_attack_sound = App->audio->LoadSoundEffect("Music/Sounds_effects/Laser_Shot_Type-1_(Main_Ships).wav");
@@ -249,6 +243,7 @@ bool j1Player::Start()
 	change_weapon_sound = App->audio->LoadSoundEffect("Music/Sounds_effects/Laser_Shot_Type_CHANGE.wav");
 
 	life = 3;*/
+
 	return ret;
 }
 
@@ -274,158 +269,159 @@ bool j1Player::CleanUp()
 // Update: draw background
 bool j1Player::Update(float dt)
 {
-	current_animation = &idle;
+
 	Distance d = App->collision->FinalDistance;
+	current_animation = &idle;
 
-	
+
 	//Horizontal movement
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !locked_to_left)
+	{
 
-	//if (d.Modulo > speed) 
-	//{
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		{
-			if (d.Modulo < speed.x && d.negativeX)
-				position.x -= d.Modulo;
-			else position.x -= speed.x;
-		}
+		position.x -= speed.x;
+		velocityX = -speed.x;
+		current_animation = &walk;
 
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		{
-			if (d.Modulo < speed.x && d.positiveX)
-				position.x += d.Modulo;
-			else position.x += speed.x;
-		}
-	//}
-	
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !locked_to_right)
+	{
+
+		position.x += speed.x;
+		velocityX = speed.x;
+		current_animation = &walk;
+
+	}
+
+	//Flip player sprite if x speed is negative
+	if (velocityX < 0)flip = SDL_FLIP_HORIZONTAL;
+	if (velocityX > 0)flip = SDL_FLIP_NONE;
 
 	//Jump
-
-		/*if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	switch (jstate)
+	{
+	case NONE:
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
 			jstate = JUMP;
-			myGravity = 1;
-			App->time->Reset();
-			speed.y = -15;
+			current_animation = &jump;
 
 		}
-		else if (jstate != NONE && jstate != JUMP)
-		{
-			myGravity = 0;
-			speed.y = 0;
+		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			jstate = JUMP;
+			current_animation = &jump;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			jstate = JUMP;
+			current_animation = &jump;
 		}
 
+
+		break;
+
+	case JUMP:
+		App->time->Reset();
+		speed.y = -15;
+		jstate = ONAIR;
+		//Change this when have better colider detection
 		speed.y = speed.y + myGravity * App->time->DeltaTime();
 		position.y += speed.y;
-		c_player->SetPos(position.x, position.y);
-		
-		*/
+		break;
 
-		
-		switch (jstate)
+	case ONFLOOR:
+
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
-		case NONE:
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-			{
-				jstate = JUMP;
-			}
-			break;
-
-		case JUMP:
-				App->time->Reset();
-				speed.y = -15;
-				jstate = ONAIR;
-				//Change this when have better colider detection
-				speed.y = speed.y + myGravity * App->time->DeltaTime();
-				position.y += speed.y;
-			break;
-
-		case ONFLOOR:
-
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-			{
-				jstate = JUMP;
-			}
-			//else jstate = ONAIR;
-
-			break;
-
-		case ONAIR:
-			
-				speed.y = speed.y + myGravity * App->time->DeltaTime();
-				
-					//if (speed.y < d.Modulo)
-						
-					if (speed.y > d.Modulo && d.positiveY)
-					{
-						position.y += d.Modulo;
-						jstate = ONFLOOR;
-					}
-					else position.y += speed.y;
-				
-				
-			
-			break;
+			jstate = JUMP;
+			current_animation = &jump;
 		}
-		if (d.Modulo != 0.0f) jstate = ONAIR;
-		/*uint winwidth;
-		uint winheight;
-		App->win->GetWindowSize(winwidth, winheight);*/
-
-		
-
-		//if(c_player->rect.x <= App->render->camera.x + 250){
-
-		//	App->render->camera.x = -1 * (App->player->position.x * App->win->GetScale() - 250);
-		//}
-		//if (c_player->rect.x + c_player->rect.w > (App->render->camera.x + App->render->camera.w) - 250) {
-
-		//	App->render->camera.x = -(App->player->position.x + c_player->rect.w) * App->win->GetScale() + App->render->camera.w - 250;
-		//	//App->render->camera.x = -App->player->position.x - App->render->camera.w * App->win->GetScale() + WIDTH_CANVAS;
-		//}
-		
-		
-		
-
-		
-
- 		c_player->SetPos(position.x, position.y);
-		App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
-		SDL_Rect offSet{ (-App->render->camera.x/ App->win->GetScale()) + 200, (-App->render->camera.y / App->win->GetScale()) + 600, 800, 600 };
-		App->render->DrawQuad(offSet, 255, 255, 255, 80);
-
-		if (position.x + c_player->rect.w > offSet.w + offSet.x)
-		{
-
-			App->render->camera.x = -(position.x * App->win->GetScale() -423);
-
+		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			jstate = JUMP;
+			current_animation = &jump;
 		}
-		else if (position.x < offSet.x)
-		{
-			App->render->camera.x = -(position.x * App->win->GetScale() - 100);
+		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			jstate = JUMP;
+			current_animation = &jump;
 		}
 
 
-		if (position.y < offSet.y)
+		//else jstate = ONAIR;
+
+		break;
+
+	case ONAIR:
+
+		speed.y = speed.y + myGravity * App->time->DeltaTime();
+		if (speed.y < d.Modulo)
+			position.y += speed.y;
+		else
 		{
-
-			App->render->camera.y = -(position.y * App->win->GetScale() - 300);
-
+			position.y += d.Modulo;
+			jstate = ONFLOOR;
 		}
-		else if (position.y + c_player->rect.h > offSet.y + offSet.h)
-		{
-			App->render->camera.y = -(position.y * App->win->GetScale() - 515);
-		}
+		current_animation = &jump;
+
+		break;
+	}
+	if (d.Modulo != 0.0f) jstate = ONAIR;
+	/*uint winwidth;
+	uint winheight;
+	App->win->GetWindowSize(winwidth, winheight);*/
+
+
+
+	//if(c_player->rect.x <= App->render->camera.x + 250){
+
+	//	App->render->camera.x = -1 * (App->player->position.x * App->win->GetScale() - 250);
+	//}
+	//if (c_player->rect.x + c_player->rect.w > (App->render->camera.x + App->render->camera.w) - 250) {
+
+	//	App->render->camera.x = -(App->player->position.x + c_player->rect.w) * App->win->GetScale() + App->render->camera.w - 250;
+	//	//App->render->camera.x = -App->player->position.x - App->render->camera.w * App->win->GetScale() + WIDTH_CANVAS;
+	//}
 
 
 
 
-	/*if(acceleration.y > d.Modulo && acceleration.y > 0) 
+
+
+	c_player->SetPos(position.x, position.y);
+	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), flip);
+	SDL_Rect offSet{ (-App->render->camera.x / App->win->GetScale()) + 200, (-App->render->camera.y / App->win->GetScale()) + 600, 800, 600 };
+	App->render->DrawQuad(offSet, 255, 255, 255, 80);
+
+	if (position.x + c_player->rect.w > offSet.w + offSet.x)
+	{
+
+		App->render->camera.x = -(position.x * App->win->GetScale() - 423);
+
+	}
+	else if (position.x < offSet.x)
+	{
+		App->render->camera.x = -(position.x * App->win->GetScale() - 100);
+	}
+
+
+	if (position.y < offSet.y)
+	{
+
+		App->render->camera.y = -(position.y * App->win->GetScale() - 300);
+
+	}
+	else if (position.y + c_player->rect.h > offSet.y + offSet.h)
+	{
+		App->render->camera.y = -(position.y * App->win->GetScale() - 515);
+	}
+
+
+
+
+	/*if(acceleration.y > d.Modulo && acceleration.y > 0)
 	 position.y += d.Modulo;
-	else*/ 
-		
+	else*/
+
 	locked_to_left = false;
 	locked_to_right = false;
-	
+
 	/*
 	if ((App->input->keyboard[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT || player_down == true) && position.y < App->render->camera.y / SCREEN_SIZE + SCREEN_HEIGHT - SHIP_HEIGHT)
 	{
@@ -474,9 +470,9 @@ bool j1Player::Update(float dt)
 
 	//anim_turbo = &turbo_idle;
 
-	
 
-	
+
+
 	//GOD MODE
 /*
 	if (App->input->keyboard[SDL_SCANCODE_F5] == KEY_STATE::KEY_DOWN) {
@@ -563,8 +559,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c_player != nullptr && c_player == c1 && jstate != JUMP/* && App->fade->IsFading() == false && c2 != App->power_up->c_power_up*/)
 	{
-	//	jstate = ONFLOOR;
-   		if (c1->rect.y + c1->rect.h - c2->rect.y <= c2->rect.y /*c1->rect.y + c1->rect.h >= c2->rect.y*/)
+		//	jstate = ONFLOOR;
+		if (c1->rect.y + c1->rect.h - c2->rect.y <= c2->rect.y /*c1->rect.y + c1->rect.h >= c2->rect.y*/)
 		{
 			//(r.x + r.w <= rect.x) || (r.x >= rect.x + rect.w) || (r.y + r.h <= rect.y) || (r.y >= rect.y + rect.h)
 			jstate = ONFLOOR;
@@ -575,26 +571,26 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		{
 			locked_to_left = true;
 		}
-			
+
 
 		else if (c1->rect.x + c1->rect.w - c2->rect.x <= margen)
 		{
 			locked_to_right = true;
 		}
 
-		
+
 		/*if (c1->rect.y + c1->rect.h - c2->rect.y >= 1 && c1->rect.y + c1->rect.h - c2->rect.y <= 3// && acceleration.y >= 0)
 		{
 			//(r.x + r.w <= rect.x) || (r.x >= rect.x + rect.w) || (r.y + r.h <= rect.y) || (r.y >= rect.y + rect.h)
 			jstate = ONFLOOR;
 			acceleration.y = 0.0f;
-			
+
 		}
 		else if (c1->rect.x + c1->rect.w >= c2->rect.x)
 		{
 			speed = 0.0f;
 		}*/
-		
-		
+
+
 	}
 }

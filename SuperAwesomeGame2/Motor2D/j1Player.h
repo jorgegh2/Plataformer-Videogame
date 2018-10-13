@@ -4,13 +4,16 @@
 #include "j1Module.h"
 #include "Animation.h"
 #include "p2Point.h"
+#include "SDL/include/SDL_render.h"
 
 struct SDL_Texture;
+struct SDL_Rect;
 struct Mix_Chunk;
 struct Collider;
 
 
-enum state {NONE, JUMP, ONFLOOR, ONAIR};
+enum state {NONE, JUMP, ONFLOOR, ONAIR, WALK};
+
 class j1Player : public j1Module
 {
 public:
@@ -27,9 +30,8 @@ public:
 	
 	state jstate;
 	SDL_Texture * graphics = nullptr;
+	SDL_RendererFlip flip;
 	
-	//float gravity;
-	//float speed;
 
 	bool locked_to_right = false;
 	bool locked_to_left = false;
@@ -37,17 +39,15 @@ public:
 
 	Animation* current_animation = nullptr;
 	Animation* anim_turbo = nullptr;
-	//Animation idle;
-
-	/*fPoint jumpforce = { 0,10 };
 	
-	fPoint acceleration = { 2,2 };
-	fPoint gravity = { 0,2 };*/
+	fPoint position;
+	fPoint location;
 	fPoint speed;
+	float velocityX;
 	float myGravity;
-	float maxFallSpeed;
+	/*float maxFallSpeed;
 	float jumpForce;
-	float currentJumpForce;
+	float currentJumpForce;*/
 	float deltaTime;
 
 	Animation up;
@@ -78,8 +78,7 @@ public:
 	Mix_Chunk* player_death = nullptr;
 	Mix_Chunk* change_weapon_sound = nullptr;
 
-	fPoint position;
-	fPoint location;
+	
 	bool destroyed = true;
 	bool god_mode = false;
 

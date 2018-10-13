@@ -62,7 +62,7 @@ void j1Map::Draw()
 					id = item_layer->data->data[item_layer->data->Get(j, i)];
 					if (id != 0)
 					{
-						App->render->Blit(item_tileset->data->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &item_tileset->data->GetTileRect(id));
+						App->render->Blit(item_tileset->data->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &item_tileset->data->GetTileRect(id), SDL_FLIP_NONE);
 						/*if (item_tileset->data->name == "TilesetWinterObjects128x128") {
 							App->render->Blit(item_tileset->data->texture, MapToWorld(j, i).x, MapToWorld(j, i).y + 10, &item_tileset->data->GetTileRect(id));
 						}*/
