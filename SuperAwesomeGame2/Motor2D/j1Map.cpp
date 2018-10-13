@@ -156,6 +156,7 @@ bool j1Map::CleanUp()
 
 	p2List_item<ImageLayers*>* item4;
 	item4 = data.image_layers.start;
+	
 
 	while (item4 != NULL)
 	{
@@ -236,7 +237,7 @@ bool j1Map::Load(const char* file_name)
 
 	// Load Image Layers info ----------------------------------------------
 	pugi::xml_node imgLayers;
-	for (imgLayers = map_file.child("map").child("imagelayer").child("image"); imgLayers && ret; imgLayers = imgLayers.next_sibling("imagelayer"))
+	for (imgLayers = map_file.child("map").child("imagelayer"); imgLayers && ret; imgLayers = imgLayers.next_sibling("imagelayer"))
 	{
 
 		ImageLayers* imgLayer = new ImageLayers();
