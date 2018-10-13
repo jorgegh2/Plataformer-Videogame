@@ -3,9 +3,11 @@
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Textures.h"
+#include "j1Player.h"
 #include "j1Map.h"
 #include <math.h>
 #include "j1Collision.h"
+#include "j1Window.h"
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
@@ -31,6 +33,49 @@ void j1Map::Draw()
 {
 	if(map_loaded == false)
 		return;
+
+	p2List_item <ImageLayers*>* item_imgLayer = nullptr;
+	
+	int speedLayer = 10;
+	for (item_imgLayer = data.image_layers.start; item_imgLayer; item_imgLayer = item_imgLayer->next){
+		
+		SDL_Rect rect = { 0, 0, item_imgLayer->data->image_width, item_imgLayer->data->image_height };
+		App->render->Blit(item_imgLayer->data->texture, item_imgLayer->data->position_x, item_imgLayer->data->position_y, &rect, SDL_FLIP_NONE);
+		
+
+		if (item_imgLayer->data->name == "Capa de Imagen 1")
+		{
+			speedLayer = 1;
+			
+
+		}
+		else if (item_imgLayer->data->name == "Capa de Imagen 2")
+		{
+			speedLayer = 3;
+			
+
+
+		}
+		else if (item_imgLayer->data->name == "Capa de Imagen 3")
+		{
+			speedLayer = 5;
+			
+
+
+		}
+
+		if (App->player->velocityX > 0)
+		{
+
+			item_imgLayer->data->position_x -= speedLayer;
+
+		}
+		else if (App->player->velocityX < 0)
+		{
+
+			item_imgLayer->data->position_x += speedLayer;
+		}
+	}
 
 	// TODO 5(old): Prepare the loop to draw all tilesets + Blit
 	/*p2List_item<MapLayer*>* layer = data.layers.start;
@@ -235,7 +280,7 @@ bool j1Map::Load(const char* file_name)
 			data.objects.add(obj);
 	}
 
-	// Load Image Layers info ----------------------------------------------
+	// Load Background Image Layers info ----------------------------------------------
 	pugi::xml_node imgLayers;
 	for (imgLayers = map_file.child("map").child("imagelayer"); imgLayers && ret; imgLayers = imgLayers.next_sibling("imagelayer"))
 	{
@@ -413,6 +458,10 @@ bool j1Map::LoadImageLayers(pugi::xml_node& imagelayer_node, ImageLayers* set)
 	bool ret = true;
 	set->name = imagelayer_node.attribute("name").as_string();
 	pugi::xml_node image = imagelayer_node.child("image");
+	//set->position_x = imagelayer_node.attribute("offsetx").as_int();//*App->win->GetScale();
+	//set->position_y = imagelayer_node.attribute("offsety").as_int();//*App->win->GetScale();
+	set->position_x = image.next_sibling("properties").child("property").attribute("value").as_int();
+	set->position_y = image.next_sibling("properties").child("property").next_sibling("property").attribute("value").as_int();
 	set->image_width = image.attribute("width").as_int();
 	set->image_height = image.attribute("height").as_int();
 	set->texture = App->tex->Load(PATH(folder.GetString(), image.attribute("source").as_string()));

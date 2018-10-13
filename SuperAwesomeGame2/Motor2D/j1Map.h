@@ -66,6 +66,8 @@ struct ImageLayers
 {
 	p2SString			name;
 	SDL_Texture*		texture;
+	int					position_x;
+	int					position_y;
 	int					image_width;
 	int					image_height;
 
