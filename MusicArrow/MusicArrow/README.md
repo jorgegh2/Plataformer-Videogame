@@ -13,6 +13,7 @@ Debug Keys: (still doing)
 
 F1-> Start from the very first level
 F2-> Start from the beginning of the current level
+F4->Change across escenes
 F5-> Save the current state
 F6-> Load the previous state (even across levels)
 F9-> To view colliders / logic
