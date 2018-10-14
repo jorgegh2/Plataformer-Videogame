@@ -188,30 +188,7 @@ bool j1Player::Start()
 	bool ret = true;
 	graphics = App->tex->Load("assets/Archer/Archer2.png");
 
-	//If the module input has been disabled in the DEAD state
-	if(!App->input->IsEnabled()) App->input->Enable();
-
-	p2List_item<MapObjects*>* item_object = nullptr;
-	
-	for (item_object = App->map->data.objects.start; item_object; item_object = item_object->next)
-	{
-		if (item_object->data->StartPoint.x != 0 && item_object->data->StartPoint.y != 0)
-		{
-			StartPoint.x = item_object->data->StartPoint.x;
-			StartPoint.y = item_object->data->StartPoint.y;
-
-		}
-	}
-
-	position.x = StartPoint.x;
-	position.y = StartPoint.y;
-
-	App->render->camera.x = -position.x * App->win->GetScale() + WIDTH_CANVAS;
-	App->render->camera.y = -position.y * App->win->GetScale() + HEIGHT_CANVAS;
-
-	dashCount = 0;
-	jstate = ONAIR;
-	current_animation = &idle;
+	ResetPlayer();
 
 	//Load background music
 	const char* path = "audio/music/musicstage1.wav";
@@ -429,10 +406,11 @@ bool j1Player::Update(float dt)
 		speed.y = speed.y + myGravity * App->time->DeltaTime();
 		position.y += speed.y * App->time->DeltaTime();
 
-		if (position.y > App->render->camera.y + App->render->camera.h) //ADD FADE TO BLACK
-
+		if (position.y > -(App->render->camera.y + App->render->camera.h)*2) //ADD FADE TO BLACK
+		{
 			App->audio->PlayFx(audio_finishdead, 1);
-
+			ResetPlayer();
+		}
 			break;
 
 	case GODMODE:
@@ -542,4 +520,32 @@ state j1Player::SetStateFromInt(int state_as_int)
 		break;
 	}
 	return player_state;
+}
+
+void j1Player::ResetPlayer()
+{
+	//If the module input has been disabled in the DEAD state
+	if (!App->input->IsEnabled()) App->input->Enable();
+
+	p2List_item<MapObjects*>* item_object = nullptr;
+
+	for (item_object = App->map->data.objects.start; item_object; item_object = item_object->next)
+	{
+		if (item_object->data->StartPoint.x != 0 && item_object->data->StartPoint.y != 0)
+		{
+			StartPoint.x = item_object->data->StartPoint.x;
+			StartPoint.y = item_object->data->StartPoint.y;
+
+		}
+	}
+
+	position.x = StartPoint.x;
+	position.y = StartPoint.y;
+
+	App->render->camera.x = -position.x * App->win->GetScale() + WIDTH_CANVAS;
+	App->render->camera.y = -position.y * App->win->GetScale() + HEIGHT_CANVAS;
+
+	dashCount = 0;
+	jstate = ONAIR;
+	current_animation = &idle;
 }

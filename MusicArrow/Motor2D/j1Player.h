@@ -33,6 +33,8 @@ public:
 	bool Save(pugi::xml_node&) const;
 
 	state j1Player::SetStateFromInt(int state_as_int);
+	void j1Player::ResetPlayer();
+
 
 	
 

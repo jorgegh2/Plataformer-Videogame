@@ -26,7 +26,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 	
 	colliderPlayer_w = PLAYER_WIDTH;
 	colliderPlayer_h = PLAYER_HEIGHT;
-
+	//fghfghhg
 	folder.create(config.child("folder").child_value());
 
 	return ret;
@@ -67,7 +67,6 @@ void j1Map::Draw()
 			speedLayer = 1;
 
 
-			
 
 		}
 		else if (item_imgLayer->data->name == "Capa de Imagen 2")
