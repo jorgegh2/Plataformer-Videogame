@@ -21,6 +21,7 @@
 #include "j1Map.h"
 #include "j1Window.h"
 #include "j1Render.h"
+#include "j1Audio.h"
 
 
 
@@ -212,6 +213,9 @@ bool j1Player::Start()
 	bool ret = true;
 	graphics = App->tex->Load("assets/Archer/Archer2.png");
 
+	//If the module input has been disabled in the DEAD state
+	//if(!App->input->IsEnabled()) App->input->Enable();
+
 	p2List_item<MapObjects*>* item_object = nullptr;
 	iPoint StartPoint;
 	for (item_object = App->map->data.objects.start; item_object; item_object = item_object->next)
@@ -251,18 +255,39 @@ bool j1Player::Start()
 
 	life = 3;*/
 
+	//Load background music
+	const char* path = "audio/music/musicstage1.wav";
+	//j1Audio Mix_LoadMUS(const char *path);
 
-	/*const char* path = "audio/music/PimPoy.wav";
-	j1Audio Mix_LoadWAV(const char *path);
-	App->audio->PlayMusic(path);
-	const char*  jumping = "audio/fx/jump.wav";
-	const char* dash = nullptr;
-	const char* step = nullptr;
-	const char* dead = nullptr;
-	const char* finishdead = nullptr;
-	const char* stageclear = nullptr;
-	const char* stage1 = nullptr;
-	const char* stage2 = nullptr;*/
+	//Play background music
+	//App->audio->PlayMusic(path);
+
+	//Load FX
+	jumping = "audio/fx/jump.wav";
+	
+
+	dash = "audio/fx/dash.wav";
+	
+
+	bump = "audio/fx/bump.wav";
+	
+
+	step = "audio/fx/steps.wav";
+	
+
+	dead = "audio/fx/dead.wav";
+	j1Audio LoadFx(const char *path);
+
+	const char*  finishdead = "audio/fx/finishdead.wav";
+	j1Audio LoadFx(const char *path);
+
+	const char*  stageclear = "audio/fx/stageclear.wav";
+	j1Audio LoadFx(const char *path);
+
+
+
+	
+
 	
 	
 
@@ -293,7 +318,7 @@ bool j1Player::Update(float dt)
 {
 	velocityX = 0;
 	//Distance d = App->collision->FinalDistance;
-	Distance d = App->collision->dPositiveY;
+	Distance d_positiveY = App->collision->dPositiveY;
 	Distance d_negativeX = App->collision->dNegativeX;
 	Distance d_positiveX = App->collision->dPositiveX;
 	Distance d_negativeY = App->collision->dNegativeY;
@@ -307,8 +332,10 @@ bool j1Player::Update(float dt)
 			position.x -= d_negativeX.Modulo;
 					
 		else position.x -= speed.x;
+
 		velocityX = -speed.x;
 		current_animation = &walk;
+		App->audio->PlayFx(App->audio->LoadFx(step));
 
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !locked_to_right)
@@ -317,11 +344,10 @@ bool j1Player::Update(float dt)
 			position.x += d_positiveX.Modulo;
 
 		else position.x += speed.x;
-		
-		
-		//position.x += speed.x;
+
 		velocityX = speed.x;
 		current_animation = &walk;
+		App->audio->PlayFx(App->audio->LoadFx(step));
 
 	}
 
@@ -330,6 +356,8 @@ bool j1Player::Update(float dt)
 		if(dashCount == 0) App->time->Reset();
 		dashCount = 1;
 		current_animation = &hit;
+		App->audio->PlayFx(App->audio->LoadFx(dash));
+
 		if (velocityX < 0) 
 		{
 
@@ -344,6 +372,7 @@ bool j1Player::Update(float dt)
 		App->time->Reset();
 		dashCount = 1;
 		current_animation = &hit;
+		App->audio->PlayFx(App->audio->LoadFx(dash));
 		if (velocityX > 0) 
 		{
 			position.x += speed.x * App->time->DeltaTime();
@@ -400,16 +429,19 @@ bool j1Player::Update(float dt)
 			jstate = JUMP;
 			current_animation = &jump;
 			current_animation->Reset();
+			App->audio->PlayFx(App->audio->LoadFx(jumping));
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			jstate = JUMP;
 			current_animation = &jump;
 			current_animation->Reset();
+			App->audio->PlayFx(App->audio->LoadFx(jumping));
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 			jstate = JUMP;
 			current_animation = &jump;
 			current_animation->Reset();
+			App->audio->PlayFx(App->audio->LoadFx(jumping));
 		}
 		jumpCount = 0;
 		dashCount = 0;
@@ -425,11 +457,11 @@ bool j1Player::Update(float dt)
 			speed.y = speed.y + myGravity * App->time->DeltaTime();
 			if (speed.y >= 0) 
 			{
-				if (speed.y < d.Modulo)
+				if (speed.y < d_positiveY.Modulo)
 					position.y += speed.y;
 				else
 				{
-					position.y += d.Modulo;
+					position.y += d_positiveY.Modulo;
 					jstate = ONFLOOR;
 				}
 			}
@@ -439,6 +471,7 @@ bool j1Player::Update(float dt)
 				{
 					position.y -= d_negativeY.Modulo;
 					speed.y = 0;
+					App->audio->PlayFx(App->audio->LoadFx(bump));
 				}
 				else
 				{
@@ -461,8 +494,18 @@ bool j1Player::Update(float dt)
 				position.y += speed.y;*/
 				current_animation = &jump;
 				current_animation->Reset();
+				App->audio->PlayFx(App->audio->LoadFx(jumping));
 				jumpCount = 1;
 				
+			}
+
+			//DEAD condition
+			if (d_positiveY.Modulo == 0 && d_positiveY.nearestColliderType == COLLIDER_WATER)
+			{
+
+				jstate = DEAD;
+				App->input->Disable();
+
 			}
 		
 		
@@ -489,8 +532,27 @@ bool j1Player::Update(float dt)
 		position.y += speed.y;*/
 
 		break;
+
+	case DEAD:
+
+
+		current_animation = &die;
+		App->audio->PlayFx(App->audio->LoadFx(dead));
+		c_player->SetPos(-1000, -1000);
+		App->time->Reset();
+		speed.y = -2;
+		speed.y = speed.y + myGravity * App->time->DeltaTime();
+		position.y += speed.y * App->time->DeltaTime();
+
+
+
+		if (position.y > App->render->camera.y) //ADD FADE TO BLACK
+
+			App->audio->PlayFx(App->audio->LoadFx(finishdead));
+
+			break;
 	}
-	if (d.Modulo != 0.0f) jstate = ONAIR;
+	if (d_positiveY.Modulo != 0.0f) jstate = ONAIR;
 	/*uint winwidth;
 	uint winheight;
 	App->win->GetWindowSize(winwidth, winheight);*/

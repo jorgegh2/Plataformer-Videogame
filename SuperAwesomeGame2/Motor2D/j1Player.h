@@ -15,7 +15,7 @@ struct Mix_Music;
 struct Collider;
 
 
-enum state {NONE, JUMP, ONFLOOR, ONAIR, LANDING};
+enum state {NONE, JUMP, ONFLOOR, ONAIR, LANDING, DEAD};
 
 class j1Player : public j1Module
 {
@@ -84,15 +84,14 @@ public:
 	Mix_Chunk* player_death = nullptr;
 	Mix_Chunk* change_weapon_sound = nullptr;*/
 
-	const char*  jumping = nullptr;
-	const char* dash = nullptr;
-	const char* step = nullptr;
-	const char* dead = nullptr;
-	const char* finishdead = nullptr;
-	const char* stageclear = nullptr;
-	const char* stage1 = nullptr;
-	const char* stage2 = nullptr;
-
+	const char*  jumping;
+	const char*  dash;
+	const char*  bump;
+	const char*  step;
+	const char*  dead;
+	const char*  finishdead;
+	const char*  stageclear;
+	
 
 	
 	bool destroyed = true;
