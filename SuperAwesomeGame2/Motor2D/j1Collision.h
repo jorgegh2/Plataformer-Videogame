@@ -66,6 +66,8 @@ public:
 
 	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback = nullptr);
 	void DebugDraw();
+	void AllCollidersToDelete();
+
 
 	Distance distance;
 	Distance dNegativeX;

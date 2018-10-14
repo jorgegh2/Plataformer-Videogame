@@ -316,31 +316,16 @@ Distance Collider::DistanceToNearestCollider(SDL_Rect& collider_rect, COLLIDER_T
 	return ret;
 }
 
-/*float 
+void j1Collision::AllCollidersToDelete()
 {
-		if (collider_rect.x + collider_rect.w <= rect.x)
+	for (uint i = 0; i < MAX_COLLIDERS; i++)
 	{
-		if (collider_rect.y + collider_rect.h > rect.y && collider_rect.y < rect.y + rect.h)
+		if(colliders[i] != nullptr)
 		{
-			ret.negativeX = true;
-			ret.negativeY = false;
-			ret.positiveX = false;
-			ret.positiveY = false;
-			ret.Modulo = rect.x - (collider_rect.x + collider_rect.w);
+			colliders[i]->to_delete = true;
 		}
 	}
-	if (collider_rect.x >= rect.x + rect.w)
-	{
-		if (collider_rect.y + collider_rect.h > rect.y && collider_rect.y < rect.y + rect.h)
-		{
-			ret.positiveX = true;
-			ret.negativeX = false;
-			ret.negativeY = false;
-			ret.positiveY = false;
-			ret.Modulo = collider_rect.x - (rect.x + rect.w);
-		}
-	}
-}*/
+}
 
 
 

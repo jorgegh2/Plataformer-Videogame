@@ -5,7 +5,7 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "j1Module.h"
-
+#include "SDL/include/SDL.h"
 
 enum COLLIDER_TYPE;
 // ----------------------------------------------------
@@ -22,7 +22,10 @@ struct MapLayer
 
 	~MapLayer()
 	{
-		RELEASE(data);
+		//RELEASE(data);
+		if (data != nullptr) {
+			delete[] data;
+		}
 	}
 
 	// TODO 6 (old): Short function to get the value of x,y
@@ -50,6 +53,8 @@ struct TileSet
 	int					num_tiles_height;
 	int					offset_x;
 	int					offset_y;
+
+	~TileSet();	
 };
 
 struct MapObjects
@@ -70,8 +75,8 @@ struct ImageLayers
 	int					position_y;
 	int					image_width;
 	int					image_height;
-
-
+	
+	~ImageLayers();
 };
 
 enum MapTypes
@@ -122,7 +127,7 @@ public:
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
 	COLLIDER_TYPE DefineType(int type_as_int);
-
+	void SetAllColliders();
 private:
 
 	bool LoadMap();

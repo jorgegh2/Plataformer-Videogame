@@ -192,6 +192,7 @@ bool j1Map::CleanUp()
 
 	while(item != NULL)
 	{
+		//App->tex->UnLoad(item->data->texture);
 		RELEASE(item->data);
 		item = item->next;
 	}
@@ -224,6 +225,7 @@ bool j1Map::CleanUp()
 
 	while (item4 != NULL)
 	{
+		//App->tex->UnLoad(item4->data->texture);
 		RELEASE(item4->data);
 		item4 = item4->next;
 	}
@@ -231,10 +233,23 @@ bool j1Map::CleanUp()
 
 	// Clean up the pugui tree
 	map_file.reset();
+
+	App->collision->AllCollidersToDelete();
 	
 	return true;
 }
 
+TileSet::~TileSet()
+{
+	App->tex->UnLoad(texture);
+	texture = nullptr;
+}
+
+ImageLayers::~ImageLayers()
+{
+	App->tex->UnLoad(texture);
+	texture = nullptr;
+}
 // Load new map
 bool j1Map::Load(const char* file_name)
 {
@@ -311,8 +326,8 @@ bool j1Map::Load(const char* file_name)
 		if (ret == true)
 			data.image_layers.add(imgLayer);
 	}
-
-	if(ret == true)
+	
+	/*if(ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
 		LOG("width: %d height: %d", data.width, data.height);
@@ -338,7 +353,7 @@ bool j1Map::Load(const char* file_name)
 			LOG("tile width: %d tile height: %d", l->width, l->height);
 			item_layer = item_layer->next;
 		}
-	}
+	}*/
 
 	map_loaded = ret;
 
@@ -481,9 +496,9 @@ bool j1Map::LoadImageLayers(pugi::xml_node& imagelayer_node, ImageLayers* set)
 	//set->position_y = imagelayer_node.attribute("offsety").as_int();//*App->win->GetScale();
 	set->position_x = image.next_sibling("properties").child("property").attribute("value").as_int();
 	set->position_y = image.next_sibling("properties").child("property").next_sibling("property").attribute("value").as_int();
-	set->image_width = image.attribute("width").as_int();
-	set->image_height = image.attribute("height").as_int();
-	set->texture = App->tex->Load(PATH(folder.GetString(), image.attribute("source").as_string()));
+	//set->image_width = image.attribute("width").as_int();
+	//set->image_height = image.attribute("height").as_int();
+	//set->texture = App->tex->Load(PATH(folder.GetString(), image.attribute("source").as_string()));
 	
 	//pugi::xml_node image = imagelayer_node.child("image");
 
@@ -595,5 +610,15 @@ COLLIDER_TYPE j1Map::DefineType(int type_as_int)
 	default:
 		return COLLIDER_NONE;
 	}
+}
+
+void j1Map::SetAllColliders()
+{
+	p2List_item<MapObjects*>* item_object = nullptr;
+	for (item_object = App->map->data.objects.start; item_object; item_object = item_object->next)
+	{
+		App->collision->AddCollider(item_object->data->RectCollider, item_object->data->Collider_type, nullptr);
+	}
+	App->player->c_player = App->collision->AddCollider({ App->player->StartPoint.x, App->player->StartPoint.y, 155, 170 }, COLLIDER_PLAYER, nullptr);
 }
 

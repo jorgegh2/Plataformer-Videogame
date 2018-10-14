@@ -84,6 +84,7 @@ public:
 	{
 		if (enabled == false)
 		{
+			active = true;
 			enabled = true;
 			Start();
 		}
@@ -91,8 +92,9 @@ public:
 
 	void Disable()
 	{
-		if (enabled == true) {
-
+		if (enabled == true) 
+		{
+			active = true;
 			enabled = false;
 			CleanUp();
 		}

@@ -39,8 +39,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	fadeToBlack = new j1FadeToBlack();
 	particles = new j1Particles();
 	time = new Timer();
-	//map_forest = new j1Scene_Forest();
-	//map_winter = new j1Scene_Winter();
+	map_forest = new j1Scene_Forest();
+	map_winter = new j1Scene_Winter();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -51,13 +51,13 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(map);
 	AddModule(scene);
-	
+	AddModule(map_forest);
+	AddModule(map_winter);
 	AddModule(fadeToBlack);
 	AddModule(particles);
 	AddModule(collision);
 	AddModule(player);
-	//AddModule(map_forest);
-	//AddModule(map_winter);
+
 
 
 	AddModule(time);
@@ -131,7 +131,9 @@ bool j1App::Start()
 
 	while (item != NULL && ret == true)
 	{
-		ret = item->data->Start();
+		if(item->data->active == true)
+			ret = item->data->Start();
+
 		item = item->next;
 	}
 
@@ -224,7 +226,7 @@ bool j1App::DoUpdate()
 	{
 		pModule = item->data;
 
-		if (pModule->active == false) {
+		if (pModule->enabled == false) {
 			continue;
 		}
 
@@ -245,7 +247,7 @@ bool j1App::PostUpdate()
 	{
 		pModule = item->data;
 
-		if (pModule->active == false) {
+		if (pModule->enabled == false) {
 			continue;
 		}
 

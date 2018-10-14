@@ -35,7 +35,7 @@ bool j1Scene::Start()
 	//App->map->Load("hello2.tmx");
 	//App->map->Load("iso.tmx");
 
-	const char* path = "audio/music/PimPoy.wav";
+	//const char* path = "audio/music/PimPoy.wav";
 	
 	
 	//j1Audio Mix_LoadWAV(const char *path);
@@ -44,27 +44,9 @@ bool j1Scene::Start()
 	else level = "Level1.tmx";*/
 	/*const char* level = "Level1.tmx";
 	const char* level = "Level2.tmx";*/
-	App->map->Load("Level2.tmx"); 
+	//App->map->Load("Level2.tmx"); 
 
-	p2List_item<MapObjects*>* item_object = nullptr;
-	for (item_object = App->map->data.objects.start; item_object; item_object = item_object->next)
-	{
-		App->collision->AddCollider(item_object->data->RectCollider, item_object->data->Collider_type, nullptr);
-	}
-
-	/*
-	uint id = 0;
-	for (item_tileset = data.tilesets.end; item_tileset; item_tileset = item_tileset->prev) {
-		for (item_layer = data.layers.start; item_layer; item_layer = item_layer->next) {
-			for (uint i = 0; i < item_layer->data->height; i++) {
-				for (uint j = 0; j < item_layer->data->width; j++) {
-					id = item_layer->data->data[item_layer->data->Get(j, i)];
-					if (id != 0)
-						App->render->Blit(item_tileset->data->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &item_tileset->data->GetTileRect(id));
-				}
-			}
-		}
-	}*/
+	
 
 	return true;
 }
@@ -110,15 +92,12 @@ bool j1Scene::Update(float dt)
 	App->win->SetTitle(title.GetString());
 
 
-	if (App->input->GetKey(SDL_SCANCODE_F4))
+	/*if (App->input->GetKey(SDL_SCANCODE_F4))
 	{
-		level = "Level2.tmx";
-		//a = !a;
 		enabled = false;
-		App->collision->CleanUp();
 		App->fadeToBlack->FadeToBlack(App->map, this);
 		
-	}
+	}*/
 
 	return true;
 }
