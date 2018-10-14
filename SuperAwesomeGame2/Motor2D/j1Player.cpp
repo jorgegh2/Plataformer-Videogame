@@ -218,8 +218,6 @@ bool j1Player::Start()
 	audio_dash = App->audio->LoadFx(dash);
 	bump = "audio/fx/bump.wav";
 	audio_bump = App->audio->LoadFx(bump);
-	step = "audio/fx/steps.wav";
-	audio_step = App->audio->LoadFx(step);
 	dead = "audio/fx/dead.wav";
 	audio_dead = App->audio->LoadFx(dead);
 	finishdead = "audio/fx/finishdead.wav";
@@ -237,8 +235,6 @@ bool j1Player::CleanUp()
 
 	LOG("Unloading player");
 	App->tex->UnLoad(graphics);
-	LOG("Unloading audio");
-	App->audio->CleanUp();
 
 	return true;
 }
@@ -265,7 +261,7 @@ bool j1Player::Update(float dt)
 
 		velocityX = -speed.x;
 		current_animation = &walk;
-		App->audio->PlayFx(audio_step);
+		
 
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !locked_to_right)
@@ -277,7 +273,7 @@ bool j1Player::Update(float dt)
 
 		velocityX = speed.x;
 		current_animation = &walk;
-		App->audio->PlayFx(audio_step);
+		
 
 	}
 
@@ -336,19 +332,19 @@ bool j1Player::Update(float dt)
 			jstate = JUMP;
 			current_animation = &jump;
 			current_animation->Reset();
-			App->audio->PlayFx(audio_jumping);
+ 			App->audio->PlayFx(audio_jumping, 1);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			jstate = JUMP;
 			current_animation = &jump;
 			current_animation->Reset();
-			App->audio->PlayFx(audio_jumping);
+			App->audio->PlayFx(audio_jumping, 1);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 			jstate = JUMP;
 			current_animation = &jump;
 			current_animation->Reset();
-			App->audio->PlayFx(audio_jumping);
+			App->audio->PlayFx(audio_jumping, 1);
 		}
 		jumpCount = 0;
 		dashCount = 0;
@@ -375,7 +371,7 @@ bool j1Player::Update(float dt)
 				{
 					position.y -= d_negativeY.Modulo;
 					speed.y = 0;
-					App->audio->PlayFx(audio_bump);
+					App->audio->PlayFx(audio_bump, 1);
 				}
 				else
 				{
@@ -391,7 +387,7 @@ bool j1Player::Update(float dt)
 				jstate = ONAIR;
 				current_animation = &jump;
 				current_animation->Reset();
-				App->audio->PlayFx(audio_jumping);
+				App->audio->PlayFx(audio_jumping, 1);
 				jumpCount = 1;
 				
 			}
@@ -416,7 +412,7 @@ bool j1Player::Update(float dt)
 	case DEAD:
 
 		current_animation = &die;
-		App->audio->PlayFx(audio_dead);
+		App->audio->PlayFx(audio_dead, 1);
 		c_player->SetPos(-1000, -1000);
 		App->time->Reset();
 		speed.y = -2;
@@ -425,7 +421,7 @@ bool j1Player::Update(float dt)
 
 		if (position.y > App->render->camera.y) //ADD FADE TO BLACK
 
-			App->audio->PlayFx(audio_finishdead);
+			App->audio->PlayFx(audio_finishdead, 1);
 
 			break;
 	}
