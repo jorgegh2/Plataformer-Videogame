@@ -91,6 +91,14 @@ public:
 	const char*  dead;
 	const char*  finishdead;
 	const char*  stageclear;
+
+	uint audio_jumping;
+	uint audio_dash;
+	uint audio_bump;
+	uint audio_step;
+	uint audio_dead;
+	uint audio_finishdead;
+	uint audio_stageclear;
 	
 
 	
