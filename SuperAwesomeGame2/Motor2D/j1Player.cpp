@@ -213,19 +213,19 @@ bool j1Player::Start()
 
 	//Load FX
 	jumping = "audio/fx/jump.wav";
-	uint audio_jumping = App->audio->LoadFx(jumping);
+	audio_jumping = App->audio->LoadFx(jumping);
 	dash = "audio/fx/dash.wav";
-	uint audio_dash = App->audio->LoadFx(dash);
+	audio_dash = App->audio->LoadFx(dash);
 	bump = "audio/fx/bump.wav";
-	uint audio_bump = App->audio->LoadFx(bump);
+	audio_bump = App->audio->LoadFx(bump);
 	step = "audio/fx/steps.wav";
-	uint audio_step = App->audio->LoadFx(step);
+	audio_step = App->audio->LoadFx(step);
 	dead = "audio/fx/dead.wav";
-	uint audio_dead = App->audio->LoadFx(dead);
+	audio_dead = App->audio->LoadFx(dead);
 	finishdead = "audio/fx/finishdead.wav";
-	uint audio_finished = App->audio->LoadFx(finishdead);
+	audio_finishdead = App->audio->LoadFx(finishdead);
 	stageclear = "audio/fx/stageclear.wav";
-	uint audio_stageclear = App->audio->LoadFx(stageclear);
+	audio_stageclear = App->audio->LoadFx(stageclear);
 
 	return ret;
 }
