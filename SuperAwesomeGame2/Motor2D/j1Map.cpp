@@ -492,10 +492,10 @@ bool j1Map::LoadImageLayers(pugi::xml_node& imagelayer_node, ImageLayers* set)
 	bool ret = true;
 	set->name = imagelayer_node.attribute("name").as_string();
 	pugi::xml_node image = imagelayer_node.child("image");
-	//set->position_x = imagelayer_node.attribute("offsetx").as_int();//*App->win->GetScale();
-	//set->position_y = imagelayer_node.attribute("offsety").as_int();//*App->win->GetScale();
-	set->position_x = image.next_sibling("properties").child("property").attribute("value").as_int();
-	set->position_y = image.next_sibling("properties").child("property").next_sibling("property").attribute("value").as_int();
+	set->position_x = imagelayer_node.attribute("offsetx").as_int();//*App->win->GetScale();
+	set->position_y = imagelayer_node.attribute("offsety").as_int();//*App->win->GetScale();
+	//set->position_x = image.next_sibling("properties").child("property").attribute("value").as_int();
+	//set->position_y = image.next_sibling("properties").child("property").next_sibling("property").attribute("value").as_int();
 	//set->image_width = image.attribute("width").as_int();
 	//set->image_height = image.attribute("height").as_int();
 	//set->texture = App->tex->Load(PATH(folder.GetString(), image.attribute("source").as_string()));

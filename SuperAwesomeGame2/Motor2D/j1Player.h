@@ -15,7 +15,7 @@ struct Mix_Music;
 struct Collider;
 
 
-enum state {NONE, JUMP, ONFLOOR, ONAIR, LANDING, DEAD};
+enum state {NONE, JUMP, ONFLOOR, ONAIR, LANDING, DEAD, GODMODE};
 
 class j1Player : public j1Module
 {

@@ -396,6 +396,8 @@ bool j1Player::Update(float dt)
 			if (d_positiveY.Modulo == 0 && d_positiveY.nearestColliderType == COLLIDER_WATER)
 			{
 				jstate = DEAD;
+				App->time->Reset();
+				App->audio->PlayFx(audio_dead, 1);
 				App->input->Disable();
 			}
 
@@ -412,22 +414,28 @@ bool j1Player::Update(float dt)
 	case DEAD:
 
 		current_animation = &die;
-		App->audio->PlayFx(audio_dead, 1);
+		
 		c_player->SetPos(-1000, -1000);
-		App->time->Reset();
-		speed.y = -2;
+
+		speed.y = -3;
 		speed.y = speed.y + myGravity * App->time->DeltaTime();
 		position.y += speed.y * App->time->DeltaTime();
 
-		if (position.y > App->render->camera.y) //ADD FADE TO BLACK
+		if (position.y > App->render->camera.y + App->render->camera.h) //ADD FADE TO BLACK
 
 			App->audio->PlayFx(audio_finishdead, 1);
 
 			break;
-	}
-	if (d_positiveY.Modulo != 0.0f) jstate = ONAIR;
 
-	c_player->SetPos(position.x, position.y);
+	case GODMODE:
+		/*c_player->SetPos(-1000, -1000);
+		speed.y = 0;*/
+
+		break;
+	}
+	if (d_positiveY.Modulo != 0.0f && jstate != DEAD) jstate = ONAIR;
+
+	if (jstate != DEAD) c_player->SetPos(position.x, position.y);
 	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), flip);
 	SDL_Rect offSet{ (-App->render->camera.x / App->win->GetScale()) + 200, (-App->render->camera.y / App->win->GetScale()) + 600, 800, 600 };
 	App->render->DrawQuad(offSet, 255, 255, 255, 80);
@@ -451,87 +459,12 @@ bool j1Player::Update(float dt)
 		App->render->camera.y = -(position.y * App->win->GetScale() - 515);
 	}
 
-	
-
 	//GOD MODE
-/*
-	if (App->input->keyboard[SDL_SCANCODE_F5] == KEY_STATE::KEY_DOWN) {
-		if (god_mode)
-			god_mode = false;
-		else god_mode = true;
+
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+		jstate = GODMODE;
 	}
-
-	if (!god_mode)
-	{
-		if (App->player2->IsEnabled() == true)
-			App->player2->c_player2->SetPos(App->player2->position.x, App->player2->position.y);
-
-		c_player->SetPos(position.x, position.y);
-	}
-	else
-	{
-		c_player->SetPos(-100, -100);
-		if (App->player2->IsEnabled() == true)
-			App->player2->c_player2->SetPos(-100, -100);
-	}
-
-
-	if (time_finished == false)
-	{
-		time_final = SDL_GetTicks() - time_init;
-		if (time_final <= 2000 && time_final >= 1000) {
-			location.x += 1;
-			position.x = App->render->camera.x / SCREEN_SIZE + location.x;
-			position.y = App->render->camera.y / SCREEN_SIZE + location.y;
-
-		}
-
-		else {
-			position.x = App->render->camera.x / SCREEN_SIZE + location.x;
-			position.y = App->render->camera.y / SCREEN_SIZE + location.y;
-
-
-		}
-
-		if (time_final > 2000) destroyed = false;
-		if (time_final >= 4000)
-		{
-			time_finished = true;
-			god_mode = false;
-
-		}
-
-		// Draw everything -------------------------------------- parpadeo
-		if (time_final % 100 <= 50) {
-			App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
-			App->render->Blit(graphics, position.x - 12, position.y + 8, &(anim_turbo->GetCurrentFrame()));
-		}
-	}
-
-
-	else {
-
-
-		// Draw everything --------------------------------------
-		App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
-		App->render->Blit(graphics, position.x - 12, position.y + 8, &(anim_turbo->GetCurrentFrame()));
-
-		position.x = App->render->camera.x / SCREEN_SIZE + location.x;
-		position.y = App->render->camera.y / SCREEN_SIZE + location.y;
-
-	}
-
-
-
-
-	if ((App->input->keyboard[SDL_SCANCODE_BACKSPACE] == KEY_DOWN || SDL_GameControllerGetButton(App->input->controller2, SDL_CONTROLLER_BUTTON_A)) && App->fade->IsFading() == false && App->players_menu->cr > 0)
-	{
-		App->player2->Enable();
-		App->players_menu->cr--;
-	}
-	*/
-
-
+	
 	return true;
 }
 
