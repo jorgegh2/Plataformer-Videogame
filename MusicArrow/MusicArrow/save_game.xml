@@ -1,9 +1,19 @@
-<!-- Save game for the game -->
-
+<?xml version="1.0"?>
 <game_state>
-
-  <renderer>
-    <camera x="100" y="0"/>
-  </renderer>
-
+	<input />
+	<window />
+	<textures />
+	<audio />
+	<map />
+	<scene />
+	<scene_forest />
+	<scene_winter />
+	<fade />
+	<particles />
+	<collision />
+	<player />
+	<time />
+	<renderer>
+		<camera x="92" y="-885" />
+	</renderer>
 </game_state>

@@ -20,6 +20,7 @@ void Timer::Release() {
 
 Timer::Timer() : j1Module(){
 
+	name.create("time");
 	Reset();
 	mTimeScale = 1.0f;
 

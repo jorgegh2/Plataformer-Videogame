@@ -9,8 +9,7 @@
 
 j1Scene_Winter::j1Scene_Winter()
 {
-	//name.create("scene_forest");
-
+	name.create("scene_winter");
 }
 
 

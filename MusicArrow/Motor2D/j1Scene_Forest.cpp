@@ -9,8 +9,7 @@
 
 j1Scene_Forest::j1Scene_Forest() : j1Module()
 {
-	//name.create("scene_forest");
-	
+	name.create("scene_forest");
 }
 
 // Destructor

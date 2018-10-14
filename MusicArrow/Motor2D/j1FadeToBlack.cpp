@@ -10,6 +10,7 @@
 j1FadeToBlack::j1FadeToBlack() : j1Module()
 {
 	//screen = { 0, 0, SCREEN_WIDTH * SCREEN_SIZE, SCREEN_HEIGHT * SCREEN_SIZE };
+	name.create("fade");
 }
 
 j1FadeToBlack::~j1FadeToBlack()
