@@ -15,6 +15,11 @@ j1Scene_Forest::j1Scene_Forest() : j1Module()
 // Destructor
 j1Scene_Forest::~j1Scene_Forest() {}
 
+bool j1Scene_Forest::Awake(pugi::xml_node& config)
+{
+	App->map->Load(config.child("bgmusic").child("level1").attribute("source").as_string());
+	return true;
+}
 
 
 // Called before the first frame

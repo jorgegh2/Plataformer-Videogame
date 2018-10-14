@@ -53,6 +53,7 @@ public:
 	float myGravity;
 	int jumpCount;
 	int dashCount;
+	bool godModeEnabled;
 
 
 	//----- Animations Awesome Game 2 ------

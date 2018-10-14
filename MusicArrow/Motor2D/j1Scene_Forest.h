@@ -13,6 +13,9 @@ public:
 	
 	// Destructor
 	~j1Scene_Forest();
+
+	// Called before render
+	bool j1Scene_Forest::Awake(pugi::xml_node& config);
 	
 	// Called before the first frame
 	bool Start();
