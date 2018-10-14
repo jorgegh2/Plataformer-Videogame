@@ -43,6 +43,7 @@ public:
 	Animation* current_animation = nullptr;
 	Animation* anim_turbo = nullptr;
 	
+	iPoint StartPoint;
 	fPoint position;
 	fPoint location;
 	fPoint speed;

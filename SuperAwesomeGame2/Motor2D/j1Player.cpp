@@ -183,7 +183,7 @@ bool j1Player::Start()
 	if(!App->input->IsEnabled()) App->input->Enable();
 
 	p2List_item<MapObjects*>* item_object = nullptr;
-	iPoint StartPoint;
+	
 	for (item_object = App->map->data.objects.start; item_object; item_object = item_object->next)
 	{
 		if (item_object->data->StartPoint.x != 0 && item_object->data->StartPoint.y != 0)
@@ -196,8 +196,6 @@ bool j1Player::Start()
 
 	position.x = StartPoint.x;
 	position.y = StartPoint.y;
-
-	c_player = App->collision->AddCollider({ StartPoint.x, StartPoint.y, 155, 170 }, COLLIDER_PLAYER, this);
 
 	App->render->camera.x = -position.x * App->win->GetScale() + WIDTH_CANVAS;
 	App->render->camera.y = -position.y * App->win->GetScale() + HEIGHT_CANVAS;
