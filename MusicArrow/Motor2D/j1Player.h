@@ -23,6 +23,8 @@ public:
 	j1Player();
 	~j1Player();
 
+	// Called before render is available
+	bool Awake(pugi::xml_node& conf);
 	bool Start();
 	bool Update(float dt);
 	bool CleanUp();
