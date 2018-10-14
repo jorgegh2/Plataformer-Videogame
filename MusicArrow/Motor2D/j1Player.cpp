@@ -438,7 +438,7 @@ bool j1Player::Update(float dt)
 	if (jstate != DEAD) c_player->SetPos(position.x, position.y);
 	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), flip);
 	SDL_Rect offSet{ (-App->render->camera.x / App->win->GetScale()) + 200, (-App->render->camera.y / App->win->GetScale()) + 600, 800, 600 };
-	App->render->DrawQuad(offSet, 255, 255, 255, 80);
+	//App->render->DrawQuad(offSet, 255, 255, 255, 80);
 
 	if (position.x + c_player->rect.w > offSet.w + offSet.x)
 	{
