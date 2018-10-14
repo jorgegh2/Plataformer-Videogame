@@ -12,7 +12,7 @@
  <imagelayer id="11" name="Capa de Imagen 2" offsetx="0" offsety="1376">
   <image source="TilsetLevel1/BG/TILE ARBRES.png" width="4500" height="1346"/>
  </imagelayer>
- <imagelayer id="12" name="Capa de Imagen 3" offsetx="0" offsety="1568">
+ <imagelayer id="12" name="Capa de Imagen 3" offsetx="0" offsety="1492">
   <image source="TilsetLevel1/BG/TILE CAMI.png" width="4500" height="1892"/>
  </imagelayer>
  <layer id="7" name="bg1" width="212" height="26" visible="0">
@@ -16563,7 +16563,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="3" name="water" width="212" height="26">
+ <layer id="3" name="water" width="212" height="26" visible="0">
   <data>
    <tile/>
    <tile/>
@@ -22079,7 +22079,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="1" name="platforms" width="212" height="26">
+ <layer id="1" name="platforms" width="212" height="26" visible="0">
   <data>
    <tile/>
    <tile/>
