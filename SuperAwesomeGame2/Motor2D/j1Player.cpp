@@ -96,7 +96,7 @@ j1Player::j1Player() : j1Module()
 	// JUMP
 
 	jump.PushBack({ 39, 1332, 151, 175 });
-	//jump.PushBack({ 275, 1327, 150, 177 });
+	jump.PushBack({ 275, 1327, 150, 177 });
 	jump.PushBack({ 488, 1320, 141, 185 });
 	jump.PushBack({ 695, 1317, 134, 191 });
 	jump.PushBack({ 881, 1310, 145, 182 });
@@ -105,7 +105,7 @@ j1Player::j1Player() : j1Module()
 	jump.PushBack({ 1444, 1305, 160, 160 });
 	jump.PushBack({ 1627, 1322, 157, 168 });
 	jump.PushBack({ 1813, 1332, 155, 171 });
-	jump.loop = false;
+	jump.loop = true;
 	jump.speed = 0.1f;
 
 	// fALLING
@@ -161,9 +161,44 @@ j1Player::j1Player() : j1Module()
 	die.PushBack({ 1643, 1943, 174, 151 });
 	die.PushBack({ 1860, 1955, 151, 174 });
 	die.loop = true;
-	die.speed = 0.15f;
+	die.speed = 0.05f;
 
 	//-------------------------------------
+
+	/*// Idle animation
+	idle.PushBack({ 94, 108, SHIP_WIDTH, SHIP_HEIGHT });
+
+	// Up animation
+	up.PushBack({ 94, 87, SHIP_WIDTH, SHIP_HEIGHT });
+	up.PushBack({ 94, 66, SHIP_WIDTH, SHIP_HEIGHT });
+	up.loop = false;
+	up.speed = 0.1f;
+
+	upback.PushBack({ 94, 87, SHIP_WIDTH, SHIP_HEIGHT });
+	upback.PushBack({ 94, 108, SHIP_WIDTH, SHIP_HEIGHT });
+	upback.loop = false;
+	upback.speed = 0.1f;
+
+	// Down animation
+	down.PushBack({ 94, 131, SHIP_WIDTH, SHIP_HEIGHT });
+	down.PushBack({ 94, 153, SHIP_WIDTH, SHIP_HEIGHT });
+	down.loop = false;
+	down.speed = 0.1f;
+
+	downback.PushBack({ 94, 131, SHIP_WIDTH, SHIP_HEIGHT });
+	downback.PushBack({ 94, 108, SHIP_WIDTH, SHIP_HEIGHT });
+	downback.loop = false;
+	downback.speed = 0.1f;
+
+	// Turbo
+
+	turbo_idle.PushBack({ 73, 116, 12, 5 });
+	turbo_idle.PushBack({ 61, 116, 12, 5 });
+	turbo_idle.PushBack({ 42, 116, 12, 5 });
+	turbo_idle.loop = true;
+	turbo_idle.speed = 0.8f;*/
+
+
 
 }
 
@@ -176,10 +211,6 @@ bool j1Player::Start()
 	LOG("Loading player textures");
 	bool ret = true;
 	graphics = App->tex->Load("assets/Archer/Archer2.png");
-
-	//If the module input has been disabled in the DEAD state
-	if(!App->input->IsEnabled()) App->input->Enable();
-	
 
 	p2List_item<MapObjects*>* item_object = nullptr;
 	iPoint StartPoint;
@@ -247,12 +278,11 @@ bool j1Player::Update(float dt)
 {
 	velocityX = 0;
 	//Distance d = App->collision->FinalDistance;
-	Distance d_positiveY = App->collision->dPositiveY; // DOWN
-	Distance d_negativeX = App->collision->dNegativeX; // LEFT
-	Distance d_positiveX = App->collision->dPositiveX; // RIGHT
-	Distance d_negativeY = App->collision->dNegativeY; // UP
+	Distance d = App->collision->dPositiveY;
+	Distance d_negativeX = App->collision->dNegativeX;
+	Distance d_positiveX = App->collision->dPositiveX;
+	Distance d_negativeY = App->collision->dNegativeY;
 	current_animation = &idle;
-	
 
 
 	//Horizontal movement
@@ -268,11 +298,13 @@ bool j1Player::Update(float dt)
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !locked_to_right)
 	{
-			if (d_positiveX.Modulo < speed.x && d_positiveX.nearestColliderType != COLLIDER_PLATAFORM)
-				position.x += d_positiveX.Modulo;
+		if (d_positiveX.Modulo < speed.x && d_positiveX.nearestColliderType != COLLIDER_PLATAFORM)
+			position.x += d_positiveX.Modulo;
 
-			else position.x += speed.x;
+		else position.x += speed.x;
 		
+		
+		//position.x += speed.x;
 		velocityX = speed.x;
 		current_animation = &walk;
 
@@ -285,7 +317,9 @@ bool j1Player::Update(float dt)
 		current_animation = &hit;
 		if (velocityX < 0) 
 		{
+
 			position.x -= speed.x * App->time->DeltaTime();
+			//velocityX = -speed.x;
 		}
 		jstate = LANDING;
 		
@@ -298,21 +332,37 @@ bool j1Player::Update(float dt)
 		if (velocityX > 0) 
 		{
 			position.x += speed.x * App->time->DeltaTime();
-		
+			//velocityX = speed.x;
 		}
 		else jstate = LANDING;
 		
 	}
 
-	
-
 	//Flip player sprite if x speed is negative
 	if (velocityX < 0)flip = SDL_FLIP_HORIZONTAL;
 	if (velocityX > 0)flip = SDL_FLIP_NONE;
 
-	//State machine
+	//Jump
 	switch (jstate)
 	{
+	/*case NONE:
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		{
+			jstate = JUMP;
+			current_animation = &jump;
+
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			jstate = JUMP;
+			current_animation = &jump;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			jstate = JUMP;
+			current_animation = &jump;
+		}
+
+
+		break;*/
 
 	case JUMP:
 		if (dashCount == 0)
@@ -320,6 +370,9 @@ bool j1Player::Update(float dt)
 		App->time->Reset();
 		speed.y = -15;
 		jstate = ONAIR;
+		//Change this when have better colider detection
+		/*speed.y = speed.y + myGravity * App->time->DeltaTime();
+		position.y += speed.y;*/
 		}
 		
 		break;
@@ -347,6 +400,9 @@ bool j1Player::Update(float dt)
 		dashCount = 0;
 		App->time->Reset();
 
+
+		//else jstate = ONAIR;
+
 		break;
 
 	case ONAIR:
@@ -354,11 +410,11 @@ bool j1Player::Update(float dt)
 			speed.y = speed.y + myGravity * App->time->DeltaTime();
 			if (speed.y >= 0) 
 			{
-				if (speed.y < d_positiveY.Modulo)
+				if (speed.y < d.Modulo)
 					position.y += speed.y;
 				else
 				{
-					position.y += d_positiveY.Modulo;
+					position.y += d.Modulo;
 					jstate = ONFLOOR;
 				}
 			}
@@ -371,97 +427,92 @@ bool j1Player::Update(float dt)
 				}
 				else
 				{
+					
 					position.y += speed.y;
 					
+					//App->time->Reset();
 				}
 			}
-			//Applying jump force
 			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumpCount < 1)
 			{
 
 				jstate = JUMP;
+				
 				App->time->Reset();
 				speed.y = -15;
 				jstate = ONAIR;
+				//Change this when have better colider detection
+				/*speed.y = speed.y + myGravity * App->time->DeltaTime();
+				position.y += speed.y;*/
 				current_animation = &jump;
 				current_animation->Reset();
 				jumpCount = 1;
 				
 			}
 		
-			//DEAD condition
-
-			if (d_positiveY.Modulo == 0 && d_positiveY.nearestColliderType == COLLIDER_WATER)
-			{
-
-				jstate = DEAD;
-				App->input->Disable();
-
-			}
-
+		
+		/*else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			jstate = JUMP;
+			current_animation = &jump;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			jstate = JUMP;
+			current_animation = &jump;
+		}*/
 		current_animation = &jump;
+		
 
 		break;
 
 	case LANDING:
 		
+		
 		current_animation = &fall;
 
-		break;
-
-	case DEAD:
-
-		
-		current_animation = &die;
-		c_player->SetPos(-1000, -1000);
-		App->time->Reset();
-		speed.y = -2;
-		speed.y = speed.y + myGravity * App->time->DeltaTime();
-		position.y += speed.y * App->time->DeltaTime();
-		
-		
-		
-		if (position.y > App->render->camera.y) //ADD FADE TO BLACK
-
-			
+		//jstate = ONAIR;
+		/*speed.y = speed.y + myGravity * App->time->DeltaTime();
+		position.y += speed.y;*/
 
 		break;
 	}
+	if (d.Modulo != 0.0f) jstate = ONAIR;
+	/*uint winwidth;
+	uint winheight;
+	App->win->GetWindowSize(winwidth, winheight);*/
 
-	
 
-	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-	{
 
-		position.x = 25000;
-		position.y = 1200;
-	}
-	
-	if (jstate != DEAD)
-	{
-		if (d_positiveY.Modulo != 0.0f) jstate = ONAIR;
+	//if(c_player->rect.x <= App->render->camera.x + 250){
 
-		c_player->SetPos(position.x, position.y);
-	}	
+	//	App->render->camera.x = -1 * (App->player->position.x * App->win->GetScale() - 250);
+	//}
+	//if (c_player->rect.x + c_player->rect.w > (App->render->camera.x + App->render->camera.w) - 250) {
 
+	//	App->render->camera.x = -(App->player->position.x + c_player->rect.w) * App->win->GetScale() + App->render->camera.w - 250;
+	//	//App->render->camera.x = -App->player->position.x - App->render->camera.w * App->win->GetScale() + WIDTH_CANVAS;
+	//}
+
+
+
+
+
+
+	c_player->SetPos(position.x, position.y);
 	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), flip);
 	SDL_Rect offSet{ (-App->render->camera.x / App->win->GetScale()) + 200, (-App->render->camera.y / App->win->GetScale()) + 600, 800, 600 };
 	App->render->DrawQuad(offSet, 255, 255, 255, 80);
 
-	if(-App->render->camera.x > 0 && (-App->render->camera.x + App->render->camera.w)*2 < App->map->MapToWorld(App->map->data.width, App->map->data.height).x){
+	if (position.x + c_player->rect.w > offSet.w + offSet.x)
+	{
 
-		if (position.x + c_player->rect.w > offSet.w + offSet.x)
-		{
-
-			App->render->camera.x = -(position.x * App->win->GetScale() - 423);
-
-		}
-		else if (position.x < offSet.x)
-		{
-			App->render->camera.x = -(position.x * App->win->GetScale() - 100);
-		}
+		App->render->camera.x = -(position.x * App->win->GetScale() - 423);
 
 	}
+	else if (position.x < offSet.x)
+	{
+		App->render->camera.x = -(position.x * App->win->GetScale() - 100);
+	}
+
 
 	if (position.y < offSet.y)
 	{
@@ -475,14 +526,68 @@ bool j1Player::Update(float dt)
 	}
 
 
-	//DEAD MODE
 
-	
-/*
-if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
-		if (god_mode) god_mode = false;
-		else god_mode = true;
+
+	/*if(acceleration.y > d.Modulo && acceleration.y > 0)
+	 position.y += d.Modulo;
+	else*/
+
+	locked_to_left = false;
+	locked_to_right = false;
+
+	/*
+	if ((App->input->keyboard[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT || player_down == true) && position.y < App->render->camera.y / SCREEN_SIZE + SCREEN_HEIGHT - SHIP_HEIGHT)
+	{
+		location.y += speed;
+		player_idle = true;
+		reverse = false;
+		if (current_animation != &down)
+		{
+			down.Reset();
+			current_animation = &down;
+		}
+
 	}
+
+	else if (App->input->keyboard[SDL_SCANCODE_S] == KEY_STATE::KEY_UP || (player_idle == true && player_down == false && reverse == false))
+		if (current_animation != &downback)
+		{
+			downback.Reset();
+			current_animation = &downback;
+			player_idle = false;
+
+		}
+
+	if ((App->input->keyboard[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT || player_up == true) && position.y > App->render->camera.y / SCREEN_SIZE)
+	{
+		location.y -= speed;
+		player_idle = true;
+		reverse = true;
+		if (current_animation != &up)
+		{
+			up.Reset();
+			current_animation = &up;
+			//anim_turbo = &turbo_up;
+
+		}
+	}
+
+	else if (App->input->keyboard[SDL_SCANCODE_W] == KEY_STATE::KEY_UP || (player_idle == true && player_up == false && reverse == true))
+		if (current_animation != &upback)
+		{
+			upback.Reset();
+			current_animation = &upback;
+			//anim_turbo = &turbo_up;
+			player_idle = false;
+		}
+
+	//anim_turbo = &turbo_idle;
+
+
+
+
+	//GOD MODE
+/*
 	if (App->input->keyboard[SDL_SCANCODE_F5] == KEY_STATE::KEY_DOWN) {
 		if (god_mode)
 			god_mode = false;
@@ -563,8 +668,42 @@ if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
 	return true;
 }
 
-//Using Avoid Colision is useless
 void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
-	
+	//if (c_player != nullptr && c_player == c1 && jstate != JUMP/* && App->fade->IsFading() == false && c2 != App->power_up->c_power_up*/)
+	//{
+	//	//	jstate = ONFLOOR;
+	//	if (c1->rect.y + c1->rect.h - c2->rect.y <= c2->rect.y /*c1->rect.y + c1->rect.h >= c2->rect.y*/)
+	//	{
+	//		//(r.x + r.w <= rect.x) || (r.x >= rect.x + rect.w) || (r.y + r.h <= rect.y) || (r.y >= rect.y + rect.h)
+	//		jstate = ONFLOOR;
+	//		//acceleration.y = 0.0f;
+	//	}
+
+	//	else if (c2->rect.x + c2->rect.w - c1->rect.x <= margen)
+	//	{
+	//		locked_to_left = true;
+	//	}
+
+
+	//	else if (c1->rect.x + c1->rect.w - c2->rect.x <= margen)
+	//	{
+	//		locked_to_right = true;
+	//	}
+
+
+	//	/*if (c1->rect.y + c1->rect.h - c2->rect.y >= 1 && c1->rect.y + c1->rect.h - c2->rect.y <= 3// && acceleration.y >= 0)
+	//	{
+	//		//(r.x + r.w <= rect.x) || (r.x >= rect.x + rect.w) || (r.y + r.h <= rect.y) || (r.y >= rect.y + rect.h)
+	//		jstate = ONFLOOR;
+	//		acceleration.y = 0.0f;
+
+	//	}
+	//	else if (c1->rect.x + c1->rect.w >= c2->rect.x)
+	//	{
+	//		speed = 0.0f;
+	//	}*/
+	//	
+
+	//}
 }
