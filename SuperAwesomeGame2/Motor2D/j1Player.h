@@ -5,10 +5,13 @@
 #include "Animation.h"
 #include "p2Point.h"
 #include "SDL/include/SDL_render.h"
+#include "p2Point.h"
+#include "j1Audio.h"
 
 struct SDL_Texture;
 struct SDL_Rect;
 struct Mix_Chunk;
+struct Mix_Music;
 struct Collider;
 
 
@@ -75,11 +78,21 @@ public:
 
 	//---------------------
 
-	Mix_Chunk* helix_sound = nullptr;
+	/*Mix_Chunk* helix_sound = nullptr;
 	Mix_Chunk* laser_sound = nullptr;
 	Mix_Chunk* basic_attack_sound = nullptr;
 	Mix_Chunk* player_death = nullptr;
-	Mix_Chunk* change_weapon_sound = nullptr;
+	Mix_Chunk* change_weapon_sound = nullptr;*/
+
+	const char*  jumping = nullptr;
+	const char* dash = nullptr;
+	const char* step = nullptr;
+	const char* dead = nullptr;
+	const char* finishdead = nullptr;
+	const char* stageclear = nullptr;
+	const char* stage1 = nullptr;
+	const char* stage2 = nullptr;
+
 
 	
 	bool destroyed = true;

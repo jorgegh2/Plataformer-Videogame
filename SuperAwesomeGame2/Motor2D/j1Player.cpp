@@ -251,6 +251,21 @@ bool j1Player::Start()
 
 	life = 3;*/
 
+
+	/*const char* path = "audio/music/PimPoy.wav";
+	j1Audio Mix_LoadWAV(const char *path);
+	App->audio->PlayMusic(path);
+	const char*  jumping = "audio/fx/jump.wav";
+	const char* dash = nullptr;
+	const char* step = nullptr;
+	const char* dead = nullptr;
+	const char* finishdead = nullptr;
+	const char* stageclear = nullptr;
+	const char* stage1 = nullptr;
+	const char* stage2 = nullptr;*/
+	
+	
+
 	return ret;
 }
 
