@@ -3,6 +3,7 @@
 ##Controls
 
 Keyboard:
+
 A: Move left
 D: Move right
 J: Dash
@@ -10,6 +11,7 @@ Space: Jump
 Enter: Special Movement
 
 Debug Keys: (still doing)
+
 F1-> Start from the very first level
 F2-> Start from the beginning of the current level
 F5-> Save the current state
