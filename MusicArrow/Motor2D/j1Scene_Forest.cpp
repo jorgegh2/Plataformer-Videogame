@@ -6,6 +6,7 @@
 #include "j1FadeToBlack.h"
 #include "j1Render.h"
 #include "j1Scene.h"
+#include "j1Player.h"
 
 j1Scene_Forest::j1Scene_Forest() : j1Module()
 {
@@ -27,6 +28,7 @@ bool j1Scene_Forest::Start()
 {
 	App->map->Load("Level1.tmx");
 	App->map->SetAllColliders();
+	App->player->ResetPlayer();
 	return true;
 }
 

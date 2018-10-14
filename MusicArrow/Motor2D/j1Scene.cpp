@@ -12,6 +12,7 @@
 #include "j1FadeToBlack.h"
 #include "j1Scene_Forest.h"
 #include "j1Scene_Winter.h"
+#include "j1Player.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -79,6 +80,24 @@ bool j1Scene::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x -= 5;
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
+		if (App->map_forest->active == true)
+		{
+			App->player->ResetPlayer();
+		}
+		else
+		{
+			App->fadeToBlack->FadeToBlack(App->map_winter, App->map_forest);
+		}
+	}
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		
+			App->player->ResetPlayer();
+		
+	}
+
 
 	App->map->Draw();
 
