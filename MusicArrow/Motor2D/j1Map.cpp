@@ -23,8 +23,9 @@ bool j1Map::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Map Parser");
 	bool ret = true;
-	coliderplayer_posx = config.child("playercolider").attribute("width").as_int();
-	coliderplayer_posy = config.child("playercolider").attribute("height").as_int();
+	
+	colliderPlayer_w = PLAYER_WIDTH;
+	colliderPlayer_h = PLAYER_HEIGHT;
 
 	folder.create(config.child("folder").child_value());
 
@@ -621,6 +622,6 @@ void j1Map::SetAllColliders()
 	{
 		App->collision->AddCollider(item_object->data->RectCollider, item_object->data->Collider_type, nullptr);
 	}
-	App->player->c_player = App->collision->AddCollider({ App->player->StartPoint.x, App->player->StartPoint.y, coliderplayer_posx, coliderplayer_posy }, COLLIDER_PLAYER, nullptr);
+	App->player->c_player = App->collision->AddCollider({ App->player->StartPoint.x, App->player->StartPoint.y, colliderPlayer_w, colliderPlayer_h }, COLLIDER_PLAYER, nullptr);
 }
 

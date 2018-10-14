@@ -15,6 +15,10 @@
 #endif
 #define NULL  0
 
+#define PLAYER_WIDTH 155;
+#define PLAYER_HEIGHT 170;	
+			
+
 // Deletes a buffer
 #define RELEASE( x ) \
     {                        \

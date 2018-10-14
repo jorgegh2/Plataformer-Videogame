@@ -13,9 +13,14 @@
 	<fade />
 	<particles />
 	<collision />
-	<player />
+	<player>
+		<position x="1579" y="2775.35156" />
+		<state current_state="1" />
+		<speed x="8" y="26.5750046" />
+		<velocity x="0" />
+	</player>
 	<time />
 	<renderer>
-		<camera x="92" y="-885" />
+		<camera x="-581" y="-872" />
 	</renderer>
 </game_state>

@@ -28,8 +28,13 @@ public:
 	bool Start();
 	bool Update(float dt);
 	bool CleanUp();
+	// Load / Save
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
 
-	void OnCollision(Collider*, Collider*);
+	state j1Player::SetStateFromInt(int state_as_int);
+
+	
 
 public:
 	

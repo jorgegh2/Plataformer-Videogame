@@ -477,5 +477,69 @@ bool j1Player::Update(float dt)
 	return true;
 }
 
-void j1Player::OnCollision(Collider* c1, Collider* c2){}
+bool j1Player::Save(pugi::xml_node& data) const
+{
+	pugi::xml_node pos_node = data.append_child("position");
 
+	pos_node.append_attribute("x") = position.x;
+	pos_node.append_attribute("y") = position.y;
+
+	pugi::xml_node State_node = data.append_child("state");
+
+	State_node.append_attribute("current_state") = jstate;
+
+	pugi::xml_node speed_node = data.append_child("speed");
+
+	speed_node.append_attribute("x") = speed.x;
+	speed_node.append_attribute("y") = speed.y;
+
+	return true;
+}
+
+bool j1Player::Load(pugi::xml_node& data)
+{
+	//load player position
+	position.x = data.child("position").attribute("x").as_int();
+	position.y = data.child("position").attribute("y").as_int();
+
+	//load speed position
+	speed.x = data.child("speed").attribute("x").as_int();
+	speed.y = data.child("speed").attribute("y").as_int();
+
+	//load player state
+	jstate = SetStateFromInt(data.child("state").attribute("current_state").as_int());
+
+	return true;
+}
+
+state j1Player::SetStateFromInt(int state_as_int)
+{
+	state player_state;
+	switch (state_as_int)
+	{
+	case 0:
+		player_state = JUMP;
+		break;
+
+	case 1:
+		player_state = ONFLOOR;
+		break;
+
+	case 2:
+		player_state = ONAIR;
+		break;
+
+	case 3:
+		player_state = LANDING;
+		break;
+
+	case 4:
+		player_state = DEAD;
+		break;
+
+	case 5:
+		player_state = GODMODE;
+		break;
+	}
+	return player_state;
+}

@@ -142,9 +142,8 @@ public:
 	MapData data;
 	int speedLayer;
 	int positionX_Layer2;
-	//Config.xml
-	int coliderplayer_posx;
-	int coliderplayer_posy;
+	int colliderPlayer_w;
+	int colliderPlayer_h;
 
 private:
 
