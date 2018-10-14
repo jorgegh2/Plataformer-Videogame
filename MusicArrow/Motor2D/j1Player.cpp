@@ -169,7 +169,15 @@ j1Player::j1Player() : j1Module()
 
 
 }
-
+bool j1Player::Awake(pugi::xml_node& config)
+{
+	LOG("Loading Player Module");
+	bool ret = true;
+	
+	speed = { config.child("vars").child("speed").attribute("speedX").as_float(), config.child("vars").child("speed").attribute("speedY").as_float() };
+	myGravity = config.child("vars").child("myGravity").attribute("value").as_float();
+	return ret;
+}
 j1Player::~j1Player()
 {}
 
@@ -201,8 +209,6 @@ bool j1Player::Start()
 	App->render->camera.x = -position.x * App->win->GetScale() + WIDTH_CANVAS;
 	App->render->camera.y = -position.y * App->win->GetScale() + HEIGHT_CANVAS;
 
-	speed = { 8,0 };
-	myGravity = 1;
 	dashCount = 0;
 	jstate = ONAIR;
 	current_animation = &idle;
@@ -442,7 +448,7 @@ bool j1Player::Update(float dt)
 	SDL_Rect offSet{ (-App->render->camera.x / App->win->GetScale()) + 200, (-App->render->camera.y / App->win->GetScale()) + 600, 800, 600 };
 	//App->render->DrawQuad(offSet, 255, 255, 255, 80);
 
-	//if(App->render->camera.x > 0 ||)
+	//if(-App->render->camera.x > 0 || -App->render->camera.x + App->render->camera.w < App->map->MapToWorld().x)
 	if (position.x + c_player->rect.w > offSet.w + offSet.x)
 	{
 		App->render->camera.x = -(position.x * App->win->GetScale() - 423);

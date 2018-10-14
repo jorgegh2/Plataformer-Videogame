@@ -24,29 +24,13 @@
 
   <map>
     <folder>maps/</folder>
-    <level level1="maps/level1.tmx" level2="maps/level2.tmx">
-      <background>
-        <layer1 name="Capa de Imagen 1" level1="maps/TilsetLevel1/BG/TILE CEL.png" level2="maps/TilesetLevel2/BG/TILECEL2.png"></layer1>
-        <layer2 name="Capa de Imagen 2" level1="maps/TilsetLevel1/BG/TILE ARBRES.png" level2="maps/TilesetLevel2/BG/TILEMUNTANESARBRES2.png"></layer2>
-        <layer3 name="Capa de Imagen 3" level1="maps/TilsetLevel1/BG/TILE CAMI.png" level2="maps/TilesetLevel2/BG/TILEARBRESCAMI2.png"></layer3>
-      </background>
-      <tilesets>
-        <tileset1 tile1="maps/TilsetLevel1/Platforms/Tileset128x128.png" tile2="maps/TilsetLevel1/Objects/TilesetObjects128x128.png"></tileset1>
-        <tileset2 tile1="maps/TilesetLevel2/Platforms/TilesetWinter128x128.png" tile2="maps/TilesetLevel2/Objects/TilesetWinterObjects128x128.png"></tileset2>
-      </tilesets>
-    </level>
   </map>
 
   <player>
-    <playercolider whidth="155" height="170"></playercolider>
     <vars>
       <speed speedX="8" speedY="0"></speed>
-      <myGravity>1</myGravity>
+      <myGravity value="1"></myGravity>
     </vars>
-    <bgmusic>
-      <level1 source="audio/music/musicstage1.wav"></level1>
-      <level2 source="audio/music/musicstage2.wav"></level2>
-    </bgmusic>
     <fxsound>
       <jump source="audio/fx/jump.wav"></jump>
       <dash source="audio/fx/dash.wav"></dash>
@@ -69,5 +53,11 @@
       <movedown input="SDL_SCANCODE_DOWN"></movedown>
     </cameracontrols>
   </player>
+  <scene>
+    <bgmusic>
+      <level1 source="audio/music/musicstage1.wav"></level1>
+      <level2 source="audio/music/musicstage2.wav"></level2>
+    </bgmusic>
+  </scene>
 
 </config>
