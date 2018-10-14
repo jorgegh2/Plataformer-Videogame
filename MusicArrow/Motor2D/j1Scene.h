@@ -32,8 +32,11 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	const char* level = "Level2.tmx";
-	bool a = true;
+	// Load / Save
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
+
+	p2SString current_scene;
 
 private:
 };

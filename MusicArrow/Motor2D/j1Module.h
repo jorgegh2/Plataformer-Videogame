@@ -94,7 +94,7 @@ public:
 	{
 		if (enabled == true) 
 		{
-			active = true;
+			active = false;
 			enabled = false;
 			CleanUp();
 		}

@@ -10,6 +10,8 @@
 #include "j1Scene.h"
 #include "j1Collision.h"
 #include "j1FadeToBlack.h"
+#include "j1Scene_Forest.h"
+#include "j1Scene_Winter.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -91,6 +93,14 @@ bool j1Scene::Update(float dt)
 
 	App->win->SetTitle(title.GetString());
 
+	if (App->map_forest->active == true)
+	{
+		current_scene = App->map_forest->name.GetString();
+	}
+	else
+	{
+		current_scene = App->map_winter->name.GetString();
+	}
 
 	/*if (App->input->GetKey(SDL_SCANCODE_F4))
 	{
@@ -118,5 +128,33 @@ bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
 
+	return true;
+}
+// Load / Save
+bool j1Scene::Load(pugi::xml_node& node)
+{
+	if (current_scene != node.child("level").attribute("current_scene").as_string())
+	{
+		if (current_scene == App->map_forest->name.GetString())
+		{
+			App->fadeToBlack->FadeToBlack(App->map_forest,App->map_winter);
+		}
+		else App->fadeToBlack->FadeToBlack(App->map_winter, App->map_forest);
+
+	}
+	return true;
+}
+bool j1Scene::Save(pugi::xml_node& node) const
+{
+	pugi::xml_node scene = node.append_child("level");
+
+	if (App->map_forest->active == true)
+	{
+		scene.append_attribute("current_scene") = App->map_forest->name.GetString();
+	}
+	else
+	{
+		scene.append_attribute("current_scene") = App->map_winter->name.GetString();
+	}
 	return true;
 }

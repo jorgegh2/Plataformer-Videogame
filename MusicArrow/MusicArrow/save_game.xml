@@ -5,7 +5,9 @@
 	<textures />
 	<audio />
 	<map />
-	<scene />
+	<scene>
+		<level current_scene="scene_forest" />
+	</scene>
 	<scene_forest />
 	<scene_winter />
 	<fade />
