@@ -6,9 +6,8 @@ Keyboard:
 
 A: Move left
 D: Move right
-J: Dash
 Space: Jump
-Enter: Special Movement
+Space x2: Double Jump
 
 Debug Keys: (still doing)
 
