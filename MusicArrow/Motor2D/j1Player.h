@@ -15,7 +15,7 @@ struct Mix_Music;
 struct Collider;
 
 
-enum state {NONE, JUMP, ONFLOOR, ONAIR, LANDING, DEAD, GODMODE};
+enum state {JUMP, ONFLOOR, ONAIR, LANDING, DEAD, GODMODE};
 
 class j1Player : public j1Module
 {
@@ -34,36 +34,17 @@ public:
 	state jstate;
 	SDL_Texture * graphics = nullptr;
 	SDL_RendererFlip flip;
-	
-
-	bool locked_to_right = false;
-	bool locked_to_left = false;
-	uint margen = 3;
 
 	Animation* current_animation = nullptr;
-	Animation* anim_turbo = nullptr;
 	
 	iPoint StartPoint;
 	fPoint position;
-	fPoint location;
 	fPoint speed;
 	float velocityX;
 	float myGravity;
 	int jumpCount;
 	int dashCount;
-	/*float maxFallSpeed;
-	float jumpForce;
-	float currentJumpForce;*/
-	float deltaTime;
 
-	Animation up;
-	Animation down;
-	Animation upback;
-	Animation downback;
-
-	Animation turbo_idle;
-	Animation turbo_up;
-	Animation turbo_down;
 
 	//----- Animations Awesome Game 2 ------
 
@@ -99,21 +80,8 @@ public:
 	uint audio_finishdead;
 	uint audio_stageclear;
 	
-
-	
 	bool destroyed = true;
 	bool god_mode = false;
-
-	uint life = 1;
-	uint time_final = 0;
-	uint time_init = 0;
-	bool time_finished = true;
-	uint Bullet_time_init = 0;
-	uint Bullet_delay;
-	bool Reset_time_bullets = true;
-
-	bool reverse = false;
-
 
 	Collider* c_player = nullptr;
 	Collider* offSet = nullptr;

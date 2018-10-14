@@ -29,6 +29,7 @@ j1Player::j1Player() : j1Module()
 {
 	graphics = NULL;
 	current_animation = NULL;
+	name.create("player");
 
 	//------ New Animations Awesome Game 2 ------
 
@@ -203,6 +204,7 @@ bool j1Player::Start()
 	speed = { 8,0 };
 	myGravity = 1;
 	dashCount = 0;
+	jstate = ONAIR;
 	current_animation = &idle;
 
 	//Load background music
@@ -252,7 +254,7 @@ bool j1Player::Update(float dt)
 
 
 	//Horizontal movement
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !locked_to_left)
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		if (d_negativeX.Modulo < speed.x && d_negativeX.nearestColliderType != COLLIDER_PLATAFORM)
 			position.x -= d_negativeX.Modulo;
@@ -264,7 +266,7 @@ bool j1Player::Update(float dt)
 		
 
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !locked_to_right)
+	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		if (d_positiveX.Modulo < speed.x && d_positiveX.nearestColliderType != COLLIDER_PLATAFORM)
 			position.x += d_positiveX.Modulo;
@@ -440,6 +442,7 @@ bool j1Player::Update(float dt)
 	SDL_Rect offSet{ (-App->render->camera.x / App->win->GetScale()) + 200, (-App->render->camera.y / App->win->GetScale()) + 600, 800, 600 };
 	//App->render->DrawQuad(offSet, 255, 255, 255, 80);
 
+	//if(App->render->camera.x > 0 ||)
 	if (position.x + c_player->rect.w > offSet.w + offSet.x)
 	{
 		App->render->camera.x = -(position.x * App->win->GetScale() - 423);
