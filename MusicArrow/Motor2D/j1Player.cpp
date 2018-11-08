@@ -110,7 +110,7 @@ j1Player::j1Player() : j1Module()
 	jump.loop = true;
 	jump.speed = 0.1f;
 
-	// fALLING
+	// FALLING
 
 	fall.PushBack({ 1251, 1296, 165, 156 });
 	fall.PushBack({ 1444, 1305, 160, 160 });
@@ -187,7 +187,7 @@ bool j1Player::Start()
 	LOG("Loading player textures");
 	bool ret = true;
 	graphics = App->tex->Load("assets/Archer/Archer2.png");
-	godModeEnabled = false;
+	
 
 	ResetPlayer();
 
@@ -239,7 +239,7 @@ bool j1Player::Update(float dt)
 
 	//Horizontal movement
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && godModeEnabled != true && jstate != DEAD)
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && jstate != DEAD && jstate != GODMODE)
 	{
 		if (d_negativeX.Modulo < speed.x && d_negativeX.nearestColliderType != COLLIDER_PLATAFORM)
 			position.x -= d_negativeX.Modulo;
@@ -251,7 +251,7 @@ bool j1Player::Update(float dt)
 
 
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && godModeEnabled != true && jstate != DEAD)
+	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && jstate != DEAD && jstate != GODMODE)
 	{
 		if (d_positiveX.Modulo < speed.x && d_positiveX.nearestColliderType != COLLIDER_PLATAFORM)
 			position.x += d_positiveX.Modulo;
@@ -265,7 +265,7 @@ bool j1Player::Update(float dt)
 	}
 
 	//Dash movement
-	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && dashCount < 1 && jstate == ONAIR && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && godModeEnabled != true && jstate != DEAD)
+	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && dashCount < 1 && jstate == ONAIR && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && jstate != DEAD && jstate != GODMODE)
 	{
 		if (dashCount == 0) App->time->Reset();
 		dashCount = 1;
@@ -280,7 +280,7 @@ bool j1Player::Update(float dt)
 		jstate = LANDING;
 
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && dashCount < 1 && jstate == ONAIR && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && godModeEnabled != true && jstate != DEAD)
+	else if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && dashCount < 1 && jstate == ONAIR && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && jstate != DEAD && jstate != GODMODE)
 	{
 		App->time->Reset();
 		dashCount = 1;
@@ -299,12 +299,12 @@ bool j1Player::Update(float dt)
 	if (velocityX < 0)flip = SDL_FLIP_HORIZONTAL;
 	if (velocityX > 0)flip = SDL_FLIP_NONE;
 
-	//Jump
+	//PLAYER STATES
 	switch (jstate)
 	{
 
 	case JUMP:
-		if (dashCount == 0 && godModeEnabled != true)
+		if (dashCount == 0)
 		{
 		App->time->Reset();
 		speed.y = -15;
@@ -314,23 +314,22 @@ bool j1Player::Update(float dt)
 		break;
 
 	case ONFLOOR:
-		if (godModeEnabled != true)
-		{
+		
 
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && godModeEnabled != true)
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 			{
 				jstate = JUMP;
 				current_animation = &jump;
 				current_animation->Reset();
 				App->audio->PlayFx(audio_jumping, 1);
 			}
-			else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && godModeEnabled != true) {
+			else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 				jstate = JUMP;
 				current_animation = &jump;
 				current_animation->Reset();
 				App->audio->PlayFx(audio_jumping, 1);
 			}
-			else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && godModeEnabled != true) {
+			else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 				jstate = JUMP;
 				current_animation = &jump;
 				current_animation->Reset();
@@ -339,12 +338,11 @@ bool j1Player::Update(float dt)
 			jumpCount = 0;
 			dashCount = 0;
 			App->time->Reset();
-		}
+		
 		break;
 
 	case ONAIR:
-		if (godModeEnabled != true)
-		{
+		
 			speed.y = speed.y + myGravity * App->time->DeltaTime();
 			if (speed.y >= 0)
 			{
@@ -369,7 +367,7 @@ bool j1Player::Update(float dt)
 					position.y += speed.y;
 				}
 			}
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumpCount < 1 && godModeEnabled != true)
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumpCount < 1)
 			{
 
 				jstate = JUMP;
@@ -384,7 +382,7 @@ bool j1Player::Update(float dt)
 			}
 
 			//DEAD condition
-			if (d_positiveY.Modulo == 0 && d_positiveY.nearestColliderType == COLLIDER_WATER && godModeEnabled != true)
+			if (d_positiveY.Modulo == 0 && d_positiveY.nearestColliderType == COLLIDER_WATER)
 			{
 				jstate = DEAD;
 				App->time->Reset();
@@ -393,7 +391,7 @@ bool j1Player::Update(float dt)
 			}
 
 			current_animation = &jump;
-		}
+		
 		break;
 
 	case LANDING:
@@ -421,65 +419,80 @@ bool j1Player::Update(float dt)
 
 	case GODMODE:
 
-		c_player->SetPos(-1000, -1000);
+		
+			c_player->SetPos(-1000, -1000);
+			App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), flip);
+		
 
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && godModeEnabled != false)
-		{
-			position.x -= speed.x;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && godModeEnabled != false)
-		{
-			position.x += speed.x;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godModeEnabled != false)
-		{
-			position.y -= speed.x;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godModeEnabled != false)
-		{
-			position.y += speed.x;
-		}
+			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+			{
+				position.x -= speed.x;
+				App->render->camera.x += speed.x* App->win->GetScale();
+			}
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+			{
+				position.x += speed.x;
+				App->render->camera.x -= speed.x* App->win->GetScale();
+			}
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+			{
+				position.y -= speed.x;
+				App->render->camera.y += speed.x* App->win->GetScale();
+			}
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+			{
+				position.y += speed.x;
+				App->render->camera.y -= speed.x* App->win->GetScale();
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && godModeEnabled == true)
+			{
+				jstate = ONAIR;
+				godModeEnabled = false;
+			}
 
 		break;
 	}
-	if (d_positiveY.Modulo != 0.0f && jstate != DEAD && godModeEnabled != true) jstate = ONAIR;
 
-	if (jstate != DEAD) c_player->SetPos(position.x, position.y);
-	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), flip);
-	SDL_Rect offSet{ (-App->render->camera.x / App->win->GetScale()) + 200, (-App->render->camera.y / App->win->GetScale()) + 600, 800, 600 };
-	//App->render->DrawQuad(offSet, 255, 255, 255, 80);
+	if (godModeEnabled == false) {
 
-	//if(-App->render->camera.x > 0 || -App->render->camera.x + App->render->camera.w < App->map->MapToWorld().x)
-	if (position.x + c_player->rect.w > offSet.w + offSet.x)
-	{
-		App->render->camera.x = -(position.x * App->win->GetScale() - 423);
-	}
-	else if (position.x < offSet.x)
-	{
-		App->render->camera.x = -(position.x * App->win->GetScale() - 100);
-	}
+		if (d_positiveY.Modulo != 0.0f && jstate != DEAD) jstate = ONAIR;
 
-	if(jstate!=DEAD && godModeEnabled == false){
-	if (position.y < offSet.y)
-	{
-		App->render->camera.y = -(position.y * App->win->GetScale() - 300);
-	}
-	else if (position.y + c_player->rect.h > offSet.y + offSet.h)
-	{
-		App->render->camera.y = -(position.y * App->win->GetScale() - 515);
-	}
+		if (jstate != DEAD) c_player->SetPos(position.x, position.y);
+		App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), flip);
+		SDL_Rect offSet{ (-App->render->camera.x / App->win->GetScale()) + 200, (-App->render->camera.y / App->win->GetScale()) + 600, 800, 600 };
+		//App->render->DrawQuad(offSet, 255, 255, 255, 80);
+
+		//if(-App->render->camera.x > 0 || -App->render->camera.x + App->render->camera.w < App->map->MapToWorld().x)
+		if (position.x + c_player->rect.w > offSet.w + offSet.x)
+		{
+			App->render->camera.x = -(position.x * App->win->GetScale() - 423);
+		}
+		else if (position.x < offSet.x)
+		{
+			App->render->camera.x = -(position.x * App->win->GetScale() - 100);
+		}
+
+		if (jstate != DEAD) {
+			if (position.y < offSet.y)
+			{
+				App->render->camera.y = -(position.y * App->win->GetScale() - 300);
+			}
+			else if (position.y + c_player->rect.h > offSet.y + offSet.h)
+			{
+				App->render->camera.y = -(position.y * App->win->GetScale() - 515);
+			}
+		}
+
 	}
 
 	//GOD MODE
 
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && godModeEnabled == false) {
 		jstate = GODMODE;
-		godModeEnabled == true;
+		godModeEnabled = true;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && godModeEnabled == true) {
-		jstate = ONAIR;
-		godModeEnabled == false;
-	}
+	
 	
 	return true;
 }
