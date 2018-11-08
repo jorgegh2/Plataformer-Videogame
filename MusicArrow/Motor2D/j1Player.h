@@ -53,7 +53,8 @@ public:
 	float myGravity;
 	int jumpCount;
 	int dashCount;
-	bool godModeEnabled;
+	int godmodeCount;
+	
 
 
 	//----- Animations Awesome Game 2 ------
@@ -91,7 +92,7 @@ public:
 	uint audio_stageclear;
 	
 	bool destroyed = true;
-	bool god_mode = false;
+	
 
 	Collider* c_player = nullptr;
 	Collider* offSet = nullptr;

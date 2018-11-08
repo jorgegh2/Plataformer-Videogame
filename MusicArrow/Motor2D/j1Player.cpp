@@ -188,6 +188,7 @@ bool j1Player::Start()
 	bool ret = true;
 	graphics = App->tex->Load("assets/Archer/Archer2.png");
 	
+	godmodeCount = 0;
 
 	ResetPlayer();
 
@@ -342,8 +343,10 @@ bool j1Player::Update(float dt)
 		break;
 
 	case ONAIR:
-		
+			
+			
 			speed.y = speed.y + myGravity * App->time->DeltaTime();
+
 			if (speed.y >= 0)
 			{
 				if (speed.y < d_positiveY.Modulo)
@@ -427,34 +430,44 @@ bool j1Player::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 			{
 				position.x -= speed.x;
-				App->render->camera.x += speed.x* App->win->GetScale();
+				App->render->camera.x += speed.x * App->win->GetScale();
 			}
 			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 			{
 				position.x += speed.x;
-				App->render->camera.x -= speed.x* App->win->GetScale();
+				App->render->camera.x -= speed.x * App->win->GetScale();
 			}
 			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 			{
 				position.y -= speed.x;
-				App->render->camera.y += speed.x* App->win->GetScale();
+				App->render->camera.y += speed.x * App->win->GetScale();
 			}
 			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 			{
 				position.y += speed.x;
-				App->render->camera.y -= speed.x* App->win->GetScale();
+				App->render->camera.y -= speed.x * App->win->GetScale();
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && godModeEnabled == true)
+			if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && godmodeCount == 1)
 			{
 				jstate = ONAIR;
-				godModeEnabled = false;
+				godmodeCount--;
 			}
-
-		break;
+		
+			break;
 	}
 
-	if (godModeEnabled == false) {
+	//GOD MODE
+
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && godmodeCount == 0) {
+		jstate = GODMODE;
+		godmodeCount++;
+	}
+
+
+	//OffSet Camera
+	if (jstate!= GODMODE)
+	{
 
 		if (d_positiveY.Modulo != 0.0f && jstate != DEAD) jstate = ONAIR;
 
@@ -484,13 +497,10 @@ bool j1Player::Update(float dt)
 			}
 		}
 
-	}
+	
 
-	//GOD MODE
+	
 
-	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && godModeEnabled == false) {
-		jstate = GODMODE;
-		godModeEnabled = true;
 	}
 	
 	
