@@ -1,8 +1,8 @@
-#CITM_2_Dev_Platformer
+# CITM_2_Dev_Platformer
 
-##Controls
+## Controls
 
-Keyboard:
+### Keyboard:
 
 A: Move left
 D: Move right
@@ -10,7 +10,7 @@ J: Dash
 Space: Jump
 Enter: Special Movement
 
-Debug Keys: (still doing)
+### Debug Keys: (still doing)
 
 F1-> Start from the very first level
 F2-> Start from the beginning of the current level
@@ -19,13 +19,13 @@ F6-> Load the previous state (even across levels)
 F9-> To view colliders / logic
 F10-> God Mode
 
-##Find this project solution in:
+## Find this project solution in:
 https://github.com/jorgegh2/Plataformer-Videogame
 
-##Find this project's scrum board in:
+## Find this project's scrum board in:
 https://trello.com/b/nqgWasdW/our-super-awesome-game-2
 
-##Credits
+## Credits
 Programming: Jorge Gemas Herencia
 Github: https://github.com/jorgegh2
 
