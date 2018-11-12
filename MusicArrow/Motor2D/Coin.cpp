@@ -11,7 +11,7 @@ Coin::Coin(int x, int y) : Entity(x, y)
 	//EXAMPLE
 	
 	rotateAnimation = App->tex->CreateAnimation("coin", "rotate", true);
-	collider = App->collision->AddCollider({ x, y,128,128 }, COLLIDER_COIN, App->entity);
+	collider = App->collision->AddCollider({ x, y,128,128 }, COLLIDER_COIN, App->entities);
 	animation = &rotateAnimation;
 	sound = App->audio->LoadFx("audio/coin2.wav");
 }

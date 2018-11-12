@@ -245,7 +245,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, p
 
 int j1PathFinding::CreatePathManhattan(const iPoint& origin, const iPoint& destination, p2DynArray<iPoint> &path)
 {
-	BROFILER_CATEGORY("PathManhattan", Profiler::Color::Red);
+//	BROFILER_CATEGORY("PathManhattan", Profiler::Color::Red);
 	if (!IsWalkable(origin) || !IsWalkable(destination))
 		return -1;
 

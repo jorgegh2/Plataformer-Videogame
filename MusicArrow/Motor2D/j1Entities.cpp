@@ -13,6 +13,7 @@
 #include "Brofiler\Brofiler.h"
 #include "Coin.h"
 #include "j1FadeToBlack.h"
+#include "j1Collision.h"
 
 #define SPAWN_MARGIN 140
 #define DESPAWN_MARGIN 1400
@@ -213,7 +214,7 @@ void j1Entities::SpawnEntity(const EntityInfo& info)
 			entities[i] = new Enemy_Walk(info.x, info.y);
 			break;
 		case ENTITY_TYPES::ENTITY_PLAYER:
-			entities[i] = player = new j1Player(info.x,info.y);
+			//entities[i] = player = new j1Player(info.x,info.y);
 			entities[i]->isPlayer = true;
 			break;
 		case ENTITY_TYPES::COIN:

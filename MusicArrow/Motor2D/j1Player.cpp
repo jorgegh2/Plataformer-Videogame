@@ -169,6 +169,13 @@ j1Player::j1Player() : j1Module()
 
 
 }
+
+j1Player::j1Player(int x, int y)
+{
+	position.x = x;
+	position.y = y;
+}
+
 bool j1Player::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Player Module");

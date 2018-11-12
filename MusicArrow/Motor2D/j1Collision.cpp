@@ -334,7 +334,7 @@ void j1Collision::AllCollidersToDelete()
 bool j1Collision::CollisionToWorld(Collider* player, bool* movement)
 {
 	//BROFILER_CATEGORY("CollisionToWorld", Profiler::Color::Aqua);
-	//bool ret = false;
+	bool ret = false;
 	//SDL_Rect playerRect = player->rect;
 	//// number of gid, layer collision
 	//uint wall = 141, dead = 143, playerStart = 144, changeLvl = 142;
@@ -499,7 +499,7 @@ bool j1Collision::CollisionToWorld(Collider* player, bool* movement)
 	//			}
 	//	}
 	//}
-	//return ret;
+	return ret;
 }
 
 

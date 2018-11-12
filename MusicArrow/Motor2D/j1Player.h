@@ -21,6 +21,7 @@ class j1Player : public j1Module
 {
 public:
 	j1Player();
+	j1Player(int x, int y);
 	~j1Player();
 
 	// Called before render is available

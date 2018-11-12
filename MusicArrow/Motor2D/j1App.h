@@ -21,12 +21,12 @@ class Timer;
 class j1Scene_Forest;
 class j1Scene_Winter;
 class j1Entities;
-class j1Entity;
-class j1Pathfinding;
-class Enemy_Walk;
-class Enemy_Fly;
-class Coin;
-class j1PerfTimer;
+//class j1Entity;
+class j1PathFinding;
+//class Enemy_Walk;
+//class Enemy_Fly;
+//class Coin;
+//class j1PerfTimer;
 
 class j1App
 {
@@ -105,12 +105,12 @@ public:
 	j1Scene_Forest*		map_forest;
 	j1Scene_Winter*		map_winter;
 	j1Entities*			entities;
-	j1Entity*			entity;
-	j1Pathfinding*		pathfinding;
-	Enemy_Walk*			enemy_walk;
-	Enemy_Fly*			enemy_fly;
-	Coin*				coin;
-	j1PerfTimer*		perf_timer;
+	//j1Entity*			entity;
+	j1PathFinding*		pathfinding;
+	//Enemy_Walk*			enemy_walk;
+	//Enemy_Fly*			enemy_fly;
+	//Coin*				coin;
+	//j1PerfTimer*		perf_timer;
 
 private:
 

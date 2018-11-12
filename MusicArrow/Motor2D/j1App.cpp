@@ -20,11 +20,11 @@
 #include "j1Scene_Forest.h"
 #include "j1Scene_Winter.h"
 #include "j1Entities.h"
-#include "j1Entity.h"
+//#include "j1Entity.h"
 #include "j1Pathfinding.h"
-#include "Enemy_Walk.h"
-#include "Enemy_Fly.h"
-#include "Coin.h"
+//#include "Enemy_Walk.h"
+//#include "Enemy_Fly.h"
+//#include "Coin.h"
 #include "j1PerfTimer.h"
 
 
@@ -49,12 +49,13 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	map_forest = new j1Scene_Forest();
 	map_winter = new j1Scene_Winter();
 	entities = new j1Entities();
-	entity = new j1Entity();
-	pathfinding = new j1Pathfinding();
-	enemy_walk = new Enemy_Walk();
-	enemy_fly = new Enemy_Fly();
-	coin = new Coin();
-	perf_timer = new j1PerfTimer();
+	pathfinding = new j1PathFinding();
+
+	//entity = new j1Entity();
+	//enemy_walk = new Enemy_Walk();
+	//enemy_fly = new Enemy_Fly();
+	//coin = new Coin();
+	//perf_timer = new j1PerfTimer();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -74,13 +75,13 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 
 	AddModule(entities);
-	AddModule(entity);
+	//AddModule(entity);
 	AddModule(pathfinding);
-	AddModule(enemy_walk);
-	AddModule(enemy_fly);
-	AddModule(coin);
+	//AddModule(enemy_walk);
+	//AddModule(enemy_fly);
+	//AddModule(coin);
 
-	AddModule(perf_timer);
+	//AddModule(perf_timer);
 	AddModule(time);
 
 	// render last to swap buffer

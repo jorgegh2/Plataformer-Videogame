@@ -33,7 +33,8 @@ Enemy_Fly::Enemy_Fly(int x, int y) : Entity(x, y)
 	originalpos.x = position.x = x;
 	originalpos.y = position.y = y;
 
-	collider = App->collision->AddCollider({ (int)position.x, (int)position.y,86,119 }, COLLIDER_ENEMY, App->entity);
+	//App->entities posible error, original(App->entity)
+	collider = App->collision->AddCollider({ (int)position.x, (int)position.y,86,119 }, COLLIDER_ENEMY, App->entities);
 }
 
 void Enemy_Fly::Move(float dt)

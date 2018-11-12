@@ -32,7 +32,7 @@ Enemy_Walk::Enemy_Walk(int x, int y) : Entity(x, y)
 	originalpos.y = position.y = y;
 
 
-	collider = App->collision->AddCollider({ (int)position.x, (int)position.y, 86, 119 }, COLLIDER_WALKENEMY, App->entity);
+	collider = App->collision->AddCollider({ (int)position.x, (int)position.y, 86, 119 }, COLLIDER_WALKENEMY, App->entities);
 	timer.Start();
 }
 
