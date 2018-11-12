@@ -60,3 +60,14 @@ bool Timer::Update(float dt) {
 	mDelataTime = mElapsedTicks * 0.001f;
 	return true;
 }
+
+uint32 Timer::Read() const
+{
+	return SDL_GetTicks() - started_at;
+}
+
+
+float Timer::ReadSec() const
+{
+	return float(SDL_GetTicks() - started_at) / 1000.0f;
+}

@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "p2List.h"
+#include "Animation.h"
 
 struct SDL_Texture;
 struct SDL_Surface;
@@ -34,6 +35,9 @@ public:
 public:
 
 	p2List<SDL_Texture*>	textures;
+
+	Animation CreateAnimation(char* anim_type, char* anim, bool loop);
+	float NormalizeAnimSpeed(char* anim_type, char* anim, float dt);
 };
 
 

@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 
+
 #include "SDL_image/include/SDL_image.h"
 #pragma comment( lib, "SDL_image/libx86/SDL2_image.lib" )
 
@@ -116,4 +117,30 @@ SDL_Texture* const j1Textures::LoadSurface(SDL_Surface* surface)
 void j1Textures::GetSize(const SDL_Texture* texture, uint& width, uint& height) const
 {
 	SDL_QueryTexture((SDL_Texture*)texture, NULL, NULL, (int*) &width, (int*) &height);
+}
+
+Animation j1Textures::CreateAnimation(char* anim_type, char* anim, bool loop) {
+	Animation ret;
+
+	pugi::xml_document anim_file;
+	pugi::xml_parse_result result = anim_file.load_file("animations.xml");
+	pugi::xml_node anim_node = anim_file.child("animations").child(anim_type).child(anim).child("frame");
+
+	while (anim_node != nullptr) {
+		ret.PushBack({ anim_node.attribute("x").as_int(),anim_node.attribute("y").as_int(),anim_node.attribute("width").as_int(),anim_node.attribute("height").as_int() });
+		anim_node = anim_node.next_sibling();
+	}
+	ret.speed = anim_file.child("animations").child(anim_type).child("speeds").attribute(anim).as_float();
+	ret.loop = loop;
+	return ret;
+}
+
+float j1Textures::NormalizeAnimSpeed(char* anim_type, char* anim, float dt) {
+
+	pugi::xml_document anim_file;
+	pugi::xml_parse_result result = anim_file.load_file("animations.xml");
+
+	float ret;
+	ret = anim_file.child("animations").child(anim_type).child("speeds").attribute(anim).as_float()*dt;
+	return ret;
 }

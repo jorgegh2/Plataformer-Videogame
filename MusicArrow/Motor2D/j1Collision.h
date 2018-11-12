@@ -14,6 +14,9 @@ enum COLLIDER_TYPE
 	COLLIDER_START_WALL,
 	COLLIDER_FINISH_LEVEL,
 	COLLIDER_PLAYER,
+	COLLIDER_ENEMY,
+	COLLIDER_COIN,
+	COLLIDER_WALKENEMY,
 
 
 	COLLIDER_MAX
@@ -67,6 +70,8 @@ public:
 	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback = nullptr);
 	void DebugDraw();
 	void AllCollidersToDelete();
+
+	bool CollisionToWorld(Collider* playerRect, bool* movement);
 
 
 	Distance distance;

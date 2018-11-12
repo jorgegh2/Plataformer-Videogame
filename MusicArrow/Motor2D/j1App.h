@@ -20,6 +20,13 @@ class j1Player;
 class Timer;
 class j1Scene_Forest;
 class j1Scene_Winter;
+class j1Entities;
+class j1Entity;
+class j1Pathfinding;
+class Enemy_Walk;
+class Enemy_Fly;
+class Coin;
+class j1PerfTimer;
 
 class j1App
 {
@@ -83,7 +90,7 @@ private:
 public:
 
 	// Modules
-	j1Window * win;
+	j1Window *			win;
 	j1Input*			input;
 	j1Render*			render;
 	j1Textures*			tex;
@@ -97,6 +104,13 @@ public:
 	Timer*				time;
 	j1Scene_Forest*		map_forest;
 	j1Scene_Winter*		map_winter;
+	j1Entities*			entities;
+	j1Entity*			entity;
+	j1Pathfinding*		pathfinding;
+	Enemy_Walk*			enemy_walk;
+	Enemy_Fly*			enemy_fly;
+	Coin*				coin;
+	j1PerfTimer*		perf_timer;
 
 private:
 

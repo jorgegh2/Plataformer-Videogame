@@ -15,6 +15,8 @@ private:
 	float mDelataTime;
 	float mTimeScale;
 
+	uint32	started_at;
+
 public:
 
 	static Timer* Instance();
@@ -27,6 +29,9 @@ public:
 	float TimeScale();
 
 	bool Update(float dt);
+
+	uint32 Read() const;
+	float ReadSec() const;
 
 	Timer();
 	~Timer();
