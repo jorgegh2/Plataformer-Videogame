@@ -481,30 +481,33 @@ bool j1Player::Update(float dt)
 		if (jstate != DEAD) c_player->SetPos(position.x, position.y);
 		App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), flip);
 		SDL_Rect offSet{ (-App->render->camera.x / App->win->GetScale()) + 200, (-App->render->camera.y / App->win->GetScale()) + 600, 800, 600 };
+		//13568 limite derecho del mapa
 		//App->render->DrawQuad(offSet, 255, 255, 255, 80);
-
-		//if(-App->render->camera.x > 0 || -App->render->camera.x + App->render->camera.w < App->map->MapToWorld().x)
-		if (position.x + c_player->rect.w > offSet.w + offSet.x)
+		
+		int limit = -App->render->camera.x + App->render->camera.w;
+		if (-App->render->camera.x > 1 && limit < 13568 && -App->render->camera.y + App->render->camera.h < 1645)
 		{
-			App->render->camera.x = -(position.x * App->win->GetScale() - 423);
-		}
-		else if (position.x < offSet.x)
-		{
-			App->render->camera.x = -(position.x * App->win->GetScale() - 100);
-		}
-
-		if (jstate != DEAD) {
-			if (position.y < offSet.y)
+			if (position.x + c_player->rect.w > offSet.w + offSet.x)
 			{
-				App->render->camera.y = -(position.y * App->win->GetScale() - 300);
+				App->render->camera.x = -(position.x * App->win->GetScale() - 423);
 			}
-			else if (position.y + c_player->rect.h > offSet.y + offSet.h)
+			else if (position.x < offSet.x)
 			{
-				App->render->camera.y = -(position.y * App->win->GetScale() - 515);
+				App->render->camera.x = -(position.x * App->win->GetScale() - 100);
 			}
-		}
 
-	
+			if (jstate != DEAD) {
+				if (position.y < offSet.y)
+				{
+					App->render->camera.y = -(position.y * App->win->GetScale() - 300);
+				}
+				else if (position.y + c_player->rect.h > offSet.y + offSet.h)
+				{
+					App->render->camera.y = -(position.y * App->win->GetScale() - 515);
+				}
+			}
+
+		}
 
 	
 
@@ -599,7 +602,7 @@ void j1Player::ResetPlayer()
 	}
 
 	position.x = StartPoint.x;
-	position.y = StartPoint.y;
+	position.y = StartPoint.y-2000;
 
 	App->render->camera.x = -position.x * App->win->GetScale() + WIDTH_CANVAS;
 	App->render->camera.y = -position.y * App->win->GetScale() + HEIGHT_CANVAS;

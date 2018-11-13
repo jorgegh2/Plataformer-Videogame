@@ -5,7 +5,7 @@
 
 //window
 
-#define WIDTH_CANVAS 250;
+#define WIDTH_CANVAS 100;
 #define HEIGHT_CANVAS 500;
 
 //  NULL just in case ----------------------
