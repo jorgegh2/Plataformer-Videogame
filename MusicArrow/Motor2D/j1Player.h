@@ -53,6 +53,8 @@ public:
 	
 	float velocityX;
 	
+	bool IsGodMode = false;
+
 	int jumpCount;
 	int dashCount;
 	int godmodeCount;

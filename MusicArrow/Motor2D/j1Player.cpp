@@ -457,20 +457,22 @@ bool j1Player::Update(float dt)
 				App->render->camera.y -= speed.x * App->win->GetScale();
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && godmodeCount == 1)
-			{
-				jstate = ONAIR;
-				godmodeCount--;
-			}
+			
 		
 			break;
 	}
 
 	//GOD MODE
 
-	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && godmodeCount == 0) {
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && !IsGodMode) {
 		jstate = GODMODE;
-		godmodeCount++;
+		IsGodMode = true;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && IsGodMode)
+	{
+		jstate = ONAIR;
+		IsGodMode = false;
+		App->time->Reset();
 	}
 
 
