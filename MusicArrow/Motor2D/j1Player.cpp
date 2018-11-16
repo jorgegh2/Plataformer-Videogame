@@ -22,6 +22,10 @@
 #include "j1Window.h"
 #include "j1Render.h"
 #include "j1Audio.h"
+#include "j1Scene.h"
+#include "j1FadeToBlack.h"
+#include "j1Scene_Forest.h"
+#include "j1Scene_Winter.h"
 
 
 
@@ -246,6 +250,12 @@ bool j1Player::Update(float dt)
 	Distance d_negativeY = App->collision->dNegativeY;
 	current_animation = &idle;
 
+	bool incamera = App->render->InCamera(c_player->rect);
+	
+	if (incamera)
+	{
+		LOG("yeeey");
+	}
 
 	//Horizontal movement
 
@@ -264,9 +274,23 @@ bool j1Player::Update(float dt)
 	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && jstate != DEAD && jstate != GODMODE)
 	{
 		if (d_positiveX.Modulo < speed.x && d_positiveX.nearestColliderType != COLLIDER_PLATAFORM)
+		{
 			position.x += d_positiveX.Modulo;
+			if (d_positiveX.nearestColliderType == COLLIDER_FINISH_LEVEL)
+			{
+				if (App->scene->current_scene == "scene_forest")
+				{
+					App->fadeToBlack->FadeToBlack(App->map_forest, App->map_winter);
+				}
+				else
+				{
+					App->fadeToBlack->FadeToBlack(App->map_winter, App->map_forest);
+				}
+			}
+		}
 
-		else position.x += speed.x;
+		else 
+			position.x += speed.x;
 
 		velocityX = speed.x;
 		current_animation = &walk;
@@ -275,7 +299,7 @@ bool j1Player::Update(float dt)
 	}
 
 	//Dash movement
-	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && dashCount < 1 && jstate == ONAIR && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && jstate != DEAD && jstate != GODMODE)
+/*	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && dashCount < 1 && jstate == ONAIR && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && jstate != DEAD && jstate != GODMODE)
 	{
 		if (dashCount == 0) App->time->Reset();
 		dashCount = 1;
@@ -303,7 +327,7 @@ bool j1Player::Update(float dt)
 		}
 		else jstate = LANDING;
 
-	}
+	}*/
 
 	//Flip player sprite if x speed is negative
 	if (velocityX < 0)flip = SDL_FLIP_HORIZONTAL;
@@ -607,7 +631,7 @@ void j1Player::ResetPlayer()
 	}
 
 	position.x = StartPoint.x;
-	position.y = StartPoint.y-2000;
+	position.y = StartPoint.y-500;
 
 	App->render->camera.x = -position.x * App->win->GetScale() + WIDTH_CANVAS;
 	App->render->camera.y = -position.y * App->win->GetScale() + HEIGHT_CANVAS;

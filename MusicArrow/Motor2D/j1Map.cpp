@@ -110,13 +110,14 @@ void j1Map::Draw()
 			for (uint i = 0; i < item_layer->data->height; i++) {
 				for (uint j = 0; j < item_layer->data->width; j++) {
 					id = item_layer->data->data[item_layer->data->Get(j, i)];
-					if (id != 0 && MapToWorld(j, i).x > -App->render->camera.x * App->win->GetScale() )//&& MapToWorld(j, i).x < -App->render->camera.x + App->render->camera.w)
+					if (id != 0 && App->render->InCamera({ MapToWorld(j, i).x, MapToWorld(j, i).y, item_tileset->data->tile_width, item_tileset->data->tile_height }))
 					{
 						App->render->Blit(item_tileset->data->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &item_tileset->data->GetTileRect(id), SDL_FLIP_NONE);
 						/*if (item_tileset->data->name == "TilesetWinterObjects128x128") {
 							App->render->Blit(item_tileset->data->texture, MapToWorld(j, i).x, MapToWorld(j, i).y + 10, &item_tileset->data->GetTileRect(id));
 						}*/
 					}
+
 				}
 			}
 		}
