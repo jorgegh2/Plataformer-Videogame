@@ -13,6 +13,7 @@
 #include "j1Scene_Forest.h"
 #include "j1Scene_Winter.h"
 #include "j1Player.h"
+#include "j1Entities.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -84,7 +85,7 @@ bool j1Scene::Update(float dt)
 	{
 		if (App->map_forest->active == true)
 		{
-			App->player->ResetPlayer();
+			App->entities->player->ResetPlayer();
 		}
 		else
 		{
@@ -94,7 +95,7 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
 		
-			App->player->ResetPlayer();
+			App->entities->player->ResetPlayer();
 		
 	}
 

@@ -7,6 +7,7 @@
 #include "j1Render.h"
 #include "j1Scene.h"
 #include "j1Player.h"
+#include "j1Entities.h"
 
 j1Scene_Forest::j1Scene_Forest() : j1Module()
 {
@@ -28,7 +29,7 @@ bool j1Scene_Forest::Start()
 {
 	App->map->Load("Level1.tmx");
 	App->map->SetAllColliders();
-	App->player->ResetPlayer();
+	App->entities->player->ResetPlayer();
 	return true;
 }
 

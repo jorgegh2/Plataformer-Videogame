@@ -51,7 +51,7 @@ void Enemy_Fly::Move(float dt)
 
 
 	iPoint enemy_tiles_pos = App->map->WorldToMap(position.x, position.y);
-	iPoint player_tiles_pos = App->map->WorldToMap(App->player->position.x, App->player->position.y);
+	iPoint player_tiles_pos = App->map->WorldToMap(App->entities->player->position.x, App->entities->player->position.y);
 
 	if (player_tiles_pos.x - enemy_tiles_pos.x <= 5 && player_tiles_pos.x - enemy_tiles_pos.x >= -5 && player_tiles_pos.y - enemy_tiles_pos.y <= 5 && player_tiles_pos.y - enemy_tiles_pos.y >= -5)
 	{

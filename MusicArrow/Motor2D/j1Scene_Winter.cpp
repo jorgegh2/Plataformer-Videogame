@@ -7,6 +7,7 @@
 #include "j1Render.h"
 #include "j1Scene.h"
 #include "j1Player.h"
+#include "j1Entities.h"
 
 j1Scene_Winter::j1Scene_Winter()
 {
@@ -32,7 +33,7 @@ bool j1Scene_Winter::Start()
 {
 	App->map->Load("Level2.tmx");
 	App->map->SetAllColliders();
-	App->player->ResetPlayer();
+	App->entities->player->ResetPlayer();
 	return true;
 }
 

@@ -25,11 +25,17 @@
 
 
 
-j1Player::j1Player() : j1Module()
+j1Player::j1Player() : Entity()
+{
+
+
+}
+
+j1Player::j1Player(int x, int y) : Entity(x, y)
 {
 	graphics = NULL;
 	current_animation = NULL;
-	name.create("player");
+	//name.create("player");
 
 	//------ New Animations Awesome Game 2 ------
 
@@ -168,10 +174,6 @@ j1Player::j1Player() : j1Module()
 	//-------------------------------------
 
 
-}
-
-j1Player::j1Player(int x, int y)
-{
 	position.x = x;
 	position.y = y;
 }
@@ -182,7 +184,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 	bool ret = true;
 	
 	speed = { config.child("vars").child("speed").attribute("speedX").as_float(), config.child("vars").child("speed").attribute("speedY").as_float() };
-	myGravity = config.child("vars").child("myGravity").attribute("value").as_float();
+	gravity = config.child("vars").child("myGravity").attribute("value").as_float();
 	return ret;
 }
 j1Player::~j1Player()
@@ -352,7 +354,7 @@ bool j1Player::Update(float dt)
 	case ONAIR:
 			
 			
-			speed.y = speed.y + myGravity * App->time->DeltaTime();
+			speed.y = speed.y + gravity * App->time->DeltaTime();
 
 			if (speed.y >= 0)
 			{
@@ -417,7 +419,7 @@ bool j1Player::Update(float dt)
 		c_player->SetPos(-1000, -1000);
 
 		speed.y = -1;
-		speed.y = speed.y + myGravity * App->time->DeltaTime();
+		speed.y = speed.y + gravity * App->time->DeltaTime();
 		position.y += speed.y * App->time->DeltaTime();
 
 		if (position.y > (-App->render->camera.y + App->render->camera.h)*2) //ADD FADE TO BLACK
@@ -479,6 +481,7 @@ bool j1Player::Update(float dt)
 		if (d_positiveY.Modulo != 0.0f && jstate != DEAD) jstate = ONAIR;
 
 		if (jstate != DEAD) c_player->SetPos(position.x, position.y);
+
 		App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), flip);
 		SDL_Rect offSet{ (-App->render->camera.x / App->win->GetScale()) + 200, (-App->render->camera.y / App->win->GetScale()) + 600, 800, 600 };
 		//13568 limite derecho del mapa

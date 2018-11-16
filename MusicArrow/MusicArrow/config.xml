@@ -26,33 +26,36 @@
     <folder>maps/</folder>
   </map>
 
-  <player>
-    <vars>
-      <speed speedX="8" speedY="0"></speed>
-      <myGravity value="1"></myGravity>
-    </vars>
-    <fxsound>
-      <jump source="audio/fx/jump.wav"></jump> config.child("fxsound").child("jump").attribute("source").as_string()
-      <dash source="audio/fx/dash.wav"></dash> config.child("fxsound").child("dash").attribute("source").as_string()
-      <bump source="audio/fx/bump.wav"></bump> config.child("fxsound").child("bump").attribute("source").as_string()
-      <dead source="audio/fx/dead.wav"></dead> config.child("fxsound").child("dead").attribute("source").as_string()
-      <finishdead source="audio/fx/finishdead.wav"></finishdead> config.child("fxsound").child("finishdead").attribute("source").as_string()
-      <stageclear source="audio/fx/stageclear.wav"></stageclear> config.child("fxsound").child("stageclear").attribute("source").as_string()
-    </fxsound>
-    <playercontrols>
-      <moveleft input="SDL_SCANCODE_A"></moveleft> config.child("playercontrols").child("moveleft").attribute("input").as_string()
-      <moveright input="SDL_SCANCODE_D"></moveright> config.child("playercontrols").child("moveright").attribute("input").as_string()
-      <jump input="SDL_SCANCODE_SPACE"></jump> config.child("playercontrols").child("jump").attribute("input").as_string()
-      <dash input="SDL_SCANCODE_J"></dash> config.child("playercontrols").child("dash").attribute("input").as_string()
-      <specialmove input="SDL_SCANCODE_K"></specialmove> config.child("playercontrols").child("specialmove").attribute("input").as_string()
-    </playercontrols>
-    <cameracontrols>
-      <moveleft input="SDL_SCANCODE_LEFT"></moveleft> config.child("cameracontrols").child("moveleft").attribute("input").as_string()
-      <moveright input="SDL_SCANCODE_RIGHT"></moveright> config.child("cameracontrols").child("moveright").attribute("input").as_string()
-      <moveup input="SDL_SCANCODE_UP"></moveup> config.child("cameracontrols").child("moveup").attribute("input").as_string()
-      <movedown input="SDL_SCANCODE_DOWN"></movedown> config.child("cameracontrols").child("movedown").attribute("input").as_string()
-    </cameracontrols>
-  </player>
+  <entities>
+    <player>
+      <vars>
+        <speed speedX="8" speedY="0"></speed>
+        <myGravity value="1"></myGravity>
+      </vars>
+      <fxsound>
+        <jump source="audio/fx/jump.wav"></jump> config.child("fxsound").child("jump").attribute("source").as_string()
+        <dash source="audio/fx/dash.wav"></dash> config.child("fxsound").child("dash").attribute("source").as_string()
+        <bump source="audio/fx/bump.wav"></bump> config.child("fxsound").child("bump").attribute("source").as_string()
+        <dead source="audio/fx/dead.wav"></dead> config.child("fxsound").child("dead").attribute("source").as_string()
+        <finishdead source="audio/fx/finishdead.wav"></finishdead> config.child("fxsound").child("finishdead").attribute("source").as_string()
+        <stageclear source="audio/fx/stageclear.wav"></stageclear> config.child("fxsound").child("stageclear").attribute("source").as_string()
+      </fxsound>
+      <playercontrols>
+        <moveleft input="SDL_SCANCODE_A"></moveleft> config.child("playercontrols").child("moveleft").attribute("input").as_string()
+        <moveright input="SDL_SCANCODE_D"></moveright> config.child("playercontrols").child("moveright").attribute("input").as_string()
+        <jump input="SDL_SCANCODE_SPACE"></jump> config.child("playercontrols").child("jump").attribute("input").as_string()
+        <dash input="SDL_SCANCODE_J"></dash> config.child("playercontrols").child("dash").attribute("input").as_string()
+        <specialmove input="SDL_SCANCODE_K"></specialmove> config.child("playercontrols").child("specialmove").attribute("input").as_string()
+      </playercontrols>
+      <cameracontrols>
+        <moveleft input="SDL_SCANCODE_LEFT"></moveleft> config.child("cameracontrols").child("moveleft").attribute("input").as_string()
+        <moveright input="SDL_SCANCODE_RIGHT"></moveright> config.child("cameracontrols").child("moveright").attribute("input").as_string()
+        <moveup input="SDL_SCANCODE_UP"></moveup> config.child("cameracontrols").child("moveup").attribute("input").as_string()
+        <movedown input="SDL_SCANCODE_DOWN"></movedown> config.child("cameracontrols").child("movedown").attribute("input").as_string()
+      </cameracontrols>
+    </player>
+  </entities>
+ 
   <scene>
     <bgmusic>
       <level1 source="audio/music/musicstage1.wav"></level1>

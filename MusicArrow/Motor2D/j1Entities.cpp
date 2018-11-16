@@ -24,24 +24,41 @@ j1Entities::j1Entities()
 		entities[i] = nullptr;
 
 	name.create("entities");
+
+	AddEntity(ENTITY_PLAYER, 0, 0);
+	SpawnEntity(queue[0]); // The player
+	queue[0].type = ENTITY_TYPES::NO_TYPE;
 }
 
 // Destructor
 j1Entities::~j1Entities()
 {
-	App->tex->UnLoad(sprites);
+	//App->tex->UnLoad(sprites);
 }
 
 bool j1Entities::Start()
 {
 	// Create a prototype for each enemy available so we can copy them around
-	sprites = App->tex->Load("maps/enemySprites.png");
-	player_life = 3;
+	//sprites = App->tex->Load("maps/enemySprites.png");
+	//player_life = 3;
+
+	
+	player->Start();
+
 	return true;
 }
 
 bool j1Entities::Awake(pugi::xml_node& config)
 {
+
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	{
+		if (entities[i] != nullptr)
+		{
+			entities[i]->Awake(config.child("player"));
+		}
+	}
+
 	return true;
 
 }
@@ -69,6 +86,13 @@ bool j1Entities::PreUpdate()
 // Called before render is available
 bool j1Entities::Update(float dt)
 {
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	{
+		if (entities[i] != nullptr)
+		{
+			entities[i]->Update(dt);
+		}
+	}
 
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
@@ -131,7 +155,7 @@ bool j1Entities::PostUpdate()
 // Called before quitting
 bool j1Entities::CleanUp()
 {
-	App->tex->UnLoad(sprites);
+	//App->tex->UnLoad(sprites);
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
 		if (entities[i] != nullptr)
@@ -184,7 +208,7 @@ bool j1Entities::AddEntity(ENTITY_TYPES type, int x, int y)
 			queue[i].x = x;
 			queue[i].y = y;
 			ret = true;
-
+			
 			break;
 		}
 	}
@@ -214,7 +238,7 @@ void j1Entities::SpawnEntity(const EntityInfo& info)
 			entities[i] = new Enemy_Walk(info.x, info.y);
 			break;
 		case ENTITY_TYPES::ENTITY_PLAYER:
-			//entities[i] = player = new j1Player(info.x,info.y);
+			entities[i] = player = new j1Player(info.x,info.y);
 			entities[i]->isPlayer = true;
 			break;
 		case ENTITY_TYPES::COIN:
@@ -225,8 +249,31 @@ void j1Entities::SpawnEntity(const EntityInfo& info)
 	}
 }
 
-void j1Entities::OnCollision(Collider* c1, Collider* c2)
+bool j1Entities::Load(pugi::xml_node& data)
 {
 
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	{
+		if (entities[i] != nullptr)
+		{
+			entities[i]->Load(data);
+		}
+	}
+
+	return true;
+}
+
+bool j1Entities::Save(pugi::xml_node& data) const
+{
+
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	{
+		if (entities[i] != nullptr)
+		{
+			entities[i]->Save(data);
+		}
+	}
+
+	return true;
 }
 

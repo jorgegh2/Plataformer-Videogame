@@ -7,6 +7,7 @@
 #include "SDL/include/SDL_render.h"
 #include "p2Point.h"
 #include "j1Audio.h"
+#include "j1Entity.h"
 
 struct SDL_Texture;
 struct SDL_Rect;
@@ -17,7 +18,7 @@ struct Collider;
 
 enum state {JUMP, ONFLOOR, ONAIR, LANDING, DEAD, GODMODE};
 
-class j1Player : public j1Module
+class j1Player : public Entity
 {
 public:
 	j1Player();
@@ -29,12 +30,13 @@ public:
 	bool Start();
 	bool Update(float dt);
 	bool CleanUp();
+
 	// Load / Save
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
-	state j1Player::SetStateFromInt(int state_as_int);
-	void j1Player::ResetPlayer();
+	state SetStateFromInt(int state_as_int);
+	void ResetPlayer();
 
 
 	
@@ -48,10 +50,9 @@ public:
 	Animation* current_animation = nullptr;
 	
 	iPoint StartPoint;
-	fPoint position;
-	fPoint speed;
+	
 	float velocityX;
-	float myGravity;
+	
 	int jumpCount;
 	int dashCount;
 	int godmodeCount;

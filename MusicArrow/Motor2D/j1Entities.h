@@ -40,12 +40,16 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 	bool ResetEntities();
-	void OnCollision(Collider* c1, Collider* c2);
+	//void OnCollision(Collider* c1, Collider* c2);
+
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
 
 	bool AddEntity(ENTITY_TYPES type, int x, int y);
 
 
 	j1Player* player = nullptr;
+	//p2SString name
 private:
 
 	void SpawnEntity(const EntityInfo& info);

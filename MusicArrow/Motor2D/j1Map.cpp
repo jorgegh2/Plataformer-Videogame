@@ -8,6 +8,7 @@
 #include <math.h>
 #include "j1Collision.h"
 #include "j1Window.h"
+#include "j1Entities.h"
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
@@ -84,39 +85,19 @@ void j1Map::Draw()
 
 		}
 
-		if (App->player->velocityX > 0)
+		if (App->entities->player->velocityX > 0)
 		{
 
 			item_imgLayer->data->position_x -= speedLayer;
 
 		}
-		else if (App->player->velocityX < 0)
+		else if (App->entities->player->velocityX < 0)
 		{
 
 			item_imgLayer->data->position_x += speedLayer;
 		}
 		
 	}
-
-	// TODO 5(old): Prepare the loop to draw all tilesets + Blit
-	/*p2List_item<MapLayer*>* layer = data.layers.start;
-	p2List_item<TileSet*>* tileset = nullptr;
-	iPoint coordenadas;
-	//start from the end because the tileset order are inverted
-	for (tileset = data.tilesets.end; tileset; tileset = tileset->prev) {
-		while (layer != NULL)
-		{
-			for (uint i = 0; i < layer->data->width; i++) {
-				for (uint j = 0; j < layer->data->height; j++) {
-					uint id = layer->data->data[layer->data->Get(i, j)];
-					SDL_Rect rect = tileset->data->GetTileRect(id);
-					coordenadas = MapToWorld(i, j);
-					App->render->Blit(tileset->data->texture, coordenadas.x, coordenadas.y, &rect);
-				}
-			}
-			layer = layer->next;
-		}
-	}*/
 
 	p2List_item<TileSet*>* item_tileset = nullptr;
 	p2List_item<MapLayer*>* item_layer = nullptr;
@@ -126,7 +107,7 @@ void j1Map::Draw()
 			for (uint i = 0; i < item_layer->data->height; i++) {
 				for (uint j = 0; j < item_layer->data->width; j++) {
 					id = item_layer->data->data[item_layer->data->Get(j, i)];
-					if (id != 0)
+					if (id != 0 && MapToWorld(j, i).x > -App->render->camera.x * App->win->GetScale() )//&& MapToWorld(j, i).x < -App->render->camera.x + App->render->camera.w)
 					{
 						App->render->Blit(item_tileset->data->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &item_tileset->data->GetTileRect(id), SDL_FLIP_NONE);
 						/*if (item_tileset->data->name == "TilesetWinterObjects128x128") {
@@ -621,6 +602,6 @@ void j1Map::SetAllColliders()
 	{
 		App->collision->AddCollider(item_object->data->RectCollider, item_object->data->Collider_type, nullptr);
 	}
-	App->player->c_player = App->collision->AddCollider({ App->player->StartPoint.x, App->player->StartPoint.y, colliderPlayer_w, colliderPlayer_h }, COLLIDER_PLAYER, nullptr);
+	App->entities->player->c_player = App->collision->AddCollider({ App->entities->player->StartPoint.x, App->entities->player->StartPoint.y, colliderPlayer_w, colliderPlayer_h }, COLLIDER_PLAYER, nullptr);
 }
 

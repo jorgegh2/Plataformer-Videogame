@@ -3,8 +3,7 @@
 
 #include "p2Point.h"
 #include "Animation.h"
-
-
+#include "PugiXml\src\pugixml.hpp"
 
 struct SDL_Texture;
 struct Collider;
@@ -17,7 +16,7 @@ protected:
 
 	float gravity = 1.0f;
 	float speed_jump = 0;
-	float speed = 0;
+	fPoint speed = {0.0f, 0.0f};
 
 
 public:
@@ -31,8 +30,18 @@ public:
 	int now = 0;
 
 public:
+	Entity() {}
 	Entity(int x, int y);
 	virtual ~Entity();
+
+	virtual bool Awake(pugi::xml_node&) { return true; };
+	virtual bool Start() { return true; };
+	virtual bool Update(float dt) { return true; };
+	virtual bool CleanUp() { return true; };
+
+	virtual bool Load(pugi::xml_node&) { return true; };
+	virtual bool Save(pugi::xml_node&) const { return true; };
+
 
 	const Collider* GetCollider() const;
 	virtual void NormalizeAnimations(float dt) {};

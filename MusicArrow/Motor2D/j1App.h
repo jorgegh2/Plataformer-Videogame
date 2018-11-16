@@ -16,7 +16,7 @@ class j1Map;
 class j1Collision;
 class j1Particles;
 class j1FadeToBlack;
-class j1Player;
+//class j1Player;
 class Timer;
 class j1Scene_Forest;
 class j1Scene_Winter;
@@ -98,7 +98,7 @@ public:
 	j1Scene*			scene;
 	j1Map*				map;
 	j1Collision*		collision;
-	j1Player*			player;
+	//j1Player*			player;
 	j1FadeToBlack*		fadeToBlack;
 	j1Particles*		particles;
 	Timer*				time;

@@ -42,7 +42,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new j1Scene();
 	map = new j1Map();
 	collision = new j1Collision();
-	player = new j1Player();
+	//player = new j1Player();
 	fadeToBlack = new j1FadeToBlack();
 	particles = new j1Particles();
 	time = new Timer();
@@ -71,10 +71,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(fadeToBlack);
 	AddModule(particles);
 	AddModule(collision);
-	AddModule(player);
-
-
+	//AddModule(player);
 	AddModule(entities);
+
+	
 	//AddModule(entity);
 	AddModule(pathfinding);
 	//AddModule(enemy_walk);
