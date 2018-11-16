@@ -11,10 +11,8 @@ class Enemy_Fly : public Entity
 {
 private:
 
-	Animation walkLeft;
-	Animation walkRight;
-	Animation deadRight;
-	Animation deadLeft;
+	Animation fly;
+	Animation attack;
 
 public:
 	iPoint originalpos;

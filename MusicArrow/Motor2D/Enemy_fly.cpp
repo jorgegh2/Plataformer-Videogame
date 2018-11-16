@@ -15,35 +15,32 @@
 #include "Enemy_fly.h"
 #include "j1Entity.h"
 #include "j1Entities.h"
-#include "j1Textures.h"
-
 
 Enemy_Fly::Enemy_Fly(int x, int y) : Entity(x, y)
 {
 
 	// EXAMPLE
 
-	walkLeft = App->tex->CreateAnimation("girl", "walkLeft", true);
-	walkRight = App->tex->CreateAnimation("girl", "walkRight", true);
-	deadRight = App->tex->CreateAnimation("girl", "deadRight", false);
-	deadLeft = App->tex->CreateAnimation("girl", "deadLeft", false);
-	flysound = App->audio->LoadFx("audio/glide.wav");
-	animation = &walkLeft;
+	fly = App->tex->CreateAnimation("crow", "fly", true);
+
+	flysound = App->audio->LoadFx("audio/fx/glide.wav");
+	animation = &fly;
 
 	originalpos.x = position.x = x;
 	originalpos.y = position.y = y;
 
 	//App->entities posible error, original(App->entity)
-	collider = App->collision->AddCollider({ (int)position.x, (int)position.y,86,119 }, COLLIDER_ENEMY, App->entities);
+	collider = App->collision->AddCollider({ (int)position.x, (int)position.y + 10, 80, 80 }, COLLIDER_WATER, App->entities);
 }
 
 void Enemy_Fly::Move(float dt)
 {
 	if (isDead == false)
-		isDead = App->collision->CollisionToWorld(collider, movement);
+		//isDead = App->collision->CollisionToWorld(collider, movement);
 	speed.x = 90 * dt;
 	speed.y = 90 * dt;
-	NormalizeAnimations(dt);
+	animation = &fly;
+	NormalizeAnimations(1);
 
 	if (soundtimer.Read() > 2000) {
 		App->audio->PlayFx(flysound, 1);
@@ -56,7 +53,7 @@ void Enemy_Fly::Move(float dt)
 
 	if (player_tiles_pos.x - enemy_tiles_pos.x <= 5 && player_tiles_pos.x - enemy_tiles_pos.x >= -5 && player_tiles_pos.y - enemy_tiles_pos.y <= 5 && player_tiles_pos.y - enemy_tiles_pos.y >= -5)
 	{
-		App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
+		//App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
 		//originalpos = App->map->MapToWorld(enemy_tiles_pos.x, enemy_tiles_pos.y);
 	}
 	else {
@@ -66,18 +63,14 @@ void Enemy_Fly::Move(float dt)
 			if (movingLeft) {
 				movingLeft = false;
 				timer.Start();
-				animation = &walkLeft;
+				animation = &fly;
 			}
-			else {
-				movingLeft = true;
-				timer.Start();
-				animation = &walkRight;
-			}
+			
 		}
-		if (movingLeft)
-			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x + 1 , enemy_tiles_pos.y }, enemy_path);
-		else
-			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
+		//if (movingLeft)
+			//App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x + 1 , enemy_tiles_pos.y }, enemy_path);
+		//else
+			//App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
 	}
 
 
@@ -93,20 +86,22 @@ void Enemy_Fly::Move(float dt)
 		else if (enemy_tiles_pos.y < enemy_path[i].y && position.y < tileInMap.y && movement[up] == true) {
 			position.y += speed.y;
 			current_in_path = true;
+			animation = &fly;
 		}
 		else if (enemy_tiles_pos.y > enemy_path[i].y && position.y > tileInMap.y && movement[down] == true) {
 			position.y -= speed.y;
 			current_in_path = true;
+			animation = &fly;
 		}
 		else if (enemy_tiles_pos.x <= enemy_path[i].x && position.x < tileInMap.x && movement[right] == true) {
 			position.x += speed.x;
-			animation = &walkRight;
 			current_in_path = true;
+			animation = &fly;
 		}
 		else if (enemy_tiles_pos.x >= enemy_path[i].x && position.x > tileInMap.x && movement[left] == true) {
 			position.x -= speed.x;
-			animation = &walkLeft;
 			current_in_path = true;
+			animation = &fly;
 		}
 		else {
 			current_in_path = false;
@@ -126,10 +121,7 @@ void Enemy_Fly::NormalizeAnimations(float dt) {
 
 	// EXAMPLE
 
-	walkLeft.speed = App->tex->NormalizeAnimSpeed("girl", "walkLeft", dt);
-	walkRight.speed = App->tex->NormalizeAnimSpeed("girl", "walkRight", dt);
-	deadLeft.speed = App->tex->NormalizeAnimSpeed("girl", "walkLeft", dt);
-	deadRight.speed = App->tex->NormalizeAnimSpeed("girl", "walkRight", dt);
+	fly.speed = App->tex->NormalizeAnimSpeed("crow", "fly", dt);
 
 }
 
@@ -141,12 +133,9 @@ void Enemy_Fly::Dead()
 
 	}
 	if (now + 1000 > SDL_GetTicks()) {
-		if (movingLeft)
-		{
-			animation = &deadLeft;
-		}
-		else
-			animation = &deadRight;
+		
+			//animation = &dead;
+		
 
 		// stop all movement, else player go out of map, bug
 		movement[down] = false;

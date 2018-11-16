@@ -15,24 +15,22 @@
 #include "Enemy_Walk.h"
 #include "j1Entity.h"
 #include "j1Entities.h"
-#include "j1Textures.h"
-#include "Animation.h"
 
 Enemy_Walk::Enemy_Walk(int x, int y) : Entity(x, y)
 {
 
 	//EXAMPLE
-	walkLeft = App->tex->CreateAnimation("zombie", "walkLeft", true);
-	walkRight = App->tex->CreateAnimation("zombie", "walkRight", true);
-	deadLeft = App->tex->CreateAnimation("zombie", "deadLeft", false);
-	deadRight = App->tex->CreateAnimation("zombie", "deadRight", false);
+	idle = App->tex->CreateAnimation("frog", "idle", true);
+	walk = App->tex->CreateAnimation("frog", "walk", true);
+	attack = App->tex->CreateAnimation("frog", "attack", true);
+	
 	zombiesound = App->audio->LoadFx("audio/zombie.wav");
 
 	originalpos.x = position.x = x;
 	originalpos.y = position.y = y;
 
 
-	collider = App->collision->AddCollider({ (int)position.x, (int)position.y, 86, 119 }, COLLIDER_WALKENEMY, App->entities);
+	collider = App->collision->AddCollider({ (int)position.x, (int)position.y, 86, 119 }, COLLIDER_PLAYER, App->entities);
 	timer.Start();
 }
 
@@ -55,7 +53,7 @@ void Enemy_Walk::Move(float dt)
 
 	if (player_tiles_pos.x - enemy_tiles_pos.x <= 3 && player_tiles_pos.x - enemy_tiles_pos.x >= -3)
 	{
-		App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
+		//App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
 
 	}
 	else {
@@ -65,19 +63,19 @@ void Enemy_Walk::Move(float dt)
 			if (movingLeft) {
 				movingLeft = false;
 				timer.Start();
-				animation = &walkLeft;
+				animation = &walk;
 			}
 			else {
 				movingLeft = true;
 				timer.Start();
-				animation = &walkRight;
+				animation = &walk;
 			}
 		}
 
-		if (movingLeft)
-			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x + 1 , enemy_tiles_pos.y }, enemy_path);
-		else
-			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
+		//if (movingLeft)
+			//App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x + 1 , enemy_tiles_pos.y }, enemy_path);
+		//else
+			//App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
 
 
 	}
@@ -92,12 +90,12 @@ void Enemy_Walk::Move(float dt)
 		}
 		else if (enemy_tiles_pos.x <= enemy_path[i].x && position.x < tileInMap.x && movement[right] == true) {
 			position.x += speed.x;
-			animation = &walkRight;
+			animation = &walk;
 			current_in_path = true;
 		}
 		else if (enemy_tiles_pos.x >= enemy_path[i].x && position.x > tileInMap.x && movement[left] == true) {
 			position.x -= speed.x;
-			animation = &walkLeft;
+			animation = &walk;
 			current_in_path = true;
 		}
 		else {
@@ -136,10 +134,8 @@ void Enemy_Walk::CalculateGravity(float dt) {
 void Enemy_Walk::NormalizeAnimations(float dt) {
 
 
-	walkLeft.speed = App->tex->NormalizeAnimSpeed("zombie", "walkLeft", dt);
-	walkRight.speed = App->tex->NormalizeAnimSpeed("zombie", "walkRight", dt);
-	deadLeft.speed = App->tex->NormalizeAnimSpeed("zombie", "deadLeft", dt);
-	deadRight.speed = App->tex->NormalizeAnimSpeed("zombie", "deadRight", dt);
+	walk.speed = App->tex->NormalizeAnimSpeed("frog", "walk", dt);
+	
 
 }
 
@@ -153,10 +149,10 @@ void Enemy_Walk::Dead()
 	if (now + 1000 > SDL_GetTicks()) {
 		if (movingLeft)
 		{
-			animation = &deadLeft;
+			//animation = &dead;
 		}
 		else
-			animation = &deadRight;
+			//animation = &dead;
 
 		// stop all movement, else player go out of map, bug
 		movement[down] = false;

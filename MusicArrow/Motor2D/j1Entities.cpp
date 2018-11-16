@@ -6,6 +6,7 @@
 #include "j1Textures.h"
 #include "j1Audio.h"
 #include "j1Entity.h"
+#include "j1Window.h"
 #include "Enemy_Fly.h"
 #include "j1Map.h"
 #include "Enemy_Walk.h"
@@ -15,7 +16,7 @@
 #include "j1FadeToBlack.h"
 #include "j1Collision.h"
 
-#define SPAWN_MARGIN 140
+#define SPAWN_MARGIN 300
 #define DESPAWN_MARGIN 1400
 
 j1Entities::j1Entities()
@@ -39,7 +40,7 @@ j1Entities::~j1Entities()
 bool j1Entities::Start()
 {
 	// Create a prototype for each enemy available so we can copy them around
-	//sprites = App->tex->Load("maps/enemySprites.png");
+	sprites = App->tex->Load("assets/Enemies/enemies_spritesheet.png");
 	//player_life = 3;
 
 	
@@ -72,7 +73,7 @@ bool j1Entities::PreUpdate()
 		if (queue[i].type != ENTITY_TYPES::NO_TYPE)
 		{
 
-			if (queue[i].x < (App->render->camera.x - (App->render->camera.w) - SPAWN_MARGIN)*(-1))
+			if (queue[i].x * App->win->GetScale() < (App->render->camera.x - (App->render->camera.w) - SPAWN_MARGIN)*(-1))
 			{
 				SpawnEntity(queue[i]);
 				queue[i].type = ENTITY_TYPES::NO_TYPE;
@@ -144,7 +145,7 @@ bool j1Entities::PostUpdate()
 	{
 		if (entities[i] != nullptr)
 		{
-			if (entities[i]->position.x < (App->render->camera.x + DESPAWN_MARGIN)*(-1))
+			if (entities[i]->position.x * App->win->GetScale() < (App->render->camera.x + DESPAWN_MARGIN)*(-1))
 			{
 
 				delete entities[i];

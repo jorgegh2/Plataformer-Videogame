@@ -143,4 +143,5 @@ float j1Textures::NormalizeAnimSpeed(char* anim_type, char* anim, float dt) {
 	float ret;
 	ret = anim_file.child("animations").child(anim_type).child("speeds").attribute(anim).as_float()*dt;
 	return ret;
+	
 }

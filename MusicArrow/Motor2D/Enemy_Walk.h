@@ -16,10 +16,10 @@ private:
 	//EXAMPLE
 	uint zombiesound;
 
-	Animation walkLeft;
-	Animation walkRight;
-	Animation deadLeft;
-	Animation deadRight;
+	Animation idle;
+	Animation walk;
+	Animation attack;
+	
 
 public:
 	fPoint originalpos;
