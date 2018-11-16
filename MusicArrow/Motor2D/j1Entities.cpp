@@ -64,6 +64,8 @@ bool j1Entities::Awake(pugi::xml_node& config)
 }
 bool j1Entities::PreUpdate()
 {
+	BROFILER_CATEGORY("PreUpdateEntities", Profiler::Color::Pink);
+
 	// check camera position to decide what to spawn
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
@@ -135,6 +137,8 @@ bool j1Entities::Update(float dt)
 
 bool j1Entities::PostUpdate()
 {
+	BROFILER_CATEGORY("PostUpdateEntities", Profiler::Color::Pink);
+
 	// check camera position to decide what to spawn
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
@@ -218,6 +222,8 @@ bool j1Entities::AddEntity(ENTITY_TYPES type, int x, int y)
 
 void j1Entities::SpawnEntity(const EntityInfo& info)
 {
+	BROFILER_CATEGORY("AddEntities", Profiler::Color::Pink);
+
 	// find room for the new enemy
 	uint i = 0;
 	for (; entities[i] != nullptr && i < MAX_ENTITIES; ++i);

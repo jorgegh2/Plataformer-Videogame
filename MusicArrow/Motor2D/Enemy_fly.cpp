@@ -41,7 +41,8 @@ void Enemy_Fly::Move(float dt)
 {
 	if (isDead == false)
 		isDead = App->collision->CollisionToWorld(collider, movement);
-	speed = 90 * dt;
+	speed.x = 90 * dt;
+	speed.y = 90 * dt;
 	NormalizeAnimations(dt);
 
 	if (soundtimer.Read() > 2000) {
@@ -90,20 +91,20 @@ void Enemy_Fly::Move(float dt)
 		}
 
 		else if (enemy_tiles_pos.y < enemy_path[i].y && position.y < tileInMap.y && movement[up] == true) {
-			position.y += speed;
+			position.y += speed.y;
 			current_in_path = true;
 		}
 		else if (enemy_tiles_pos.y > enemy_path[i].y && position.y > tileInMap.y && movement[down] == true) {
-			position.y -= speed;
+			position.y -= speed.y;
 			current_in_path = true;
 		}
 		else if (enemy_tiles_pos.x <= enemy_path[i].x && position.x < tileInMap.x && movement[right] == true) {
-			position.x += speed;
+			position.x += speed.x;
 			animation = &walkRight;
 			current_in_path = true;
 		}
 		else if (enemy_tiles_pos.x >= enemy_path[i].x && position.x > tileInMap.x && movement[left] == true) {
-			position.x -= speed;
+			position.x -= speed.x;
 			animation = &walkLeft;
 			current_in_path = true;
 		}
