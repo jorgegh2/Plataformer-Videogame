@@ -24,7 +24,7 @@ Enemy_Walk::Enemy_Walk(int x, int y) : Entity(x, y)
 	walk = App->tex->CreateAnimation("frog", "walk", true);
 	attack = App->tex->CreateAnimation("frog", "attack", true);
 	
-	zombiesound = App->audio->LoadFx("audio/zombie.wav");
+	zombiesound = App->audio->LoadFx("audio/fx/zombie.wav");
 
 	originalpos.x = position.x = x;
 	originalpos.y = position.y = y;
@@ -37,14 +37,16 @@ Enemy_Walk::Enemy_Walk(int x, int y) : Entity(x, y)
 void Enemy_Walk::Move(float dt)
 {
 	NormalizeAnimations(dt);
+	animation = &idle;
 
 	speed.x = 30 * dt;
+	speed.y = 30 * dt;
 
 	if (isDead == false)
 		isDead = App->collision->CollisionToWorld(collider, movement);
 
-	if (movement[down] == true)
-		CalculateGravity(dt);
+	//if (movement[down] == true)
+		//CalculateGravity(dt);
 
 
 	iPoint enemy_tiles_pos = App->map->WorldToMap(position.x, position.y);

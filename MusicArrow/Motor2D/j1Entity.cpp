@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1Audio.h"
 #include "j1Textures.h"
+#include "SDL/include/SDL_rect.h"
 
 Entity::Entity(int x, int y) : position(x, y)
 {
@@ -29,6 +30,7 @@ void Entity::Draw(SDL_Texture* sprites)
 
 
 	if (animation != nullptr) {
+		SDL_Rect aux = animation->GetCurrentFrame();
 		App->render->Blit(sprites, position.x, position.y, &(animation->GetCurrentFrame()));
 	}
 }
