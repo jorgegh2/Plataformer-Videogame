@@ -340,7 +340,7 @@ bool j1Player::Update(float dt)
 	case JUMP:
 		if (dashCount == 0)
 		{
-		App->time->Reset();
+		timer.Reset();
 		speed.y = -15;
 		jstate = ONAIR;
 		}
@@ -371,14 +371,14 @@ bool j1Player::Update(float dt)
 			}
 			jumpCount = 0;
 			dashCount = 0;
-			App->time->Reset();
+			timer.Reset();
 		
 		break;
 
 	case ONAIR:
 			
 			
-			speed.y = speed.y + gravity * App->time->DeltaTime();
+			speed.y = speed.y + gravity * timer.ReadSec();
 
 			if (speed.y >= 0)
 			{
@@ -407,7 +407,7 @@ bool j1Player::Update(float dt)
 			{
 
 				jstate = JUMP;
-				App->time->Reset();
+				timer.Reset();
 				speed.y = -15;
 				jstate = ONAIR;
 				current_animation = &jump;
@@ -421,7 +421,7 @@ bool j1Player::Update(float dt)
 			if (d_positiveY.Modulo == 0 && d_positiveY.nearestColliderType == COLLIDER_WATER)
 			{
 				jstate = DEAD;
-				App->time->Reset();
+				timer.Reset();
 				App->audio->PlayFx(audio_dead, 1);
 				App->input->Disable();
 			}
@@ -443,8 +443,8 @@ bool j1Player::Update(float dt)
 		c_player->SetPos(-1000, -1000);
 
 		speed.y = -1;
-		speed.y = speed.y + gravity * App->time->DeltaTime();
-		position.y += speed.y * App->time->DeltaTime();
+		speed.y = speed.y + gravity * timer.ReadSec();
+		position.y += speed.y * timer.ReadSec();
 
 		if (position.y > (-App->render->camera.y + App->render->camera.h)*2) //ADD FADE TO BLACK
 		{
@@ -496,7 +496,7 @@ bool j1Player::Update(float dt)
 	{
 		jstate = ONAIR;
 		IsGodMode = false;
-		App->time->Reset();
+		timer.Reset();
 	}
 
 

@@ -4,7 +4,7 @@
 #include "SDL/include/SDL.h"
 #include "j1Module.h"
 
-class Timer : public j1Module {
+class Timer{
 
 private:
 

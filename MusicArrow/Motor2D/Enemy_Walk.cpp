@@ -31,7 +31,7 @@ Enemy_Walk::Enemy_Walk(int x, int y) : Entity(x, y)
 
 
 	collider = App->collision->AddCollider({ (int)position.x, (int)position.y, 86, 119 }, COLLIDER_PLAYER, App->entities);
-	timer.Start();
+	timer.Reset();
 }
 
 void Enemy_Walk::Move(float dt)
@@ -62,12 +62,12 @@ void Enemy_Walk::Move(float dt)
 
 			if (movingLeft) {
 				movingLeft = false;
-				timer.Start();
+				timer.Reset();
 				animation = &walk;
 			}
 			else {
 				movingLeft = true;
-				timer.Start();
+				timer.Reset();
 				animation = &walk;
 			}
 		}

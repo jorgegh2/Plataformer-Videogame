@@ -44,7 +44,7 @@ void Enemy_Fly::Move(float dt)
 
 	if (soundtimer.Read() > 2000) {
 		App->audio->PlayFx(flysound, 1);
-		soundtimer.Start();
+		soundtimer.Reset();
 	}
 
 
@@ -62,7 +62,7 @@ void Enemy_Fly::Move(float dt)
 
 			if (movingLeft) {
 				movingLeft = false;
-				timer.Start();
+				timer.Reset();
 				animation = &fly;
 			}
 			

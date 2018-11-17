@@ -31,6 +31,7 @@
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 {
+	dt = 0.0f;
 	frames = 0;
 	want_to_save = want_to_load = false;
 
@@ -82,7 +83,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	//AddModule(coin);
 
 	//AddModule(perf_timer);
-	AddModule(time);
+	//AddModule(time);
 
 	// render last to swap buffer
 	AddModule(render);
@@ -129,6 +130,13 @@ bool j1App::Awake()
 		organization.create(app_config.child("organization").child_value());
 	}
 
+	int cap = app_config.attribute("framerate_cap").as_int(-1);
+
+	if (cap > 0)
+	{
+		capped_ms = 1000 / cap;
+	}
+
 	if (ret == true)
 	{
 		p2List_item<j1Module*>* item;
@@ -158,6 +166,7 @@ bool j1App::Start()
 
 		item = item->next;
 	}
+	startup_time.Reset();
 
 	return ret;
 }
@@ -204,6 +213,11 @@ pugi::xml_node j1App::LoadConfig(pugi::xml_document& config_file) const
 // ---------------------------------------------
 void j1App::PrepareUpdate()
 {
+	frame_count++;
+	last_sec_frame_count++;
+
+	dt = frame_time.ReadSec();
+	frame_time.Reset();
 }
 
 // ---------------------------------------------
@@ -214,6 +228,32 @@ void j1App::FinishUpdate()
 
 	if (want_to_load == true)
 		LoadGameNow();
+
+	// Framerate calculations --
+
+	if (last_sec_frame_time.Read() > 1000)
+	{
+		last_sec_frame_time.Reset();
+		prev_last_sec_frame_count = last_sec_frame_count;
+		last_sec_frame_count = 0;
+	}
+
+	float avg_fps = float(frame_count) / startup_time.ReadSec();
+	float seconds_since_startup = startup_time.ReadSec();
+	uint32 last_frame_ms = frame_time.Read();
+	uint32 frames_on_last_update = prev_last_sec_frame_count;
+
+	static char title[256];
+	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %lu ",
+		avg_fps, last_frame_ms, frames_on_last_update, dt, seconds_since_startup, frame_count);
+	App->win->SetTitle(title);
+
+	if (capped_ms > 0 && last_frame_ms < capped_ms)
+	{
+		j1PerfTimer t;
+		SDL_Delay(capped_ms - last_frame_ms);
+		LOG("We waited for %d milliseconds and got back in %f", capped_ms - last_frame_ms, t.ReadMs());
+	}
 }
 
 // Call modules before each loop iteration
@@ -320,6 +360,11 @@ const char* j1App::GetArgv(int index) const
 const char* j1App::GetTitle() const
 {
 	return title.GetString();
+}
+
+float j1App::GetDT() const
+{
+	return dt;
 }
 
 // ---------------------------------------

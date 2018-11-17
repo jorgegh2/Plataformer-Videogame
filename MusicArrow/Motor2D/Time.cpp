@@ -18,9 +18,8 @@ void Timer::Release() {
 
 }
 
-Timer::Timer() : j1Module(){
+Timer::Timer(){
 
-	name.create("time");
 	Reset();
 	mTimeScale = 1.0f;
 
@@ -63,11 +62,11 @@ bool Timer::Update(float dt) {
 
 uint32 Timer::Read() const
 {
-	return SDL_GetTicks() - started_at;
+	return SDL_GetTicks() - mStartTicks;//started_at;
 }
 
 
 float Timer::ReadSec() const
 {
-	return float(SDL_GetTicks() - started_at) / 1000.0f;
+	return float(SDL_GetTicks() - mStartTicks) / 1000.0f;//started_at) / 1000.0f;
 }

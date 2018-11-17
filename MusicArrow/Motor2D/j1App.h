@@ -4,6 +4,8 @@
 #include "p2List.h"
 #include "j1Module.h"
 #include "PugiXml\src\pugixml.hpp"
+#include "j1PerfTimer.h"
+#include "Time.h"
 
 // Modules
 class j1Window;
@@ -58,6 +60,7 @@ public:
 	const char* GetArgv(int index) const;
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
+	float GetDT() const;
 
 	void LoadGame(const char* file);
 	void SaveGame(const char* file) const;
@@ -112,6 +115,7 @@ public:
 	//Coin*				coin;
 	//j1PerfTimer*		perf_timer;
 
+
 private:
 
 	p2List<j1Module*>	modules;
@@ -127,6 +131,16 @@ private:
 	bool				want_to_load;
 	p2SString			load_game;
 	mutable p2SString	save_game;
+
+	j1PerfTimer			ptimer;
+	uint64				frame_count = 0;
+	Timer				startup_time;
+	Timer				frame_time;
+	Timer				last_sec_frame_time;
+	uint32				last_sec_frame_count = 0;
+	uint32				prev_last_sec_frame_count = 0;
+	
+	int					capped_ms = -1;
 };
 
 extern j1App* App; // No student is asking me about that ... odd :-S

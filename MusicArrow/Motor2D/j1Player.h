@@ -8,6 +8,7 @@
 #include "p2Point.h"
 #include "j1Audio.h"
 #include "j1Entity.h"
+#include "Time.h"
 
 struct SDL_Texture;
 struct SDL_Rect;
@@ -52,7 +53,8 @@ public:
 	iPoint StartPoint;
 	
 	float velocityX;
-	
+	Timer timer;
+
 	bool IsGodMode = false;
 
 	int jumpCount;
