@@ -40,7 +40,7 @@ void Enemy_Fly::Move(float dt)
 	speed.x = 90 * dt;
 	speed.y = 90 * dt;
 	animation = &fly;
-	NormalizeAnimations(1);
+	NormalizeAnimations(0.01);
 
 	if (soundtimer.Read() > 2000) {
 		App->audio->PlayFx(flysound, 1);

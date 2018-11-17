@@ -36,8 +36,9 @@ Enemy_Walk::Enemy_Walk(int x, int y) : Entity(x, y)
 
 void Enemy_Walk::Move(float dt)
 {
-	NormalizeAnimations(dt);
 	animation = &idle;
+	NormalizeAnimations(0.01);
+
 
 	speed.x = 30 * dt;
 	speed.y = 30 * dt;
@@ -136,6 +137,7 @@ void Enemy_Walk::CalculateGravity(float dt) {
 void Enemy_Walk::NormalizeAnimations(float dt) {
 
 
+	idle.speed = App->tex->NormalizeAnimSpeed("frog", "idle", dt);
 	walk.speed = App->tex->NormalizeAnimSpeed("frog", "walk", dt);
 	
 
