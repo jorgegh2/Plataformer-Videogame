@@ -34,11 +34,6 @@ Enemy_Walk::Enemy_Walk(int x, int y, SDL_Rect colliderRect) : Entity(x, y)
 	timer.Reset();
 }
 
-bool Enemy_Walk::Awake(pugi::xml_node& config)
-{
-	return true;
-}
-
 void Enemy_Walk::Move(float dt)
 {
 	BROFILER_CATEGORY("Enemy_WalkPath", Profiler::Color::Gray);
@@ -83,12 +78,6 @@ void Enemy_Walk::Move(float dt)
 			}
 		}
 
-		//if (movingLeft)
-			//App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x + 1 , enemy_tiles_pos.y }, enemy_path);
-		//else
-			//App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
-
-
 	}
 
 	if (i < enemy_path.Count()) {
@@ -128,21 +117,7 @@ void Enemy_Walk::Move(float dt)
 void Enemy_Walk::CalculateGravity(float dt) 
 {
 	BROFILER_CATEGORY("CalculateGravityEnemy", Profiler::Color::Gray);
-	//Trap for colliders work "good" speed.y = speed.y + g; //* timer.ReadSec();
-
 		
-
-	//if (speed.y >= 0)
-	//{
-	//	if (speed.y < AllDistances.distancePositiveY.Modulo)
-	//		position.y += speed.y;
-	//	else
-	//	{
-	//		position.y += AllDistances.distancePositiveY.Modulo;
-	//		jstate = ONFLOOR;
-
-	
-	
 		if (speed_jump < 20)
 		{
 			speed_jump += gravity;
@@ -175,32 +150,7 @@ void Enemy_Walk::NormalizeAnimations(float dt)
 
 }
 
-void Enemy_Walk::Dead()
-{
-	BROFILER_CATEGORY("DeadEnemy", Profiler::Color::Gray);
-	if (now == 0) {
-		now = SDL_GetTicks();
-		App->audio->PlayFx(zombiesound, 1);
-	}
-	if (now + 1000 > SDL_GetTicks()) {
-		if (movingLeft)
-		{
-			//animation = &dead;
-		}
-		else
-			//animation = &dead;
 
-		// stop all movement, else player go out of map, bug
-		movement[down] = false;
-		movement[left] = false;
-		movement[right] = false;
-	}
-	else
-	{
-		now = 0;
-		death = true;
-	}
-}
 
 bool Enemy_Walk::Save(pugi::xml_node& data) const
 {

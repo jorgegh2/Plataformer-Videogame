@@ -21,13 +21,11 @@ public:
 
 	Enemy_Fly(int x, int y, SDL_Rect colliderRect);
 
-	bool Awake(pugi::xml_node& config);
 
 	bool Save(pugi::xml_node& config) const;
 	bool Load(pugi::xml_node& config);
 
 	void Move(float dt);
-	void Dead();
 
 	void DrawPath();
 	bool isDead = false;  //quitar

@@ -28,7 +28,6 @@ bool j1Map::Awake(pugi::xml_node& config)
 	
 	colliderPlayer_w = PLAYER_WIDTH;
 	colliderPlayer_h = PLAYER_HEIGHT;
-	//fghfghhg
 	folder.create(config.child("folder").child_value());
 
 	return ret;
@@ -113,9 +112,7 @@ void j1Map::Draw()
 					if (id != 0 && App->render->InCamera({ MapToWorld(j, i).x, MapToWorld(j, i).y, item_tileset->data->tile_width, item_tileset->data->tile_height }))
 					{
 						App->render->Blit(item_tileset->data->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &item_tileset->data->GetTileRect(id), SDL_FLIP_NONE);
-						/*if (item_tileset->data->name == "TilesetWinterObjects128x128") {
-							App->render->Blit(item_tileset->data->texture, MapToWorld(j, i).x, MapToWorld(j, i).y + 10, &item_tileset->data->GetTileRect(id));
-						}*/
+						
 					}
 
 				}
@@ -151,13 +148,13 @@ iPoint j1Map::MapToWorld(int x, int y) const
 {
 	BROFILER_CATEGORY("MapToWorld", Profiler::Color::Coral);
 	iPoint ret(0,0);
-	// TODO 8(old): Create a method that translates x,y coordinates from map positions to world positions
+	
 	if (data.type == MAPTYPE_ORTHOGONAL)
 	{
 		ret.x = x * data.tile_width;
 		ret.y = y * data.tile_height;
 	}
-	// TODO 1: Add isometric map to world coordinates
+
 	if (data.type == MAPTYPE_ISOMETRIC)
 	{
 		ret.x = (x - y) * data.tile_width*0.5f;
@@ -172,10 +169,10 @@ iPoint j1Map::WorldToMap(int x, int y) const
 {
 	BROFILER_CATEGORY("WorldToMap", Profiler::Color::Coral);
 	iPoint ret(0,0);
-	// TODO 2: Add orthographic world to map coordinates
+
 	ret.x = x / data.tile_width;
 	ret.y = y / data.tile_height;
-	// TODO 3: Add the case for isometric maps to WorldToMap
+
 	return ret;
 }
 
@@ -204,7 +201,7 @@ bool j1Map::CleanUp()
 
 	while(item != NULL)
 	{
-		//App->tex->UnLoad(item->data->texture);
+
 		RELEASE(item->data);
 		item = item->next;
 	}
@@ -237,7 +234,7 @@ bool j1Map::CleanUp()
 
 	while (item4 != NULL)
 	{
-		//App->tex->UnLoad(item4->data->texture);
+		
 		RELEASE(item4->data);
 		item4 = item4->next;
 	}
@@ -342,34 +339,6 @@ bool j1Map::Load(const char* file_name)
 
 	SetAllCollidersAndEntities();
 	
-	/*if(ret == true)
-	{
-		LOG("Successfully parsed map XML file: %s", file_name);
-		LOG("width: %d height: %d", data.width, data.height);
-		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
-
-		p2List_item<TileSet*>* item = data.tilesets.start;
-		while(item != NULL)
-		{
-			TileSet* s = item->data;
-			LOG("Tileset ----");
-			LOG("name: %s firstgid: %d", s->name.GetString(), s->firstgid);
-			LOG("tile width: %d tile height: %d", s->tile_width, s->tile_height);
-			LOG("spacing: %d margin: %d", s->spacing, s->margin);
-			item = item->next;
-		}
-
-		p2List_item<MapLayer*>* item_layer = data.layers.start;
-		while(item_layer != NULL)
-		{
-			MapLayer* l = item_layer->data;
-			LOG("Layer ----");
-			LOG("name: %s", l->name.GetString());
-			LOG("tile width: %d tile height: %d", l->width, l->height);
-			item_layer = item_layer->next;
-		}
-	}*/
-
 	map_loaded = ret;
 
 	return ret;
@@ -511,15 +480,9 @@ bool j1Map::LoadImageLayers(pugi::xml_node& imagelayer_node, ImageLayers* set)
 	bool ret = true;
 	set->name = imagelayer_node.attribute("name").as_string();
 	pugi::xml_node image = imagelayer_node.child("image");
-	set->position_x = imagelayer_node.attribute("offsetx").as_int();//*App->win->GetScale();
-	set->position_y = imagelayer_node.attribute("offsety").as_int();//*App->win->GetScale();
-	//set->position_x = image.next_sibling("properties").child("property").attribute("value").as_int();
-	//set->position_y = image.next_sibling("properties").child("property").next_sibling("property").attribute("value").as_int();
-	//set->image_width = image.attribute("width").as_int();
-	//set->image_height = image.attribute("height").as_int();
-	//set->texture = App->tex->Load(PATH(folder.GetString(), image.attribute("source").as_string()));
-	
-	//pugi::xml_node image = imagelayer_node.child("image");
+	set->position_x = imagelayer_node.attribute("offsetx").as_int();
+	set->position_y = imagelayer_node.attribute("offsety").as_int();
+
 
 	if (image == NULL)
 	{
@@ -545,8 +508,7 @@ bool j1Map::LoadImageLayers(pugi::xml_node& imagelayer_node, ImageLayers* set)
 			set->image_height = h;
 		}
 
-		/*set->num_tiles_width = set->tex_width / set->tile_width;
-		set->num_tiles_height = set->tex_height / set->tile_height;*/
+
 	}
 
 	return ret;
@@ -698,16 +660,13 @@ void j1Map::SetAllCollidersAndEntities()
 		else if (item_object->data->Collider_type == COLLIDER_ENEMY && item_object->data->enemy_type == 0)
 		{
 			App->entities->AddEntity(ENEMY_FLY, item_object->data->RectCollider.x, item_object->data->RectCollider.y, item_object->data->RectCollider);
-			//App->entities = App->collision->AddCollider(item_object->data->RectCollider, item_object->data->Collider_type, nullptr);
 		}
 		else if (item_object->data->Collider_type == COLLIDER_ENEMY && item_object->data->enemy_type == 1)
 		{
 			App->entities->AddEntity(ENEMY_WALK, item_object->data->RectCollider.x, item_object->data->RectCollider.y, item_object->data->RectCollider);
-			//App->entities = App->collision->AddCollider(item_object->data->RectCollider, item_object->data->Collider_type, nullptr);
 		}
 
 		else App->collision->AddCollider(item_object->data->RectCollider, item_object->data->Collider_type, nullptr);
 	}
-	//App->entities->player->c_player = App->collision->AddCollider({ App->entities->player->StartPoint.x, App->entities->player->StartPoint.y, colliderPlayer_w, colliderPlayer_h }, COLLIDER_PLAYER, nullptr);
 }
 

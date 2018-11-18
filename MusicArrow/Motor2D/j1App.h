@@ -18,18 +18,11 @@ class j1Map;
 class j1Collision;
 class j1Particles;
 class j1FadeToBlack;
-//class j1Player;
 class Timer;
 class j1Scene_Forest;
 class j1Scene_Winter;
 class j1Entities;
-//class j1Entity;
 class j1PathFinding;
-//class Enemy_Walk;
-//class Enemy_Fly;
-//class Coin;
-//class j1PerfTimer;
-
 class j1App
 {
 public:

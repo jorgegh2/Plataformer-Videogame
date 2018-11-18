@@ -28,14 +28,11 @@ Enemy_Fly::Enemy_Fly(int x, int y, SDL_Rect colliderRect) : Entity(x, y)
 	originalpos.x = position.x = x;
 	originalpos.y = position.y = y;
 
-	//App->entities posible error, original(App->entity)
+
 	collider = App->collision->AddCollider(colliderRect, COLLIDER_ENEMY, App->entities);
 }
 
-bool Enemy_Fly::Awake(pugi::xml_node& config) 
-{
-	return true;
-}
+
 
 
 
@@ -67,33 +64,7 @@ void Enemy_Fly::Move(float dt)
 		App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
 		originalpos = App->map->MapToWorld(enemy_tiles_pos.x, enemy_tiles_pos.y);
 	}
-	/*else {
-
-		if (timer.Read() > 2000) {
-
-			if (movingLeft) {
-				movingLeft = false;
-				timer.Reset();
-				animation = &fly;
-			}
-			else
-			{
-				movingLeft = true;
-				timer.Reset();
-				animation = &fly;
-				App->audio->PlayFx(flysound, 1);
-			}
-
-		}
-		if (movingLeft)
-			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x + 1 , enemy_tiles_pos.y }, enemy_path);
-		else
-			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
 	
-	}*/
-
-
-	//const p2DynArray<iPoint>* tmp_array = App->pathfinding->GetLastPath();
 
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		ShowPath = !ShowPath;
@@ -113,7 +84,6 @@ void Enemy_Fly::Move(float dt)
 		}
 
 		else if (enemy_tiles_pos.y < enemy_path[i].y && position.y < tileInMap.y && movement[down] == true) {
-		//	if(position.y += speed.y + collider->rect.h > App->entities->player->position.y)
 			position.y += speed.y;
 			current_in_path = true;
 			animation = &attack;
@@ -141,7 +111,7 @@ void Enemy_Fly::Move(float dt)
 			i++;
 
 
-		//DrawPath();
+	
 	}
 	else {
 		i = 0;
@@ -157,8 +127,6 @@ void Enemy_Fly::DrawPath()
 	for (int i = 0; i < enemy_path.Count(); i++)
 	{
 		iPoint p = App->map->MapToWorld(enemy_path[i].x, enemy_path[i].y);
-		//p.x -= App->map->data.tile_width / 2;
-	//	p.y -= App->map->data.tile_height / 2;
 
 		SDL_Rect quad = { p.x, p.y, App->map->data.tile_width, App->map->data.tile_height };
 		App->render->DrawQuad(quad, 255, 255, 0, 255);
@@ -173,29 +141,7 @@ void Enemy_Fly::NormalizeAnimations(float dt) {
 
 }
 
-void Enemy_Fly::Dead()
-{
 
-	if (now == 0) {
-		now = SDL_GetTicks();
-
-	}
-	if (now + 1000 > SDL_GetTicks()) {
-		
-			//animation = &dead;
-		
-
-		// stop all movement, else player go out of map, bug
-		movement[down] = false;
-		movement[left] = false;
-		movement[right] = false;
-	}
-	else
-	{
-		now = 0;
-		death = true;
-	}
-}
 
 bool Enemy_Fly::Save(pugi::xml_node& data) const
 {
