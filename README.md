@@ -39,7 +39,7 @@ The animations are collected from the animations.xml file and its playback speed
 https://github.com/jorgegh2/Plataformer-Videogame
 
 ## Find this project's scrum board in:
-https://trello.com/b/nqgWasdW/our-super-awesome-game-2
+https://trello.com/b/nqgWasdW/musicarrow
 
 ## Credits
 Programming: Jorge Gemas Herencia
