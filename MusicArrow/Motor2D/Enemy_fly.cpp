@@ -42,7 +42,7 @@ bool Enemy_Fly::Awake(pugi::xml_node& config)
 void Enemy_Fly::Move(float dt)
 {
 	if (isDead == false)
-		//isDead = App->collision->CollisionToWorld(collider, movement);
+		isDead = App->collision->CollisionToWorld(collider, movement);
 	speed.x = 90 * dt;
 	speed.y = 90 * dt;
 	animation = &fly;
@@ -59,8 +59,8 @@ void Enemy_Fly::Move(float dt)
 
 	if (player_tiles_pos.x - enemy_tiles_pos.x <= 5 && player_tiles_pos.x - enemy_tiles_pos.x >= -5 && player_tiles_pos.y - enemy_tiles_pos.y <= 5 && player_tiles_pos.y - enemy_tiles_pos.y >= -5)
 	{
-		//App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
-		//originalpos = App->map->MapToWorld(enemy_tiles_pos.x, enemy_tiles_pos.y);
+		App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
+		originalpos = App->map->MapToWorld(enemy_tiles_pos.x, enemy_tiles_pos.y);
 	}
 	else {
 
@@ -73,14 +73,15 @@ void Enemy_Fly::Move(float dt)
 			}
 			
 		}
-		//if (movingLeft)
-			//App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x + 1 , enemy_tiles_pos.y }, enemy_path);
-		//else
-			//App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
+		if (movingLeft)
+			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x + 1 , enemy_tiles_pos.y }, enemy_path);
+		else
+			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
 	}
 
 
-	if (i < enemy_path.Count()) { //enemy_path[i] != nullptr
+	if (i < enemy_path.Count()) {
+		//enemy_path[i] != nullptr;
 		//No faltaba comprobar que enemy_path era null eso ya lo hace el count, el player entraba en la siguiente tile y ya te detectaba la comparacion pero se quedaba tocando
 		// el iPoint tileInMap coje la posicion en el mapa de la tile para dirigir al enemigo hasta los puntos de la esquina opuesta asi hace el path bien y se queda dentro de la tile
 		iPoint tileInMap = App->map->MapToWorld(enemy_path[i].x, enemy_path[i].y);

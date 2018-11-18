@@ -124,7 +124,26 @@ void j1Map::Draw()
 	}
 
 
-	// TODO 10(old): Complete the draw function
+
+}
+
+TileSet* j1Map::GetTilesetFromTileId(int id) const
+{
+	p2List_item<TileSet*>* item = data.tilesets.start;
+	TileSet* set = item->data;
+
+	while (item)
+	{
+		if (id < item->data->firstgid)
+		{
+			set = item->prev->data;
+			break;
+		}
+		set = item->data;
+		item = item->next;
+	}
+
+	return set;
 }
 
 iPoint j1Map::MapToWorld(int x, int y) const
@@ -578,6 +597,53 @@ bool j1Map::LoadObjects(pugi::xml_node& node, MapObjects* object)
 	}
 
 	return true;
+}
+
+bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
+{
+	bool ret = false;
+	p2List_item<MapLayer*>* item;
+	item = data.layers.start;
+
+	for (item = data.layers.start; item != NULL; item = item->next)
+	{
+		MapLayer* layer = item->data;
+
+		if (layer->name != "Walkable")
+			continue;
+
+		uchar* map = new uchar[layer->width*layer->height];
+		memset(map, 1, layer->width*layer->height);
+
+		for (int y = 0; y < data.height; ++y)
+		{
+			for (int x = 0; x < data.width; ++x)
+			{
+				int i = (y*layer->width) + x;
+
+				int tile_id = layer->Get(x, y);
+				TileSet* tileset = (tile_id > 0) ? GetTilesetFromTileId(tile_id) : NULL;
+
+				if (tileset != NULL)
+				{
+					map[i] = (tile_id - tileset->firstgid);
+
+				}else
+				{
+					map[i] = 0;
+				}
+			}
+		}
+
+		*buffer = map;
+		width = data.width;
+		height = data.height;
+		ret = true;
+
+		break;
+	}
+
+	return ret;
 }
 
 COLLIDER_TYPE j1Map::DefineType(int type_as_int)

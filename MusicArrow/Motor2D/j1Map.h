@@ -127,6 +127,7 @@ public:
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
 	COLLIDER_TYPE DefineType(int type_as_int);
+	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
 	void SetAllCollidersAndEntities();
 private:
 
@@ -136,6 +137,8 @@ private:
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadObjects(pugi::xml_node& node, MapObjects* object);
 	bool LoadImageLayers(pugi::xml_node& node, ImageLayers* object);
+
+	TileSet* GetTilesetFromTileId(int id) const;
 
 public:
 

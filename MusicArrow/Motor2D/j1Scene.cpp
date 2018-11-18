@@ -14,6 +14,7 @@
 #include "j1Scene_Winter.h"
 #include "j1Player.h"
 #include "j1Entities.h"
+#include "j1Pathfinding.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -36,6 +37,9 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
+
+	
+
 	//App->map->Load("hello2.tmx");
 	//App->map->Load("iso.tmx");
 
