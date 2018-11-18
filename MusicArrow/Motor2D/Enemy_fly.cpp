@@ -19,9 +19,8 @@
 Enemy_Fly::Enemy_Fly(int x, int y) : Entity(x, y)
 {
 
-	// EXAMPLE
-
 	fly = App->tex->CreateAnimation("crow", "fly", true);
+	attack = App->tex->CreateAnimation("crow", "attack", true);
 
 	flysound = App->audio->LoadFx("audio/fx/glide.wav");
 	animation = &fly;
@@ -40,7 +39,7 @@ void Enemy_Fly::Move(float dt)
 	speed.x = 90 * dt;
 	speed.y = 90 * dt;
 	animation = &fly;
-	NormalizeAnimations(0.01);
+	NormalizeAnimations(dt);
 
 	if (soundtimer.Read() > 2000) {
 		App->audio->PlayFx(flysound, 1);
@@ -86,22 +85,23 @@ void Enemy_Fly::Move(float dt)
 		else if (enemy_tiles_pos.y < enemy_path[i].y && position.y < tileInMap.y && movement[up] == true) {
 			position.y += speed.y;
 			current_in_path = true;
-			animation = &fly;
+			animation = &attack;
+			
 		}
 		else if (enemy_tiles_pos.y > enemy_path[i].y && position.y > tileInMap.y && movement[down] == true) {
 			position.y -= speed.y;
 			current_in_path = true;
-			animation = &fly;
+			animation = &attack;
 		}
 		else if (enemy_tiles_pos.x <= enemy_path[i].x && position.x < tileInMap.x && movement[right] == true) {
 			position.x += speed.x;
 			current_in_path = true;
-			animation = &fly;
+			animation = &attack;
 		}
 		else if (enemy_tiles_pos.x >= enemy_path[i].x && position.x > tileInMap.x && movement[left] == true) {
 			position.x -= speed.x;
 			current_in_path = true;
-			animation = &fly;
+			animation = &attack;
 		}
 		else {
 			current_in_path = false;
@@ -119,9 +119,8 @@ void Enemy_Fly::Move(float dt)
 
 void Enemy_Fly::NormalizeAnimations(float dt) {
 
-	// EXAMPLE
-
 	fly.speed = App->tex->NormalizeAnimSpeed("crow", "fly", dt);
+	attack.speed = App->tex->NormalizeAnimSpeed("crow", "attack", dt);
 
 }
 

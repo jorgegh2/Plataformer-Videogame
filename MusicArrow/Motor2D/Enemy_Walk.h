@@ -18,7 +18,7 @@ private:
 
 	Animation idle;
 	Animation walk;
-	Animation attack;
+	Animation jump;
 	
 
 public:
@@ -28,9 +28,11 @@ public:
 	void Move(float dt);
 	void Dead();
 	bool isDead = false;
+
 	int i = 0; // pathcount
 	bool current_in_path = false;
 	p2DynArray<iPoint> enemy_path;
+
 	Timer timer;
 	bool movingLeft = false;
 	void NormalizeAnimations(float dt);
