@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.1" tiledversion="2018.09.12" orientation="orthogonal" renderorder="right-down" width="212" height="27" tilewidth="128" tileheight="128" infinite="0" nextlayerid="25" nextobjectid="50">
+<map version="1.1" tiledversion="2018.09.12" orientation="orthogonal" renderorder="right-down" width="212" height="27" tilewidth="128" tileheight="128" infinite="0" nextlayerid="25" nextobjectid="69">
  <tileset firstgid="1" name="TilesetWinter128x128" tilewidth="128" tileheight="128" tilecount="50" columns="10">
   <image source="TilesetLevel2/Platforms/TilesetWinter128x128.png" trans="ff00ff" width="1280" height="640"/>
  </tileset>
@@ -34619,6 +34619,120 @@
    </properties>
   </object>
   <object id="49" x="2760" y="2772" width="80" height="80">
+   <properties>
+    <property name="CEnemyType" type="int" value="6"/>
+    <property name="EnemyType" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="50" x="6024" y="1400" width="80" height="80">
+   <properties>
+    <property name="CEnemyType" type="int" value="6"/>
+    <property name="EnemyType" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="51" x="10408" y="2168" width="80" height="80">
+   <properties>
+    <property name="CEnemyType" type="int" value="6"/>
+    <property name="EnemyType" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="52" x="14744" y="1480" width="80" height="80">
+   <properties>
+    <property name="CEnemyType" type="int" value="6"/>
+    <property name="EnemyType" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="53" x="20248" y="1944" width="80" height="80">
+   <properties>
+    <property name="CEnemyType" type="int" value="6"/>
+    <property name="EnemyType" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="54" x="23576" y="1896" width="80" height="80">
+   <properties>
+    <property name="CEnemyType" type="int" value="6"/>
+    <property name="EnemyType" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="55" x="6920" y="2088" width="80" height="80">
+   <properties>
+    <property name="CEnemyType" type="int" value="6"/>
+    <property name="EnemyType" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="56" x="8072" y="2088" width="80" height="80">
+   <properties>
+    <property name="CEnemyType" type="int" value="6"/>
+    <property name="EnemyType" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="57" x="9048" y="2232" width="80" height="80">
+   <properties>
+    <property name="CEnemyType" type="int" value="6"/>
+    <property name="EnemyType" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="58" x="8008" y="1544" width="80" height="80">
+   <properties>
+    <property name="CEnemyType" type="int" value="6"/>
+    <property name="EnemyType" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="59" x="14008" y="1928" width="80" height="80">
+   <properties>
+    <property name="CEnemyType" type="int" value="6"/>
+    <property name="EnemyType" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="60" x="13480" y="1304" width="80" height="80">
+   <properties>
+    <property name="CEnemyType" type="int" value="6"/>
+    <property name="EnemyType" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="61" x="16072" y="2296" width="80" height="80">
+   <properties>
+    <property name="CEnemyType" type="int" value="6"/>
+    <property name="EnemyType" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="62" x="17016" y="1928" width="80" height="80">
+   <properties>
+    <property name="CEnemyType" type="int" value="6"/>
+    <property name="EnemyType" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="63" x="18248" y="2328" width="80" height="80">
+   <properties>
+    <property name="CEnemyType" type="int" value="6"/>
+    <property name="EnemyType" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="64" x="18872" y="2344" width="80" height="80">
+   <properties>
+    <property name="CEnemyType" type="int" value="6"/>
+    <property name="EnemyType" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="65" x="18312" y="1544" width="80" height="80">
+   <properties>
+    <property name="CEnemyType" type="int" value="6"/>
+    <property name="EnemyType" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="66" x="19944" y="1288" width="80" height="80">
+   <properties>
+    <property name="CEnemyType" type="int" value="6"/>
+    <property name="EnemyType" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="67" x="21416" y="2024" width="80" height="80">
+   <properties>
+    <property name="CEnemyType" type="int" value="6"/>
+    <property name="EnemyType" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="68" x="23240" y="2552" width="80" height="80">
    <properties>
     <property name="CEnemyType" type="int" value="6"/>
     <property name="EnemyType" type="int" value="1"/>
