@@ -593,6 +593,7 @@ bool j1Map::LoadObjects(pugi::xml_node& node, MapObjects* object)
 	pugi::xml_node node_property = node.child("properties").child("property");
 	object->id = node.attribute("id").as_int();
 	object->name = "Colliders";
+	object->enemy_type = node_property.next_sibling("property").attribute("value").as_int(-1);
 	if (node.attribute("name"))
 	{
 		object->name = node.attribute("name").as_string();
@@ -694,9 +695,14 @@ void j1Map::SetAllCollidersAndEntities()
 			App->entities->AddEntity(ENTITY_PLAYER, item_object->data->RectCollider.x, item_object->data->RectCollider.y, item_object->data->RectCollider);
 			
 		}
-		else if (item_object->data->Collider_type == COLLIDER_ENEMY)
+		else if (item_object->data->Collider_type == COLLIDER_ENEMY && item_object->data->enemy_type == 0)
 		{
 			App->entities->AddEntity(ENEMY_FLY, item_object->data->RectCollider.x, item_object->data->RectCollider.y, item_object->data->RectCollider);
+			//App->entities = App->collision->AddCollider(item_object->data->RectCollider, item_object->data->Collider_type, nullptr);
+		}
+		else if (item_object->data->Collider_type == COLLIDER_ENEMY && item_object->data->enemy_type == 1)
+		{
+			App->entities->AddEntity(ENEMY_WALK, item_object->data->RectCollider.x, item_object->data->RectCollider.y, item_object->data->RectCollider);
 			//App->entities = App->collision->AddCollider(item_object->data->RectCollider, item_object->data->Collider_type, nullptr);
 		}
 

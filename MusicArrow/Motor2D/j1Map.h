@@ -61,6 +61,7 @@ struct MapObjects
 {
 	p2SString			name;
 	int					id;
+	int					enemy_type;
 	SDL_Rect			RectCollider;
 	iPoint				StartPoint;
 	COLLIDER_TYPE		Collider_type;
