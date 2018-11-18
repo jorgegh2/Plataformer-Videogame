@@ -8,7 +8,7 @@ A: Move left
 
 D: Move right
 
-Space: Jump
+Space: Jump (and double jump)
 
 
 ### Debug Keys:
