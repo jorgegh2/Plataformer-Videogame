@@ -36,6 +36,8 @@ F11-> Enable/Disable FPS cap to 30
 
 - You can set the player and camera controls through the config.xml file.
 
+You can set the player and camera controls through the config.xml file
+
 
 ## Find this project solution in:
 https://github.com/jorgegh2/Plataformer-Videogame
