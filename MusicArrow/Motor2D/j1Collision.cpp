@@ -129,7 +129,7 @@ bool j1Collision::PreUpdate()
 			if (c2->type == COLLIDER_PLAYER)
 			{
 				
-				CalculateAllDistance(c2, c1);
+				AllDistances = CalculateAllDistance(c2, c1);
 			
 			}
 			

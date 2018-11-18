@@ -71,6 +71,8 @@ public:
 	j1Collision();
 	~j1Collision();
 
+	AllDistance AllDistances;
+
 	bool PreUpdate() override;
 	bool Update(float dt) override;
 	bool CleanUp() override;
