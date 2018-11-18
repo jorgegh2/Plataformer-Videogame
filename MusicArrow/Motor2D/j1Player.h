@@ -64,10 +64,7 @@ public:
 
 	bool IsGodMode = false;
 
-	int jumpCount;
-	int dashCount; 
-	
-	
+	bool IsJumping = false;
 
 
 	//----- Animations Awesome Game 2 ------

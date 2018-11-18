@@ -342,13 +342,10 @@ bool j1Player::Update(float dt)
 	{
 
 	case JUMP:
-		if (dashCount == 0)
-		{
 		timer.Reset();
 		speed.y = -1500*dt;
 		jstate = ONAIR;
-		}
-		
+				
 		break;
 
 	case ONFLOOR:
@@ -373,8 +370,7 @@ bool j1Player::Update(float dt)
 				current_animation->Reset();
 				App->audio->PlayFx(audio_jumping, 1);
 			}
-			jumpCount = 0;
-			dashCount = 0;
+			IsJumping = true;
 			timer.Reset();
 		
 		break;
@@ -410,7 +406,7 @@ bool j1Player::Update(float dt)
 					position.y += speed.y;
 				}
 			}
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumpCount < 1)
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && IsJumping)
 			{
 
 				jstate = JUMP;
@@ -420,7 +416,7 @@ bool j1Player::Update(float dt)
 				current_animation = &jump;
 				current_animation->Reset();
 				App->audio->PlayFx(audio_jumping, 1);
-				jumpCount = 1;
+				IsJumping = false;
 
 			}
 
@@ -643,7 +639,6 @@ void j1Player::ResetPlayer()
 	App->render->camera.x = -position.x * App->win->GetScale() + WIDTH_CANVAS;
 	App->render->camera.y = -position.y * App->win->GetScale() + HEIGHT_CANVAS;
 
-	dashCount = 0;
 	jstate = ONAIR;
 	current_animation = &idle;
 }
