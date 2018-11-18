@@ -72,6 +72,13 @@ void Enemy_Fly::Move(float dt)
 				timer.Reset();
 				animation = &fly;
 			}
+			else 
+			{
+				movingLeft = true;
+				timer.Reset();
+				animation = &fly;
+				App->audio->PlayFx(flysound, 1);
+			}
 			
 		}
 		if (movingLeft)
