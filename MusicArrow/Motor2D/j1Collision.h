@@ -15,9 +15,6 @@ enum COLLIDER_TYPE
 	COLLIDER_FINISH_LEVEL,
 	COLLIDER_PLAYER,
 	COLLIDER_ENEMY,
-	COLLIDER_COIN,
-	COLLIDER_WALKENEMY,
-
 
 	COLLIDER_MAX
 };
@@ -50,7 +47,6 @@ struct Collider
 		type(type),
 		callback(callback)
 	{}
-	int type_collider;
 	void SetPos(int x, int y)
 	{
 		rect.x = x;
@@ -81,14 +77,8 @@ public:
 	void DebugDraw();
 	void AllCollidersToDelete();
 
-	bool CollisionToWorld(Collider* playerRect, bool* movement);
-
 	void CalculateAllDistance(Collider* c1, Collider* c2, AllDistance& Alldistances);
 	void CalculateCollision(AllDistance& AllDistances, Collider* colliderEntity);
-	
-//	Distance FinalDistance;
-	
-	
 
 private:
 

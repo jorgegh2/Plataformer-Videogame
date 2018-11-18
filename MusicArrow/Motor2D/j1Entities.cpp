@@ -12,7 +12,6 @@
 #include "Enemy_Walk.h"
 #include "p2Log.h"
 #include "Brofiler\Brofiler.h"
-#include "Coin.h"
 #include "j1FadeToBlack.h"
 #include "j1Collision.h"
 

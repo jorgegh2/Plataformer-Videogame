@@ -41,8 +41,6 @@ bool Enemy_Fly::Awake(pugi::xml_node& config)
 
 void Enemy_Fly::Move(float dt)
 {
-	if (isDead == false)
-		isDead = App->collision->CollisionToWorld(collider, movement);
 	speed.x = 200 * dt;
 	speed.y = 200 * dt;
 	animation = &fly;

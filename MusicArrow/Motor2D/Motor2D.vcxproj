@@ -78,7 +78,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Enemy_fly.cpp" />
     <ClCompile Include="Enemy_Walk.cpp" />
     <ClCompile Include="j1Entities.cpp" />
@@ -89,7 +88,6 @@
     <ClCompile Include="j1Audio.cpp" />
     <ClCompile Include="j1Input.cpp" />
     <ClCompile Include="j1Map.cpp" />
-    <ClCompile Include="j1Particles.cpp" />
     <ClCompile Include="j1Pathfinding.cpp" />
     <ClCompile Include="j1PerfTimer.cpp" />
     <ClCompile Include="j1Player.cpp" />
@@ -106,14 +104,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
-    <ClInclude Include="Coin.h" />
     <ClInclude Include="Enemy_fly.h" />
     <ClInclude Include="Enemy_Walk.h" />
     <ClInclude Include="j1Entities.h" />
     <ClInclude Include="j1Entity.h" />
     <ClInclude Include="j1FadeToBlack.h" />
     <ClInclude Include="j1Map.h" />
-    <ClInclude Include="j1Particles.h" />
     <ClInclude Include="j1Pathfinding.h" />
     <ClInclude Include="j1PerfTimer.h" />
     <ClInclude Include="j1Player.h" />

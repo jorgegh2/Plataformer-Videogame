@@ -14,17 +14,12 @@
 #include "j1Collision.h"
 #include "j1App.h"
 #include "j1FadeToBlack.h"
-#include "j1Particles.h"
 #include "j1Player.h"
 #include "Time.h"
 #include "j1Scene_Forest.h"
 #include "j1Scene_Winter.h"
 #include "j1Entities.h"
-//#include "j1Entity.h"
 #include "j1Pathfinding.h"
-//#include "Enemy_Walk.h"
-//#include "Enemy_Fly.h"
-//#include "Coin.h"
 #include "j1PerfTimer.h"
 #include "Brofiler/Brofiler.h"
 
@@ -43,23 +38,12 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new j1Scene();
 	map = new j1Map();
 	collision = new j1Collision();
-	//player = new j1Player();
 	fadeToBlack = new j1FadeToBlack();
-	particles = new j1Particles();
 	time = new Timer();
 	map_forest = new j1Scene_Forest();
 	map_winter = new j1Scene_Winter();
 	entities = new j1Entities();
 	pathfinding = new j1PathFinding();
-
-	//entity = new j1Entity();
-	//enemy_walk = new Enemy_Walk();
-	//enemy_fly = new Enemy_Fly();
-	//coin = new Coin();
-	//perf_timer = new j1PerfTimer();
-
-	// Ordered for awake / Start / Update
-	// Reverse order of CleanUp
 
 	AddModule(input);
 	AddModule(win);
@@ -70,20 +54,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map_forest);
 	AddModule(map_winter);
 	AddModule(fadeToBlack);
-	AddModule(particles);
 	AddModule(collision);
-	//AddModule(player);
 	AddModule(entities);
-
-	
-	//AddModule(entity);
 	AddModule(pathfinding);
-	//AddModule(enemy_walk);
-	//AddModule(enemy_fly);
-	//AddModule(coin);
-
-	//AddModule(perf_timer);
-	//AddModule(time);
 
 	// render last to swap buffer
 	AddModule(render);
@@ -121,7 +94,6 @@ bool j1App::Awake()
 
 	if (config.empty() == false)
 	{
-		// self-config
 		ret = true;
 		app_config = config.child("app");
 		title.create(app_config.child("title").child_value());
@@ -391,10 +363,7 @@ void j1App::SaveGame(const char* file) const
 }
 
 // ---------------------------------------
-void j1App::GetSaveGames(p2List<p2SString>& list_to_fill) const
-{
-	// need to add functionality to file_system module for this to work
-}
+
 
 bool j1App::LoadGameNow()
 {

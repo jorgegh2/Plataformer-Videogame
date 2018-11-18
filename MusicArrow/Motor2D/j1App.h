@@ -64,7 +64,6 @@ public:
 
 	void LoadGame(const char* file);
 	void SaveGame(const char* file) const;
-	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
 
 	int cap;
 	int	capped_ms = -1;
@@ -104,20 +103,13 @@ public:
 	j1Scene*			scene;
 	j1Map*				map;
 	j1Collision*		collision;
-	//j1Player*			player;
 	j1FadeToBlack*		fadeToBlack;
 	j1Particles*		particles;
 	Timer*				time;
 	j1Scene_Forest*		map_forest;
 	j1Scene_Winter*		map_winter;
 	j1Entities*			entities;
-	//j1Entity*			entity;
 	j1PathFinding*		pathfinding;
-	//Enemy_Walk*			enemy_walk;
-	//Enemy_Fly*			enemy_fly;
-	//Coin*				coin;
-	//j1PerfTimer*		perf_timer;
-
 
 private:
 

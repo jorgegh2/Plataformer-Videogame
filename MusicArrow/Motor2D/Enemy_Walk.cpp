@@ -49,9 +49,6 @@ void Enemy_Walk::Move(float dt)
 	speed.x = 30 * dt;
 	speed.y = 30 * dt;
 
-	if (isDead == false)
-		isDead = App->collision->CollisionToWorld(collider, movement);
-
 	if (movement[down] == true)
 		CalculateGravity(dt);
 

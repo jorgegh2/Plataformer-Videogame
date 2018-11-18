@@ -621,18 +621,6 @@ void j1Player::ResetPlayer()
 	//If the module input has been disabled in the DEAD state
 	if (!App->input->IsEnabled()) App->input->Enable();
 
-	p2List_item<MapObjects*>* item_object = nullptr;
-
-	/*for (item_object = App->map->data.objects.start; item_object; item_object = item_object->next)
-	{
-		if (item_object->data->StartPoint.x != 0 && item_object->data->StartPoint.y != 0)
-		{
-			StartPoint.x = item_object->data->StartPoint.x;
-			StartPoint.y = item_object->data->StartPoint.y;
-
-		}
-	}*/
-
 	position.x = OriginPos.x;
 	position.y = OriginPos.y;
 
