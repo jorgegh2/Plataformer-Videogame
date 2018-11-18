@@ -11,6 +11,7 @@ class Enemy_Fly : public Entity
 {
 private:
 
+	bool Agro = false;
 	Animation fly;
 	Animation attack;
 

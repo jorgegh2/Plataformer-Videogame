@@ -43,8 +43,8 @@ void Enemy_Fly::Move(float dt)
 {
 	if (isDead == false)
 		isDead = App->collision->CollisionToWorld(collider, movement);
-	speed.x = 90 * dt;
-	speed.y = 90 * dt;
+	speed.x = 200 * dt;
+	speed.y = 200 * dt;
 	animation = &fly;
 	NormalizeAnimations(dt);
 
@@ -54,10 +54,19 @@ void Enemy_Fly::Move(float dt)
 	}
 
 
+
+	if (position.DistanceManhattan(App->entities->player->position) < 750)
+		Agro = true;
+	else
+		Agro = false;
+
+	//eje X
+
+
 	iPoint enemy_tiles_pos = App->map->WorldToMap(position.x, position.y);
 	iPoint player_tiles_pos = App->map->WorldToMap(App->entities->player->position.x, App->entities->player->position.y);
 
-	if (player_tiles_pos.x - enemy_tiles_pos.x <= 5 && player_tiles_pos.x - enemy_tiles_pos.x >= -5 && player_tiles_pos.y - enemy_tiles_pos.y <= 5 && player_tiles_pos.y - enemy_tiles_pos.y >= -5)
+	if (Agro && enemy_path.Count() <= 0)
 	{
 		App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
 		originalpos = App->map->MapToWorld(enemy_tiles_pos.x, enemy_tiles_pos.y);
@@ -65,26 +74,27 @@ void Enemy_Fly::Move(float dt)
 	}
 	else {
 
-		if (timer.Read() > 2000) {
+		/*if (timer.Read() > 2000) {
 
 			if (movingLeft) {
 				movingLeft = false;
 				timer.Reset();
 				animation = &fly;
 			}
-			else 
+			else
 			{
 				movingLeft = true;
 				timer.Reset();
 				animation = &fly;
 				App->audio->PlayFx(flysound, 1);
 			}
-			
+
 		}
 		if (movingLeft)
 			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x + 1 , enemy_tiles_pos.y }, enemy_path);
 		else
 			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
+	*/
 	}
 
 
@@ -106,19 +116,18 @@ void Enemy_Fly::Move(float dt)
 			position.y += speed.y;
 			current_in_path = true;
 			animation = &attack;
-			
 		}
 		else if (enemy_tiles_pos.y > enemy_path[i].y && position.y > tileInMap.y && movement[down] == true) {
 			position.y -= speed.y;
 			current_in_path = true;
 			animation = &attack;
 		}
-		else if (enemy_tiles_pos.x <= enemy_path[i].x && position.x < tileInMap.x && movement[right] == true) {
+		else if (enemy_tiles_pos.x < enemy_path[i].x && position.x < tileInMap.x && movement[right] == true) {
 			position.x += speed.x;
 			current_in_path = true;
 			animation = &attack;
 		}
-		else if (enemy_tiles_pos.x >= enemy_path[i].x && position.x > tileInMap.x && movement[left] == true) {
+		else if (enemy_tiles_pos.x > enemy_path[i].x && position.x > tileInMap.x && movement[left] == true) {
 			position.x -= speed.x;
 			current_in_path = true;
 			animation = &attack;
@@ -129,9 +138,13 @@ void Enemy_Fly::Move(float dt)
 
 		if (current_in_path == false)
 			i++;
+
+
+		DrawPath();
 	}
 	else {
 		i = 0;
+		enemy_path.Clear();
 	}
 
 }
@@ -140,12 +153,12 @@ void Enemy_Fly::DrawPath()
 {
 	for (int i = 0; i < enemy_path.Count(); i++)
 	{
-		iPoint p = { enemy_path.At(i)->x, enemy_path.At(i)->y };
+		iPoint p = App->map->MapToWorld(enemy_path[i].x, enemy_path[i].y);
 		p.x -= App->map->data.tile_width / 2;
 		p.y -= App->map->data.tile_height / 2;
 
 		SDL_Rect quad = { p.x, p.y, App->map->data.tile_width, App->map->data.tile_height };
-		App->render->DrawQuad(quad, 255, 255, 0, 75, true);
+		App->render->DrawQuad(quad, 255, 255, 0, 255);
 	}
 }
 
