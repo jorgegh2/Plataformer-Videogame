@@ -6,6 +6,7 @@
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_timer.h"
 #include "p2Log.h"
+#include "Brofiler/Brofiler.h"
 
 j1FadeToBlack::j1FadeToBlack() : j1Module()
 {
@@ -27,6 +28,7 @@ bool j1FadeToBlack::Start()
 // Update: draw background
 bool j1FadeToBlack::Update(float dt)
 {
+	BROFILER_CATEGORY("FadeToBlackUpdate", Profiler::Color::Chocolate);
 	if (current_step == fade_step::none)
 		return true;
 
@@ -66,6 +68,7 @@ bool j1FadeToBlack::Update(float dt)
 // Fade to black. At mid point deactivate one module, then activate the other
 bool j1FadeToBlack::FadeToBlack(j1Module* module_off, j1Module* module_on, float time)
 {
+	BROFILER_CATEGORY("FadeToBlack", Profiler::Color::Chocolate);
 	bool ret = false;
 
 	if (current_step == fade_step::none)
@@ -83,5 +86,6 @@ bool j1FadeToBlack::FadeToBlack(j1Module* module_off, j1Module* module_on, float
 
 bool j1FadeToBlack::IsFading() const
 {
+	BROFILER_CATEGORY("FadeToBlackFading", Profiler::Color::Chocolate);
 	return current_step != fade_step::none;
 }

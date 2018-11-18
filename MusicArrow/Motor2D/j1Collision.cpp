@@ -172,6 +172,7 @@ bool j1Collision::PreUpdate()
 // Called before render is available
 bool j1Collision::Update(float dt)
 {
+	BROFILER_CATEGORY("UpdateCollision", Profiler::Color::PapayaWhip);
 
 	DebugDraw();
 
@@ -180,6 +181,7 @@ bool j1Collision::Update(float dt)
 
 void j1Collision::DebugDraw()
 {
+	BROFILER_CATEGORY("DebugDraw", Profiler::Color::PapayaWhip);
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		debug = !debug;
 
@@ -225,6 +227,7 @@ void j1Collision::DebugDraw()
 // Called before quitting
 bool j1Collision::CleanUp()
 {
+	BROFILER_CATEGORY("CleanUpCollision", Profiler::Color::PapayaWhip);
 	LOG("Freeing all colliders");
 
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
@@ -241,6 +244,7 @@ bool j1Collision::CleanUp()
 
 Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback)
 {
+	BROFILER_CATEGORY("AddCollider", Profiler::Color::PapayaWhip);
 	Collider* ret = nullptr;
 
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
@@ -260,6 +264,7 @@ Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* 
 
 bool Collider::CheckCollision(const SDL_Rect& r) const
 {
+	BROFILER_CATEGORY("CheckCollision", Profiler::Color::PapayaWhip);
 	if ((r.x + r.w <= rect.x) || (r.x >= rect.x + rect.w) || (r.y + r.h <= rect.y) || (r.y >= rect.y + rect.h)) return false;
 	else return true;
 }
@@ -288,6 +293,7 @@ COLLIDER_TYPE j1Collision::DefineType(int type_as_int)
 }
 Distance Collider::DistanceToNearestCollider(SDL_Rect& collider_rect, COLLIDER_TYPE& collider_type) const
 {
+	BROFILER_CATEGORY("DistanceToNearestCollider", Profiler::Color::PapayaWhip);
 	Distance ret;
 	ret.nearestColliderType = collider_type;
 	ret.Modulo = 10000;
@@ -342,6 +348,7 @@ Distance Collider::DistanceToNearestCollider(SDL_Rect& collider_rect, COLLIDER_T
 
 void j1Collision::AllCollidersToDelete()
 {
+	BROFILER_CATEGORY("AllCollidersToDelete", Profiler::Color::PapayaWhip);
 	for (uint i = 0; i < MAX_COLLIDERS; i++)
 	{
 		if(colliders[i] != nullptr)

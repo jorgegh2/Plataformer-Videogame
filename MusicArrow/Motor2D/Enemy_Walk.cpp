@@ -15,10 +15,11 @@
 #include "Enemy_Walk.h"
 #include "j1Entity.h"
 #include "j1Entities.h"
+#include "Brofiler/Brofiler.h"
 
 Enemy_Walk::Enemy_Walk(int x, int y, SDL_Rect colliderRect) : Entity(x, y)
 {
-
+	
 	idle = App->tex->CreateAnimation("frog", "idle", true);
 	walk = App->tex->CreateAnimation("frog", "walk", true);
 	jump = App->tex->CreateAnimation("frog", "jump", true);
@@ -40,6 +41,7 @@ bool Enemy_Walk::Awake(pugi::xml_node& config)
 
 void Enemy_Walk::Move(float dt)
 {
+	BROFILER_CATEGORY("Enemy_WalkPath", Profiler::Color::Gray);
 	animation = &idle;
 	NormalizeAnimations(dt);
 
@@ -119,7 +121,9 @@ void Enemy_Walk::Move(float dt)
 }
 
 
-void Enemy_Walk::CalculateGravity(float dt) {
+void Enemy_Walk::CalculateGravity(float dt) 
+{
+	BROFILER_CATEGORY("CalculateGravityEnemy", Profiler::Color::Gray);
 	//Trap for colliders work "good" 
 	if (speed_jump < 20)
 	{
@@ -138,8 +142,9 @@ void Enemy_Walk::CalculateGravity(float dt) {
 	}
 }
 
-void Enemy_Walk::NormalizeAnimations(float dt) {
-
+void Enemy_Walk::NormalizeAnimations(float dt) 
+{
+	BROFILER_CATEGORY("NormalizeAnimationsEnemy", Profiler::Color::Gray);
 
 	idle.speed = App->tex->NormalizeAnimSpeed("frog", "idle", dt);
 	walk.speed = App->tex->NormalizeAnimSpeed("frog", "walk", dt);
@@ -150,7 +155,7 @@ void Enemy_Walk::NormalizeAnimations(float dt) {
 
 void Enemy_Walk::Dead()
 {
-
+	BROFILER_CATEGORY("DeadEnemy", Profiler::Color::Gray);
 	if (now == 0) {
 		now = SDL_GetTicks();
 		App->audio->PlayFx(zombiesound, 1);
@@ -177,6 +182,7 @@ void Enemy_Walk::Dead()
 
 bool Enemy_Walk::Save(pugi::xml_node& data) const
 {
+	BROFILER_CATEGORY("SaveEnemy", Profiler::Color::Gray);
 	pugi::xml_node enemy_walk_node = data.append_child("enemywalk");
 
 	pugi::xml_node pos_node = enemy_walk_node.append_child("position");
@@ -218,6 +224,7 @@ bool Enemy_Walk::Save(pugi::xml_node& data) const
 
 bool Enemy_Walk::Load(pugi::xml_node& data)
 {
+	BROFILER_CATEGORY("LoadEnemy", Profiler::Color::Gray);
 	//load player position
 	position.x = data.child("enemywalk").child("position").attribute("x").as_int();
 	position.y = data.child("enemywalk").child("position").attribute("y").as_int();

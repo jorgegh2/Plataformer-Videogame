@@ -36,7 +36,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 void j1Map::Draw()
 {
-	BROFILER_CATEGORY("DrawMap", Profiler::Color::Red);
+	BROFILER_CATEGORY("DrawMap", Profiler::Color::Coral);
 
 	if(map_loaded == false)
 		return;
@@ -129,6 +129,7 @@ void j1Map::Draw()
 
 TileSet* j1Map::GetTilesetFromTileId(int id) const
 {
+	BROFILER_CATEGORY("GetTilesetFromTileId", Profiler::Color::Coral);
 	p2List_item<TileSet*>* item = data.tilesets.start;
 	TileSet* set = item->data;
 
@@ -148,6 +149,7 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 
 iPoint j1Map::MapToWorld(int x, int y) const
 {
+	BROFILER_CATEGORY("MapToWorld", Profiler::Color::Coral);
 	iPoint ret(0,0);
 	// TODO 8(old): Create a method that translates x,y coordinates from map positions to world positions
 	if (data.type == MAPTYPE_ORTHOGONAL)
@@ -168,6 +170,7 @@ iPoint j1Map::MapToWorld(int x, int y) const
 
 iPoint j1Map::WorldToMap(int x, int y) const
 {
+	BROFILER_CATEGORY("WorldToMap", Profiler::Color::Coral);
 	iPoint ret(0,0);
 	// TODO 2: Add orthographic world to map coordinates
 	ret.x = x / data.tile_width;
@@ -178,6 +181,7 @@ iPoint j1Map::WorldToMap(int x, int y) const
 
 SDL_Rect TileSet::GetTileRect(int id) const
 {
+	BROFILER_CATEGORY("GetTileRect", Profiler::Color::Coral);
 	SDL_Rect rect = {0, 0, 0, 0};
 	int relative_id = id - firstgid;
 	rect.w = tile_width;
@@ -191,6 +195,7 @@ SDL_Rect TileSet::GetTileRect(int id) const
 // Called before quitting
 bool j1Map::CleanUp()
 {
+	BROFILER_CATEGORY("MapCleanUp", Profiler::Color::Coral);
 	LOG("Unloading map");
 
 	// Remove all tilesets
@@ -260,6 +265,7 @@ ImageLayers::~ImageLayers()
 // Load new map
 bool j1Map::Load(const char* file_name)
 {
+	BROFILER_CATEGORY("MapLoadData", Profiler::Color::Coral);
 		bool ret = true;
 	p2SString tmp("%s%s", folder.GetString(), file_name);
 
@@ -372,6 +378,7 @@ bool j1Map::Load(const char* file_name)
 // Load map general properties
 bool j1Map::LoadMap()
 {
+	BROFILER_CATEGORY("MapCleanUp", Profiler::Color::Coral);
 	bool ret = true;
 	pugi::xml_node map = map_file.child("map");
 
@@ -437,6 +444,7 @@ bool j1Map::LoadMap()
 
 bool j1Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 {
+	BROFILER_CATEGORY("LoadTilesetDetails", Profiler::Color::Coral);
 	bool ret = true;
 	set->name.create(tileset_node.attribute("name").as_string());
 	set->firstgid = tileset_node.attribute("firstgid").as_int();
@@ -462,6 +470,7 @@ bool j1Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 
 bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 {
+	BROFILER_CATEGORY("LoadTilesetImage", Profiler::Color::Coral);
 	bool ret = true;
 	pugi::xml_node image = tileset_node.child("image");
 
@@ -498,6 +507,7 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 
 bool j1Map::LoadImageLayers(pugi::xml_node& imagelayer_node, ImageLayers* set)
 {
+	BROFILER_CATEGORY("LoadImageLayers", Profiler::Color::Coral);
 	bool ret = true;
 	set->name = imagelayer_node.attribute("name").as_string();
 	pugi::xml_node image = imagelayer_node.child("image");
@@ -544,6 +554,7 @@ bool j1Map::LoadImageLayers(pugi::xml_node& imagelayer_node, ImageLayers* set)
 
 bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 {
+	BROFILER_CATEGORY("LoadLayer", Profiler::Color::Coral);
 	bool ret = true;
 
 	layer->name = node.attribute("name").as_string();
@@ -578,6 +589,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 
 bool j1Map::LoadObjects(pugi::xml_node& node, MapObjects* object)
 {
+	BROFILER_CATEGORY("LoadObjects", Profiler::Color::Coral);
 	pugi::xml_node node_property = node.child("properties").child("property");
 	object->id = node.attribute("id").as_int();
 	object->name = "Colliders";
@@ -602,6 +614,7 @@ bool j1Map::LoadObjects(pugi::xml_node& node, MapObjects* object)
 
 bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 {
+	BROFILER_CATEGORY("CreateWalkabilityMap", Profiler::Color::Coral);
 	bool ret = false;
 	p2List_item<MapLayer*>* item;
 	item = data.layers.start;
@@ -672,6 +685,7 @@ COLLIDER_TYPE j1Map::DefineType(int type_as_int)
 
 void j1Map::SetAllCollidersAndEntities()
 {
+	BROFILER_CATEGORY("SetAllCollidersAndEntities", Profiler::Color::AliceBlue);
 	p2List_item<MapObjects*>* item_object = nullptr;
 	for (item_object = App->map->data.objects.start; item_object; item_object = item_object->next)
 	{

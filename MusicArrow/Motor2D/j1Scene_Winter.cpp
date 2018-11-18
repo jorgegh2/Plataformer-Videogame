@@ -42,6 +42,7 @@ bool j1Scene_Winter::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F4))
 	{
 		App->fadeToBlack->FadeToBlack(App->map_winter, App->map_forest);
+		App->entities->player->ResetPlayer();
 	}
 	return true;
 }

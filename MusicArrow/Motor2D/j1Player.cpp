@@ -26,6 +26,7 @@
 #include "j1FadeToBlack.h"
 #include "j1Scene_Forest.h"
 #include "j1Scene_Winter.h"
+#include "Brofiler/Brofiler.h"
 
 
 
@@ -235,7 +236,7 @@ bool j1Player::Start()
 // Unload assets
 bool j1Player::CleanUp()
 {
-
+	BROFILER_CATEGORY("PlayerCleanUp", Profiler::Color::Beige);
 
 	LOG("Unloading player");
 	App->tex->UnLoad(graphics);
@@ -246,6 +247,8 @@ bool j1Player::CleanUp()
 // Update: draw background
 bool j1Player::Update(float dt)
 {
+	BROFILER_CATEGORY("PlayerUpdate", Profiler::Color::Beige);
+
 	float g = gravity * dt;
 	float speedDtX = speed.x * dt;
 	velocityX = 0;
@@ -553,6 +556,7 @@ bool j1Player::Update(float dt)
 
 bool j1Player::Save(pugi::xml_node& data) const
 {
+	BROFILER_CATEGORY("PlayerSave", Profiler::Color::Beige);
 	pugi::xml_node player_node = data.append_child("player");
 	pugi::xml_node pos_node = player_node.append_child("position");
 
@@ -573,6 +577,7 @@ bool j1Player::Save(pugi::xml_node& data) const
 
 bool j1Player::Load(pugi::xml_node& data)
 {
+	BROFILER_CATEGORY("PlayerLoad", Profiler::Color::Beige);
 	//load player position
 	position.x = data.child("player").child("position").attribute("x").as_int();
 	position.y = data.child("player").child("position").attribute("y").as_int();
@@ -621,6 +626,7 @@ state j1Player::SetStateFromInt(int state_as_int)
 
 void j1Player::ResetPlayer()
 {
+	BROFILER_CATEGORY("PlayerReset", Profiler::Color::Beige);
 	//If the module input has been disabled in the DEAD state
 	if (!App->input->IsEnabled()) App->input->Enable();
 
