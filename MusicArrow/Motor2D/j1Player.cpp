@@ -209,20 +209,6 @@ bool j1Player::Awake(pugi::xml_node& config)
 	stageclear = config.child("fxsound").child("stageclear").attribute("source").as_string();
 	audio_stageclear = App->audio->LoadFx(stageclear);
 
-	//Set SDL Scan Codes
-
-	codeForward = config.child("playercontrols").child("moveright").attribute("input").as_int();
-	codeBackward = config.child("playercontrols").child("moveleft").attribute("input").as_int();
-	codeUp = config.child("playercontrols").child("moveup").attribute("input").as_int();
-	codeDown = config.child("playercontrols").child("movedown").attribute("input").as_int();
-	codeJump = config.child("playercontrols").child("jump").attribute("input").as_int();
-	codeDash = config.child("playercontrols").child("dash").attribute("input").as_int();
-	codeFinalAttack = config.child("playercontrols").child("specialmove").attribute("input").as_int();
-	codeCameraLeft = config.child("cameracontrols").child("moveleft").attribute("input").as_int();
-	codeCameraRight = config.child("cameracontrols").child("moveright").attribute("input").as_int();
-	codeCameraUp = config.child("cameracontrols").child("moveup").attribute("input").as_int();
-	codeCameraDown = config.child("cameracontrols").child("movedown").attribute("input").as_int();
-
 
 	return ret;
 }
@@ -317,7 +303,7 @@ bool j1Player::Update(float dt)
 	}
 
 	//Dash movement
-/*	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && dashCount < 1 && jstate == ONAIR && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && jstate != DEAD && jstate != GODMODE)
+	/*if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && dashCount < 1 && jstate == ONAIR && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && jstate != DEAD && jstate != GODMODE)
 	{
 		if (dashCount == 0) App->time->Reset();
 		dashCount = 1;
@@ -326,7 +312,7 @@ bool j1Player::Update(float dt)
 
 		if (velocityX < 0)
 		{
-			position.x -= speed.x * 4;
+			position.x -= speed.x * 6 * dt;
 
 		}
 		jstate = LANDING;
@@ -340,7 +326,7 @@ bool j1Player::Update(float dt)
 		App->audio->PlayFx(audio_dash);
 		if (velocityX > 0)
 		{
-			position.x += speed.x * 4;
+			position.x += speed.x * 6 * dt;
 
 		}
 		else jstate = LANDING;
@@ -359,7 +345,7 @@ bool j1Player::Update(float dt)
 		if (dashCount == 0)
 		{
 		timer.Reset();
-		speed.y = -938*dt;
+		speed.y = -1500*dt;
 		jstate = ONAIR;
 		}
 		
@@ -429,7 +415,7 @@ bool j1Player::Update(float dt)
 
 				jstate = JUMP;
 				timer.Reset();
-				speed.y = -15;
+				speed.y = -1500 * dt;
 				jstate = ONAIR;
 				current_animation = &jump;
 				current_animation->Reset();

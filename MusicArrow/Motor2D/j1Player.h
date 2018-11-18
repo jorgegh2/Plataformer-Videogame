@@ -12,8 +12,7 @@
 #include "j1Collision.h"
 
 struct SDL_Texture;
-struct Collider; //quitar
-
+//struct Collider; 
 
 enum state {
 
@@ -58,7 +57,7 @@ public:
 
 	Animation* current_animation = nullptr;
 	
-	iPoint OriginPos; //quitar
+	iPoint OriginPos;
 	
 	float velocityX; 
 	Timer timer;
@@ -66,7 +65,7 @@ public:
 	bool IsGodMode = false;
 
 	int jumpCount;
-	int dashCount;  //quitar
+	int dashCount; 
 	
 	
 
@@ -98,18 +97,6 @@ public:
 	uint audio_dead;
 	uint audio_finishdead;
 	uint audio_stageclear;
-
-	int codeForward;
-	int codeBackward;
-	int codeUp;
-	int codeDown;
-	int codeJump;
-	int codeDash;
-	int codeFinalAttack;
-	int codeCameraLeft;
-	int codeCameraRight;
-	int codeCameraUp;
-	int codeCameraDown;
 	
 	Collider* offSet = nullptr;
 };
