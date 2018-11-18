@@ -380,12 +380,11 @@ void j1Collision::CalculateCollision(AllDistance& AllDistances, Collider* collid
 				if (matrix[colliderEntity->type][c1->type] && colliderEntity->callback)
 					colliderEntity->callback->OnCollision(colliderEntity, c1);
 			}*/
-			if (colliderEntity->type == COLLIDER_PLAYER)
-			{
+			
 
 				CalculateAllDistance(c1, colliderEntity, AllDistances);
 
-			}
+			
 
 	}
 }

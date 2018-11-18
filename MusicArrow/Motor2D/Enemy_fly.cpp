@@ -59,10 +59,7 @@ void Enemy_Fly::Move(float dt)
 		Agro = true;
 	else
 		Agro = false;
-
-	//eje X
-
-
+	   
 	iPoint enemy_tiles_pos = App->map->WorldToMap(position.x, position.y);
 	iPoint player_tiles_pos = App->map->WorldToMap(App->entities->player->position.x, App->entities->player->position.y);
 
@@ -71,11 +68,10 @@ void Enemy_Fly::Move(float dt)
 		timer.Reset();
 		App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
 		originalpos = App->map->MapToWorld(enemy_tiles_pos.x, enemy_tiles_pos.y);
-		DrawPath();
 	}
-	else {
+	/*else {
 
-		/*if (timer.Read() > 2000) {
+		if (timer.Read() > 2000) {
 
 			if (movingLeft) {
 				movingLeft = false;
@@ -95,12 +91,17 @@ void Enemy_Fly::Move(float dt)
 			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x + 1 , enemy_tiles_pos.y }, enemy_path);
 		else
 			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
-	*/
-	}
+	
+	}*/
 
 
 	//const p2DynArray<iPoint>* tmp_array = App->pathfinding->GetLastPath();
-	DrawPath();
+
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+		ShowPath = !ShowPath;
+
+	if(ShowPath)
+		DrawPath();
 
 
 	if (i < enemy_path.Count()) {
@@ -142,7 +143,7 @@ void Enemy_Fly::Move(float dt)
 			i++;
 
 
-		DrawPath();
+		//DrawPath();
 	}
 	else {
 		i = 0;

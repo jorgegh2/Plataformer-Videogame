@@ -55,12 +55,17 @@ void Enemy_Walk::Move(float dt)
 	if (movement[down] == true)
 		CalculateGravity(dt);
 
+	if (position.DistanceManhattan(App->entities->player->position) < 1500)
+		Agro = true;
+	else
+		Agro = false;
+
 
 	iPoint enemy_tiles_pos = App->map->WorldToMap(position.x, position.y);
 	iPoint player_tiles_pos = App->map->WorldToMap(App->entities->player->position.x, App->entities->player->position.y);
 
 
-	if (player_tiles_pos.x - enemy_tiles_pos.x <= 3 && player_tiles_pos.x - enemy_tiles_pos.x >= -3)
+	if (Agro && timer.ReadSec() >= 0.1)
 	{
 		//App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
 
@@ -118,28 +123,48 @@ void Enemy_Walk::Move(float dt)
 		i = 0;
 	}
 
+
+
 }
 
 
 void Enemy_Walk::CalculateGravity(float dt) 
 {
 	BROFILER_CATEGORY("CalculateGravityEnemy", Profiler::Color::Gray);
-	//Trap for colliders work "good" 
-	if (speed_jump < 20)
-	{
-		speed_jump += gravity;
-	}
-	else
-	{
-		speed_jump = 20;
-	}
+	//Trap for colliders work "good" speed.y = speed.y + g; //* timer.ReadSec();
 
-	position.y += speed_jump;
+		
 
-	if (movement[down] == false && speed_jump > 0)
-	{
-		speed_jump = 0;
-	}
+	//if (speed.y >= 0)
+	//{
+	//	if (speed.y < AllDistances.distancePositiveY.Modulo)
+	//		position.y += speed.y;
+	//	else
+	//	{
+	//		position.y += AllDistances.distancePositiveY.Modulo;
+	//		jstate = ONFLOOR;
+
+	
+	
+		if (speed_jump < 20)
+		{
+			speed_jump += gravity;
+		}
+		else
+		{
+			speed_jump = 20;
+		}
+
+		if(speed_jump < AllDistances.distancePositiveY.Modulo)
+			position.y += speed_jump;
+		else
+			position.y += AllDistances.distancePositiveY.Modulo;
+
+				if (movement[down] == false && speed_jump > 0)
+				{
+					speed_jump = 0;
+				}
+			
 }
 
 void Enemy_Walk::NormalizeAnimations(float dt) 

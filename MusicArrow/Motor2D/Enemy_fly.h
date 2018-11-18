@@ -14,6 +14,7 @@ private:
 	bool Agro = false;
 	Animation fly;
 	Animation attack;
+	bool ShowPath = false;
 
 public:
 	iPoint originalpos;

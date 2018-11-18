@@ -20,9 +20,10 @@ private:
 	Animation walk;
 	Animation jump;
 	
+	bool Agro = false;
 
 public:
-	fPoint originalpos;
+	iPoint originalpos;
 
 	Enemy_Walk(int x, int y, SDL_Rect colliderRect);
 
@@ -30,6 +31,8 @@ public:
 
 	bool Save(pugi::xml_node& config) const;
 	bool Load(pugi::xml_node& config);
+
+	//void DrawPath();
 
 	void Move(float dt);
 	void Dead();
