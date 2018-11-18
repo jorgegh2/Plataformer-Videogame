@@ -25,22 +25,19 @@ j1Entities::j1Entities()
 
 	name.create("entities");
 
-	/*AddEntity(ENTITY_PLAYER, 0, 0);
-	SpawnEntity(queue[0]); // The player
-	queue[0].type = ENTITY_TYPES::NO_TYPE;*/
 }
 
 // Destructor
 j1Entities::~j1Entities()
 {
-	//App->tex->UnLoad(sprites);
+	
 }
 
 bool j1Entities::Start()
 {
 	// Create a prototype for each enemy available so we can copy them around
 	sprites = App->tex->Load("assets/Enemies/enemies_spritesheet.png");
-	//player_life = 3;
+	
 
 	
 	player->Start();
@@ -115,7 +112,7 @@ bool j1Entities::Update(float dt)
 			entities[i]->Draw(sprites);
 		}
 	}
-	//REVISAR: YA SE NORMALIZA EN CADA CLASE Y si se hace deberia de ser antes de mover
+	
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
 		if (entities[i] != nullptr)
@@ -123,27 +120,6 @@ bool j1Entities::Update(float dt)
 			entities[i]->NormalizeAnimations(dt);
 		}
 	}
-	/*for (uint i = 0; i < MAX_ENTITIES; ++i)
-	{
-		if (entities[i] != nullptr)
-		{
-			if (entities[i]->collider->type == COLLIDER_ENEMY)
-			{
-				if (player->CheckDeath(entities[i]))
-					player->Dead();
-			}
-		}
-	}*/
-	/*for (uint i = 0; i < MAX_ENTITIES; ++i)
-	{
-		if (entities[i] != nullptr)
-		{
-			if (entities[i]->death == true && entities[i]->isPlayer == false) {
-				delete entities[i];
-				entities[i] = nullptr;
-			}
-		}
-	}*/
 
 	return true;
 }
@@ -204,7 +180,7 @@ bool j1Entities::ResetEntities()
 	{
 		if (queue[i].type != NULL)
 			queue[i].type = NO_TYPE;
-		//cambiar, posiciones originales
+		
 		queue[i].x = 0;
 		queue[i].y = 0;
 	}
@@ -223,7 +199,7 @@ bool j1Entities::AddEntity(ENTITY_TYPES type, int x, int y, SDL_Rect colliderRec
 	{
 		if (queue[i].type == ENTITY_TYPES::NO_TYPE)
 		{
-			//App->map->data.tile_height;
+			
 			queue[i].type = type;
 			queue[i].x = x;
 			queue[i].y = y;
@@ -255,7 +231,7 @@ void j1Entities::SpawnEntity(const EntityInfo& info)
 		{
 
 		case ENTITY_TYPES::NO_TYPE:
-			//enemies[i] = new Enemy_Balloon(info.x, info.y);
+			
 			break;
 
 		case ENTITY_TYPES::ENEMY_FLY:
@@ -269,7 +245,7 @@ void j1Entities::SpawnEntity(const EntityInfo& info)
 			entities[i]->isPlayer = true;
 			break;
 		case ENTITY_TYPES::COIN:
-			//entities[i] = new Coin(info.x, info.y);
+			
 			break;
 		}
 

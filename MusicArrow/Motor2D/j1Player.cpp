@@ -1,21 +1,8 @@
-//#include "Globals.h"
 #include "j1App.h"
 #include "j1Textures.h"
 #include "j1Input.h"
-//#include "ModulePlayersMenu.h"
-//#include "ModuleRender.h"
 #include "j1Player.h"
-//#include "SDL\include\SDL.h"
-//#include "ModuleParticles.h"
 #include "j1Collision.h"
-//#include "ModuleFadeToBlack.h"
-//#include "Level01.h"
-//#include "ModuleGameOver.h"
-//#include "ModuleGameIntroduction.h"
-//#include "ModuleAudio.h"
-//#include "ModuleFonts.h"
-//#include "UI.h"
-//#include "ModulePowerUp.h"
 #include "Time.h"
 #include "p2Log.h"
 #include "j1Map.h"
@@ -40,9 +27,9 @@ j1Player::j1Player(int x, int y, SDL_Rect colliderRect) : Entity(x, y)
 {
 	graphics = NULL;
 	current_animation = NULL;
-	collider = App->collision->AddCollider(colliderRect, COLLIDER_PLAYER, nullptr); //cambiar c_player to collider (heredada de entity)
+	collider = App->collision->AddCollider(colliderRect, COLLIDER_PLAYER, nullptr); 
 	OriginPos = { collider->rect.x, collider->rect.y };
-	//name.create("player");
+	
 
 	//------ New Animations Awesome Game 2 ------
 
@@ -302,37 +289,6 @@ bool j1Player::Update(float dt)
 
 	}
 
-	//Dash movement
-	/*if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && dashCount < 1 && jstate == ONAIR && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && jstate != DEAD && jstate != GODMODE)
-	{
-		if (dashCount == 0) App->time->Reset();
-		dashCount = 1;
-		current_animation = &hit;
-		App->audio->PlayFx(audio_dash);
-
-		if (velocityX < 0)
-		{
-			position.x -= speed.x * 6 * dt;
-
-		}
-		jstate = LANDING;
-
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && dashCount < 1 && jstate == ONAIR && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && jstate != DEAD && jstate != GODMODE)
-	{
-		App->time->Reset();
-		dashCount = 1;
-		current_animation = &hit;
-		App->audio->PlayFx(audio_dash);
-		if (velocityX > 0)
-		{
-			position.x += speed.x * 6 * dt;
-
-		}
-		else jstate = LANDING;
-
-	}*/
-
 	//Flip player sprite if x speed is negative
 	if (velocityX < 0)flip = SDL_FLIP_HORIZONTAL;
 	if (velocityX > 0)flip = SDL_FLIP_NONE;
@@ -379,8 +335,7 @@ bool j1Player::Update(float dt)
 			
 		
 
-			speed.y = speed.y + g; //* timer.ReadSec();
-
+			speed.y = speed.y + g;
 		
 
 			if (speed.y >= 0)
@@ -449,7 +404,7 @@ bool j1Player::Update(float dt)
 		speed.y = speed.y + gravity * timer.ReadSec();
 		position.y += speed.y * timer.ReadSec();
 
-		if (position.y > (-App->render->camera.y + App->render->camera.h)*2) //ADD FADE TO BLACK
+		if (position.y > (-App->render->camera.y + App->render->camera.h)*2)
 		{
 			App->audio->PlayFx(audio_finishdead, 1);
 			ResetPlayer();
@@ -513,8 +468,6 @@ bool j1Player::Update(float dt)
 
 		App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), flip);
 		SDL_Rect offSet{ (-App->render->camera.x / App->win->GetScale()) + 200, (-App->render->camera.y / App->win->GetScale()) + 600, 800, 600 };
-		//13568 limite derecho del mapa
-		//App->render->DrawQuad(offSet, 255, 255, 255, 80);
 		
 		int limit = -App->render->camera.x + App->render->camera.w;
 		if (position.x + collider->rect.w > offSet.w + offSet.x && limit < 13568)

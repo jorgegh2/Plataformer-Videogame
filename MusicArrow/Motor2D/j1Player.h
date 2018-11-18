@@ -11,8 +11,7 @@
 #include "Time.h"
 #include "j1Collision.h"
 
-struct SDL_Texture;
-//struct Collider; 
+struct SDL_Texture; 
 
 enum state {
 
@@ -32,12 +31,10 @@ public:
 	~j1Player();
 
 	// Called before render is available
-	//void Dead();
 	bool Awake(pugi::xml_node& conf);
 	bool Start();
 	bool Update(float dt);
 	bool CleanUp();
-	//bool CheckDeath(Entity* enemyEntity);
 
 	// Load / Save
 	bool Load(pugi::xml_node&);

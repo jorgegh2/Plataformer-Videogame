@@ -30,15 +30,14 @@ bool j1Scene_Forest::Awake(pugi::xml_node& config)
 bool j1Scene_Forest::Start()
 {
 	App->map->Load("Level1.tmx");
-	//App->entities->player->ResetPlayer();
+	
 
 	int w, h;
 	uchar* data = NULL;
 	if (App->map->CreateWalkabilityMap(w, h, &data))
 		App->pathfinding->SetMap(w, h, data);
 	RELEASE_ARRAY(data);
-	/*App->entities->AddEntity(ENEMY_FLY, 2000, 2500);
-	App->entities->AddEntity(ENEMY_WALK, 2500, 2500);*/
+	
 	return true;
 }
 

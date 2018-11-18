@@ -41,7 +41,6 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 	bool ResetEntities();
-	//void OnCollision(Collider* c1, Collider* c2); //quitar
 
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
@@ -50,7 +49,7 @@ public:
 
 
 	j1Player* player = nullptr;
-	//p2SString name  //quitar
+
 private:
 
 	void SpawnEntity(const EntityInfo& info);
@@ -59,13 +58,10 @@ private:
 private:
 	EntityInfo queue[MAX_ENTITIES];
 	Entity* entities[MAX_ENTITIES];
-	SDL_Texture* sprites = nullptr;  //quitar
+	SDL_Texture* sprites = nullptr;
 
 	p2DynArray<iPoint> flyPositions;
-	p2DynArray<iPoint> walkPositions;
-public:
-	uint player_life = 3; //quitar
-	iPoint loadPositionPlayer = { 0,0 };  //quitar
+	p2DynArray<iPoint> walkPositions;	
 
 };
 
