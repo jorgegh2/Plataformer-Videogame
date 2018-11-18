@@ -16,7 +16,7 @@
 #include "j1Entity.h"
 #include "j1Entities.h"
 
-Enemy_Fly::Enemy_Fly(int x, int y) : Entity(x, y)
+Enemy_Fly::Enemy_Fly(int x, int y, SDL_Rect colliderRect) : Entity(x, y)
 {
 
 	fly = App->tex->CreateAnimation("crow", "fly", true);
@@ -29,8 +29,15 @@ Enemy_Fly::Enemy_Fly(int x, int y) : Entity(x, y)
 	originalpos.y = position.y = y;
 
 	//App->entities posible error, original(App->entity)
-	collider = App->collision->AddCollider({ (int)position.x, (int)position.y + 10, 80, 80 }, COLLIDER_WATER, App->entities);
+	collider = App->collision->AddCollider(colliderRect, COLLIDER_ENEMY, App->entities);
 }
+
+bool Enemy_Fly::Awake(pugi::xml_node& config) 
+{
+	return true;
+}
+
+
 
 void Enemy_Fly::Move(float dt)
 {

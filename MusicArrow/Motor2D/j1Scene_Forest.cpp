@@ -30,8 +30,8 @@ bool j1Scene_Forest::Start()
 	App->map->Load("Level1.tmx");
 	App->map->SetAllColliders();
 	App->entities->player->ResetPlayer();
-	App->entities->AddEntity(ENEMY_FLY, 2000, 2500);
-	App->entities->AddEntity(ENEMY_WALK, 2500, 2500);
+	/*App->entities->AddEntity(ENEMY_FLY, 2000, 2500);
+	App->entities->AddEntity(ENEMY_WALK, 2500, 2500);*/
 	return true;
 }
 

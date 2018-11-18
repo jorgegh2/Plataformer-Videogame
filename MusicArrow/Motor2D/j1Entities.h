@@ -22,6 +22,7 @@ class Entity;
 
 struct EntityInfo
 {
+	SDL_Rect colliderRect;
 	ENTITY_TYPES type = ENTITY_TYPES::NO_TYPE;
 	int x, y;
 };
@@ -40,30 +41,31 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 	bool ResetEntities();
-	//void OnCollision(Collider* c1, Collider* c2);
+	//void OnCollision(Collider* c1, Collider* c2); //quitar
 
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
-	bool AddEntity(ENTITY_TYPES type, int x, int y);
+	bool AddEntity(ENTITY_TYPES type, int x, int y, SDL_Rect colliderRect);
 
 
 	j1Player* player = nullptr;
-	//p2SString name
+	//p2SString name  //quitar
 private:
 
 	void SpawnEntity(const EntityInfo& info);
+	pugi::xml_node config;
 
 private:
 	EntityInfo queue[MAX_ENTITIES];
 	Entity* entities[MAX_ENTITIES];
-	SDL_Texture* sprites = nullptr;
+	SDL_Texture* sprites = nullptr;  //quitar
 
 	p2DynArray<iPoint> flyPositions;
 	p2DynArray<iPoint> walkPositions;
 public:
-	uint player_life = 3;
-	iPoint loadPositionPlayer = { 0,0 };
+	uint player_life = 3; //quitar
+	iPoint loadPositionPlayer = { 0,0 };  //quitar
 
 };
 

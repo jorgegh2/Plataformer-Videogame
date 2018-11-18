@@ -34,7 +34,7 @@ public:
 	Entity(int x, int y);
 	virtual ~Entity();
 
-	virtual bool Awake(pugi::xml_node&) { return true; };
+	virtual bool Awake(pugi::xml_node&);
 	virtual bool Start() { return true; };
 	virtual bool Update(float dt) { return true; };
 	virtual bool CleanUp() { return true; };

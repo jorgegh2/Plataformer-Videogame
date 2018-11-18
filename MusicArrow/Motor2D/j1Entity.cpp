@@ -11,6 +11,11 @@ Entity::Entity(int x, int y) : position(x, y)
 
 }
 
+bool Entity::Awake(pugi::xml_node& config)
+{
+	return true;
+}
+
 Entity::~Entity()
 {
 	if (collider != nullptr)

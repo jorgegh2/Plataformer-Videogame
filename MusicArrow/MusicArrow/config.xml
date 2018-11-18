@@ -7,7 +7,7 @@
   </app>
 	
   <renderer>
-    <vsync value="true"/>
+    <vsync value="false"/>
   </renderer>
 
   <window>
@@ -29,8 +29,8 @@
   <entities>
     <player>
       <vars>
-        <speed speedX="8" speedY="0"></speed>
-        <myGravity value="1"></myGravity>
+        <speed speedX="470" speedY="0"></speed>
+        <myGravity value="63"></myGravity>
       </vars>
       <fxsound>
         <jump source="audio/fx/jump.wav"></jump> config.child("fxsound").child("jump").attribute("source").as_string()

@@ -11,19 +11,24 @@
 #include "Time.h"
 
 struct SDL_Texture;
-struct SDL_Rect;
-struct Mix_Chunk;
-struct Mix_Music;
-struct Collider;
+struct Collider; //quitar
 
 
-enum state {JUMP, ONFLOOR, ONAIR, LANDING, DEAD, GODMODE};
+enum state {
+
+	JUMP, 
+	ONFLOOR, 
+	ONAIR, 
+	LANDING, 
+	DEAD, 
+	GODMODE
+};
 
 class j1Player : public Entity
 {
 public:
 	j1Player();
-	j1Player(int x, int y);
+	j1Player(int x, int y, SDL_Rect colliderRect);
 	~j1Player();
 
 	// Called before render is available
@@ -50,18 +55,17 @@ public:
 
 	Animation* current_animation = nullptr;
 	
-	iPoint StartPoint;
+	iPoint StartPoint; //quitar
 	
-	float velocityX;
+	float velocityX; 
 	Timer timer;
 
 	bool IsGodMode = false;
 
 	int jumpCount;
-	int dashCount;
-	int godmodeCount;
+	int dashCount;  //quitar
+	int godmodeCount; //quitar
 	
-
 
 	//----- Animations Awesome Game 2 ------
 
@@ -77,12 +81,6 @@ public:
 
 	//---------------------
 
-	/*Mix_Chunk* helix_sound = nullptr;
-	Mix_Chunk* laser_sound = nullptr;
-	Mix_Chunk* basic_attack_sound = nullptr;
-	Mix_Chunk* player_death = nullptr;
-	Mix_Chunk* change_weapon_sound = nullptr;*/
-
 	const char*  jumping;
 	const char*  dash;
 	const char*  bump;
@@ -97,47 +95,8 @@ public:
 	uint audio_finishdead;
 	uint audio_stageclear;
 	
-	bool destroyed = true;
-	
-
 	Collider* c_player = nullptr;
 	Collider* offSet = nullptr;
-
-	// Vars to check if the buttons are still pressed
-	bool a_pressed = false;
-	bool x_pressed = false;
-	bool b_pressed = false;
-
-	bool shoot = false; // so that the player does not shot forever
-	bool change = false; // so that the player does not change weapons forever
-	bool powerup = false;
-	bool powerup_desincrement = false;
-
-	bool player_up = false;
-	bool player_down = false;
-	bool player_idle = false;
-
-public: // so we can access from UI module and blit the HUD textures or images
-	/*enum CHANGE_WEAPON
-	{
-		BASIC_ATTACK = 0,
-		LASER,
-		BACK_SHOOT,
-		HELIX
-	} change_weapon = CHANGE_WEAPON::BASIC_ATTACK;
-
-
-	enum POWER_UPS
-	{
-		POWER_UP_BASIC = 0,
-		POWER_UP_1,
-		POWER_UP_2,
-		POWER_UP_3,
-		POWER_UP_4,
-		POWER_UP_5,
-		POWER_UP_6
-
-	} power_up = POWER_UPS::POWER_UP_BASIC;*/
 };
 
 #endif // __j1PLAYER_H__

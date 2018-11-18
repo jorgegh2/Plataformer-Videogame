@@ -35,10 +35,11 @@ j1Player::j1Player() : Entity()
 
 }
 
-j1Player::j1Player(int x, int y) : Entity(x, y)
+j1Player::j1Player(int x, int y, SDL_Rect colliderRect) : Entity(x, y)
 {
 	graphics = NULL;
 	current_animation = NULL;
+	c_player = App->collision->AddCollider(colliderRect, COLLIDER_PLAYER, nullptr); //cambiar c_player to collider (heredada de entity)
 	//name.create("player");
 
 	//------ New Animations Awesome Game 2 ------
@@ -180,15 +181,17 @@ j1Player::j1Player(int x, int y) : Entity(x, y)
 
 	position.x = x;
 	position.y = y;
+	
 }
 
 bool j1Player::Awake(pugi::xml_node& config)
 {
+
 	LOG("Loading Player Module");
 	bool ret = true;
 	
-	speed = { config.child("vars").child("speed").attribute("speedX").as_float(), config.child("vars").child("speed").attribute("speedY").as_float() };
-	gravity = config.child("vars").child("myGravity").attribute("value").as_float();
+	speed = { config.child("player").child("vars").child("speed").attribute("speedX").as_float(), config.child("player").child("vars").child("speed").attribute("speedY").as_float() };
+	gravity = config.child("player").child("vars").child("myGravity").attribute("value").as_float();
 	return ret;
 }
 j1Player::~j1Player()
@@ -242,6 +245,8 @@ bool j1Player::CleanUp()
 // Update: draw background
 bool j1Player::Update(float dt)
 {
+	float g = gravity * dt;
+	float speedDtX = speed.x * dt;
 	velocityX = 0;
 	//Distance d = App->collision->FinalDistance;
 	Distance d_positiveY = App->collision->dPositiveY;
@@ -250,30 +255,30 @@ bool j1Player::Update(float dt)
 	Distance d_negativeY = App->collision->dNegativeY;
 	current_animation = &idle;
 
-	bool incamera = App->render->InCamera(c_player->rect);
+	/*bool incamera = App->render->InCamera(c_player->rect);
 	
 	if (incamera)
 	{
 		LOG("yeeey");
-	}
+	}*/
 
 	//Horizontal movement
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && jstate != DEAD && jstate != GODMODE)
 	{
-		if (d_negativeX.Modulo < speed.x && d_negativeX.nearestColliderType != COLLIDER_PLATAFORM)
+		if (d_negativeX.Modulo < speedDtX && d_negativeX.nearestColliderType != COLLIDER_PLATAFORM)
 			position.x -= d_negativeX.Modulo;
 
-		else position.x -= speed.x;
+		else position.x -= speedDtX;
 
-		velocityX = -speed.x;
+		velocityX = -speedDtX;
 		current_animation = &walk;
 
 
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && jstate != DEAD && jstate != GODMODE)
 	{
-		if (d_positiveX.Modulo < speed.x && d_positiveX.nearestColliderType != COLLIDER_PLATAFORM)
+		if (d_positiveX.Modulo < speedDtX && d_positiveX.nearestColliderType != COLLIDER_PLATAFORM)
 		{
 			position.x += d_positiveX.Modulo;
 			if (d_positiveX.nearestColliderType == COLLIDER_FINISH_LEVEL)
@@ -290,9 +295,9 @@ bool j1Player::Update(float dt)
 		}
 
 		else 
-			position.x += speed.x;
+			position.x += speedDtX;
 
-		velocityX = speed.x;
+		velocityX = speedDtX;
 		current_animation = &walk;
 
 
@@ -341,7 +346,7 @@ bool j1Player::Update(float dt)
 		if (dashCount == 0)
 		{
 		timer.Reset();
-		speed.y = -15;
+		speed.y = -938*dt;
 		jstate = ONAIR;
 		}
 		
@@ -377,8 +382,11 @@ bool j1Player::Update(float dt)
 
 	case ONAIR:
 			
-			
-			speed.y = speed.y + gravity * timer.ReadSec();
+		
+
+			speed.y = speed.y + g; //* timer.ReadSec();
+
+		
 
 			if (speed.y >= 0)
 			{
@@ -462,23 +470,23 @@ bool j1Player::Update(float dt)
 
 			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 			{
-				position.x -= speed.x;
-				App->render->camera.x += speed.x * App->win->GetScale();
+				position.x -= speedDtX;
+				App->render->camera.x += speedDtX * App->win->GetScale();
 			}
 			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 			{
-				position.x += speed.x;
-				App->render->camera.x -= speed.x * App->win->GetScale();
+				position.x += speedDtX;
+				App->render->camera.x -= speedDtX * App->win->GetScale();
 			}
 			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 			{
-				position.y -= speed.x;
-				App->render->camera.y += speed.x * App->win->GetScale();
+				position.y -= speedDtX;
+				App->render->camera.y += speedDtX * App->win->GetScale();
 			}
 			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 			{
-				position.y += speed.x;
-				App->render->camera.y -= speed.x * App->win->GetScale();
+				position.y += speedDtX;
+				App->render->camera.y -= speedDtX * App->win->GetScale();
 			}
 
 			

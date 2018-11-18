@@ -26,9 +26,9 @@ j1Entities::j1Entities()
 
 	name.create("entities");
 
-	AddEntity(ENTITY_PLAYER, 0, 0);
+	/*AddEntity(ENTITY_PLAYER, 0, 0);
 	SpawnEntity(queue[0]); // The player
-	queue[0].type = ENTITY_TYPES::NO_TYPE;
+	queue[0].type = ENTITY_TYPES::NO_TYPE;*/
 }
 
 // Destructor
@@ -49,16 +49,10 @@ bool j1Entities::Start()
 	return true;
 }
 
-bool j1Entities::Awake(pugi::xml_node& config)
+bool j1Entities::Awake(pugi::xml_node& config) 
 {
 
-	for (uint i = 0; i < MAX_ENTITIES; ++i)
-	{
-		if (entities[i] != nullptr)
-		{
-			entities[i]->Awake(config.child("player"));
-		}
-	}
+	this->config = config;
 
 	return true;
 
@@ -122,7 +116,7 @@ bool j1Entities::Update(float dt)
 		}
 	}
 
-	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	/*for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
 		if (entities[i] != nullptr)
 		{
@@ -131,7 +125,7 @@ bool j1Entities::Update(float dt)
 				entities[i] = nullptr;
 			}
 		}
-	}
+	}*/
 
 	return true;
 }
@@ -145,7 +139,7 @@ bool j1Entities::PostUpdate()
 	{
 		if (entities[i] != nullptr)
 		{
-			if (entities[i]->position.x * App->win->GetScale() < (App->render->camera.x + DESPAWN_MARGIN)*(-1))
+			if (entities[i]->position.x * App->win->GetScale() < (App->render->camera.x + DESPAWN_MARGIN)*(-1) || entities[i]->death == true)
 			{
 
 				delete entities[i];
@@ -191,6 +185,7 @@ bool j1Entities::ResetEntities()
 	{
 		if (queue[i].type != NULL)
 			queue[i].type = NO_TYPE;
+		//cambiar, posiciones originales
 		queue[i].x = 0;
 		queue[i].y = 0;
 	}
@@ -200,7 +195,7 @@ bool j1Entities::ResetEntities()
 
 }
 
-bool j1Entities::AddEntity(ENTITY_TYPES type, int x, int y)
+bool j1Entities::AddEntity(ENTITY_TYPES type, int x, int y, SDL_Rect colliderRect)
 {
 	bool ret = false;
 
@@ -208,12 +203,17 @@ bool j1Entities::AddEntity(ENTITY_TYPES type, int x, int y)
 	{
 		if (queue[i].type == ENTITY_TYPES::NO_TYPE)
 		{
-			App->map->data.tile_height;
+			//App->map->data.tile_height;
 			queue[i].type = type;
 			queue[i].x = x;
 			queue[i].y = y;
+			queue[i].colliderRect = colliderRect;
 			ret = true;
-			
+			if (type == ENTITY_PLAYER)
+			{
+				SpawnEntity(queue[i]); // The player
+				queue[i].type = ENTITY_TYPES::NO_TYPE;
+			}
 			break;
 		}
 	}
@@ -239,19 +239,21 @@ void j1Entities::SpawnEntity(const EntityInfo& info)
 			break;
 
 		case ENTITY_TYPES::ENEMY_FLY:
-			entities[i] = new Enemy_Fly(info.x, info.y);
+			entities[i] = new Enemy_Fly(info.x, info.y, info.colliderRect);
 			break;
 		case ENTITY_TYPES::ENEMY_WALK:
-			entities[i] = new Enemy_Walk(info.x, info.y);
+			entities[i] = new Enemy_Walk(info.x, info.y, info.colliderRect);
 			break;
 		case ENTITY_TYPES::ENTITY_PLAYER:
-			entities[i] = player = new j1Player(info.x,info.y);
+			entities[i] = player = new j1Player(info.x,info.y, info.colliderRect);
 			entities[i]->isPlayer = true;
 			break;
 		case ENTITY_TYPES::COIN:
-			entities[i] = new Coin(info.x, info.y);
+			//entities[i] = new Coin(info.x, info.y);
 			break;
 		}
+
+		entities[i]->Awake(config);
 
 	}
 }

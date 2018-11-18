@@ -17,16 +17,17 @@ private:
 public:
 	iPoint originalpos;
 
-	Enemy_Fly(int x, int y);
+	Enemy_Fly(int x, int y, SDL_Rect colliderRect);
+	bool Awake(pugi::xml_node& config);
 	void Move(float dt);
 	void Dead();
-	bool isDead = false;
+	bool isDead = false;  //quitar
 	int i = 0;//pathcount
 	bool current_in_path = false;
 	p2DynArray<iPoint> enemy_path;
 	int now = 0;
 	Timer timer;
-	bool movingLeft = false;
+	bool movingLeft = false; //cambiar
 	void NormalizeAnimations(float dt);
 	uint flysound;
 	Timer soundtimer;

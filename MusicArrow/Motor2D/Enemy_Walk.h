@@ -24,7 +24,8 @@ private:
 public:
 	fPoint originalpos;
 
-	Enemy_Walk(int x, int y);
+	Enemy_Walk(int x, int y, SDL_Rect colliderRect);
+	bool Awake(pugi::xml_node& config);
 	void Move(float dt);
 	void Dead();
 	bool isDead = false;

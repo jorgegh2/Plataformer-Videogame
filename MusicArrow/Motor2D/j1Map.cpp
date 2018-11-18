@@ -594,6 +594,8 @@ COLLIDER_TYPE j1Map::DefineType(int type_as_int)
 		return COLLIDER_FINISH_LEVEL;
 	case 5:
 		return COLLIDER_PLAYER;
+	case 6:
+		return COLLIDER_ENEMY;
 	default:
 		return COLLIDER_NONE;
 	}
@@ -604,8 +606,19 @@ void j1Map::SetAllColliders()
 	p2List_item<MapObjects*>* item_object = nullptr;
 	for (item_object = App->map->data.objects.start; item_object; item_object = item_object->next)
 	{
-		App->collision->AddCollider(item_object->data->RectCollider, item_object->data->Collider_type, nullptr);
+		if (item_object->data->Collider_type == COLLIDER_PLAYER)
+		{
+			App->entities->AddEntity(ENTITY_PLAYER, item_object->data->RectCollider.x, item_object->data->RectCollider.y, item_object->data->RectCollider);
+			
+		}
+		if (item_object->data->Collider_type == COLLIDER_ENEMY)
+		{
+			App->entities->AddEntity(ENEMY_FLY, item_object->data->RectCollider.x, item_object->data->RectCollider.y, item_object->data->RectCollider);
+			//App->entities = App->collision->AddCollider(item_object->data->RectCollider, item_object->data->Collider_type, nullptr);
+		}
+
+		else App->collision->AddCollider(item_object->data->RectCollider, item_object->data->Collider_type, nullptr);
 	}
-	App->entities->player->c_player = App->collision->AddCollider({ App->entities->player->StartPoint.x, App->entities->player->StartPoint.y, colliderPlayer_w, colliderPlayer_h }, COLLIDER_PLAYER, nullptr);
+	//App->entities->player->c_player = App->collision->AddCollider({ App->entities->player->StartPoint.x, App->entities->player->StartPoint.y, colliderPlayer_w, colliderPlayer_h }, COLLIDER_PLAYER, nullptr);
 }
 

@@ -14,13 +14,12 @@
 	<particles />
 	<collision />
 	<entities>
-		<position x="1735" y="2775.01147" />
+		<position x="315" y="2775.12158" />
 		<state current_state="1" />
-		<speed x="8" y="31.2259998" />
+		<speed x="470" y="98.54599" />
 	</entities>
 	<pathfinding />
-	<time />
 	<renderer>
-		<camera x="-1" y="-872" />
+		<camera x="-57" y="-872" />
 	</renderer>
 </game_state>

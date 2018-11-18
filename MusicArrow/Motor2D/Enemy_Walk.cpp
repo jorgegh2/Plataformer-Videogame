@@ -16,7 +16,7 @@
 #include "j1Entity.h"
 #include "j1Entities.h"
 
-Enemy_Walk::Enemy_Walk(int x, int y) : Entity(x, y)
+Enemy_Walk::Enemy_Walk(int x, int y, SDL_Rect colliderRect) : Entity(x, y)
 {
 
 	idle = App->tex->CreateAnimation("frog", "idle", true);
@@ -29,8 +29,13 @@ Enemy_Walk::Enemy_Walk(int x, int y) : Entity(x, y)
 	originalpos.y = position.y = y;
 
 
-	collider = App->collision->AddCollider({ (int)position.x, (int)position.y, 86, 119 }, COLLIDER_PLAYER, App->entities);
+	collider = App->collision->AddCollider(colliderRect, COLLIDER_ENEMY, App->entities);
 	timer.Reset();
+}
+
+bool Enemy_Walk::Awake(pugi::xml_node& config)
+{
+	return true;
 }
 
 void Enemy_Walk::Move(float dt)
