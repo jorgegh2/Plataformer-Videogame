@@ -6,7 +6,8 @@
 #include "p2DynArray.h"
 
 #define DEFAULT_PATH_LENGTH 50
-#define INVALID_WALK_CODE 141
+#define INVALID_WALK_CODE 101
+#define INVALID_FLY_CODE 201
 
 class j1PathFinding : public j1Module
 {
