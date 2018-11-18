@@ -83,14 +83,9 @@ public:
 
 	bool CollisionToWorld(Collider* playerRect, bool* movement);
 
-	AllDistance CalculateAllDistance(Collider* c1, Collider* c2);
+	void CalculateAllDistance(Collider* c1, Collider* c2, AllDistance& Alldistances);
 
-	Distance distance;
-	Distance dNegativeX;
-	Distance dPositiveX;
-	Distance dNegativeY;
-	Distance dPositiveY;
-	COLLIDER_TYPE collider_type;
+	
 //	Distance FinalDistance;
 	
 	
