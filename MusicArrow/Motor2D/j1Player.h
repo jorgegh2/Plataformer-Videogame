@@ -9,6 +9,7 @@
 #include "j1Audio.h"
 #include "j1Entity.h"
 #include "Time.h"
+#include "j1Collision.h"
 
 struct SDL_Texture;
 struct Collider; //quitar
@@ -32,10 +33,12 @@ public:
 	~j1Player();
 
 	// Called before render is available
+	void Dead();
 	bool Awake(pugi::xml_node& conf);
 	bool Start();
 	bool Update(float dt);
 	bool CleanUp();
+	bool CheckDeath(Entity* enemyEntity);
 
 	// Load / Save
 	bool Load(pugi::xml_node&);
@@ -66,6 +69,10 @@ public:
 	int dashCount;  //quitar
 	int godmodeCount; //quitar
 	
+	Distance d_positiveY;
+	Distance d_negativeX;
+	Distance d_positiveX;
+	Distance d_negativeY;
 
 	//----- Animations Awesome Game 2 ------
 

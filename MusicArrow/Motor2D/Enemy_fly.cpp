@@ -55,7 +55,7 @@ void Enemy_Fly::Move(float dt)
 
 
 
-	if (position.DistanceManhattan(App->entities->player->position) < 750)
+	if (position.DistanceManhattan(App->entities->player->position) < 1500)
 		Agro = true;
 	else
 		Agro = false;
@@ -66,8 +66,9 @@ void Enemy_Fly::Move(float dt)
 	iPoint enemy_tiles_pos = App->map->WorldToMap(position.x, position.y);
 	iPoint player_tiles_pos = App->map->WorldToMap(App->entities->player->position.x, App->entities->player->position.y);
 
-	if (Agro && enemy_path.Count() <= 0)
+	if (Agro && timer.ReadSec() >= 0.1)
 	{
+		timer.Reset();
 		App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
 		originalpos = App->map->MapToWorld(enemy_tiles_pos.x, enemy_tiles_pos.y);
 		DrawPath();
@@ -112,12 +113,13 @@ void Enemy_Fly::Move(float dt)
 			Dead();
 		}
 
-		else if (enemy_tiles_pos.y < enemy_path[i].y && position.y < tileInMap.y && movement[up] == true) {
+		else if (enemy_tiles_pos.y < enemy_path[i].y && position.y < tileInMap.y && movement[down] == true) {
+		//	if(position.y += speed.y + collider->rect.h > App->entities->player->position.y)
 			position.y += speed.y;
 			current_in_path = true;
 			animation = &attack;
 		}
-		else if (enemy_tiles_pos.y > enemy_path[i].y && position.y > tileInMap.y && movement[down] == true) {
+		else if (enemy_tiles_pos.y > enemy_path[i].y && position.y > tileInMap.y && movement[up] == true) {
 			position.y -= speed.y;
 			current_in_path = true;
 			animation = &attack;
@@ -147,6 +149,8 @@ void Enemy_Fly::Move(float dt)
 		enemy_path.Clear();
 	}
 
+	
+
 }
 
 void Enemy_Fly::DrawPath()
@@ -154,8 +158,8 @@ void Enemy_Fly::DrawPath()
 	for (int i = 0; i < enemy_path.Count(); i++)
 	{
 		iPoint p = App->map->MapToWorld(enemy_path[i].x, enemy_path[i].y);
-		p.x -= App->map->data.tile_width / 2;
-		p.y -= App->map->data.tile_height / 2;
+		//p.x -= App->map->data.tile_width / 2;
+	//	p.y -= App->map->data.tile_height / 2;
 
 		SDL_Rect quad = { p.x, p.y, App->map->data.tile_width, App->map->data.tile_height };
 		App->render->DrawQuad(quad, 255, 255, 0, 255);
