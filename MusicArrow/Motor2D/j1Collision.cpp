@@ -20,6 +20,7 @@ j1Collision::j1Collision() : j1Module()
 	matrix[COLLIDER_FLOOR][COLLIDER_WATER] = false;
 	matrix[COLLIDER_FLOOR][COLLIDER_START_WALL] = false;
 	matrix[COLLIDER_FLOOR][COLLIDER_FINISH_LEVEL] = false;
+	matrix[COLLIDER_FLOOR][COLLIDER_ENEMY] = true;
 
 
 	matrix[COLLIDER_PLAYER][COLLIDER_FLOOR] = true;
@@ -28,6 +29,16 @@ j1Collision::j1Collision() : j1Module()
 	matrix[COLLIDER_PLAYER][COLLIDER_WATER] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_START_WALL] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_FINISH_LEVEL] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
+
+
+	matrix[COLLIDER_ENEMY][COLLIDER_FLOOR] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_PLATAFORM] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_WATER] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_START_WALL] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_FINISH_LEVEL] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = false;
 
 
 	matrix[COLLIDER_PLATAFORM][COLLIDER_FLOOR] = false;
@@ -36,6 +47,7 @@ j1Collision::j1Collision() : j1Module()
 	matrix[COLLIDER_PLATAFORM][COLLIDER_WATER] = false;
 	matrix[COLLIDER_PLATAFORM][COLLIDER_START_WALL] = false;
 	matrix[COLLIDER_PLATAFORM][COLLIDER_FINISH_LEVEL] = false;
+	matrix[COLLIDER_PLATAFORM][COLLIDER_ENEMY] = true;
 
 
 	matrix[COLLIDER_WATER][COLLIDER_FLOOR] = false;
@@ -44,6 +56,7 @@ j1Collision::j1Collision() : j1Module()
 	matrix[COLLIDER_WATER][COLLIDER_WATER] = false;
 	matrix[COLLIDER_WATER][COLLIDER_START_WALL] = false;
 	matrix[COLLIDER_WATER][COLLIDER_FINISH_LEVEL] = false;
+	matrix[COLLIDER_WATER][COLLIDER_ENEMY] = true;
 
 
 	matrix[COLLIDER_START_WALL][COLLIDER_FLOOR] = false;
@@ -52,6 +65,7 @@ j1Collision::j1Collision() : j1Module()
 	matrix[COLLIDER_START_WALL][COLLIDER_WATER] = false;
 	matrix[COLLIDER_START_WALL][COLLIDER_START_WALL] = false;
 	matrix[COLLIDER_START_WALL][COLLIDER_FINISH_LEVEL] = false;
+	matrix[COLLIDER_START_WALL][COLLIDER_ENEMY] = true;
 	
 
 	matrix[COLLIDER_FINISH_LEVEL][COLLIDER_FLOOR] = false;
@@ -60,6 +74,7 @@ j1Collision::j1Collision() : j1Module()
 	matrix[COLLIDER_FINISH_LEVEL][COLLIDER_WATER] = false;
 	matrix[COLLIDER_FINISH_LEVEL][COLLIDER_START_WALL] = false;
 	matrix[COLLIDER_FINISH_LEVEL][COLLIDER_FINISH_LEVEL] = false;
+	matrix[COLLIDER_FINISH_LEVEL][COLLIDER_ENEMY] = true;
 	
 }
 
@@ -188,10 +203,13 @@ void j1Collision::DebugDraw()
 		case COLLIDER_PLAYER: // green
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
 			break; 
+		case COLLIDER_ENEMY: // red
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
 		case COLLIDER_PLATAFORM: // yellow
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
 			break;
-		case COLLIDER_WATER: // red
+		case COLLIDER_WATER: // cian
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 255, alpha);
 			break;
 		case COLLIDER_START_WALL: // magenta
@@ -262,6 +280,8 @@ COLLIDER_TYPE j1Collision::DefineType(int type_as_int)
 		return COLLIDER_FINISH_LEVEL;
 	case 5:
 		return COLLIDER_PLAYER;
+	case 6:
+		return COLLIDER_ENEMY;
 	default:
 		return COLLIDER_NONE;
 	}

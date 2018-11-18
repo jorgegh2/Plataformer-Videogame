@@ -27814,9 +27814,9 @@
     <property name="Ctype" type="int" value="4"/>
    </properties>
   </object>
-  <object id="47" x="1096.97" y="2312.12" width="63.6364" height="72.7273">
+  <object id="47" x="1096.97" y="2312.12" width="80" height="80">
    <properties>
-    <property name="CEnemyType" type="int" value="4"/>
+    <property name="CEnemyType" type="int" value="6"/>
    </properties>
   </object>
   <object id="48" x="503" y="2750" width="155" height="170">
