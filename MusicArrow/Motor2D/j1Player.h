@@ -111,7 +111,6 @@ public:
 	int codeCameraUp;
 	int codeCameraDown;
 	
-	Collider* c_player = nullptr;
 	Collider* offSet = nullptr;
 };
 

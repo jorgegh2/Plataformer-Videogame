@@ -126,13 +126,13 @@ bool j1Collision::PreUpdate()
 				if (matrix[c2->type][c1->type] && c2->callback)
 					c2->callback->OnCollision(c2, c1);
 			}
-			if (c2->type == COLLIDER_PLAYER)
+			/*if (c2->type == COLLIDER_PLAYER)
 			{
-				
-				CalculateAllDistance(c2, c1, AllDistances);
-			
-			}
-			
+
+				CalculateAllDistance(c1, c2, AllDistances);
+
+			}*/
+
 		}
 	}
 
@@ -353,6 +353,41 @@ void j1Collision::CalculateAllDistance(Collider* c1, Collider* c2, AllDistance& 
 		Alldistances.distancePositiveY.nearestColliderType = distance.nearestColliderType;
 	}
 
+}
+
+void j1Collision::CalculateCollision(AllDistance& AllDistances, Collider* colliderEntity)
+{
+	// Calculate collisions
+	Collider* c1;
+	AllDistances.distanceNegativeX.Modulo = 10000;
+	AllDistances.distancePositiveX.Modulo = 10000;
+	AllDistances.distanceNegativeY.Modulo = 10000;
+	AllDistances.distancePositiveY.Modulo = 10000;
+	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	{
+		// skip empty colliders
+		if (colliders[i] == nullptr)
+			continue;
+
+		c1 = colliders[i];
+
+	
+			/*if (c1->CheckCollision(colliderEntity->rect) == true)
+			{
+				if (matrix[c1->type][colliderEntity->type] && c1->callback)
+					c1->callback->OnCollision(c1, colliderEntity);
+
+				if (matrix[colliderEntity->type][c1->type] && colliderEntity->callback)
+					colliderEntity->callback->OnCollision(colliderEntity, c1);
+			}*/
+			if (colliderEntity->type == COLLIDER_PLAYER)
+			{
+
+				CalculateAllDistance(c1, colliderEntity, AllDistances);
+
+			}
+
+	}
 }
 bool j1Collision::CollisionToWorld(Collider* player, bool* movement)
 {

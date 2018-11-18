@@ -19,7 +19,7 @@ protected:
 	float speed_jump = 0;
 	fPoint speed = {0.0f, 0.0f};
 
-	AllDistance allDistances;
+	
 
 
 public:
@@ -31,6 +31,8 @@ public:
 	bool isPlayer = false;
 	bool movement[4] = { true,true,true,true };
 	int now = 0;
+
+	AllDistance AllDistances;
 
 public:
 	Entity() {}

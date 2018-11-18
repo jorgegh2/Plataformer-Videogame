@@ -76,6 +76,14 @@ bool j1Entities::PreUpdate()
 		}
 	}
 
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	{
+		if (entities[i] != nullptr)
+		{
+			App->collision->CalculateCollision(entities[i]->AllDistances, entities[i]->collider);
+		}
+	}
+
 
 	return true;
 }
@@ -116,7 +124,7 @@ bool j1Entities::Update(float dt)
 			entities[i]->NormalizeAnimations(dt);
 		}
 	}
-	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	/*for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
 		if (entities[i] != nullptr)
 		{
@@ -126,7 +134,7 @@ bool j1Entities::Update(float dt)
 					player->Dead();
 			}
 		}
-	}
+	}*/
 	/*for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
 		if (entities[i] != nullptr)

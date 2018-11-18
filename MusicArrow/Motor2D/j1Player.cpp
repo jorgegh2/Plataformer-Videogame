@@ -40,8 +40,8 @@ j1Player::j1Player(int x, int y, SDL_Rect colliderRect) : Entity(x, y)
 {
 	graphics = NULL;
 	current_animation = NULL;
-	c_player = App->collision->AddCollider(colliderRect, COLLIDER_PLAYER, nullptr); //cambiar c_player to collider (heredada de entity)
-	OriginPos = {c_player->rect.x, c_player->rect.y };
+	collider = App->collision->AddCollider(colliderRect, COLLIDER_PLAYER, nullptr); //cambiar c_player to collider (heredada de entity)
+	OriginPos = { collider->rect.x, collider->rect.y };
 	//name.create("player");
 
 	//------ New Animations Awesome Game 2 ------
@@ -270,25 +270,14 @@ bool j1Player::Update(float dt)
 	float g = gravity * dt;
 	float speedDtX = speed.x * dt;
 	velocityX = 0;
-	//Distance d = App->collision->FinalDistance;
-	AllDistances.distanceNegativeX = App->collision->AllDistances.distanceNegativeX;
-	AllDistances.distanceNegativeY = App->collision->AllDistances.distanceNegativeY;
-	AllDistances.distancePositiveX = App->collision->AllDistances.distancePositiveX;
-	AllDistances.distancePositiveY = App->collision->AllDistances.distancePositiveY;
 
 	
 	current_animation = &idle;
 
-	/*bool incamera = App->render->InCamera(c_player->rect);
 	
-	if (incamera)
-	{
-		LOG("yeeey");
-	}*/
-
 	//Horizontal movement
 
-	if (App->input->GetKey(codeBackward) == KEY_REPEAT && jstate != DEAD && jstate != GODMODE)
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && jstate != DEAD && jstate != GODMODE)
 	{
 		if (AllDistances.distanceNegativeX.Modulo < speedDtX && AllDistances.distanceNegativeX.nearestColliderType != COLLIDER_PLATAFORM)
 			position.x -= AllDistances.distanceNegativeX.Modulo;
@@ -300,7 +289,7 @@ bool j1Player::Update(float dt)
 
 
 	}
-	else if (App->input->GetKey(codeForward) == KEY_REPEAT && jstate != DEAD && jstate != GODMODE)
+	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && jstate != DEAD && jstate != GODMODE)
 	{
 		if (AllDistances.distancePositiveX.Modulo < speedDtX && AllDistances.distancePositiveX.nearestColliderType != COLLIDER_PLATAFORM)
 		{
@@ -379,20 +368,20 @@ bool j1Player::Update(float dt)
 	case ONFLOOR:
 		
 
-			if (App->input->GetKey(codeJump) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 			{
 				jstate = JUMP;
 				current_animation = &jump;
 				current_animation->Reset();
 				App->audio->PlayFx(audio_jumping, 1);
 			}
-			else if (App->input->GetKey(codeJump) == KEY_DOWN && App->input->GetKey(codeBackward) == KEY_REPEAT) {
+			else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 				jstate = JUMP;
 				current_animation = &jump;
 				current_animation->Reset();
 				App->audio->PlayFx(audio_jumping, 1);
 			}
-			else if (App->input->GetKey(codeJump) == KEY_DOWN && App->input->GetKey(codeForward) == KEY_REPEAT) {
+			else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 				jstate = JUMP;
 				current_animation = &jump;
 				current_animation->Reset();
@@ -435,7 +424,7 @@ bool j1Player::Update(float dt)
 					position.y += speed.y;
 				}
 			}
-			if (App->input->GetKey(codeJump) == KEY_DOWN && jumpCount < 1)
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumpCount < 1)
 			{
 
 				jstate = JUMP;
@@ -472,7 +461,7 @@ bool j1Player::Update(float dt)
 
 		current_animation = &die;
 		
-		c_player->SetPos(-1000, -1000);
+		collider->SetPos(-1000, -1000);
 
 		speed.y = -1;
 		speed.y = speed.y + gravity * timer.ReadSec();
@@ -488,26 +477,26 @@ bool j1Player::Update(float dt)
 	case GODMODE:
 
 		
-			c_player->SetPos(-1000, -1000);
+		collider->SetPos(-1000, -1000);
 			App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), flip);
 		
 
-			if (App->input->GetKey(codeBackward) == KEY_REPEAT)
+			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 			{
 				position.x -= speedDtX;
 				App->render->camera.x += speedDtX * App->win->GetScale();
 			}
-			if (App->input->GetKey(codeForward) == KEY_REPEAT)
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 			{
 				position.x += speedDtX;
 				App->render->camera.x -= speedDtX * App->win->GetScale();
 			}
-			if (App->input->GetKey(codeUp) == KEY_REPEAT)
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 			{
 				position.y -= speedDtX;
 				App->render->camera.y += speedDtX * App->win->GetScale();
 			}
-			if (App->input->GetKey(codeDown) == KEY_REPEAT)
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 			{
 				position.y += speedDtX;
 				App->render->camera.y -= speedDtX * App->win->GetScale();
@@ -538,7 +527,7 @@ bool j1Player::Update(float dt)
 
 		if (AllDistances.distancePositiveY.Modulo != 0.0f && jstate != DEAD) jstate = ONAIR;
 
-		if (jstate != DEAD) c_player->SetPos(position.x, position.y);
+		if (jstate != DEAD) collider->SetPos(position.x, position.y);
 
 		App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), flip);
 		SDL_Rect offSet{ (-App->render->camera.x / App->win->GetScale()) + 200, (-App->render->camera.y / App->win->GetScale()) + 600, 800, 600 };
@@ -546,7 +535,7 @@ bool j1Player::Update(float dt)
 		//App->render->DrawQuad(offSet, 255, 255, 255, 80);
 		
 		int limit = -App->render->camera.x + App->render->camera.w;
-		if (position.x + c_player->rect.w > offSet.w + offSet.x && limit < 13568)
+		if (position.x + collider->rect.w > offSet.w + offSet.x && limit < 13568)
 		{
 			App->render->camera.x = -(position.x * App->win->GetScale() - 423);
 		}
@@ -560,7 +549,7 @@ bool j1Player::Update(float dt)
 			{
 				App->render->camera.y = -(position.y * App->win->GetScale() - 300);
 			}
-			else if (position.y + c_player->rect.h > offSet.y + offSet.h && -App->render->camera.y + App->render->camera.h < 1645)
+			else if (position.y + collider->rect.h > offSet.y + offSet.h && -App->render->camera.y + App->render->camera.h < 1645)
 			{
 				App->render->camera.y = -(position.y * App->win->GetScale() - 515);
 			}
