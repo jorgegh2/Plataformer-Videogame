@@ -61,6 +61,7 @@ void Enemy_Fly::Move(float dt)
 	{
 		App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
 		originalpos = App->map->MapToWorld(enemy_tiles_pos.x, enemy_tiles_pos.y);
+		DrawPath();
 	}
 	else {
 
@@ -78,6 +79,10 @@ void Enemy_Fly::Move(float dt)
 		else
 			App->pathfinding->CreatePathManhattan(enemy_tiles_pos, { enemy_tiles_pos.x - 1 , enemy_tiles_pos.y }, enemy_path);
 	}
+
+
+	//const p2DynArray<iPoint>* tmp_array = App->pathfinding->GetLastPath();
+	DrawPath();
 
 
 	if (i < enemy_path.Count()) {
@@ -122,6 +127,19 @@ void Enemy_Fly::Move(float dt)
 		i = 0;
 	}
 
+}
+
+void Enemy_Fly::DrawPath()
+{
+	for (int i = 0; i < enemy_path.Count(); i++)
+	{
+		iPoint p = { enemy_path.At(i)->x, enemy_path.At(i)->y };
+		p.x -= App->map->data.tile_width / 2;
+		p.y -= App->map->data.tile_height / 2;
+
+		SDL_Rect quad = { p.x, p.y, App->map->data.tile_width, App->map->data.tile_height };
+		App->render->DrawQuad(quad, 255, 255, 0, 75, true);
+	}
 }
 
 

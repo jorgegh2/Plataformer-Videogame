@@ -170,7 +170,8 @@ iPoint j1Map::WorldToMap(int x, int y) const
 {
 	iPoint ret(0,0);
 	// TODO 2: Add orthographic world to map coordinates
-
+	ret.x = x / data.tile_width;
+	ret.y = y / data.tile_height;
 	// TODO 3: Add the case for isometric maps to WorldToMap
 	return ret;
 }

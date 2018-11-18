@@ -21,6 +21,7 @@ public:
 	bool Awake(pugi::xml_node& config);
 	void Move(float dt);
 	void Dead();
+	void DrawPath();
 	bool isDead = false;  //quitar
 	int i = 0;//pathcount
 	bool current_in_path = false;
