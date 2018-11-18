@@ -194,6 +194,36 @@ bool j1Player::Awake(pugi::xml_node& config)
 	
 	speed = { config.child("player").child("vars").child("speed").attribute("speedX").as_float(), config.child("player").child("vars").child("speed").attribute("speedY").as_float() };
 	gravity = config.child("player").child("vars").child("myGravity").attribute("value").as_float();
+
+	//Load FX
+	jumping = config.child("fxsound").child("jump").attribute("source").as_string();
+	audio_jumping = App->audio->LoadFx(jumping);
+	dash = config.child("fxsound").child("dash").attribute("source").as_string();
+	audio_dash = App->audio->LoadFx(dash);
+	bump = config.child("fxsound").child("bump").attribute("source").as_string();
+	audio_bump = App->audio->LoadFx(bump);
+	dead = config.child("fxsound").child("dead").attribute("source").as_string();
+	audio_dead = App->audio->LoadFx(dead);
+	finishdead = config.child("fxsound").child("finishdead").attribute("source").as_string();
+	audio_finishdead = App->audio->LoadFx(finishdead);
+	stageclear = config.child("fxsound").child("stageclear").attribute("source").as_string();
+	audio_stageclear = App->audio->LoadFx(stageclear);
+
+	//Set SDL Scan Codes
+
+	codeForward = config.child("playercontrols").child("moveright").attribute("input").as_int();
+	codeBackward = config.child("playercontrols").child("moveleft").attribute("input").as_int();
+	codeUp = config.child("playercontrols").child("moveup").attribute("input").as_int();
+	codeDown = config.child("playercontrols").child("movedown").attribute("input").as_int();
+	codeJump = config.child("playercontrols").child("jump").attribute("input").as_int();
+	codeDash = config.child("playercontrols").child("dash").attribute("input").as_int();
+	codeFinalAttack = config.child("playercontrols").child("specialmove").attribute("input").as_int();
+	codeCameraLeft = config.child("cameracontrols").child("moveleft").attribute("input").as_int();
+	codeCameraRight = config.child("cameracontrols").child("moveright").attribute("input").as_int();
+	codeCameraUp = config.child("cameracontrols").child("moveup").attribute("input").as_int();
+	codeCameraDown = config.child("cameracontrols").child("movedown").attribute("input").as_int();
+
+
 	return ret;
 }
 j1Player::~j1Player()
@@ -206,7 +236,7 @@ bool j1Player::Start()
 	bool ret = true;
 	graphics = App->tex->Load("assets/Archer/Archer2.png");
 	
-	godmodeCount = 0;
+	
 
 	ResetPlayer();
 
@@ -216,19 +246,7 @@ bool j1Player::Start()
 	//Play background music
 	App->audio->PlayMusic(path);
 
-	//Load FX
-	jumping = "audio/fx/jump.wav";
-	audio_jumping = App->audio->LoadFx(jumping);
-	dash = "audio/fx/dash.wav";
-	audio_dash = App->audio->LoadFx(dash);
-	bump = "audio/fx/bump.wav";
-	audio_bump = App->audio->LoadFx(bump);
-	dead = "audio/fx/dead.wav";
-	audio_dead = App->audio->LoadFx(dead);
-	finishdead = "audio/fx/finishdead.wav";
-	audio_finishdead = App->audio->LoadFx(finishdead);
-	stageclear = "audio/fx/stageclear.wav";
-	audio_stageclear = App->audio->LoadFx(stageclear);
+	
 
 	return ret;
 }
@@ -253,10 +271,12 @@ bool j1Player::Update(float dt)
 	float speedDtX = speed.x * dt;
 	velocityX = 0;
 	//Distance d = App->collision->FinalDistance;
-	Distance d_positiveY = App->collision->dPositiveY;
-	Distance d_negativeX = App->collision->dNegativeX;
-	Distance d_positiveX = App->collision->dPositiveX;
-	Distance d_negativeY = App->collision->dNegativeY;
+	AllDistances.distanceNegativeX = App->collision->AllDistances.distanceNegativeX;
+	AllDistances.distanceNegativeY = App->collision->AllDistances.distanceNegativeY;
+	AllDistances.distancePositiveX = App->collision->AllDistances.distancePositiveX;
+	AllDistances.distancePositiveY = App->collision->AllDistances.distancePositiveY;
+
+	
 	current_animation = &idle;
 
 	/*bool incamera = App->render->InCamera(c_player->rect);
@@ -268,10 +288,10 @@ bool j1Player::Update(float dt)
 
 	//Horizontal movement
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && jstate != DEAD && jstate != GODMODE)
+	if (App->input->GetKey(codeBackward) == KEY_REPEAT && jstate != DEAD && jstate != GODMODE)
 	{
-		if (d_negativeX.Modulo < speedDtX && d_negativeX.nearestColliderType != COLLIDER_PLATAFORM)
-			position.x -= d_negativeX.Modulo;
+		if (AllDistances.distanceNegativeX.Modulo < speedDtX && AllDistances.distanceNegativeX.nearestColliderType != COLLIDER_PLATAFORM)
+			position.x -= AllDistances.distanceNegativeX.Modulo;
 
 		else position.x -= speedDtX;
 
@@ -280,12 +300,12 @@ bool j1Player::Update(float dt)
 
 
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && jstate != DEAD && jstate != GODMODE)
+	else if (App->input->GetKey(codeForward) == KEY_REPEAT && jstate != DEAD && jstate != GODMODE)
 	{
-		if (d_positiveX.Modulo < speedDtX && d_positiveX.nearestColliderType != COLLIDER_PLATAFORM)
+		if (AllDistances.distancePositiveX.Modulo < speedDtX && AllDistances.distancePositiveX.nearestColliderType != COLLIDER_PLATAFORM)
 		{
-			position.x += d_positiveX.Modulo;
-			if (d_positiveX.nearestColliderType == COLLIDER_FINISH_LEVEL)
+			position.x += AllDistances.distancePositiveX.Modulo;
+			if (AllDistances.distancePositiveX.nearestColliderType == COLLIDER_FINISH_LEVEL)
 			{
 				if (App->scene->current_scene == "scene_forest")
 				{
@@ -359,20 +379,20 @@ bool j1Player::Update(float dt)
 	case ONFLOOR:
 		
 
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+			if (App->input->GetKey(codeJump) == KEY_DOWN)
 			{
 				jstate = JUMP;
 				current_animation = &jump;
 				current_animation->Reset();
 				App->audio->PlayFx(audio_jumping, 1);
 			}
-			else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			else if (App->input->GetKey(codeJump) == KEY_DOWN && App->input->GetKey(codeBackward) == KEY_REPEAT) {
 				jstate = JUMP;
 				current_animation = &jump;
 				current_animation->Reset();
 				App->audio->PlayFx(audio_jumping, 1);
 			}
-			else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			else if (App->input->GetKey(codeJump) == KEY_DOWN && App->input->GetKey(codeForward) == KEY_REPEAT) {
 				jstate = JUMP;
 				current_animation = &jump;
 				current_animation->Reset();
@@ -394,19 +414,19 @@ bool j1Player::Update(float dt)
 
 			if (speed.y >= 0)
 			{
-				if (speed.y < d_positiveY.Modulo)
+				if (speed.y < AllDistances.distancePositiveY.Modulo)
 					position.y += speed.y;
 				else
 				{
-					position.y += d_positiveY.Modulo;
+					position.y += AllDistances.distancePositiveY.Modulo;
 					jstate = ONFLOOR;
 				}
 			}
 			else
 			{
-				if (speed.y < -d_negativeY.Modulo && d_negativeY.nearestColliderType != COLLIDER_PLATAFORM)
+				if (speed.y < -AllDistances.distanceNegativeY.Modulo && AllDistances.distanceNegativeY.nearestColliderType != COLLIDER_PLATAFORM)
 				{
-					position.y -= d_negativeY.Modulo;
+					position.y -= AllDistances.distanceNegativeY.Modulo;
 					speed.y = 0;
 					App->audio->PlayFx(audio_bump, 1);
 				}
@@ -415,7 +435,7 @@ bool j1Player::Update(float dt)
 					position.y += speed.y;
 				}
 			}
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumpCount < 1)
+			if (App->input->GetKey(codeJump) == KEY_DOWN && jumpCount < 1)
 			{
 
 				jstate = JUMP;
@@ -430,7 +450,7 @@ bool j1Player::Update(float dt)
 			}
 
 			//DEAD condition
-			if (d_positiveY.Modulo == 0 && d_positiveY.nearestColliderType == COLLIDER_WATER)
+			if (AllDistances.distancePositiveY.Modulo == 0 && AllDistances.distancePositiveY.nearestColliderType == COLLIDER_WATER)
 			{
 				jstate = DEAD;
 				timer.Reset();
@@ -472,22 +492,22 @@ bool j1Player::Update(float dt)
 			App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), flip);
 		
 
-			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+			if (App->input->GetKey(codeBackward) == KEY_REPEAT)
 			{
 				position.x -= speedDtX;
 				App->render->camera.x += speedDtX * App->win->GetScale();
 			}
-			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+			if (App->input->GetKey(codeForward) == KEY_REPEAT)
 			{
 				position.x += speedDtX;
 				App->render->camera.x -= speedDtX * App->win->GetScale();
 			}
-			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+			if (App->input->GetKey(codeUp) == KEY_REPEAT)
 			{
 				position.y -= speedDtX;
 				App->render->camera.y += speedDtX * App->win->GetScale();
 			}
-			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+			if (App->input->GetKey(codeDown) == KEY_REPEAT)
 			{
 				position.y += speedDtX;
 				App->render->camera.y -= speedDtX * App->win->GetScale();
@@ -516,7 +536,7 @@ bool j1Player::Update(float dt)
 	if (jstate!= GODMODE)
 	{
 
-		if (d_positiveY.Modulo != 0.0f && jstate != DEAD) jstate = ONAIR;
+		if (AllDistances.distancePositiveY.Modulo != 0.0f && jstate != DEAD) jstate = ONAIR;
 
 		if (jstate != DEAD) c_player->SetPos(position.x, position.y);
 

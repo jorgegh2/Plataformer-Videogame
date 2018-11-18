@@ -33,12 +33,12 @@ public:
 	~j1Player();
 
 	// Called before render is available
-	void Dead();
+	//void Dead();
 	bool Awake(pugi::xml_node& conf);
 	bool Start();
 	bool Update(float dt);
 	bool CleanUp();
-	bool CheckDeath(Entity* enemyEntity);
+	//bool CheckDeath(Entity* enemyEntity);
 
 	// Load / Save
 	bool Load(pugi::xml_node&);
@@ -67,7 +67,7 @@ public:
 
 	int jumpCount;
 	int dashCount;  //quitar
-	int godmodeCount; //quitar
+	
 	
 
 
@@ -98,6 +98,18 @@ public:
 	uint audio_dead;
 	uint audio_finishdead;
 	uint audio_stageclear;
+
+	int codeForward;
+	int codeBackward;
+	int codeUp;
+	int codeDown;
+	int codeJump;
+	int codeDash;
+	int codeFinalAttack;
+	int codeCameraLeft;
+	int codeCameraRight;
+	int codeCameraUp;
+	int codeCameraDown;
 	
 	Collider* c_player = nullptr;
 	Collider* offSet = nullptr;
