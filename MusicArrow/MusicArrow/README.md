@@ -30,9 +30,11 @@ F11-> Enable/Disable FPS cap to 30
 
 ## Innovation grade:
 
-Introducing the coliders in the Tiled we have implemented a system that allows the automatic creation of all the entities that are added to a queue and only spawn when they are within the limits of the camera, for which we are able to add all the entities from the Tiled.
+- Introducing the coliders in the Tiled we have implemented a system that allows the automatic creation of all the entities that are added to a queue and only spawn when they are within the limits of the camera, for which we are able to add all the entities from the Tiled.
 
-The animations are collected from the animations.xml file and its playback speed and loop are controlled from there.
+- The animations are collected from the animations.xml file and its playback speed and loop are controlled from there.
+
+- You can set the player and camera controls through the config.xml file.
 
 
 ## Find this project solution in:
