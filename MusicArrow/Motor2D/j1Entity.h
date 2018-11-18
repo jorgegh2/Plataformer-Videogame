@@ -4,6 +4,7 @@
 #include "p2Point.h"
 #include "Animation.h"
 #include "PugiXml\src\pugixml.hpp"
+#include "j1Collision.h"
 
 struct SDL_Texture;
 struct Collider;
@@ -17,6 +18,8 @@ protected:
 	float gravity = 1.0f;
 	float speed_jump = 0;
 	fPoint speed = {0.0f, 0.0f};
+
+	AllDistance allDistances;
 
 
 public:

@@ -129,40 +129,10 @@ bool j1Collision::PreUpdate()
 			if (c2->type == COLLIDER_PLAYER)
 			{
 				
-	   			distance = c2->DistanceToNearestCollider(c1->rect, c1->type);
-				//if (i == 0) FinalDistance = distance;
-				if (distance.negativeX && distance.Modulo < dNegativeX.Modulo)
-				{
-					dNegativeX.Modulo = distance.Modulo;
-					dNegativeX.nearestColliderType = distance.nearestColliderType;
-				}
-				else if (distance.positiveX && distance.Modulo < dPositiveX.Modulo)
-				{
-					dPositiveX.Modulo = distance.Modulo;
-					dPositiveX.nearestColliderType = distance.nearestColliderType;
-				}
-				else if (distance.negativeY && distance.Modulo < dNegativeY.Modulo)
-				{
-					dNegativeY.Modulo = distance.Modulo;
-					dNegativeY.nearestColliderType = distance.nearestColliderType;
-				}
-				else if (distance.positiveY && distance.Modulo < dPositiveY.Modulo)
-				{
-					dPositiveY.Modulo = distance.Modulo;
-					dPositiveY.nearestColliderType = distance.nearestColliderType;
-				}
-				/*else if (FinalDistance.Modulo > distance.Modulo)
-				{
-					FinalDistance = distance;
-				}
-				if (distanceX)
-				{
-
-				}
-				else if (distanceY)
-				{
-				}*/
+				CalculateAllDistance(c2, c1);
+			
 			}
+			
 		}
 	}
 
@@ -357,7 +327,34 @@ void j1Collision::AllCollidersToDelete()
 		}
 	}
 }
-
+AllDistance j1Collision::CalculateAllDistance(Collider* c1, Collider* c2)
+{
+	
+	distance = c2->DistanceToNearestCollider(c1->rect, c1->type);
+	//if (i == 0) FinalDistance = distance;
+	if (distance.negativeX && distance.Modulo < dNegativeX.Modulo)
+	{
+		dNegativeX.Modulo = distance.Modulo;
+		dNegativeX.nearestColliderType = distance.nearestColliderType;
+	}
+	else if (distance.positiveX && distance.Modulo < dPositiveX.Modulo)
+	{
+		dPositiveX.Modulo = distance.Modulo;
+		dPositiveX.nearestColliderType = distance.nearestColliderType;
+	}
+	else if (distance.negativeY && distance.Modulo < dNegativeY.Modulo)
+	{
+		dNegativeY.Modulo = distance.Modulo;
+		dNegativeY.nearestColliderType = distance.nearestColliderType;
+	}
+	else if (distance.positiveY && distance.Modulo < dPositiveY.Modulo)
+	{
+		dPositiveY.Modulo = distance.Modulo;
+		dPositiveY.nearestColliderType = distance.nearestColliderType;
+	}
+	AllDistance Alldistances = { dNegativeX, dPositiveX, dNegativeY, dPositiveY };
+	return Alldistances;
+}
 bool j1Collision::CollisionToWorld(Collider* player, bool* movement)
 {
 	//BROFILER_CATEGORY("CollisionToWorld", Profiler::Color::Aqua);

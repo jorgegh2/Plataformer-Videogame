@@ -116,7 +116,17 @@ bool j1Entities::Update(float dt)
 			entities[i]->NormalizeAnimations(dt);
 		}
 	}
-
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	{
+		if (entities[i] != nullptr)
+		{
+			if (entities[i]->collider->type == COLLIDER_ENEMY)
+			{
+				if (player->CheckDeath(entities[i]))
+					player->Dead();
+			}
+		}
+	}
 	/*for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
 		if (entities[i] != nullptr)

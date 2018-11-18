@@ -30,6 +30,14 @@ struct Distance
 	bool positiveY = false;
 	bool negativeY = false;
 };
+
+struct AllDistance
+{
+	Distance distanceNegativeX;
+	Distance distancePositiveX;
+	Distance distanceNegativeY;
+	Distance distancePositiveY;
+};
 struct Collider
 {
 	SDL_Rect rect;
@@ -73,6 +81,7 @@ public:
 
 	bool CollisionToWorld(Collider* playerRect, bool* movement);
 
+	AllDistance CalculateAllDistance(Collider* c1, Collider* c2);
 
 	Distance distance;
 	Distance dNegativeX;

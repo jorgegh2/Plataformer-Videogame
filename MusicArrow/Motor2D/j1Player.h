@@ -69,10 +69,7 @@ public:
 	int dashCount;  //quitar
 	int godmodeCount; //quitar
 	
-	Distance d_positiveY;
-	Distance d_negativeX;
-	Distance d_positiveX;
-	Distance d_negativeY;
+
 
 	//----- Animations Awesome Game 2 ------
 
