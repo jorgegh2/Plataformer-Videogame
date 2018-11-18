@@ -313,6 +313,8 @@ bool j1Map::Load(const char* file_name)
 		if (ret == true)
 			data.image_layers.add(imgLayer);
 	}
+
+	SetAllCollidersAndEntities();
 	
 	/*if(ret == true)
 	{
@@ -601,7 +603,7 @@ COLLIDER_TYPE j1Map::DefineType(int type_as_int)
 	}
 }
 
-void j1Map::SetAllColliders()
+void j1Map::SetAllCollidersAndEntities()
 {
 	p2List_item<MapObjects*>* item_object = nullptr;
 	for (item_object = App->map->data.objects.start; item_object; item_object = item_object->next)

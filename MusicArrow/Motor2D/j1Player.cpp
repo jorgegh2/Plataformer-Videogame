@@ -522,28 +522,24 @@ bool j1Player::Update(float dt)
 		//App->render->DrawQuad(offSet, 255, 255, 255, 80);
 		
 		int limit = -App->render->camera.x + App->render->camera.w;
-		if (-App->render->camera.x > 1 && limit < 13568 && -App->render->camera.y + App->render->camera.h < 1645)
+		if (position.x + c_player->rect.w > offSet.w + offSet.x && limit < 13568)
 		{
-			if (position.x + c_player->rect.w > offSet.w + offSet.x)
-			{
-				App->render->camera.x = -(position.x * App->win->GetScale() - 423);
-			}
-			else if (position.x < offSet.x)
-			{
-				App->render->camera.x = -(position.x * App->win->GetScale() - 100);
-			}
+			App->render->camera.x = -(position.x * App->win->GetScale() - 423);
+		}
+		else if (position.x < offSet.x && -App->render->camera.x > 1)
+		{
+			App->render->camera.x = -(position.x * App->win->GetScale() - 100);
+		}
 
-			if (jstate != DEAD) {
-				if (position.y < offSet.y)
-				{
-					App->render->camera.y = -(position.y * App->win->GetScale() - 300);
-				}
-				else if (position.y + c_player->rect.h > offSet.y + offSet.h)
-				{
-					App->render->camera.y = -(position.y * App->win->GetScale() - 515);
-				}
+		if (jstate != DEAD) {
+			if (position.y < offSet.y)
+			{
+				App->render->camera.y = -(position.y * App->win->GetScale() - 300);
 			}
-
+			else if (position.y + c_player->rect.h > offSet.y + offSet.h && -App->render->camera.y + App->render->camera.h < 1645)
+			{
+				App->render->camera.y = -(position.y * App->win->GetScale() - 515);
+			}
 		}
 
 	

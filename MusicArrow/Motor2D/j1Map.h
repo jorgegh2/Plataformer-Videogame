@@ -127,7 +127,7 @@ public:
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
 	COLLIDER_TYPE DefineType(int type_as_int);
-	void SetAllColliders();
+	void SetAllCollidersAndEntities();
 private:
 
 	bool LoadMap();

@@ -32,7 +32,6 @@ bool j1Scene_Winter::Awake(pugi::xml_node& node)
 bool j1Scene_Winter::Start()
 {
 	App->map->Load("Level2.tmx");
-	App->map->SetAllColliders();
 	App->entities->player->ResetPlayer();
 	return true;
 }
