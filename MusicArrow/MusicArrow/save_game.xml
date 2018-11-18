@@ -14,12 +14,22 @@
 	<particles />
 	<collision />
 	<entities>
-		<position x="315" y="2775.12158" />
-		<state current_state="1" />
-		<speed x="470" y="98.54599" />
+		<player>
+			<position x="633" y="2773" />
+			<state current_state="1" />
+			<speed x="470" y="139.230011" />
+		</player>
+		<enemyfly>
+			<position x="703.237427" y="2312" />
+			<speed x="1.44000006" y="1.44000006" />
+			<isDead isDead="false" />
+			<path currentpath="true" />
+			<now now="0" />
+			<movingleft movingleft="false" />
+		</enemyfly>
 	</entities>
 	<pathfinding />
 	<renderer>
-		<camera x="-57" y="-872" />
+		<camera x="-216" y="-871" />
 	</renderer>
 </game_state>

@@ -66,6 +66,9 @@ public:
 	void SaveGame(const char* file) const;
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
 
+	int cap;
+	int	capped_ms = -1;
+
 private:
 
 	// Load config file
@@ -144,7 +147,7 @@ private:
 	pugi::xml_node		config;
 	pugi::xml_node		app_config;
 	
-	int					capped_ms = -1;
+	
 };
 
 extern j1App* App; // No student is asking me about that ... odd :-S

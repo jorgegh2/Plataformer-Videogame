@@ -55,7 +55,7 @@ public:
 
 	Animation* current_animation = nullptr;
 	
-	iPoint StartPoint; //quitar
+	iPoint OriginPos; //quitar
 	
 	float velocityX; 
 	Timer timer;

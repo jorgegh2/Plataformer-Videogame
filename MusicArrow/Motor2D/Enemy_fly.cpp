@@ -180,3 +180,61 @@ void Enemy_Fly::Dead()
 		death = true;
 	}
 }
+
+bool Enemy_Fly::Save(pugi::xml_node& data) const
+{
+	pugi::xml_node enemy_fly_node = data.append_child("enemyfly");
+
+	pugi::xml_node pos_node = enemy_fly_node.append_child("position");
+
+	pos_node.append_attribute("x") = position.x;
+	pos_node.append_attribute("y") = position.y;
+
+	pugi::xml_node speed_node = enemy_fly_node.append_child("speed");
+
+	speed_node.append_attribute("x") = speed.x;
+	speed_node.append_attribute("y") = speed.y;
+
+	pugi::xml_node dead_node = enemy_fly_node.append_child("isDead");
+
+	dead_node.append_attribute("isDead") = isDead;
+
+	pugi::xml_node path_node = enemy_fly_node.append_child("path");
+
+	path_node.append_attribute("currentpath") = current_in_path;
+
+	pugi::xml_node now_node = enemy_fly_node.append_child("now");
+
+	now_node.append_attribute("now") = now;
+
+	pugi::xml_node movingLeft_node = enemy_fly_node.append_child("movingleft");
+
+	movingLeft_node.append_attribute("movingleft") = movingLeft;
+
+	return true;
+}
+
+bool Enemy_Fly::Load(pugi::xml_node& data)
+{
+	//load player position
+	position.x = data.child("enemyfly").child("position").attribute("x").as_int();
+	position.y = data.child("enemyfly").child("position").attribute("y").as_int();
+
+	//load speed position
+	speed.x = data.child("enemyfly").child("speed").attribute("x").as_int();
+	speed.y = data.child("enemyfly").child("speed").attribute("y").as_int();
+
+	//load dead state
+	isDead = data.child("enemyfly").child("isDead").attribute("isDead").as_bool();
+
+	//load current path
+	current_in_path = data.child("enemyfly").child("path").attribute("currentpath").as_bool();
+
+	//load now
+	now = data.child("enemyfly").child("now").attribute("now").as_int();
+
+	//load moving left
+	movingLeft = data.child("enemyfly").child("movingleft").attribute("movingleft").as_bool();
+
+	return true;
+}

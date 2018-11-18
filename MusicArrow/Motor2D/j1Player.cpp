@@ -40,6 +40,7 @@ j1Player::j1Player(int x, int y, SDL_Rect colliderRect) : Entity(x, y)
 	graphics = NULL;
 	current_animation = NULL;
 	c_player = App->collision->AddCollider(colliderRect, COLLIDER_PLAYER, nullptr); //cambiar c_player to collider (heredada de entity)
+	OriginPos = {c_player->rect.x, c_player->rect.y };
 	//name.create("player");
 
 	//------ New Animations Awesome Game 2 ------
@@ -552,16 +553,17 @@ bool j1Player::Update(float dt)
 
 bool j1Player::Save(pugi::xml_node& data) const
 {
-	pugi::xml_node pos_node = data.append_child("position");
+	pugi::xml_node player_node = data.append_child("player");
+	pugi::xml_node pos_node = player_node.append_child("position");
 
 	pos_node.append_attribute("x") = position.x;
 	pos_node.append_attribute("y") = position.y;
 
-	pugi::xml_node State_node = data.append_child("state");
+	pugi::xml_node State_node = player_node.append_child("state");
 
 	State_node.append_attribute("current_state") = jstate;
 
-	pugi::xml_node speed_node = data.append_child("speed");
+	pugi::xml_node speed_node = player_node.append_child("speed");
 
 	speed_node.append_attribute("x") = speed.x;
 	speed_node.append_attribute("y") = speed.y;
@@ -572,15 +574,15 @@ bool j1Player::Save(pugi::xml_node& data) const
 bool j1Player::Load(pugi::xml_node& data)
 {
 	//load player position
-	position.x = data.child("position").attribute("x").as_int();
-	position.y = data.child("position").attribute("y").as_int();
+	position.x = data.child("player").child("position").attribute("x").as_int();
+	position.y = data.child("player").child("position").attribute("y").as_int();
 
 	//load speed position
-	speed.x = data.child("speed").attribute("x").as_int();
-	speed.y = data.child("speed").attribute("y").as_int();
+	speed.x = data.child("player").child("speed").attribute("x").as_int();
+	speed.y = data.child("player").child("speed").attribute("y").as_int();
 
 	//load player state
-	jstate = SetStateFromInt(data.child("state").attribute("current_state").as_int());
+	jstate = SetStateFromInt(data.child("player").child("state").attribute("current_state").as_int());
 
 	return true;
 }
@@ -624,7 +626,7 @@ void j1Player::ResetPlayer()
 
 	p2List_item<MapObjects*>* item_object = nullptr;
 
-	for (item_object = App->map->data.objects.start; item_object; item_object = item_object->next)
+	/*for (item_object = App->map->data.objects.start; item_object; item_object = item_object->next)
 	{
 		if (item_object->data->StartPoint.x != 0 && item_object->data->StartPoint.y != 0)
 		{
@@ -632,10 +634,10 @@ void j1Player::ResetPlayer()
 			StartPoint.y = item_object->data->StartPoint.y;
 
 		}
-	}
+	}*/
 
-	position.x = StartPoint.x;
-	position.y = StartPoint.y-500;
+	position.x = OriginPos.x;
+	position.y = OriginPos.y;
 
 	App->render->camera.x = -position.x * App->win->GetScale() + WIDTH_CANVAS;
 	App->render->camera.y = -position.y * App->win->GetScale() + HEIGHT_CANVAS;

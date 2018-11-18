@@ -30,7 +30,7 @@ bool j1Scene_Forest::Awake(pugi::xml_node& config)
 bool j1Scene_Forest::Start()
 {
 	App->map->Load("Level1.tmx");
-	App->entities->player->ResetPlayer();
+	//App->entities->player->ResetPlayer();
 
 	int w, h;
 	uchar* data = NULL;
@@ -48,6 +48,15 @@ bool j1Scene_Forest::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F4))
 	{
 		App->fadeToBlack->FadeToBlack(App->map_forest, App->map_winter);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	{
+		if (App->cap == 30)
+			App->cap = 60;
+		else
+			App->cap = 30;
+		App->capped_ms = 1000 / App->cap;
 	}
 	return true;
 }

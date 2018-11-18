@@ -174,3 +174,75 @@ void Enemy_Walk::Dead()
 		death = true;
 	}
 }
+
+bool Enemy_Walk::Save(pugi::xml_node& data) const
+{
+	pugi::xml_node enemy_walk_node = data.append_child("enemywalk");
+
+	pugi::xml_node pos_node = enemy_walk_node.append_child("position");
+
+	pos_node.append_attribute("x") = position.x;
+	pos_node.append_attribute("y") = position.y;
+
+	pugi::xml_node speed_node = enemy_walk_node.append_child("speed");
+
+	speed_node.append_attribute("x") = speed.x;
+	speed_node.append_attribute("y") = speed.y;
+
+	pugi::xml_node speed_jump_node = enemy_walk_node.append_child("speedjump");
+
+	speed_jump_node.append_attribute("speedjump") = speed_jump;
+
+	pugi::xml_node gravity_node = enemy_walk_node.append_child("gravity");
+
+	gravity_node.append_attribute("gravity") = gravity;
+
+	pugi::xml_node dead_node = enemy_walk_node.append_child("isDead");
+
+	dead_node.append_attribute("isDead") = isDead;
+
+	pugi::xml_node path_node = enemy_walk_node.append_child("path");
+
+	path_node.append_attribute("currentpath") = current_in_path;
+
+	pugi::xml_node now_node = enemy_walk_node.append_child("now");
+
+	now_node.append_attribute("now") = now;
+
+	pugi::xml_node movingLeft_node = enemy_walk_node.append_child("movingleft");
+
+	movingLeft_node.append_attribute("movingleft") = movingLeft;
+
+	return true;
+}
+
+bool Enemy_Walk::Load(pugi::xml_node& data)
+{
+	//load player position
+	position.x = data.child("enemywalk").child("position").attribute("x").as_int();
+	position.y = data.child("enemywalk").child("position").attribute("y").as_int();
+
+	//load speed position
+	speed.x = data.child("enemywalk").child("speed").attribute("x").as_int();
+	speed.y = data.child("enemywalk").child("speed").attribute("y").as_int();
+
+	//load speed jump
+	speed_jump = data.child("enemywalk").child("speedjump").attribute("speedjump").as_int();
+
+	//load gravity
+	speed_jump = data.child("enemywalk").child("gravity").attribute("gravity").as_int();
+
+	//load dead state
+	isDead = data.child("enemywalk").child("isDead").attribute("isDead").as_bool();
+
+	//load current path
+	current_in_path = data.child("enemywalk").child("path").attribute("currentpath").as_bool();
+
+	//load now
+	now = data.child("enemywalk").child("now").attribute("now").as_int();
+
+	//load moving left
+	movingLeft = data.child("enemywalk").child("movingleft").attribute("movingleft").as_bool();
+
+	return true;
+}

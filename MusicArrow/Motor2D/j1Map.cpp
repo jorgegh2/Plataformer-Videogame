@@ -680,7 +680,7 @@ void j1Map::SetAllCollidersAndEntities()
 			App->entities->AddEntity(ENTITY_PLAYER, item_object->data->RectCollider.x, item_object->data->RectCollider.y, item_object->data->RectCollider);
 			
 		}
-		if (item_object->data->Collider_type == COLLIDER_ENEMY)
+		else if (item_object->data->Collider_type == COLLIDER_ENEMY)
 		{
 			App->entities->AddEntity(ENEMY_FLY, item_object->data->RectCollider.x, item_object->data->RectCollider.y, item_object->data->RectCollider);
 			//App->entities = App->collision->AddCollider(item_object->data->RectCollider, item_object->data->Collider_type, nullptr);
