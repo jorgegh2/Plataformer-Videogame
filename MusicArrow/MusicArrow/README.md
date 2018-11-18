@@ -1,31 +1,47 @@
-#CITM_2_Dev_Platformer
+# CITM_2_Dev_Platformer
 
-##Controls
+## Controls
 
-Keyboard:
+### Keyboard:
 
 A: Move left
-D: Move right
-Space: Jump
-Space x2: Double Jump
 
-Debug Keys: (still doing)
+D: Move right
+
+Space: Jump
+
+
+### Debug Keys:
 
 F1-> Start from the very first level
+
 F2-> Start from the beginning of the current level
-F4->Change across escenes
+
 F5-> Save the current state
+
 F6-> Load the previous state (even across levels)
-F9-> To view colliders / logic
+
+F9-> To view colliders / logic and pathfinding
+
 F10-> God Mode
 
-##Find this project solution in:
+F11-> Enable/Disable FPS cap to 30
+
+
+## Innovation grade:
+
+Introducing the coliders in the Tiled we have implemented a system that allows the automatic creation of all the entities that are added to a queue and only spawn when they are within the limits of the camera, for which we are able to add all the entities from the Tiled.
+
+The animations are collected from the animations.xml file and its playback speed and loop are controlled from there.
+
+
+## Find this project solution in:
 https://github.com/jorgegh2/Plataformer-Videogame
 
-##Find this project's scrum board in:
+## Find this project's scrum board in:
 https://trello.com/b/nqgWasdW/our-super-awesome-game-2
 
-##Credits
+## Credits
 Programming: Jorge Gemas Herencia
 Github: https://github.com/jorgegh2
 

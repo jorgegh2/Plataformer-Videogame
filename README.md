@@ -8,14 +8,10 @@ A: Move left
 
 D: Move right
 
-J: Dash
-
 Space: Jump
 
-Enter: Special Movement
 
-
-### Debug Keys: (still doing)
+### Debug Keys:
 
 F1-> Start from the very first level
 
@@ -25,9 +21,18 @@ F5-> Save the current state
 
 F6-> Load the previous state (even across levels)
 
-F9-> To view colliders / logic
+F9-> To view colliders / logic and pathfinding
 
 F10-> God Mode
+
+F11-> Enable/Disable FPS cap to 30
+
+
+## Innovation grade:
+
+Introducing the coliders in the Tiled we have implemented a system that allows the automatic creation of all the entities that are added to a queue and only spawn when they are within the limits of the camera, for which we are able to add all the entities from the Tiled.
+
+The animations are collected from the animations.xml file and its playback speed and loop are controlled from there.
 
 
 ## Find this project solution in:
