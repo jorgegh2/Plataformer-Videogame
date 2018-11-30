@@ -11,6 +11,8 @@
 
 class j1App;
 struct Collider;
+class UIElement;
+enum EventElement;
 
 class j1Module
 {
@@ -102,6 +104,7 @@ public:
 
 	// Callbacks ---
 	virtual void OnCollision(Collider*, Collider*) {}
+	virtual void onUiTriggered(UIElement*, EventElement) {}
 
 };
 

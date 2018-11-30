@@ -21,6 +21,8 @@
 #include "j1Entities.h"
 #include "j1Pathfinding.h"
 #include "j1PerfTimer.h"
+#include "j1Fonts.h"
+#include "j1Gui.h"
 #include "Brofiler/Brofiler.h"
 
 // Constructor
@@ -44,19 +46,26 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	map_winter = new j1Scene_Winter();
 	entities = new j1Entities();
 	pathfinding = new j1PathFinding();
+	font = new j1Fonts();
+	gui = new j1Gui();
 
 	AddModule(input);
 	AddModule(win);
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(map);
-	AddModule(scene);
-	AddModule(map_forest);
-	AddModule(map_winter);
+	
 	AddModule(fadeToBlack);
 	AddModule(collision);
 	AddModule(entities);
 	AddModule(pathfinding);
+	AddModule(font);
+	AddModule(gui);
+
+	// scene last
+	AddModule(scene);
+	AddModule(map_forest);
+	AddModule(map_winter);
 
 	// render last to swap buffer
 	AddModule(render);
