@@ -10,11 +10,6 @@
 j1Gui::j1Gui() : j1Module()
 {
 	name.create("gui");
-
-	for (uint i = 0; i < MAX_GUI_ENTITIES; ++i)
-	{
-		GuiEntities[i] = nullptr;
-	}
 }
 
 // Destructor
@@ -35,7 +30,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool j1Gui::Start()
 {
-	//atlas = App->tex->Load(atlas_file_name.GetString());
+	atlas = App->tex->Load(atlas_file_name.GetString());
 
 	return true;
 }
@@ -54,38 +49,37 @@ bool j1Gui::Start()
 
 bool j1Gui::Update(float dt)
 {
-	for (uint i = 0; i < MAX_GUI_ENTITIES; i++)
+
+	for (item = GuiEntities.start; item; item = item->next)
 	{
-		GuiEntities[i]->Update(dt);
+		item->data->Update(dt);
 	}
 
-	Draw();
+
+	for (item = GuiEntities.start; item; item = item->next)
+	{
+		item->data->Draw(item->data->GetUITexture());
+	}
+
+	DrawAll();
 	return true;
 }
 
 // Called before quitting
 bool j1Gui::CleanUp()
 {
-	bool ret = true;
 	LOG("Freeing GUI");
+	App->tex->UnLoad(atlas);
 
-	if (!App->tex->UnLoad(atlas))
+	item = GuiEntities.start;
+	while (item != nullptr)
 	{
-		LOG("ERROR to Unload textureFont");
-		ret = false;
-		return ret;
+		RELEASE(item->data);
+		item = item->next;
 	}
+	GuiEntities.clear();
 
-	for (uint i = 0; i < MAX_GUI_ENTITIES; ++i)
-	{
-		if (GuiEntities[i] != nullptr)
-		{
-			delete GuiEntities[i];
-			GuiEntities[i] = nullptr;
-		}
-	}
-
-	return ret;
+	return true;
 }
 
 // const getter for atlas
@@ -95,39 +89,28 @@ SDL_Texture* j1Gui::GetAtlas() const
 }
 
 
-void j1Gui::Draw() const
+void j1Gui::DrawAll() 
 {
-	for (uint i = 0; i < MAX_GUI_ENTITIES; i++)
+	for (item = GuiEntities.start; item; item = item->next)
 	{
-		if (GuiEntities[i] != nullptr)
-		{
-			GuiEntities[i]->Draw(GuiEntities[i]->GetUITexture());
-		}
+		item->data->Draw(item->data->GetUITexture());
 	}
 }
 
 void j1Gui::CreateImage(iPoint position, SDL_Rect rectImage)
 {
-	for (uint i = 0; i < MAX_GUI_ENTITIES; i++)
-	{
-		if (GuiEntities[i] == nullptr)
-		{
-			GuiEntities[i] = new UIImage(position, rectImage);
-			break;
-		}
-	}
+	
+	UIImage* entity = new UIImage(position, rectImage);
+	GuiEntities.add(entity);
+	
 }
 
 void j1Gui::CreateLabel(iPoint position, p2SString text, SDL_Color color, _TTF_Font* font)
 {
-	for (uint i = 0; i < MAX_GUI_ENTITIES; i++)
-	{
-		if (GuiEntities[i] == nullptr)
-		{
-			GuiEntities[i] = new UILabel(position, text, color, font);
-			break;
-		}
-	}
+
+	UILabel* entity = new UILabel(position, text, color, font);
+	GuiEntities.add(entity);
+
 }
 
 

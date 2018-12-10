@@ -2,7 +2,6 @@
 #include "j1App.h"
 #include "j1Fonts.h"
 #include "j1Textures.h"
-#include "p2Log.h"
 
 UILabel::UILabel(iPoint position, p2SString text, SDL_Color color, _TTF_Font* font) : UIElement(LabelElement, position)
 {
@@ -12,10 +11,7 @@ UILabel::UILabel(iPoint position, p2SString text, SDL_Color color, _TTF_Font* fo
 
 UILabel::~UILabel()
 {
-	if (!App->tex->UnLoad(textureFont))
-	{
-		LOG("ERROR to Unload textureFont");
-	}
+	App->tex->UnLoad(textureFont);
 }
 
 SDL_Texture* UILabel::GetUITexture()

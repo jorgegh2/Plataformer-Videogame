@@ -43,7 +43,7 @@ public:
 	bool CleanUp();
 
 	//Draw all Gui's entities
-	void Draw() const;
+	void DrawAll();
 
 	// TODO 2: Create the factory methods
 	// Gui creation functions
@@ -62,7 +62,9 @@ private:
 
 	SDL_Texture* atlas;
 	p2SString atlas_file_name;
-	UIElement* GuiEntities[MAX_GUI_ENTITIES];
+	p2List<UIElement*> GuiEntities;
+	p2List_item<UIElement*>* item;
+	//UIElement* GuiEntities[MAX_GUI_ENTITIES];//cambiar again
 	//bool drawDebug;
 
 };
