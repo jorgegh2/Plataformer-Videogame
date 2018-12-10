@@ -10,6 +10,11 @@
 j1Gui::j1Gui() : j1Module()
 {
 	name.create("gui");
+
+	for (uint i = 0; i < MAX_GUI_ENTITIES; ++i)
+	{
+		GuiEntities[i] = nullptr;
+	}
 }
 
 // Destructor
@@ -31,7 +36,8 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 bool j1Gui::Start()
 {
 	atlas = App->tex->Load(atlas_file_name.GetString());
-
+	//atlas = App->tex->Load("gui/atlas.png");
+	//atlas2 = App->tex->Load("maps/path2.png");
 	return true;
 }
 
@@ -47,21 +53,30 @@ bool j1Gui::Start()
 //	return true;
 //}
 
-void j1Gui::Update()
+bool j1Gui::Update(float dt)
 {
 	for (uint i = 0; i < MAX_GUI_ENTITIES; i++)
 	{
-		GuiEntities[i].Update();
+		GuiEntities[i]->Update(dt);
 	}
 
 	Draw();
-	
+	return true;
 }
 
 // Called before quitting
 bool j1Gui::CleanUp()
 {
 	LOG("Freeing GUI");
+
+	for (uint i = 0; i < MAX_GUI_ENTITIES; ++i)
+	{
+		if (GuiEntities[i] != nullptr)
+		{
+			delete GuiEntities[i];
+			GuiEntities[i] = nullptr;
+		}
+	}
 
 	return true;
 }
@@ -77,9 +92,24 @@ void j1Gui::Draw() const
 {
 	for (uint i = 0; i < MAX_GUI_ENTITIES; i++)
 	{
-		GuiEntities[i].Draw(atlas);
+		if (GuiEntities[i] != nullptr)
+		{
+			GuiEntities[i]->Draw(atlas);
+		}
 	}
 }
+
+void j1Gui::CreateImage(iPoint position, SDL_Rect rectImage)
+{
+	for (uint i = 0; i < MAX_GUI_ENTITIES; i++)
+	{
+		if (GuiEntities[i] == nullptr)
+		{
+			GuiEntities[i] = new UIImage(position, rectImage);
+		}
+	}
+}
+
 
 
 // class Gui ---------------------------------------------------

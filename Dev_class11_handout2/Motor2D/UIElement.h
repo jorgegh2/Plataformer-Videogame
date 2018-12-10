@@ -1,9 +1,10 @@
-#ifndef __GUIENTITY_H__
-#define __GUIENTITY_H__
+#ifndef __UIELEMENT_H__
+#define __UIELEMENT_H__
 
 #include "SDL/include/SDL_rect.h"
 #include "p2Point.h"
-class SDL_Texture;
+
+struct SDL_Texture;
 
 enum ElementType { NoTypeElement, ButtonElement, LabelElement, ImageElement, SliderElement };
 
@@ -15,13 +16,13 @@ enum EventElement {
 class UIElement
 {
 public: 
-	UIElement(iPoint);
-	virtual void Update(float);
-	virtual void Draw();
-	virtual void DebugDraw() const;
-	virtual void SetSliderButtonPos(int);
-	void SetParent(UIElement*);
-	void SetLocalPosition(iPoint);
+	UIElement(iPoint position, SDL_Rect rectToDraw);
+	void Update(float dt);
+	void Draw(SDL_Texture* atlas);
+	//virtual void DebugDraw() const;
+	//virtual void SetSliderButtonPos(int);
+	//void SetParent(UIElement*);
+	//void SetLocalPosition(iPoint);
 	virtual ~UIElement();
 	
 protected:
@@ -29,7 +30,8 @@ protected:
 	EventElement eventElement;
 	uint positionToDraw;
 	bool toDelete;
-	iPoint localPosition;
+	iPoint position;
+	SDL_Rect rectToDraw;
 	
 
 };

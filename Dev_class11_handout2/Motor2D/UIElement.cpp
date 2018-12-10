@@ -1,16 +1,34 @@
 #include "j1App.h"
-#include "GuiEntity.h"
+#include "UIElement.h"
 #include "j1Render.h"
 #include "p2Log.h"
+#include "j1Textures.h"
+#include "UIImage.h"
 
-
-void GuiEntity::Draw(SDL_Texture* atlas) const
+UIElement::UIElement(iPoint position, SDL_Rect rectToDraw)
 {
-	if (type == IMAGE)
+	this->position = position;
+	this->rectToDraw = rectToDraw;
+
+}
+
+UIElement::~UIElement()
+{}
+
+void UIElement::Draw(SDL_Texture* atlas)
+{
+	//switch
+	if (type == ImageElement)
 	{
-		if (!App->render->Blit(atlas, position.x, position.y, &Image))
+		if (!App->render->Blit(atlas, position.x, position.y, &rectToDraw))
 		{
 			LOG("ERROR to blit a Gui Entity!");
 		}
 	}
+
+}
+
+void UIElement::Update(float dt)
+{
+	
 }

@@ -43,7 +43,7 @@ bool j1Scene::Start()
 	}
 
 	debug_tex = App->tex->Load("maps/path2.png");
-
+	App->gui->CreateImage({ 100,100 }, { 485, 829, 328, 103 });
 	// TODO 3: Create the banner (rect {485, 829, 328, 103}) and the text "Hello World"
 
 	return true;

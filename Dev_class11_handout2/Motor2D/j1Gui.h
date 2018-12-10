@@ -2,8 +2,12 @@
 #define __j1GUI_H__
 
 #include "j1Module.h"
-#include "GuiEntity.h"
+#include "UIElement.h"
 #include "p2DynArray.h"
+#include "UIButton.h"
+#include "UIImage.h"
+#include "UILabel.h"
+
 
 #define CURSOR_WIDTH 2
 #define MAX_GUI_ENTITIES 50
@@ -33,7 +37,7 @@ public:
 	//bool PostUpdate();
 
 	// Call all updates
-	void Update();
+	bool Update(float dt);
 
 	// Called before quitting
 	bool CleanUp();
@@ -44,25 +48,22 @@ public:
 	// TODO 2: Create the factory methods
 	// Gui creation functions
 	
-	UIImage* CreateImage(iPoint, SDL_Rect);
-	UILabel* CreateLabel(iPoint, char*, SDL_Color, _TTF_Font*);
-	UIButton* CreateButton(iPoint, SDL_Rect, SDL_Rect, SDL_Rect, bool dragable = false);
+	void CreateImage(iPoint position, SDL_Rect rectImage);
+	//UILabel* CreateLabel(iPoint, char*, SDL_Color, _TTF_Font*);
+	//UIButton* CreateButton(iPoint, SDL_Rect, SDL_Rect, SDL_Rect, bool dragable = false);
 	//UISlider* CreateSlider(iPoint, SDL_Rect, SDL_Rect, float);
-	void SortByDrawOrder();
+	//void SortByDrawOrder();
 	const SDL_Texture* GetAtlas() const;
-	bool DeleteUIElements();
-	bool needOrderList;
+	//bool DeleteUIElements();
+	//bool needOrderList;
 
-	const SDL_Texture* GetAtlas() const;
-
-	
 
 private:
 
 	SDL_Texture* atlas;
 	p2SString atlas_file_name;
-	p2List<UIElement*> UiElement; // cambiar a array
-	bool drawDebug;
+	UIElement* GuiEntities[MAX_GUI_ENTITIES];
+	//bool drawDebug;
 
 };
 
