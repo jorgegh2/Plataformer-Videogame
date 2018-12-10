@@ -45,7 +45,7 @@ bool j1Scene::Start()
 
 	debug_tex = App->tex->Load("maps/path2.png");
 	App->gui->CreateImage({ 100,100 }, { 485, 829, 328, 103 });
-	_TTF_Font* font = App->font->Load("fonts/open_sans/OpenSans-Bold.ttf", 12);
+	_TTF_Font* font = App->font->Load("fonts/open_sans/OpenSans-Bold.ttf");
 	App->gui->CreateLabel({ 600,100 }, "Hello World", { 255,255,255,255 }, font);
 	// TODO 3: Create the banner (rect {485, 829, 328, 103}) and the text "Hello World"
 

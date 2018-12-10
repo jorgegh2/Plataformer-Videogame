@@ -35,7 +35,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool j1Gui::Start()
 {
-	atlas = App->tex->Load(atlas_file_name.GetString());
+	//atlas = App->tex->Load(atlas_file_name.GetString());
 
 	return true;
 }
@@ -66,7 +66,15 @@ bool j1Gui::Update(float dt)
 // Called before quitting
 bool j1Gui::CleanUp()
 {
+	bool ret = true;
 	LOG("Freeing GUI");
+
+	if (!App->tex->UnLoad(atlas))
+	{
+		LOG("ERROR to Unload textureFont");
+		ret = false;
+		return ret;
+	}
 
 	for (uint i = 0; i < MAX_GUI_ENTITIES; ++i)
 	{
@@ -77,11 +85,11 @@ bool j1Gui::CleanUp()
 		}
 	}
 
-	return true;
+	return ret;
 }
 
 // const getter for atlas
-const SDL_Texture* j1Gui::GetAtlas() const
+SDL_Texture* j1Gui::GetAtlas() const
 {
 	return atlas;
 }
@@ -93,7 +101,7 @@ void j1Gui::Draw() const
 	{
 		if (GuiEntities[i] != nullptr)
 		{
-			GuiEntities[i]->Draw(atlas);
+			GuiEntities[i]->Draw(GuiEntities[i]->GetUITexture());
 		}
 	}
 }

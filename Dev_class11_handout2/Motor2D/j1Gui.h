@@ -53,7 +53,7 @@ public:
 	//UIButton* CreateButton(iPoint, SDL_Rect, SDL_Rect, SDL_Rect, bool dragable = false);
 	//UISlider* CreateSlider(iPoint, SDL_Rect, SDL_Rect, float);
 	//void SortByDrawOrder();
-	const SDL_Texture* GetAtlas() const;
+	SDL_Texture* GetAtlas() const;
 	//bool DeleteUIElements();
 	//bool needOrderList;
 
