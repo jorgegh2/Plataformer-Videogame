@@ -36,8 +36,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 bool j1Gui::Start()
 {
 	atlas = App->tex->Load(atlas_file_name.GetString());
-	//atlas = App->tex->Load("gui/atlas.png");
-	//atlas2 = App->tex->Load("maps/path2.png");
+
 	return true;
 }
 
@@ -106,6 +105,19 @@ void j1Gui::CreateImage(iPoint position, SDL_Rect rectImage)
 		if (GuiEntities[i] == nullptr)
 		{
 			GuiEntities[i] = new UIImage(position, rectImage);
+			break;
+		}
+	}
+}
+
+void j1Gui::CreateLabel(iPoint position, p2SString text, SDL_Color color, _TTF_Font* font)
+{
+	for (uint i = 0; i < MAX_GUI_ENTITIES; i++)
+	{
+		if (GuiEntities[i] == nullptr)
+		{
+			GuiEntities[i] = new UILabel(position, text, color, font);
+			break;
 		}
 	}
 }

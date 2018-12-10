@@ -16,7 +16,7 @@ enum EventElement {
 class UIElement
 {
 public: 
-	UIElement(iPoint position, SDL_Rect rectToDraw);
+	UIElement(iPoint position, SDL_Rect rectToDraw = {0,0,0,0});
 	void Update(float dt);
 	void Draw(SDL_Texture* atlas);
 	//virtual void DebugDraw() const;
@@ -32,6 +32,7 @@ protected:
 	bool toDelete;
 	iPoint position;
 	SDL_Rect rectToDraw;
+	SDL_Texture* textureFont; //
 	
 
 };

@@ -26,6 +26,14 @@ void UIElement::Draw(SDL_Texture* atlas)
 		}
 	}
 
+	if (type == LabelElement)
+	{
+		if (!App->render->Blit(textureFont, position.x, position.y, &rectToDraw))
+		{
+			LOG("ERROR to blit a Gui Entity!");
+		}
+	}
+
 }
 
 void UIElement::Update(float dt)

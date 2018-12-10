@@ -49,7 +49,7 @@ public:
 	// Gui creation functions
 	
 	void CreateImage(iPoint position, SDL_Rect rectImage);
-	//UILabel* CreateLabel(iPoint, char*, SDL_Color, _TTF_Font*);
+	void CreateLabel(iPoint position, p2SString text, SDL_Color color,  _TTF_Font* font);
 	//UIButton* CreateButton(iPoint, SDL_Rect, SDL_Rect, SDL_Rect, bool dragable = false);
 	//UISlider* CreateSlider(iPoint, SDL_Rect, SDL_Rect, float);
 	//void SortByDrawOrder();
