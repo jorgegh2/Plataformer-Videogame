@@ -3,6 +3,7 @@
 
 #include "SDL/include/SDL_rect.h"
 #include "p2Point.h"
+#include "p2List.h"
 
 struct SDL_Texture;
 
@@ -16,7 +17,9 @@ enum EventElement {
 class UIElement
 {
 public: 
-	UIElement(ElementType type, iPoint position,  SDL_Rect rectToDraw = { 0,0,0,0 } );
+	UIElement(ElementType type, iPoint position, UIElement* parent, SDL_Rect rectToDraw = { 0,0,0,0 } );
+		///Second constructor if there are a rect but no parent is necessary.
+		///UIElement(ElementType type, iPoint position, SDL_Rect rectToDraw = { 0,0,0,0 });
 	void Update(float dt);
 	void Draw(SDL_Texture* atlas);
 	//virtual void DebugDraw() const;
@@ -25,6 +28,7 @@ public:
 	//void SetLocalPosition(iPoint);
 	virtual ~UIElement();
 	virtual SDL_Texture* GetUITexture();
+	UIElement* GetParent() const;
 	
 protected:
 	ElementType type;
@@ -34,6 +38,9 @@ protected:
 
 	iPoint position;
 	SDL_Rect rectToDraw;
+	UIElement* parent;
+	UIElement* children;
+	p2List<UIElement*> listChildren;
 	
 	
 

@@ -113,10 +113,9 @@ void j1Gui::CreateLabel(iPoint position, p2SString text, SDL_Color color, _TTF_F
 
 }
 
-void j1Gui::CreateButton(iPoint position, SDL_Rect rectToDraw[], bool dragable)
+void j1Gui::CreateButton(iPoint position, SDL_Rect rectToDraw[], p2SString text, SDL_Color color, _TTF_Font* font)
 {
-
-	UIButton* entity = new UIButton(position, rectToDraw, dragable);
+	UIButton* entity = new UIButton(position, rectToDraw, text, color, font);
 	GuiEntities.add(entity);
 
 }

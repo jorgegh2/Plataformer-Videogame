@@ -13,7 +13,11 @@
 #define MAX_GUI_ENTITIES 50
 
 // TODO 1: Create your structure of classes
-
+class UIImage;
+class UILabel;
+struct _TTF_Font;
+class p2SString;
+struct SDL_Texture;
 // ---------------------------------------------------
 class j1Gui : public j1Module
 {
@@ -49,8 +53,9 @@ public:
 	// Gui creation functions
 	
 	void CreateImage(iPoint position, SDL_Rect rectImage);
-	void CreateLabel(iPoint position, p2SString text, SDL_Color color,  _TTF_Font* font);
-	void CreateButton(iPoint, SDL_Rect[], bool dragable = false);
+	
+	void CreateLabel(iPoint position, p2SString text, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL);
+	void CreateButton(iPoint, SDL_Rect[], p2SString text = nullptr, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL);
 	//UISlider* CreateSlider(iPoint, SDL_Rect, SDL_Rect, float);
 	//void SortByDrawOrder();
 	SDL_Texture* GetAtlas() const;

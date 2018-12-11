@@ -49,7 +49,7 @@ bool j1Scene::Start()
 	App->gui->CreateLabel({ 600,100 }, "Hello World", { 255,255,255,255 }, font);
 
 	SDL_Rect rects[3] = { { 642,169,229,69 }, { 0,113,229,69 }, { 411,169,229,69 } };
-	App->gui->CreateButton({ 600,150 }, rects);
+	App->gui->CreateButton({ 610,150 }, rects,"Hello World");
 	// TODO 3: Create the banner (rect {485, 829, 328, 103}) and the text "Hello World"
 
 	return true;

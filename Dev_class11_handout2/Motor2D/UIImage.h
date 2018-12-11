@@ -6,7 +6,7 @@
 class UIImage : public UIElement
 {
 public:
-	UIImage(iPoint, SDL_Rect);
+	UIImage(iPoint, SDL_Rect, UIElement* parent = nullptr);
 	/*SDL_Rect default_texture_rect = { 0,0,0,0 };
 	SDL_Rect mouse_on_rect = { 0,0,0,0 };
 	SDL_Rect clicked_rect = { 0,0,0,0 };*/
