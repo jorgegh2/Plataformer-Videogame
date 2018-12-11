@@ -20,7 +20,7 @@ public:
 	UIElement(ElementType type, iPoint position, UIElement* parent, SDL_Rect rectToDraw = { 0,0,0,0 } );
 		///Second constructor if there are a rect but no parent is necessary.
 		///UIElement(ElementType type, iPoint position, SDL_Rect rectToDraw = { 0,0,0,0 });
-	void Update(float dt);
+	virtual void Update(float dt);
 	void Draw(SDL_Texture* atlas);
 	//virtual void DebugDraw() const;
 	//virtual void SetSliderButtonPos(int);
