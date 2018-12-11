@@ -50,7 +50,7 @@ public:
 	
 	void CreateImage(iPoint position, SDL_Rect rectImage);
 	void CreateLabel(iPoint position, p2SString text, SDL_Color color,  _TTF_Font* font);
-	//UIButton* CreateButton(iPoint, SDL_Rect, SDL_Rect, SDL_Rect, bool dragable = false);
+	void CreateButton(iPoint, SDL_Rect[], bool dragable = false);
 	//UISlider* CreateSlider(iPoint, SDL_Rect, SDL_Rect, float);
 	//void SortByDrawOrder();
 	SDL_Texture* GetAtlas() const;

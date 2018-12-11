@@ -20,7 +20,7 @@ UIElement::~UIElement()
 void UIElement::Draw(SDL_Texture* UItexture)
 {
 	//switch
-	if (type == ImageElement ||type == LabelElement)
+	if (type == ImageElement ||type == LabelElement || type == ButtonElement)
 	{
 		if (!App->render->Blit(UItexture, position.x, position.y, &rectToDraw))
 		{

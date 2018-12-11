@@ -47,6 +47,9 @@ bool j1Scene::Start()
 	App->gui->CreateImage({ 100,100 }, { 485, 829, 328, 103 });
 	_TTF_Font* font = App->font->Load("fonts/open_sans/OpenSans-Bold.ttf");
 	App->gui->CreateLabel({ 600,100 }, "Hello World", { 255,255,255,255 }, font);
+
+	SDL_Rect rects[3] = { { 642,169,229,69 }, { 0,113,229,69 }, { 411,169,229,69 } };
+	App->gui->CreateButton({ 600,150 }, rects);
 	// TODO 3: Create the banner (rect {485, 829, 328, 103}) and the text "Hello World"
 
 	return true;
