@@ -5,16 +5,18 @@
 #include "j1Textures.h"
 #include "UIImage.h"
 #include "j1Gui.h"
+#include "j1Input.h"
 
-UIElement::UIElement(ElementType type, iPoint position, UIElement* parent, SDL_Rect rectToDraw)
+UIElement::UIElement(ElementType type, iPoint position, UIElement* parent, bool isEnabled, SDL_Rect rectToDraw)
 {
 	this->position = position;
 	this->rectToDraw = rectToDraw;
 	this->type = type;
 	this->parent = parent;
+	this->isEnabled = isEnabled;
 }
 
-//UIElement::UIElement(ElementType type, iPoint position, SDL_Rect rectToDraw)
+//UIElement::UIElement(ElementType type, iPoint position, bool isEnabled)
 //{
 //	this->position = position;
 //	this->rectToDraw = rectToDraw;
@@ -34,7 +36,10 @@ void UIElement::Draw(SDL_Texture* UItexture)
 
 	for (p2List_item<UIElement*>* item = listChildren.start; item; item = item->next)
 	{
-		item->data->Draw(item->data->GetUITexture());
+		if (item->data->isEnabled)
+		{
+			item->data->Draw(item->data->GetUITexture());
+		}
 	}
 }
 
@@ -60,7 +65,25 @@ UIElement* UIElement::GetParent() const
 	return parent;
 }
 
-SDL_Rect UIElement::GetRectToDraw()
+SDL_Rect UIElement::GetRectToDraw() const
 {
 	return rectToDraw;
+}
+
+iPoint UIElement::GetPosition() const
+{
+	return position;
+}
+
+
+bool UIElement::IsMouseInsideElement()
+{
+	//SDL_Rect rectImage = buttonImage->GetRectToDraw();
+	iPoint mousePosition;
+	App->input->GetMousePosition(mousePosition.x, mousePosition.y);
+
+	if (mousePosition.x > position.x && mousePosition.x < position.x + rectToDraw.w && mousePosition.y > position.y && mousePosition.y < position.y + rectToDraw.h)
+		return true;
+	else
+		return false;
 }

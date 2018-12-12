@@ -5,7 +5,7 @@
 class UIImage : public UIElement
 {
 public:
-	UIImage(iPoint, SDL_Rect, UIElement* parent = nullptr);
+	UIImage(iPoint, SDL_Rect, UIElement* parent = nullptr, bool isEnabled = true);
 	virtual ~UIImage();
 	void setRectToDraw(SDL_Rect newRectToDraw);
 	/*SDL_Rect default_texture_rect = { 0,0,0,0 };

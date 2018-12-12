@@ -5,12 +5,16 @@
 #include "UIImage.h"
 #include "UILabel.h"
 
+#define QUAD_WIDTH 2;
+
 class UIBoxText : public UIElement
 {
 public:
-	UIBoxText(iPoint position, SDL_Rect rectImage, p2SString text, SDL_Color color, _TTF_Font* font, UIElement* parent = nullptr);
+	UIBoxText(iPoint position, SDL_Rect rectImage, p2SString text, SDL_Color color, _TTF_Font* font, UIElement* parent = nullptr, bool isEnabled = true);
 	virtual ~UIBoxText();
 	void printFinalQuad(SDL_Rect finalRect);
+
+	void PreUpdate();
 	void Update(float dt);
 	
 	
@@ -19,6 +23,7 @@ private:
 	UILabel* BoxTextLabelInitial;
 	UILabel* BoxTextLabel;
 	SDL_Rect finalRect;
+	EventElement Event = NoEventElement;
 };
 
 #endif

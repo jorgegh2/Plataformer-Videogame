@@ -7,7 +7,7 @@
 #include "j1App.h"
 #include "j1Input.h"
 
-UIButton::UIButton(iPoint position, SDL_Rect rectToDraw[], p2SString text, SDL_Color color, _TTF_Font* font, UIElement* parent) : UIElement(ButtonElement, position, parent)
+UIButton::UIButton(iPoint position, SDL_Rect rectToDraw[], p2SString text, SDL_Color color, _TTF_Font* font, UIElement* parent, bool isEnabled) : UIElement(ButtonElement, position, parent, isEnabled)
 {
 	for (uint i = 0; i < 3; i++)
 	{
@@ -21,9 +21,8 @@ UIButton::UIButton(iPoint position, SDL_Rect rectToDraw[], p2SString text, SDL_C
 	buttonLabel = new UILabel(position, text, color, font, this);
 	listChildren.add(buttonLabel);
 
-	//this->parent = parent;
+	buttonLabel->CentralizeLabel(buttonImage);
 
-	Event = NoEventElement;
 }
 
 
@@ -39,7 +38,7 @@ void UIButton::PreUpdate()
 	{
 	case NoEventElement:
 
-		if (IsMouseInsideElement())
+		if (buttonImage->IsMouseInsideElement())
 		{
 			Event = MouseEnterEvent;
 		}
@@ -54,7 +53,7 @@ void UIButton::PreUpdate()
 
 	case MouseInside:
 
-		if (!IsMouseInsideElement())
+		if (!buttonImage->IsMouseInsideElement())
 		{
 			Event = MouseLeaveEvent;
 		}
@@ -101,14 +100,3 @@ void UIButton::Update(float dt)
 	
 }
 
-bool UIButton::IsMouseInsideElement()
-{
-	SDL_Rect rectImage = buttonImage->GetRectToDraw();
-	iPoint mousePosition;
-	App->input->GetMousePosition(mousePosition.x, mousePosition.y);
-
-	if (mousePosition.x > position.x && mousePosition.x < position.x + rectImage.w && mousePosition.y > position.y && mousePosition.y < position.y + rectImage.h)
-		return true;
-	else
-		return false;
-}

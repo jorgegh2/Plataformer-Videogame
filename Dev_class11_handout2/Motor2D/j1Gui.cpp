@@ -41,7 +41,10 @@ bool j1Gui::PreUpdate()
 {
 	for (item = GuiEntities.start; item; item = item->next)
 	{
-		item->data->PreUpdate();
+		if (item->data->isEnabled)
+		{
+			item->data->PreUpdate();
+		}
 	}
 	return true;
 }
@@ -57,13 +60,10 @@ bool j1Gui::Update(float dt)
 
 	for (item = GuiEntities.start; item; item = item->next)
 	{
-		item->data->Update(dt);
-	}
-
-
-	for (item = GuiEntities.start; item; item = item->next)
-	{
-		item->data->Draw(item->data->GetUITexture());
+		if (item->data->isEnabled)
+		{
+			item->data->Update(dt);
+		}
 	}
 
 	DrawAll();
@@ -98,7 +98,10 @@ void j1Gui::DrawAll()
 {
 	for (item = GuiEntities.start; item; item = item->next)
 	{
-		item->data->Draw(item->data->GetUITexture());
+		if (item->data->isEnabled)
+		{
+			item->data->Draw(item->data->GetUITexture());
+		}
 	}
 }
 
