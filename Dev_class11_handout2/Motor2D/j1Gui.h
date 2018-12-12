@@ -35,7 +35,7 @@ public:
 	bool Start();
 
 	// Called before all Updates
-	//bool PreUpdate();
+	bool PreUpdate();
 
 	//// Called after all Updates
 	//bool PostUpdate();

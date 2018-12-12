@@ -36,11 +36,15 @@ bool j1Gui::Start()
 }
 
 // Update all guis
-//bool j1Gui::PreUpdate()
-//{
-//	return true;
-//}
-//
+bool j1Gui::PreUpdate()
+{
+	for (item = GuiEntities.start; item; item = item->next)
+	{
+		item->data->PreUpdate();
+	}
+	return true;
+}
+
 //// Called after all Updates
 //bool j1Gui::PostUpdate()
 //{

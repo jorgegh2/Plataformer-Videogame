@@ -10,8 +10,7 @@ struct SDL_Texture;
 enum ElementType { NoTypeElement, ButtonElement, LabelElement, ImageElement, SliderElement };
 
 enum EventElement {
-	NoEventElement, MouseEnterEvent, MouseLeaveEvent, MouseRightClickEvent, MouseLeftClickEvent,
-	FocusEventElement
+	NoEventElement, MouseEnterEvent, MouseInside, MouseLeaveEvent, MouseLeftClickEvent, MouseLeftClickPressed //FocusEventElement
 };
 
 class UIElement
@@ -21,7 +20,10 @@ public:
 		///Second constructor if there are a rect but no parent is necessary.
 		///UIElement(ElementType type, iPoint position, SDL_Rect rectToDraw = { 0,0,0,0 });
 	virtual void Update(float dt);
+	virtual void PreUpdate();
 	void Draw(SDL_Texture* atlas);
+	SDL_Rect GetRectToDraw();
+
 	//virtual void DebugDraw() const;
 	//virtual void SetSliderButtonPos(int);
 	//void SetParent(UIElement*);

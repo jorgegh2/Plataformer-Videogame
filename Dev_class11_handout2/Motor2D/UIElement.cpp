@@ -38,6 +38,11 @@ void UIElement::Draw(SDL_Texture* UItexture)
 	}
 }
 
+void UIElement::PreUpdate()
+{
+
+}
+
 void UIElement::Update(float dt)
 {
 	
@@ -53,4 +58,9 @@ SDL_Texture* UIElement::GetUITexture()
 UIElement* UIElement::GetParent() const
 {
 	return parent;
+}
+
+SDL_Rect UIElement::GetRectToDraw()
+{
+	return rectToDraw;
 }
