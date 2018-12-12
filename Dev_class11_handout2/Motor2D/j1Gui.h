@@ -3,10 +3,10 @@
 
 #include "j1Module.h"
 #include "UIElement.h"
-#include "p2DynArray.h"
 #include "UIButton.h"
 #include "UIImage.h"
 #include "UILabel.h"
+#include "UIBoxText.h"
 
 
 #define CURSOR_WIDTH 2
@@ -53,9 +53,10 @@ public:
 	// Gui creation functions
 	
 	void CreateImage(iPoint position, SDL_Rect rectImage);
-	
 	void CreateLabel(iPoint position, p2SString text, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL);
-	void CreateButton(iPoint, SDL_Rect[], p2SString text = nullptr, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL);
+	void CreateButton(iPoint position, SDL_Rect[], p2SString text = nullptr, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL);
+	void CreateBoxText(iPoint position, SDL_Rect rectImage, p2SString text = nullptr, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL);
+
 	//UISlider* CreateSlider(iPoint, SDL_Rect, SDL_Rect, float);
 	//void SortByDrawOrder();
 	SDL_Texture* GetAtlas() const;

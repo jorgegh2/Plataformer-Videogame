@@ -7,6 +7,7 @@
 #include "j1Input.h"
 #include "j1Gui.h"
 
+
 j1Gui::j1Gui() : j1Module()
 {
 	name.create("gui");
@@ -103,25 +104,26 @@ void j1Gui::DrawAll()
 
 void j1Gui::CreateImage(iPoint position, SDL_Rect rectImage)
 {
-	
 	UIImage* entity = new UIImage(position, rectImage);
 	GuiEntities.add(entity);
-	
 }
 
 void j1Gui::CreateLabel(iPoint position, p2SString text, SDL_Color color, _TTF_Font* font)
 {
-
 	UILabel* entity = new UILabel(position, text, color, font);
 	GuiEntities.add(entity);
-
 }
 
 void j1Gui::CreateButton(iPoint position, SDL_Rect rectToDraw[], p2SString text, SDL_Color color, _TTF_Font* font)
 {
 	UIButton* entity = new UIButton(position, rectToDraw, text, color, font);
 	GuiEntities.add(entity);
+}
 
+void j1Gui::CreateBoxText(iPoint position, SDL_Rect rectImage, p2SString text, SDL_Color color, _TTF_Font* font)
+{
+	UIBoxText* entity = new UIBoxText(position, rectImage, text, color, font);
+	GuiEntities.add(entity);
 }
 
 

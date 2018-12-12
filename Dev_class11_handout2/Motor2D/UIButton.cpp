@@ -21,7 +21,7 @@ UIButton::UIButton(iPoint position, SDL_Rect rectToDraw[], p2SString text, SDL_C
 	buttonLabel = new UILabel(position, text, color, font, this);
 	listChildren.add(buttonLabel);
 
-	this->parent = parent;
+	//this->parent = parent;
 
 	Event = NoEventElement;
 }

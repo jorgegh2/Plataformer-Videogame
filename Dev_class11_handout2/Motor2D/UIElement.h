@@ -7,7 +7,7 @@
 
 struct SDL_Texture;
 
-enum ElementType { NoTypeElement, ButtonElement, LabelElement, ImageElement, SliderElement };
+enum ElementType { NoTypeElement, ButtonElement, LabelElement, ImageElement, SliderElement, BoxTextElement };
 
 enum EventElement {
 	NoEventElement, MouseEnterEvent, MouseInside, MouseLeaveEvent, MouseLeftClickEvent, MouseLeftClickPressed //FocusEventElement
