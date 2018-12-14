@@ -14,7 +14,7 @@ UIBoxText::UIBoxText(iPoint position, SDL_Rect rectImage, p2SString text, SDL_Co
 	listChildren.add(BoxTextLabelInitial);
 	BoxTextLabelInitial->InitPosToWrite(BoxTextImage);
 
-	BoxTextLabel = new UILabel(position, text, color, font, this, false);
+	BoxTextLabel = new UILabel(position, "", color, font, this, false);
 	listChildren.add(BoxTextLabel);
 	BoxTextLabel->InitPosToWrite(BoxTextImage);
 
@@ -23,6 +23,8 @@ UIBoxText::UIBoxText(iPoint position, SDL_Rect rectImage, p2SString text, SDL_Co
 	finalRect.y = BoxTextLabelInitial->GetPosition().y;
 	finalRect.w = QUAD_WIDTH;
 	finalRect.h = BoxTextLabelInitial->GetRectToDraw().h;
+
+	timer.Start();
 }
 
 UIBoxText::~UIBoxText()
@@ -30,8 +32,9 @@ UIBoxText::~UIBoxText()
 
 }
 
-void UIBoxText::printFinalQuad(SDL_Rect finalRect)
+void UIBoxText::printFinalQuad(SDL_Rect& finalRect)
 {
+	finalRect.x = BoxTextLabel->GetPosition().x + BoxTextLabel->GetRectToDraw().w;
 	App->render->DrawQuad(finalRect, 255, 255, 255, 255);
 }
 
@@ -43,8 +46,6 @@ void UIBoxText::PreUpdate()
 void UIBoxText::Update(float dt)
 {
 	
-
-
 	switch (BoxTextLabelInitial->GetEvent())
 	{
 	case NoEventElement:
@@ -54,21 +55,29 @@ void UIBoxText::Update(float dt)
 			if (!BoxTextLabelInitial->isEnabled)
 			{
 				BoxTextLabelInitial->isEnabled = true;
-				//BoxTextLabel->isEnabled = false;
+				BoxTextLabel->isEnabled = false;
 			}
 		}
 		break;
 
 	case MouseLeftClickEvent:
 		BoxTextLabelInitial->isEnabled = false;
-		//BoxTextLabel->isEnabled = true;
+		BoxTextLabel->isEnabled = true;
 	
 		break;
 	}
 
 	if (!BoxTextLabelInitial->isEnabled)
 	{
-		printFinalQuad(finalRect); //cambiar a un boleano que cambie en la maquina de estados
+		if (timer.ReadSec() >= 0.5f)
+		{
+			printFinalQuad(finalRect);
+			if (timer.ReadSec() >= 1.0f)
+			{
+				timer.Start();
+			}
+			
+		}
 	}
 
 }
