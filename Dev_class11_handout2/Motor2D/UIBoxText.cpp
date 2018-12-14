@@ -42,26 +42,19 @@ void UIBoxText::PreUpdate()
 
 void UIBoxText::Update(float dt)
 {
-	if (BoxTextLabelInitial->GetEvent() == MouseLeftClickEvent)
-	{
-		printFinalQuad(finalRect); //cambiar a un boleano que cambie en la maquina de estados
-	}
+	
 
 
 	switch (BoxTextLabelInitial->GetEvent())
 	{
-	
-	case MouseInside:
-		if (!BoxTextLabelInitial->IsMouseInsideElement())
+	case NoEventElement:
+
+		if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
 		{
-			Event = NoEventElement;
-		}
-		else
-		{
-			if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
+			if (!BoxTextLabelInitial->isEnabled)
 			{
-				Event = MouseLeftClickEvent;
-				
+				BoxTextLabelInitial->isEnabled = true;
+				//BoxTextLabel->isEnabled = false;
 			}
 		}
 		break;
@@ -69,20 +62,13 @@ void UIBoxText::Update(float dt)
 	case MouseLeftClickEvent:
 		BoxTextLabelInitial->isEnabled = false;
 		//BoxTextLabel->isEnabled = true;
-		if (!BoxTextLabelInitial->IsMouseInsideElement())
-		{
-			if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
-			{
-				Event = NoEventElement;
-				BoxTextLabelInitial->isEnabled = true;
-				//BoxTextLabel->isEnabled = false;
-			}
-		}
+	
 		break;
-
-	case
-
-		/*case MouseLeaveEvent:
-		break;*/
 	}
+
+	if (!BoxTextLabelInitial->isEnabled)
+	{
+		printFinalQuad(finalRect); //cambiar a un boleano que cambie en la maquina de estados
+	}
+
 }
