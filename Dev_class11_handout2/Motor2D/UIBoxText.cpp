@@ -37,16 +37,20 @@ void UIBoxText::printFinalQuad(SDL_Rect finalRect)
 
 void UIBoxText::PreUpdate()
 {
-	switch (Event)
+	BoxTextLabelInitial->PreUpdate();
+}
+
+void UIBoxText::Update(float dt)
+{
+	if (BoxTextLabelInitial->GetEvent() == MouseLeftClickEvent)
 	{
-	case NoEventElement:
+		printFinalQuad(finalRect); //cambiar a un boleano que cambie en la maquina de estados
+	}
 
-		if (BoxTextLabelInitial->IsMouseInsideElement())
-		{
-			Event = MouseInside;
-		}
-		break;
 
+	switch (BoxTextLabelInitial->GetEvent())
+	{
+	
 	case MouseInside:
 		if (!BoxTextLabelInitial->IsMouseInsideElement())
 		{
@@ -57,14 +61,14 @@ void UIBoxText::PreUpdate()
 			if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
 			{
 				Event = MouseLeftClickEvent;
-				BoxTextLabelInitial->isEnabled = false;
-				//BoxTextLabel->isEnabled = true;
+				
 			}
 		}
 		break;
 
 	case MouseLeftClickEvent:
-		
+		BoxTextLabelInitial->isEnabled = false;
+		//BoxTextLabel->isEnabled = true;
 		if (!BoxTextLabelInitial->IsMouseInsideElement())
 		{
 			if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
@@ -75,16 +79,10 @@ void UIBoxText::PreUpdate()
 			}
 		}
 		break;
-		
-	/*case MouseLeaveEvent:
-		break;*/
-	}
-}
 
-void UIBoxText::Update(float dt)
-{
-	if (Event == MouseLeftClickEvent)
-	{
-		printFinalQuad(finalRect);
+	case
+
+		/*case MouseLeaveEvent:
+		break;*/
 	}
 }

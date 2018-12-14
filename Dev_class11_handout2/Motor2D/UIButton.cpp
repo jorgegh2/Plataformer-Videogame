@@ -33,70 +33,29 @@ UIButton::~UIButton()
 void UIButton::PreUpdate()
 {
 	
+	buttonImage->PreUpdate();
 
-	switch (Event)
-	{
-	case NoEventElement:
-
-		if (buttonImage->IsMouseInsideElement())
-		{
-			Event = MouseEnterEvent;
-		}
-		break;
-
-	case MouseEnterEvent:
-
-		buttonImage->setRectToDraw(rects[1]);
-		
-		Event = MouseInside;
-		break;
-
-	case MouseInside:
-
-		if (!buttonImage->IsMouseInsideElement())
-		{
-			Event = MouseLeaveEvent;
-		}
-		else
-		{
-			if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
-			{
-				Event = MouseLeftClickEvent;
-			}
-		}
-		break;
-
-	case MouseLeftClickEvent:
-	
-		buttonImage->setRectToDraw(rects[2]);
-		
-		Event = MouseLeftClickPressed;
-		
-		break;
-
-	case MouseLeftClickPressed:
-
-		if (App->input->GetMouseButtonDown(1) == KEY_UP)
-		{
-			//MouseEnterEvent to change the rect 
-			Event = MouseEnterEvent;
-		}
-
-		break;
-
-	case MouseLeaveEvent:
-
-		buttonImage->setRectToDraw(rects[0]);
-		Event = NoEventElement;
-		break;
-
-	}
 }
 
 void UIButton::Update(float dt)
 {
 	
-	
+	if (buttonImage->GetEvent() == MouseEnterEvent || buttonImage->GetEvent() == MouseLeftClickLeave)
+	{
+		buttonImage->setRectToDraw(rects[1]);
+	}
+
+	else if (buttonImage->GetEvent() == MouseLeaveEvent)
+	{
+		buttonImage->setRectToDraw(rects[0]);
+	}
+
+	else if (buttonImage->GetEvent() == MouseLeftClickEvent)
+	{
+		buttonImage->setRectToDraw(rects[2]);
+	}
+
+
 	
 }
 

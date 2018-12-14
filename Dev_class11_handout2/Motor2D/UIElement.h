@@ -12,13 +12,13 @@ struct SDL_Texture;
 enum ElementType { NoTypeElement, ButtonElement, LabelElement, ImageElement, SliderElement, BoxTextElement };
 
 enum EventElement {
-	NoEventElement, MouseEnterEvent, MouseInside, MouseLeaveEvent, MouseLeftClickEvent, MouseLeftClickPressed //FocusEventElement
+	NoEventElement, MouseEnterEvent, MouseInside, MouseLeaveEvent, MouseLeftClickEvent, MouseLeftClickPressed, MouseLeftClickLeave //FocusEventElement
 };
 
 class UIElement
 {
 public: 
-	UIElement(ElementType type, iPoint position, UIElement* parent, bool isEnabled, SDL_Rect rectToDraw = { 0,0,0,0 } );
+	UIElement(ElementType type, iPoint position, UIElement* parent, bool isEnabled, SDL_Rect rectToDraw = { 0,0,0,0 }, bool Dragable = false );
 		///Second constructor if there are a rect but no parent is necessary.
 		///UIElement(ElementType type, iPoint position, SDL_Rect rectToDraw = { 0,0,0,0 });
 	virtual ~UIElement();
@@ -38,10 +38,13 @@ public:
 	SDL_Rect GetRectToDraw() const;
 	iPoint GetPosition() const;
 	bool IsMouseInsideElement();
+	EventElement GetEvent() const;
+
+	void DragUIElement();
 	
 protected:
 	ElementType type;
-	//EventElement eventElement;
+	EventElement Event = NoEventElement;
 	//uint positionToDraw;
 	//bool toDelete;
 
@@ -50,6 +53,8 @@ protected:
 	UIElement* parent;
 	UIElement* children;
 	p2List<UIElement*> listChildren;
+
+	bool dragable;
 	
 	
 public:

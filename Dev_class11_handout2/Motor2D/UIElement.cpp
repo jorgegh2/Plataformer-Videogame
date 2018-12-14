@@ -7,13 +7,14 @@
 #include "j1Gui.h"
 #include "j1Input.h"
 
-UIElement::UIElement(ElementType type, iPoint position, UIElement* parent, bool isEnabled, SDL_Rect rectToDraw)
+UIElement::UIElement(ElementType type, iPoint position, UIElement* parent, bool isEnabled, SDL_Rect rectToDraw, bool dragable)
 {
 	this->position = position;
 	this->rectToDraw = rectToDraw;
 	this->type = type;
 	this->parent = parent;
 	this->isEnabled = isEnabled;
+	this->dragable = dragable;
 }
 
 //UIElement::UIElement(ElementType type, iPoint position, bool isEnabled)
@@ -45,7 +46,63 @@ void UIElement::Draw(SDL_Texture* UItexture)
 
 void UIElement::PreUpdate()
 {
+	switch (Event)
+	{
+	case NoEventElement:
 
+		if (IsMouseInsideElement())
+		{
+			Event = MouseEnterEvent;
+		}
+		break;
+
+	case MouseEnterEvent:
+
+		Event = MouseInside;
+		break;
+
+	case MouseInside:
+
+		if (!IsMouseInsideElement())
+		{
+			Event = MouseLeaveEvent;
+		}
+		else
+		{
+			if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
+			{
+				Event = MouseLeftClickEvent;
+			}
+		}
+		break;
+
+	case MouseLeftClickEvent:
+
+		Event = MouseLeftClickPressed;
+
+		break;
+
+	case MouseLeftClickPressed:
+
+		if (App->input->GetMouseButtonDown(1) == KEY_UP)
+		{
+			//MouseEnterEvent to change the rect 
+			Event = MouseLeftClickLeave;
+		}
+
+		break;
+
+	case MouseLeftClickLeave:
+
+		Event = MouseInside;
+		break;
+
+	case MouseLeaveEvent:
+
+		Event = NoEventElement;
+		break;
+
+	}
 }
 
 void UIElement::Update(float dt)
@@ -86,4 +143,17 @@ bool UIElement::IsMouseInsideElement()
 		return true;
 	else
 		return false;
+}
+
+void UIElement::DragUIElement()
+{
+	iPoint mousePosition;
+	App->input->GetMousePosition(mousePosition.x, mousePosition.y);
+
+	position = mousePosition;
+}
+
+EventElement UIElement::GetEvent() const
+{
+	return Event;
 }
