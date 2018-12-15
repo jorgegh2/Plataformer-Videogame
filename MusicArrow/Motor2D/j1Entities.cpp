@@ -35,7 +35,7 @@ j1Entities::~j1Entities()
 
 bool j1Entities::Start()
 {
-	// Create a prototype for each enemy available so we can copy them around
+
 	sprites = App->tex->Load("assets/Enemies/enemies_spritesheet.png");
 	
 
