@@ -92,7 +92,7 @@ SDL_Texture* j1Fonts::Print(const char* text, SDL_Color color, _TTF_Font* font)
 }
 
 // calculate size of a text
-bool j1Fonts::CalcSize(const char* text, int& width, int& height, _TTF_Font* font) const
+bool j1Fonts::CalcSize(const char* text, int& width, int& height, _TTF_Font* font) 
 {
 	bool ret = false;
 

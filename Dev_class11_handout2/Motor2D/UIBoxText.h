@@ -7,7 +7,6 @@
 #include "j1Timer.h"
 
 #define QUAD_WIDTH 2;
-
 class UIBoxText : public UIElement
 {
 public:
@@ -17,6 +16,8 @@ public:
 
 	//void PreUpdate();
 	void Update(float dt);
+	void EditBoxTextLabel(p2SString newCharacter);
+	
 	
 	
 private:

@@ -87,6 +87,11 @@ bool j1Input::PreUpdate()
 				windowEvents[WE_QUIT] = true;
 			break;
 
+			case SDL_TEXTINPUT:
+				newCharacter = event.text.text;
+				newCharacterDetected = true;
+				break;
+
 			case SDL_WINDOWEVENT:
 				switch(event.window.event)
 				{
@@ -125,6 +130,8 @@ bool j1Input::PreUpdate()
 				mouse_y = event.motion.y / scale;
 				//LOG("Mouse motion x %d y %d", mouse_motion_x, mouse_motion_y);
 			break;
+
+			
 		}
 	}
 
@@ -155,4 +162,19 @@ void j1Input::GetMouseMotion(int& x, int& y)
 {
 	x = mouse_motion_x;
 	y = mouse_motion_y;
+}
+
+p2SString j1Input::GetNewCharacter() const
+{
+	return newCharacter;
+}
+
+bool j1Input::GetNewCharacterDetected() const
+{
+	return newCharacterDetected;
+}
+
+void j1Input::ChangeBoolCharacterDetected()
+{
+	newCharacterDetected = !newCharacterDetected;
 }

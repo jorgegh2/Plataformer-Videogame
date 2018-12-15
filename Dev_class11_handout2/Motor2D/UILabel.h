@@ -21,6 +21,18 @@ public:
 
 	SDL_Texture* GetUITexture();
 	SDL_Texture* textureFont; //
+	/*p2SString GetText() const;*/
+	//SDL_Color GetColor() const;
+	////_TTF_Font* GetFont() const;
+	//void SetText(p2SString newText);
+	void SetNewSizeAndTextureFont(p2SString text);
+
+private:
+	SDL_Color color;
+	_TTF_Font* font;
+
+public:
+	p2SString text;
 };
 
 #endif

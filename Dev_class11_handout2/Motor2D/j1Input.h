@@ -67,6 +67,9 @@ public:
 	// Get mouse / axis position
 	void GetMousePosition(int &x, int &y);
 	void GetMouseMotion(int& x, int& y);
+	p2SString GetNewCharacter() const;
+	bool GetNewCharacterDetected() const;
+	void ChangeBoolCharacterDetected();
 
 private:
 	bool		windowEvents[WE_COUNT];
@@ -76,6 +79,8 @@ private:
 	int			mouse_motion_y;
 	int			mouse_x;
 	int			mouse_y;
+	p2SString	newCharacter;
+	bool		newCharacterDetected = false;
 };
 
 #endif // __j1INPUT_H__

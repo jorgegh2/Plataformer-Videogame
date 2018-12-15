@@ -3,6 +3,7 @@
 #include "j1Render.h"
 #include "j1App.h"
 #include "j1Input.h"
+#include "j1Fonts.h"
 
 UIBoxText::UIBoxText(iPoint position, SDL_Rect rectImage, p2SString text, SDL_Color color, _TTF_Font* font, bool dragable, UIElement* parent, bool isEnabled) : UIElement(BoxTextElement, position, parent, isEnabled, dragable, rectImage)
 {
@@ -25,11 +26,13 @@ UIBoxText::UIBoxText(iPoint position, SDL_Rect rectImage, p2SString text, SDL_Co
 	finalRect.h = BoxTextLabelInitial->GetRectToDraw().h;
 
 	timer.Start();
+
+	SDL_StartTextInput();
 }
 
 UIBoxText::~UIBoxText()
 {
-
+	SDL_StopTextInput();
 }
 
 void UIBoxText::printFinalQuad(SDL_Rect& finalRect)
@@ -78,7 +81,7 @@ void UIBoxText::Update(float dt)
 		break;
 	}
 
-	if (!BoxTextLabelInitial->isEnabled)
+	if (!BoxTextLabelInitial->isEnabled)//BoxTextLabel is enabled
 	{
 		if (timer.ReadSec() >= 0.5f)
 		{
@@ -89,6 +92,26 @@ void UIBoxText::Update(float dt)
 			}
 			
 		}
+
+		if (App->input->GetNewCharacterDetected())
+		{
+			EditBoxTextLabel(App->input->GetNewCharacter());
+			App->input->ChangeBoolCharacterDetected();
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN)
+		{
+			BoxTextLabel->text.Cut(BoxTextLabel->text.Length() - 1);
+			BoxTextLabel->SetNewSizeAndTextureFont(BoxTextLabel->text);
+		}
+
 	}
+
+}
+
+void UIBoxText::EditBoxTextLabel(p2SString newCharacter)
+{
+	BoxTextLabel->text += newCharacter;
+	BoxTextLabel->SetNewSizeAndTextureFont(BoxTextLabel->text);
 
 }

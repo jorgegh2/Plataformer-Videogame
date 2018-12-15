@@ -133,7 +133,7 @@ UIElement* UIElement::GetParent() const
 	return parent;
 }
 
-SDL_Rect UIElement::GetRectToDraw() const
+SDL_Rect UIElement::GetRectToDraw()
 {
 	return rectToDraw;
 }

@@ -35,7 +35,7 @@ public:
 
 	virtual SDL_Texture* GetUITexture();
 	UIElement* GetParent() const;
-	SDL_Rect GetRectToDraw() const;
+	SDL_Rect GetRectToDraw();
 	iPoint GetPosition() const;
 	bool IsMouseInsideElement();
 	EventElement GetEvent() const;
