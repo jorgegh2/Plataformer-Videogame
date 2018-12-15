@@ -23,8 +23,7 @@ class j1Scene_Forest;
 class j1Scene_Winter;
 class j1Entities;
 class j1PathFinding;
-class j1Fonts;
-class j1Gui;
+
 
 class j1App
 {
@@ -106,8 +105,7 @@ public:
 	j1Scene_Winter*		map_winter;
 	j1Entities*			entities;
 	j1PathFinding*		pathfinding;
-	j1Fonts*			font;
-	j1Gui*				gui;
+	
 
 private:
 

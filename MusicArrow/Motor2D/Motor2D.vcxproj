@@ -14,7 +14,7 @@
     <ProjectGuid>{2AF9969B-F202-497B-AF30-7BEF9CE8005E}</ProjectGuid>
     <RootNamespace>programacio_2</RootNamespace>
     <ProjectName>MusicArrow</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -85,8 +85,6 @@
     <ClCompile Include="j1Entities.cpp" />
     <ClCompile Include="j1Entity.cpp" />
     <ClCompile Include="j1FadeToBlack.cpp" />
-    <ClCompile Include="j1Fonts.cpp" />
-    <ClCompile Include="j1Gui.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
     <ClCompile Include="j1Audio.cpp" />
@@ -105,11 +103,6 @@
     <ClCompile Include="j1Window.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
     <ClCompile Include="Time.cpp" />
-    <ClCompile Include="UiButton.cpp" />
-    <ClCompile Include="UIElement.cpp" />
-    <ClCompile Include="UiImage.cpp" />
-    <ClCompile Include="UiLabel.cpp" />
-    <ClCompile Include="UISlider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -118,8 +111,6 @@
     <ClInclude Include="j1Entities.h" />
     <ClInclude Include="j1Entity.h" />
     <ClInclude Include="j1FadeToBlack.h" />
-    <ClInclude Include="j1Fonts.h" />
-    <ClInclude Include="j1Gui.h" />
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1Pathfinding.h" />
     <ClInclude Include="j1PerfTimer.h" />
@@ -144,11 +135,6 @@
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
     <ClInclude Include="Time.h" />
-    <ClInclude Include="UiButton.h" />
-    <ClInclude Include="UiElement.h" />
-    <ClInclude Include="UiImage.h" />
-    <ClInclude Include="UiLabel.h" />
-    <ClInclude Include="UISlider.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
