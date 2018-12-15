@@ -52,10 +52,10 @@ public:
 	// TODO 2: Create the factory methods
 	// Gui creation functions
 	
-	void CreateImage(iPoint position, SDL_Rect rectImage);
-	void CreateLabel(iPoint position, p2SString text, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL);
-	void CreateButton(iPoint position, SDL_Rect[], p2SString text = nullptr, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL);
-	void CreateBoxText(iPoint position, SDL_Rect rectImage, p2SString text = nullptr, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL);
+	void CreateImage(iPoint position, SDL_Rect rectImage, bool dragable = false);
+	void CreateLabel(iPoint position, p2SString text, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL, bool dragable = false);
+	void CreateButton(iPoint position, SDL_Rect[], p2SString text = nullptr, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL, bool dragable = false);
+	void CreateBoxText(iPoint position, SDL_Rect rectImage, p2SString text = nullptr, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL, bool dragable = false);
 
 	//UISlider* CreateSlider(iPoint, SDL_Rect, SDL_Rect, float);
 	//void SortByDrawOrder();

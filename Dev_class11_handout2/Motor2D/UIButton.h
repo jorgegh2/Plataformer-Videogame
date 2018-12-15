@@ -14,9 +14,9 @@ struct SDL_Texture;
 class UIButton : public UIElement
 {
 public:
-	UIButton(iPoint, SDL_Rect[], p2SString text, SDL_Color color, _TTF_Font* font, UIElement* parent = nullptr, bool isEnabled = true);
+	UIButton(iPoint, SDL_Rect[], p2SString text, SDL_Color color, _TTF_Font* font, bool dragable, UIElement* parent = nullptr, bool isEnabled = true);
 	virtual ~UIButton();
-	void PreUpdate();
+	//void PreUpdate();
 	void Update(float dt);
 	
 

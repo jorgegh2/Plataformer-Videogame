@@ -7,7 +7,7 @@
 #include "j1Gui.h"
 #include "j1Input.h"
 
-UIElement::UIElement(ElementType type, iPoint position, UIElement* parent, bool isEnabled, SDL_Rect rectToDraw, bool dragable)
+UIElement::UIElement(ElementType type, iPoint position, UIElement* parent, bool isEnabled, bool dragable, SDL_Rect rectToDraw)
 {
 	this->position = position;
 	this->rectToDraw = rectToDraw;
@@ -29,9 +29,12 @@ UIElement::~UIElement()
 
 void UIElement::Draw(SDL_Texture* UItexture)
 {
-	if (!App->render->Blit(UItexture, position.x, position.y, &rectToDraw))
+	if (type != ButtonElement && type != BoxTextElement)
 	{
-		LOG("ERROR to blit a Gui Entity!");
+		if (!App->render->Blit(UItexture, position.x, position.y, &rectToDraw))
+		{
+			LOG("ERROR to blit a Gui Entity!");
+		}
 	}
 
 
@@ -79,6 +82,11 @@ void UIElement::PreUpdate()
 	case MouseLeftClickEvent:
 
 		Event = MouseLeftClickPressed;
+		mousePositionFirst = { 0,0 };
+		if (dragable == true)
+		{
+			App->input->GetMousePosition(mousePositionFirst.x, mousePositionFirst.y);
+		}
 
 		break;
 
@@ -86,15 +94,15 @@ void UIElement::PreUpdate()
 
 		if (App->input->GetMouseButtonDown(1) == KEY_UP)
 		{
-			//MouseEnterEvent to change the rect 
 			Event = MouseLeftClickLeave;
 		}
-
+		
 		break;
 
 	case MouseLeftClickLeave:
 
 		Event = MouseInside;
+		mousePositionFinal = { 0,0 };
 		break;
 
 	case MouseLeaveEvent:
@@ -107,7 +115,10 @@ void UIElement::PreUpdate()
 
 void UIElement::Update(float dt)
 {
-	
+	if(Event == MouseLeftClickPressed && dragable == true)
+	{
+		DragUIElement();
+	}
 }
 
 
@@ -147,10 +158,19 @@ bool UIElement::IsMouseInsideElement()
 
 void UIElement::DragUIElement()
 {
-	iPoint mousePosition;
-	App->input->GetMousePosition(mousePosition.x, mousePosition.y);
+	App->input->GetMousePosition(mousePositionFinal.x, mousePositionFinal.y);
 
-	position = mousePosition;
+	position += mousePositionFinal - mousePositionFirst;
+
+	for (p2List_item<UIElement*>* item = listChildren.start; item; item = item->next)
+	{
+		if (item->data->isEnabled)
+		{
+			item->data->position += mousePositionFinal - mousePositionFirst;
+		}
+	}
+
+	mousePositionFirst = mousePositionFinal;
 }
 
 EventElement UIElement::GetEvent() const

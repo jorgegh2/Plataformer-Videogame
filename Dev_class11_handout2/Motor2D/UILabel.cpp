@@ -5,7 +5,7 @@
 #include "UIImage.h"
 #include "p2Point.h"
 
-UILabel::UILabel(iPoint position, p2SString text, SDL_Color color, _TTF_Font* font, UIElement* parent, bool isEnabled) : UIElement(LabelElement, position, parent, isEnabled)
+UILabel::UILabel(iPoint position, p2SString text, SDL_Color color, _TTF_Font* font, bool dragable, UIElement* parent, bool isEnabled) : UIElement(LabelElement, position, parent, isEnabled, dragable)
 {
 	App->font->CalcSize(text.GetString(), rectToDraw.w, rectToDraw.h, font);
 	textureFont = App->font->Print(text.GetString(), color, font);

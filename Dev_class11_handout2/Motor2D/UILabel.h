@@ -14,7 +14,7 @@ class UIImage;
 class UILabel : public UIElement
 {
 public:
-	UILabel(iPoint position, p2SString text, SDL_Color color, _TTF_Font* font, UIElement* parent = nullptr, bool isEnabled = true);
+	UILabel(iPoint position, p2SString text, SDL_Color color, _TTF_Font* font, bool dragable, UIElement* parent = nullptr, bool isEnabled = true);
 	virtual ~UILabel();
 	void CentralizeLabel(UIImage* image);
 	void InitPosToWrite(UIImage* image);

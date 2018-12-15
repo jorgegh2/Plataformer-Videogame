@@ -105,27 +105,27 @@ void j1Gui::DrawAll()
 	}
 }
 
-void j1Gui::CreateImage(iPoint position, SDL_Rect rectImage)
+void j1Gui::CreateImage(iPoint position, SDL_Rect rectImage, bool dragable)
 {
-	UIImage* entity = new UIImage(position, rectImage);
+	UIImage* entity = new UIImage(position, rectImage, dragable);
 	GuiEntities.add(entity);
 }
 
-void j1Gui::CreateLabel(iPoint position, p2SString text, SDL_Color color, _TTF_Font* font)
+void j1Gui::CreateLabel(iPoint position, p2SString text, SDL_Color color, _TTF_Font* font, bool dragable)
 {
-	UILabel* entity = new UILabel(position, text, color, font);
+	UILabel* entity = new UILabel(position, text, color, font, dragable);
 	GuiEntities.add(entity);
 }
 
-void j1Gui::CreateButton(iPoint position, SDL_Rect rectToDraw[], p2SString text, SDL_Color color, _TTF_Font* font)
+void j1Gui::CreateButton(iPoint position, SDL_Rect rectToDraw[], p2SString text, SDL_Color color, _TTF_Font* font, bool dragable)
 {
-	UIButton* entity = new UIButton(position, rectToDraw, text, color, font);
+	UIButton* entity = new UIButton(position, rectToDraw, text, color, font, dragable);
 	GuiEntities.add(entity);
 }
 
-void j1Gui::CreateBoxText(iPoint position, SDL_Rect rectImage, p2SString text, SDL_Color color, _TTF_Font* font)
+void j1Gui::CreateBoxText(iPoint position, SDL_Rect rectImage, p2SString text, SDL_Color color, _TTF_Font* font, bool dragable)
 {
-	UIBoxText* entity = new UIBoxText(position, rectImage, text, color, font);
+	UIBoxText* entity = new UIBoxText(position, rectImage, text, color, font, dragable);
 	GuiEntities.add(entity);
 }
 

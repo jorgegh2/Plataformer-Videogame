@@ -11,11 +11,11 @@
 class UIBoxText : public UIElement
 {
 public:
-	UIBoxText(iPoint position, SDL_Rect rectImage, p2SString text, SDL_Color color, _TTF_Font* font, UIElement* parent = nullptr, bool isEnabled = true);
+	UIBoxText(iPoint position, SDL_Rect rectImage, p2SString text, SDL_Color color, _TTF_Font* font, bool dragable, UIElement* parent = nullptr, bool isEnabled = true);
 	virtual ~UIBoxText();
 	void printFinalQuad(SDL_Rect& finalRect);
 
-	void PreUpdate();
+	//void PreUpdate();
 	void Update(float dt);
 	
 	

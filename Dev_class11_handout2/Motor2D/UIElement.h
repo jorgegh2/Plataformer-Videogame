@@ -18,7 +18,7 @@ enum EventElement {
 class UIElement
 {
 public: 
-	UIElement(ElementType type, iPoint position, UIElement* parent, bool isEnabled, SDL_Rect rectToDraw = { 0,0,0,0 }, bool Dragable = false );
+	UIElement(ElementType type, iPoint position, UIElement* parent, bool isEnabled, bool Dragable, SDL_Rect rectToDraw = { 0,0,0,0 });
 		///Second constructor if there are a rect but no parent is necessary.
 		///UIElement(ElementType type, iPoint position, SDL_Rect rectToDraw = { 0,0,0,0 });
 	virtual ~UIElement();
@@ -55,6 +55,8 @@ protected:
 	p2List<UIElement*> listChildren;
 
 	bool dragable;
+	iPoint mousePositionFirst;
+	iPoint mousePositionFinal;
 	
 	
 public:
