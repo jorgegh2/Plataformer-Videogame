@@ -8,14 +8,14 @@
 class UISlider : public UIElement
 {
 public:
-	UISlider(iPoint position, SDL_Rect barImage, SDL_Rect zamImage);
+	UISlider(iPoint position, SDL_Rect barImage, SDL_Rect zamImage, bool dragable, UIElement* parent = nullptr, bool isEnabled = true);
 	virtual ~UISlider();
 
-	void PreUpdate();
-	void Update(float dt);
+	//void PreUpdate();
+	//void Update(float dt);
 
 private:
-	UIImage* bar;
-	UIImage* zam;
+	UIImage* bar = nullptr;
+	UIImage* zam = nullptr;
 };
 #endif

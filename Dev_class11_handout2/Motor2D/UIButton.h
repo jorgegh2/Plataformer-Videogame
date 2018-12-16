@@ -24,8 +24,8 @@ public:
 	//SDL_Rect mouse_on_rect = { 0,0,0,0 };
 	//SDL_Rect clicked_rect = { 0,0,0,0 };
 private:
-	UIImage* buttonImage;
-	UILabel* buttonLabel;
+	UIImage* buttonImage = nullptr;
+	UILabel* buttonLabel = nullptr;
 	SDL_Rect rects[3];
 	EventElement Event = NoEventElement;
 };

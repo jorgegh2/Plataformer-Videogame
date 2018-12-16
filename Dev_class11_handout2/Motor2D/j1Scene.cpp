@@ -52,6 +52,7 @@ bool j1Scene::Start()
 	App->gui->CreateButton({ 610,150 }, rects,"Hello World", { 255, 255, 255, 255 }, NULL, true);
 	App->gui->CreateBoxText({ 700,250 }, { 488, 569, 344, 61 }, "Hello World", { 255, 255, 255, 255 }, NULL, true);
 
+	App->gui->CreateSlider({ 500, 200 }, { 976, 789, 5, 152 }, { 843, 330, 15, 10 });
 	// TODO 3: Create the banner (rect {485, 829, 328, 103}) and the text "Hello World"
 
 	return true;

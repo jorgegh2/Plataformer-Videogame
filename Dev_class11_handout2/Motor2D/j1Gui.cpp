@@ -44,6 +44,14 @@ bool j1Gui::PreUpdate()
 		if (item->data->isEnabled)
 		{
 			item->data->PreUpdate();
+
+			for (p2List_item<UIElement*>* item2 = item->data->listChildren.start; item2; item2 = item2->next)
+			{
+				if (item2->data->isEnabled)
+				{
+					item2->data->PreUpdate();
+				}
+			}
 		}
 	}
 	return true;
@@ -63,6 +71,13 @@ bool j1Gui::Update(float dt)
 		if (item->data->isEnabled)
 		{
 			item->data->Update(dt);
+			for (p2List_item<UIElement*>* item2 = item->data->listChildren.start; item2; item2 = item2->next)
+			{
+				if (item2->data->isEnabled)
+				{
+					item2->data->Update(dt);
+				}
+			}
 		}
 	}
 
@@ -129,7 +144,8 @@ void j1Gui::CreateBoxText(iPoint position, SDL_Rect rectImage, p2SString text, S
 	GuiEntities.add(entity);
 }
 
-
-
-// class Gui ---------------------------------------------------
-
+void j1Gui::CreateSlider(iPoint position, SDL_Rect barImageRect, SDL_Rect zamImageRect, bool dragable)
+{
+	UISlider* entity = new UISlider(position, barImageRect, zamImageRect, dragable);
+	GuiEntities.add(entity);
+}

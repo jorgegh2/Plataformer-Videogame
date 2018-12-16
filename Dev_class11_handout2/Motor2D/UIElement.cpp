@@ -12,7 +12,7 @@ UIElement::UIElement(ElementType type, iPoint position, UIElement* parent, bool 
 	this->position = position;
 	this->rectToDraw = rectToDraw;
 	this->type = type;
-	this->parent = parent;
+//	this->parent = parent;
 	this->isEnabled = isEnabled;
 	this->dragable = dragable;
 }
@@ -29,7 +29,7 @@ UIElement::~UIElement()
 
 void UIElement::Draw(SDL_Texture* UItexture)
 {
-	if (type != ButtonElement && type != BoxTextElement)
+	if (type != ButtonElement && type != BoxTextElement && type != SliderElement && UItexture != nullptr)
 	{
 		if (!App->render->Blit(UItexture, position.x, position.y, &rectToDraw))
 		{
@@ -159,15 +159,18 @@ bool UIElement::IsMouseInsideElement()
 void UIElement::DragUIElement()
 {
 	App->input->GetMousePosition(mousePositionFinal.x, mousePositionFinal.y);
-
-	position += mousePositionFinal - mousePositionFirst;
-
+	iPoint newPos = mousePositionFinal - mousePositionFirst;
+	if (parent == nullptr)
+	{
+		position += newPos;
+	}
+	else
+	{
+		MoveInParentLimitsX(newPos.x, newPos.y);
+	}
 	for (p2List_item<UIElement*>* item = listChildren.start; item; item = item->next)
 	{
-		if (item->data->isEnabled)
-		{
-			item->data->position += mousePositionFinal - mousePositionFirst;
-		}
+		item->data->position += newPos;
 	}
 
 	mousePositionFirst = mousePositionFinal;
@@ -176,4 +179,34 @@ void UIElement::DragUIElement()
 EventElement UIElement::GetEvent() const
 {
 	return Event;
+}
+
+void UIElement::SetParentAndChildren(UIElement* children)
+{
+	listChildren.add(children);
+	children->parent = this;
+}
+
+void UIElement::MoveInParentLimitsX(int movementX, int movementY)
+{
+	int newPosX = position.x + movementX;
+	if (newPosX > parent->GetPosition().x && newPosX + rectToDraw.w < parent->GetPosition().x + parent->GetRectToDraw().w)
+	{
+		position.x = newPosX;
+	}
+	int newPosY = position.y + movementY;
+	if (newPosY > parent->GetPosition().y && newPosY + rectToDraw.h < parent->GetPosition().y + parent->GetRectToDraw().h)
+	{
+		position.y = newPosY;
+	}
+
+}
+void UIElement::MoveInParentLimitsY(int movementY)
+{
+	int newPosY = position.y + movementY;
+	if (newPosY > parent->GetPosition().y && newPosY + rectToDraw.h < parent->GetPosition().y + parent->GetRectToDraw().h)
+	{
+		position.y = newPosY;
+	}
+
 }

@@ -21,12 +21,13 @@ public:
 	
 	
 private:
-	UIImage* BoxTextImage;
-	UILabel* BoxTextLabelInitial;
-	UILabel* BoxTextLabel;
+	UIImage* BoxTextImage = nullptr;
+	UILabel* BoxTextLabelInitial = nullptr;
+	UILabel* BoxTextLabel = nullptr;
 	SDL_Rect finalRect;
 	EventElement Event = NoEventElement;
 	j1Timer timer;
+	bool focusQuad = false;
 
 };
 

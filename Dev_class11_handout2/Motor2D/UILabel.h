@@ -29,7 +29,7 @@ public:
 
 private:
 	SDL_Color color;
-	_TTF_Font* font;
+	_TTF_Font* font = nullptr;
 
 public:
 	p2SString text;

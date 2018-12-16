@@ -7,16 +7,16 @@
 
 UIBoxText::UIBoxText(iPoint position, SDL_Rect rectImage, p2SString text, SDL_Color color, _TTF_Font* font, bool dragable, UIElement* parent, bool isEnabled) : UIElement(BoxTextElement, position, parent, isEnabled, dragable, rectImage)
 {
-	BoxTextImage = new UIImage(position, rectImage, dragable, this);
-	listChildren.add(BoxTextImage);
+	BoxTextImage = new UIImage(position, rectImage, false, this);
+	SetParentAndChildren(BoxTextImage);
 
 	//funcion para centrar el texto y sacar su posicion relativa.
 	BoxTextLabelInitial = new UILabel(position, text, color, font,false, this);
-	listChildren.add(BoxTextLabelInitial);
+	SetParentAndChildren(BoxTextLabelInitial);
 	BoxTextLabelInitial->InitPosToWrite(BoxTextImage);
 
 	BoxTextLabel = new UILabel(position, "", color, font, false, this, false);
-	listChildren.add(BoxTextLabel);
+	SetParentAndChildren(BoxTextLabel);
 	BoxTextLabel->InitPosToWrite(BoxTextImage);
 
 
@@ -61,8 +61,12 @@ void UIBoxText::Update(float dt)
 		{
 			if (!BoxTextLabelInitial->isEnabled)
 			{
-				BoxTextLabelInitial->isEnabled = true;
-				BoxTextLabel->isEnabled = false;
+				focusQuad = false;
+				if (BoxTextLabel->text == "")
+				{
+					BoxTextLabelInitial->isEnabled = true;
+					BoxTextLabel->isEnabled = false;
+				}
 			}
 		}
 		break;
@@ -70,6 +74,7 @@ void UIBoxText::Update(float dt)
 	case MouseLeftClickEvent:
 		BoxTextLabelInitial->isEnabled = false;
 		BoxTextLabel->isEnabled = true;
+		focusQuad = true;
 	
 		break;
 
@@ -81,7 +86,7 @@ void UIBoxText::Update(float dt)
 		break;
 	}
 
-	if (!BoxTextLabelInitial->isEnabled)//BoxTextLabel is enabled
+	if (focusQuad)//BoxTextLabel is enabled
 	{
 		if (timer.ReadSec() >= 0.5f)
 		{

@@ -39,8 +39,10 @@ public:
 	iPoint GetPosition() const;
 	bool IsMouseInsideElement();
 	EventElement GetEvent() const;
-
+	void SetParentAndChildren(UIElement* children);
 	void DragUIElement();
+	void MoveInParentLimitsX(int movementX, int);
+	void MoveInParentLimitsY(int movementY);
 	
 protected:
 	ElementType type;
@@ -50,9 +52,7 @@ protected:
 
 	iPoint position;
 	SDL_Rect rectToDraw;
-	UIElement* parent;
-	UIElement* children;
-	p2List<UIElement*> listChildren;
+	UIElement* parent = nullptr;	
 
 	bool dragable;
 	iPoint mousePositionFirst;
@@ -61,6 +61,7 @@ protected:
 	
 public:
 	bool isEnabled = true;
+	p2List<UIElement*> listChildren;
 };
 
 #endif

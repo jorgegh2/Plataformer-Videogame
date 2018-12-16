@@ -7,6 +7,7 @@
 #include "UIImage.h"
 #include "UILabel.h"
 #include "UIBoxText.h"
+#include "UISlider.h"
 
 
 #define CURSOR_WIDTH 2
@@ -56,8 +57,8 @@ public:
 	void CreateLabel(iPoint position, p2SString text, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL, bool dragable = false);
 	void CreateButton(iPoint position, SDL_Rect[], p2SString text = nullptr, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL, bool dragable = false);
 	void CreateBoxText(iPoint position, SDL_Rect rectImage, p2SString text = nullptr, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL, bool dragable = false);
-
-	//UISlider* CreateSlider(iPoint, SDL_Rect, SDL_Rect, float);
+	void CreateSlider(iPoint position, SDL_Rect barImageRect, SDL_Rect zamImageRect, bool dragable = false);
+	
 	//void SortByDrawOrder();
 	SDL_Texture* GetAtlas() const;
 	//bool DeleteUIElements();
@@ -66,7 +67,7 @@ public:
 
 private:
 
-	SDL_Texture* atlas;
+	SDL_Texture* atlas = nullptr;
 	p2SString atlas_file_name;
 	p2List<UIElement*> GuiEntities;
 	p2List_item<UIElement*>* item;
