@@ -4,11 +4,13 @@
 
 ### Keyboard:
 
-A: Move left
+S: Slide
 
-D: Move right
+D: Attack
 
-Space: Jump (and double jump)
+A: Charged Attack
+
+Space: Jump
 
 
 ### Debug Keys:
@@ -35,8 +37,12 @@ F11-> Enable/Disable FPS cap to 30
 - The animations are collected from the animations.xml file and its playback speed and loop are controlled from there.
 
 
+
 ## Find this project solution in:
 https://github.com/jorgegh2/Plataformer-Videogame
+
+## Find our website
+https://github.com/jorgegh2/Plataformer-Videogame/wiki
 
 ## Find this project's scrum board in:
 https://trello.com/b/nqgWasdW/our-super-awesome-game-2
