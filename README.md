@@ -4,11 +4,13 @@
 
 ### Keyboard:
 
-A: Move left
+S: Slide
 
-D: Move right
+D: Attack
 
-Space: Jump (and double jump)
+A: Charged Attack
+
+Space: Jump
 
 
 ### Debug Keys:
