@@ -5,6 +5,11 @@
       <frame x="238" y="527" width="173" height="152"/>
       <frame x="65" y="519" width="173" height="190"/>
     </fly>
+    <attack>
+      <frame x="422" y="542" width="136" height="125"/>
+      <frame x="238" y="527" width="173" height="152"/>
+      <frame x="65" y="519" width="173" height="190"/>
+    </attack>
     <speeds fly="10" attack="10"/>
   </gargoil>
   <slime>
@@ -14,6 +19,12 @@
       <frame x="271" y="50" width="96" height="64"/>
       <frame x="376" y="44" width="96" height="70"/>
     </idle>
+    <walk>
+      <frame x="63" y="47" width="95" height="67"/>
+      <frame x="169" y="41" width="96" height="73"/>
+      <frame x="271" y="50" width="96" height="64"/>
+      <frame x="376" y="44" width="96" height="70"/>
+    </walk>
     <jump>
       <frame x="54" y="145" width="95" height="69"/>
       <frame x="160" y="145" width="100" height="70"/>

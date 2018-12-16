@@ -19,8 +19,8 @@
 Enemy_Fly::Enemy_Fly(int x, int y, SDL_Rect colliderRect) : Entity(x, y)
 {
 
-	fly = App->tex->CreateAnimation("crow", "fly", true);
-	attack = App->tex->CreateAnimation("crow", "attack", true);
+	fly = App->tex->CreateAnimation("gargoil", "fly", true);
+	attack = App->tex->CreateAnimation("gargoil", "attack", true);
 
 	flysound = App->audio->LoadFx("audio/fx/glide.wav");
 	animation = &fly;
