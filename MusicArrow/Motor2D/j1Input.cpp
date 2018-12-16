@@ -88,6 +88,11 @@ bool j1Input::PreUpdate()
 				windowEvents[WE_QUIT] = true;
 			break;
 
+			case SDL_TEXTINPUT:
+				newCharacter = event.text.text;
+				newCharacterDetected = true;
+				break;
+
 			case SDL_WINDOWEVENT:
 				switch(event.window.event)
 				{
@@ -156,4 +161,19 @@ void j1Input::GetMouseMotion(int& x, int& y)
 {
 	x = mouse_motion_x;
 	y = mouse_motion_y;
+}
+
+p2SString j1Input::GetNewCharacter() const
+{
+	return newCharacter;
+}
+
+bool j1Input::GetNewCharacterDetected() const
+{
+	return newCharacterDetected;
+}
+
+void j1Input::ChangeBoolCharacterDetected()
+{
+	newCharacterDetected = !newCharacterDetected;
 }

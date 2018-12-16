@@ -12,7 +12,7 @@ UIElement::UIElement(ElementType type, iPoint position, UIElement* parent, bool 
 	this->position = position;
 	this->rectToDraw = rectToDraw;
 	this->type = type;
-//	this->parent = parent;
+	//	this->parent = parent;
 	this->isEnabled = isEnabled;
 	this->dragable = dragable;
 }
@@ -87,8 +87,6 @@ void UIElement::PreUpdate()
 		{
 			App->input->GetMousePosition(mousePositionFirst.x, mousePositionFirst.y);
 		}
-		posX = mousePositionFirst.x;
-		posY = mousePositionFirst.y;
 
 		break;
 
@@ -98,7 +96,7 @@ void UIElement::PreUpdate()
 		{
 			Event = MouseLeftClickLeave;
 		}
-		
+
 		break;
 
 	case MouseLeftClickLeave:
@@ -117,7 +115,7 @@ void UIElement::PreUpdate()
 
 void UIElement::Update(float dt)
 {
-	if(Event == MouseLeftClickPressed && dragable == true)
+	if (Event == MouseLeftClickPressed && dragable == true)
 	{
 		DragUIElement();
 	}
@@ -178,7 +176,7 @@ void UIElement::DragUIElement()
 			int margin = MARGIN;
 			if (parent->IsMouseInsideElement(margin))
 			{
-				if (posX != -1 && parent->horizontalSlider == true )
+				if (posX != -1 && parent->horizontalSlider == true)
 				{
 					position.x = posX;
 					posX = -1;
@@ -188,7 +186,7 @@ void UIElement::DragUIElement()
 					position.y = posY;
 					posY = -1;
 				}
-				
+
 				MoveInParentLimits(movement.x, movement.y);
 			}
 			else
