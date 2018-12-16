@@ -67,13 +67,20 @@ public:
 	//----- Animations Awesome Game 2 ------
 
 	Animation idle;
-	Animation alert;
-	Animation walk;
+	Animation idle2;
 	Animation run;
 	Animation jump;
-	Animation fall;
-	Animation shot;
+	Animation slide1;
+	Animation slide2;
+	Animation slide3;
+	Animation attack;
+	Animation charge;
+	Animation fireball;
+	Animation outfire;
 	Animation hit;
+	Animation giant1;
+	Animation giant2;
+	Animation giant3;
 	Animation die;
 
 	//---------------------

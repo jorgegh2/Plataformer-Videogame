@@ -31,139 +31,169 @@ j1Player::j1Player(int x, int y, SDL_Rect colliderRect) : Entity(x, y)
 	OriginPos = { collider->rect.x, collider->rect.y };
 	
 
-	//------ New Animations Awesome Game 2 ------
+	//------ New Animations ------
 
-	// IDLE
+	// IDLE1
 
-	idle.PushBack({ 34, 16, 155, 171 });
-	idle.PushBack({ 230, 16, 155, 171 });
-	idle.PushBack({ 441, 17, 156, 170 });
-	idle.PushBack({ 640, 18, 156, 169 });
-	idle.PushBack({ 838, 18, 157, 169 });
-	idle.PushBack({ 1043, 18, 157, 169 });
-	idle.PushBack({ 1235, 18, 156, 169 });
-	idle.PushBack({ 1422, 17, 156, 170 });
-	idle.PushBack({ 1609, 16, 155, 171 });
-	idle.PushBack({ 1785, 16, 155, 171 });
+	idle.PushBack({ 46, 68, 77, 110 });
+	idle.PushBack({ 136, 72, 94, 108 });
+	idle.PushBack({ 242, 72, 94, 111 });
+	idle.PushBack({ 350, 68, 88, 110 });
+	idle.PushBack({ 447, 71, 94, 107 });
 	idle.loop = true;
-	idle.speed = 0.3f;
+	idle.speed = 0.2f;
 
-	// ALERT
+	// IDLE2
 
-	alert.PushBack({ 34, 264, 155, 171 });
-	alert.PushBack({ 257, 263, 154, 172 });
-	alert.PushBack({ 460, 261, 152, 174 });
-	alert.PushBack({ 653, 260, 152, 175 });
-	alert.PushBack({ 853, 260, 152, 175 });
-	alert.PushBack({ 1059, 260, 152, 175 });
-	alert.PushBack({ 1257, 260, 152, 175 });
-	alert.PushBack({ 1437, 261, 152, 174 });
-	alert.PushBack({ 1612, 263, 154, 172 });
-	alert.PushBack({ 1788, 264, 155, 171 });
-	alert.loop = true;
-	alert.speed = 0.05f;
-
-	// WALK
-
-	walk.PushBack({ 44, 772, 154, 171 });
-	walk.PushBack({ 281, 772, 155, 171 });
-	walk.PushBack({ 476, 772, 155, 171 });
-	walk.PushBack({ 660, 773, 156, 169 });
-	walk.PushBack({ 856, 773, 156, 169 });
-	walk.PushBack({ 1046, 773, 156, 169 });
-	walk.PushBack({ 1262, 773, 156, 169 });
-	walk.PushBack({ 1444, 772, 155, 171 });
-	walk.PushBack({ 1622, 772, 155, 171 });
-	walk.PushBack({ 1797, 772, 154, 171 });
-	walk.loop = true;
-	walk.speed = 0.5f;
+	idle2.PushBack({ 46, 221, 77, 110 });
+	idle2.PushBack({ 142, 218, 94, 108 });
+	idle2.PushBack({ 247, 214, 94, 111 });
+	idle2.PushBack({ 349, 215, 89, 111 });
+	idle2.PushBack({ 461, 215, 94, 108 });
+	idle2.loop = true;
+	idle2.speed = 0.2f;
 
 
 	// RUN
 
-	run.PushBack({ 51, 1016, 143, 184 });
-	run.PushBack({ 285, 1018, 144, 182 });
-	run.PushBack({ 479, 1021, 148, 179 });
-	run.PushBack({ 668, 1024, 151, 175 });
-	run.PushBack({ 862, 1027, 154, 172 });
-	run.PushBack({ 1061, 1027, 154, 172 });
-	run.PushBack({ 1281, 1024, 151, 175 });
-	run.PushBack({ 1467, 1021, 148, 179 });
-	run.PushBack({ 1640, 1018, 144, 182 });
-	run.PushBack({ 1816, 1016, 143, 184 });
+	run.PushBack({ 46, 371, 105, 110 });
+	run.PushBack({ 180, 372, 77, 113 });
+	run.PushBack({ 292, 367, 99, 116 });
+	run.PushBack({ 411, 375, 100, 107 });
+	run.PushBack({ 534, 368, 71, 111 });
+	run.PushBack({ 630, 371, 99, 108 });
+	run.PushBack({ 741, 364, 127, 108 });
+	run.PushBack({ 889, 367, 127, 108 });
 	run.loop = true;
-	run.speed = 0.05f;
+	run.speed = 0.4f;
 
 
 	// JUMP
 
-	jump.PushBack({ 39, 1332, 151, 175 });
-	jump.PushBack({ 275, 1327, 150, 177 });
-	jump.PushBack({ 488, 1320, 141, 185 });
-	jump.PushBack({ 695, 1317, 134, 191 });
-	jump.PushBack({ 881, 1310, 145, 182 });
-	jump.PushBack({ 1063, 1299, 158, 167 });
-	jump.PushBack({ 1251, 1296, 165, 156 });
-	jump.PushBack({ 1444, 1305, 160, 160 });
-	jump.PushBack({ 1627, 1322, 157, 168 });
-	jump.PushBack({ 1813, 1332, 155, 171 });
-	jump.loop = true;
-	jump.speed = 0.1f;
+	jump.PushBack({ 22, 508, 105, 127 });
+	jump.PushBack({ 144, 514, 97, 128 });
+	jump.PushBack({ 356, 525, 85, 94 });
+	jump.PushBack({ 463, 526, 86, 83 });
+	jump.PushBack({ 566, 550, 86, 63 });
+	jump.PushBack({ 692, 549, 85, 71 });
+	jump.PushBack({ 811, 545, 86, 74 });
+	jump.PushBack({ 932, 557, 88, 63 });
+	jump.PushBack({ 1049, 549, 91, 79 });
+	jump.PushBack({ 1171, 545, 85, 94 });
+	jump.PushBack({ 1277, 536, 113, 117 });
+	jump.loop = false;
+	jump.speed = 0.3f;
 
-	// FALLING
+	// SLIDE 1
 
-	fall.PushBack({ 1251, 1296, 165, 156 });
-	fall.PushBack({ 1444, 1305, 160, 160 });
-	fall.loop = false;
-	fall.speed = 0.05f;
+	slide1.PushBack({ 46, 665, 108, 116 });
+	slide1.PushBack({ 174, 660, 116, 118 });
+	slide1.PushBack({ 313, 665, 117, 124 });
+	slide1.PushBack({ 453, 676, 116, 94 });
+	slide1.loop = false;
+	slide1.speed = 0.05f;
 
-	// SHOOT
+	// SLIDE 2
 
-	shot.PushBack({ 49, 521, 155, 171 });
-	shot.PushBack({ 269, 525, 158, 171 });
-	shot.PushBack({ 460, 531, 160, 161 });
-	shot.PushBack({ 635, 537, 162, 155 });
-	shot.PushBack({ 834, 542, 163, 150 });
-	shot.PushBack({ 1041, 544, 163, 148 });
-	shot.PushBack({ 1241, 544, 163, 148 });
-	shot.PushBack({ 1423, 539, 163, 153 });
-	shot.PushBack({ 1610, 529, 159, 165 });
-	shot.PushBack({ 1791, 521, 155, 171 });
-	shot.loop = true;
-	shot.speed = 0.05f;
+	slide2.PushBack({ 46, 829, 116, 94 });
+	slide2.PushBack({ 175, 829, 94, 93 });
+	slide2.PushBack({ 289, 823, 83, 105 });
+	slide2.PushBack({ 395, 830, 94, 93 });
+	slide2.PushBack({ 509, 834, 116, 94 });
+	slide2.loop = true;
+	slide2.speed = 0.05f;
 
+	// SLIDE 3
+
+	slide3.PushBack({ 50, 960, 108, 91 });
+	slide3.PushBack({ 188, 959, 97, 91 });
+	slide3.loop = false;
+	slide3.speed = 0.05f;
+
+	// ATTACK
+
+	attack.PushBack({ 50, 1098, 147, 94 });
+	attack.PushBack({ 203, 1104, 141, 94 });
+	attack.PushBack({ 359, 1112, 136, 94 });
+	attack.PushBack({ 512, 1118, 130, 94 });
+	attack.loop = true;
+	attack.speed = 0.05f;
+
+	//CHARGE FIREBALL
+
+	charge.PushBack({ 434, 1252, 102, 91 });
+	charge.PushBack({ 342, 1250, 77, 82 });
+	charge.loop = true;
+	charge.speed = 0.05f;
+
+	// FIREBALL
+
+	fireball.PushBack({ 566, 1273, 161, 60 });
+	fireball.PushBack({ 739, 1278, 150, 61 });
+	fireball.PushBack({ 898, 1281, 149, 61 });
+	fireball.loop = true;
+	fireball.speed = 0.05f;
+
+	//OUT FIREBALL
+
+	outfire.PushBack({ 1091, 1266, 85, 94 });
+	outfire.PushBack({ 1197, 1257, 113, 117 });
+	outfire.loop = false;
+	outfire.speed = 0.05f;
 
 
 	// HIT
 
-	hit.PushBack({ 41, 1587, 157, 169 });
-	hit.PushBack({ 267, 1588, 157, 168 });
-	hit.PushBack({ 467, 1589, 157, 168 });
-	hit.PushBack({ 665, 1591, 158, 166 });
-	hit.PushBack({ 870, 1593, 159, 166 });
-	hit.PushBack({ 1075, 1593, 159, 166 });
-	hit.PushBack({ 1284, 1591, 158, 166 });
-	hit.PushBack({ 1528, 1589, 157, 168 });
-	hit.PushBack({ 1777, 1588, 155, 168 });
-	hit.PushBack({ 2037, 1588, 155, 168 });
+	hit.PushBack({ 45, 1398, 117, 128 });
+	hit.PushBack({ 208, 1399, 116, 136 });
 	hit.loop = true;
 	hit.speed = 0.05f;
 
 
 	// DIE
 
-	die.PushBack({ 44, 1879, 156, 169 });
-	die.PushBack({ 245, 1889, 161, 160 });
-	die.PushBack({ 431, 1900, 163, 150 });
-	die.PushBack({ 616, 1901, 164, 149 });
-	die.PushBack({ 807, 1903, 164, 147 });
-	die.PushBack({ 1003, 1905, 164, 143 });
-	die.PushBack({ 1202, 1910, 179, 136 });
-	die.PushBack({ 1417, 1914, 196, 133 });
-	die.PushBack({ 1643, 1943, 174, 151 });
-	die.PushBack({ 1860, 1955, 151, 174 });
+	die.PushBack({ 370, 1401, 136, 127 });
+	die.PushBack({ 521, 1401, 116, 113 });
+	die.PushBack({ 652, 1378, 132, 117 });
+	die.PushBack({ 808, 1434, 160, 66 });
+	die.PushBack({ 986, 1420, 160, 72 });
 	die.loop = false;
 	die.speed = 0.15f;
+
+
+	// TO GIANT
+
+	giant1.PushBack({ 1180, 1773, 100, 109 });
+	giant1.PushBack({ 1289, 1779, 83, 100 });
+	giant1.PushBack({ 1389, 1758, 99, 120 });
+	giant1.PushBack({ 1505, 1717, 133, 161 });
+	giant1.PushBack({ 1655, 1655, 184, 223 });
+	giant1.loop = false;
+	giant1.speed = 0.15f;
+
+	// TO NORMAL
+
+	giant3.PushBack({ 1655, 1655, 184, 223 });
+	giant3.PushBack({ 1505, 1717, 133, 161 });
+	giant3.PushBack({ 1389, 1758, 99, 120 });
+	giant3.PushBack({ 1289, 1779, 83, 100 });
+	giant3.PushBack({ 1180, 1773, 100, 109 });
+	giant3.loop = false;
+	giant3.speed = 0.15f;
+
+	// GIANT
+
+	giant2.PushBack({ 49, 1550, 193, 316 });
+	giant2.PushBack({ 281, 1550, 207, 309 });
+	giant2.PushBack({ 527, 1556, 229, 310 });
+	giant2.PushBack({ 781, 1550, 213, 316 });
+	giant2.PushBack({ 63, 1920, 192, 317 });
+	giant2.PushBack({ 296, 1913, 207, 324 });
+	giant2.PushBack({ 556, 1913, 247, 330 });
+	giant2.PushBack({ 849, 1920, 213, 309 });
+	giant2.loop = false;
+	giant2.speed = 0.15f;
+
 
 	//-------------------------------------
 
@@ -207,7 +237,7 @@ bool j1Player::Start()
 {
 	LOG("Loading player textures");
 	bool ret = true;
-	graphics = App->tex->Load("assets/Archer/Archer2.png");
+	graphics = App->tex->Load("assets/Star/star.png");
 	
 	
 
@@ -258,7 +288,7 @@ bool j1Player::Update(float dt)
 		else position.x -= speedDtX;
 
 		velocityX = -speedDtX;
-		current_animation = &walk;
+		current_animation = &run;
 
 
 	}
@@ -284,7 +314,7 @@ bool j1Player::Update(float dt)
 			position.x += speedDtX;
 
 		velocityX = speedDtX;
-		current_animation = &walk;
+		current_animation = &run;
 
 
 	}
@@ -390,7 +420,7 @@ bool j1Player::Update(float dt)
 
 	case LANDING:
 
-		current_animation = &fall;
+		//current_animation = &fall;
 
 		break;
 
