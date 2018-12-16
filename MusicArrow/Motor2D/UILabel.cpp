@@ -52,26 +52,6 @@ void UILabel::InitPosToWrite(UIImage* image)
 	position.x += MARGIN;
 }
 
-//p2SString UILabel::GetText() const
-//{
-//	return text;
-//}
-//
-//void UILabel::SetText(p2SString newText)
-//{
-//	text += newText;
-//}
-
-//SDL_Color UILabel::GetColor() const
-//{
-//	return color;
-//}
-//
-//_TTF_Font* UILabel::GetFont() const
-//{
-//	return font;
-//}
-
 void UILabel::SetNewSizeAndTextureFont(p2SString text)
 {
 	//text.Cut(text.Length()-2, text.Length()-1);

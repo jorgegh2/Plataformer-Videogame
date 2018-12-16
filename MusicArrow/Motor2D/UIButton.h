@@ -16,18 +16,14 @@ class UIButton : public UIElement
 public:
 	UIButton(iPoint, SDL_Rect[], p2SString text, SDL_Color color, _TTF_Font* font, bool dragable, UIElement* parent = nullptr, bool isEnabled = true);
 	virtual ~UIButton();
-	//void PreUpdate();
 	void Update(float dt);
 
-
-	//SDL_Rect default_texture_rect = { 0,0,0,0 };
-	//SDL_Rect mouse_on_rect = { 0,0,0,0 };
-	//SDL_Rect clicked_rect = { 0,0,0,0 };
 private:
 	UIImage * buttonImage = nullptr;
 	UILabel* buttonLabel = nullptr;
 	SDL_Rect rects[3];
 	EventElement Event = NoEventElement;
+
 };
 
 #endif

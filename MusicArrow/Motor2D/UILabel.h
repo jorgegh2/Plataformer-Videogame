@@ -20,11 +20,7 @@ public:
 	void InitPosToWrite(UIImage* image);
 
 	SDL_Texture* GetUITexture();
-	SDL_Texture* textureFont; //
-							  /*p2SString GetText() const;*/
-							  //SDL_Color GetColor() const;
-							  ////_TTF_Font* GetFont() const;
-							  //void SetText(p2SString newText);
+	SDL_Texture* textureFont; 
 	void SetNewSizeAndTextureFont(p2SString text);
 
 private:

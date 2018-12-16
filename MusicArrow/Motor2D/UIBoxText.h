@@ -14,7 +14,6 @@ public:
 	virtual ~UIBoxText();
 	void printFinalQuad(SDL_Rect& finalRect);
 
-	//void PreUpdate();
 	void Update(float dt);
 	void EditBoxTextLabel(p2SString newCharacter);
 

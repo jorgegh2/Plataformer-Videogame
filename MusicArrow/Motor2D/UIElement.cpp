@@ -146,7 +146,6 @@ iPoint UIElement::GetPosition() const
 
 bool UIElement::IsMouseInsideElement(int marginX, int marginY)
 {
-	//SDL_Rect rectImage = buttonImage->GetRectToDraw();
 	iPoint mousePosition;
 	App->input->GetMousePosition(mousePosition.x, mousePosition.y);
 

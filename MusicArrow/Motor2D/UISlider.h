@@ -3,7 +3,6 @@
 
 #include "UIElement.h"
 #include "UIImage.h"
-//#include "p2SString.h"
 
 class UISlider : public UIElement
 {
@@ -12,7 +11,6 @@ public:
 	virtual ~UISlider();
 
 	void PreUpdate();
-	//void Update(float dt);
 	void SetValueSlider(UIElement* element, int& valueToChange, int maxValue);
 
 private:

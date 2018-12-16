@@ -17,7 +17,6 @@ UIButton::UIButton(iPoint position, SDL_Rect rectToDraw[], p2SString text, SDL_C
 	buttonImage = new UIImage(position, rectToDraw[0], false, this);
 	SetParentAndChildren(buttonImage);
 
-	//funcion para centrar el texto y sacar su posicion relativa.
 	buttonLabel = new UILabel(position, text, color, font, false, this);
 	SetParentAndChildren(buttonLabel);
 
@@ -29,13 +28,6 @@ UIButton::UIButton(iPoint position, SDL_Rect rectToDraw[], p2SString text, SDL_C
 
 UIButton::~UIButton()
 {}
-
-//void UIButton::PreUpdate()
-//{
-//	
-//	buttonImage->PreUpdate();
-//
-//}
 
 void UIButton::Update(float dt)
 {

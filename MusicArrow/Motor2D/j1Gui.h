@@ -37,9 +37,6 @@ public:
 	// Called before all Updates
 	bool PreUpdate();
 
-	//// Called after all Updates
-	//bool PostUpdate();
-
 	// Call all updates
 	bool Update(float dt);
 
@@ -66,7 +63,6 @@ private:
 	p2SString atlas_file_name;
 	p2List<UIElement*> GuiEntities;
 	p2List_item<UIElement*>* item;
-	//bool drawDebug;
 
 };
 

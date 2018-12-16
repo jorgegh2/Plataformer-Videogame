@@ -19,20 +19,12 @@ class UIElement
 {
 public:
 	UIElement(ElementType type, iPoint position, UIElement* parent, bool isEnabled, bool Dragable, SDL_Rect rectToDraw = { 0,0,0,0 });
-	///Second constructor if there are a rect but no parent is necessary.
-	///UIElement(ElementType type, iPoint position, SDL_Rect rectToDraw = { 0,0,0,0 });
 	virtual ~UIElement();
 
 	virtual void PreUpdate();
 	virtual void Update(float dt);
 
 	void Draw(SDL_Texture* atlas);
-
-	//virtual void DebugDraw() const;
-	//virtual void SetSliderButtonPos(int);
-	//void SetParent(UIElement*);
-	//void SetLocalPosition(iPoint);
-
 	virtual SDL_Texture* GetUITexture();
 	UIElement* GetParent() const;
 	SDL_Rect GetRectToDraw();
@@ -47,8 +39,7 @@ public:
 protected:
 	ElementType type;
 	EventElement Event = NoEventElement;
-	//uint positionToDraw;
-	//bool toDelete;
+	
 	int posX = -1;
 	int posY = -1;
 	bool horizontalSlider = false;

@@ -10,7 +10,6 @@ UIBoxText::UIBoxText(iPoint position, SDL_Rect rectImage, p2SString text, SDL_Co
 	BoxTextImage = new UIImage(position, rectImage, false, this);
 	SetParentAndChildren(BoxTextImage);
 
-	//funcion para centrar el texto y sacar su posicion relativa.
 	BoxTextLabelInitial = new UILabel(position, text, color, font, false, this);
 	SetParentAndChildren(BoxTextLabelInitial);
 	BoxTextLabelInitial->InitPosToWrite(BoxTextImage);
@@ -41,11 +40,6 @@ void UIBoxText::printFinalQuad(SDL_Rect& finalRect)
 	finalRect.y = BoxTextLabel->GetPosition().y;
 	App->render->DrawQuad(finalRect, 255, 255, 255, 255);
 }
-
-//void UIBoxText::PreUpdate()
-//{
-//	BoxTextLabelInitial->PreUpdate();
-//}
 
 void UIBoxText::Update(float dt)
 {
