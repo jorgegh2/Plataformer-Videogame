@@ -41,6 +41,9 @@ F11-> Enable/Disable FPS cap to 30
 ## Find this project solution in:
 https://github.com/jorgegh2/Plataformer-Videogame
 
+## Find our website
+https://github.com/jorgegh2/Plataformer-Videogame/wiki
+
 ## Find this project's scrum board in:
 https://trello.com/b/nqgWasdW/our-super-awesome-game-2
 
