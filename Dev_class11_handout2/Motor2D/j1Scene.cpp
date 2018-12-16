@@ -11,6 +11,8 @@
 #include "j1Gui.h"
 #include "j1Scene.h"
 #include "j1Fonts.h"
+//#include "UIImage.h"
+//#include "UISlider.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -44,7 +46,7 @@ bool j1Scene::Start()
 	}
 
 	debug_tex = App->tex->Load("maps/path2.png");
-	App->gui->CreateImage({ 100,100 }, { 485, 829, 328, 103 }, true);
+	image = App->gui->CreateImage({ 100,100 }, { 485, 829, 328, 103 }, true);
 	_TTF_Font* font = App->font->Load("fonts/open_sans/OpenSans-Bold.ttf");
 	App->gui->CreateLabel({ 600,100 }, "Hello World", { 255,255,255,255 }, font, true);
 
@@ -52,7 +54,7 @@ bool j1Scene::Start()
 	App->gui->CreateButton({ 610,150 }, rects,"Hello World", { 255, 255, 255, 255 }, NULL, true);
 	App->gui->CreateBoxText({ 700,250 }, { 488, 569, 344, 61 }, "Hello World", { 255, 255, 255, 255 }, NULL, true);
 
-	App->gui->CreateSlider({ 500, 200 }, { 976, 789, 5, 152 }, { 843, 330, 15, 10 });
+	slider = App->gui->CreateSlider({ 600, 200 }, { 976, 789, 5, 152 }, { 843, 330, 15, 10 });
 	// TODO 3: Create the banner (rect {485, 829, 328, 103}) and the text "Hello World"
 
 	return true;
@@ -92,7 +94,7 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	// Gui ---
-	
+	slider->SetValueSlider(image, image->position.y, 200);
 	// -------
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");

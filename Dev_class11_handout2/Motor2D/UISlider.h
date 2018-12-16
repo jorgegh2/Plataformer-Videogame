@@ -11,11 +11,14 @@ public:
 	UISlider(iPoint position, SDL_Rect barImage, SDL_Rect zamImage, bool dragable, UIElement* parent = nullptr, bool isEnabled = true);
 	virtual ~UISlider();
 
-	//void PreUpdate();
+	void PreUpdate();
 	//void Update(float dt);
+	void SetValueSlider(UIElement* element, int& valueToChange, int maxValue);
 
 private:
 	UIImage* bar = nullptr;
 	UIImage* zam = nullptr;
+	iPoint previousRelativePosition;
+	int minValue = -1;
 };
 #endif

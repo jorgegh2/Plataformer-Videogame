@@ -120,10 +120,11 @@ void j1Gui::DrawAll()
 	}
 }
 
-void j1Gui::CreateImage(iPoint position, SDL_Rect rectImage, bool dragable)
+UIImage* j1Gui::CreateImage(iPoint position, SDL_Rect rectImage, bool dragable)
 {
 	UIImage* entity = new UIImage(position, rectImage, dragable);
 	GuiEntities.add(entity);
+	return entity;
 }
 
 void j1Gui::CreateLabel(iPoint position, p2SString text, SDL_Color color, _TTF_Font* font, bool dragable)
@@ -144,8 +145,9 @@ void j1Gui::CreateBoxText(iPoint position, SDL_Rect rectImage, p2SString text, S
 	GuiEntities.add(entity);
 }
 
-void j1Gui::CreateSlider(iPoint position, SDL_Rect barImageRect, SDL_Rect zamImageRect, bool dragable)
+UISlider* j1Gui::CreateSlider(iPoint position, SDL_Rect barImageRect, SDL_Rect zamImageRect, bool dragable)
 {
 	UISlider* entity = new UISlider(position, barImageRect, zamImageRect, dragable);
 	GuiEntities.add(entity);
+	return entity;
 }

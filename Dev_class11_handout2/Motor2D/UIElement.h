@@ -37,20 +37,21 @@ public:
 	UIElement* GetParent() const;
 	SDL_Rect GetRectToDraw();
 	iPoint GetPosition() const;
-	bool IsMouseInsideElement();
+	bool IsMouseInsideElement(int MarginX = 0, int marginY = 0);
 	EventElement GetEvent() const;
 	void SetParentAndChildren(UIElement* children);
 	void DragUIElement();
-	void MoveInParentLimitsX(int movementX, int);
-	void MoveInParentLimitsY(int movementY);
+	void MoveInParentLimits(int movementX, int);
 	
 protected:
 	ElementType type;
 	EventElement Event = NoEventElement;
 	//uint positionToDraw;
 	//bool toDelete;
-
-	iPoint position;
+	int posX = -1;
+	int posY = -1;
+	bool horizontalSlider = false;
+	
 	SDL_Rect rectToDraw;
 	UIElement* parent = nullptr;	
 
@@ -62,6 +63,7 @@ protected:
 public:
 	bool isEnabled = true;
 	p2List<UIElement*> listChildren;
+	iPoint position;
 };
 
 #endif

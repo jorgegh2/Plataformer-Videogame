@@ -144,13 +144,13 @@ iPoint UIElement::GetPosition() const
 }
 
 
-bool UIElement::IsMouseInsideElement()
+bool UIElement::IsMouseInsideElement(int marginX, int marginY)
 {
 	//SDL_Rect rectImage = buttonImage->GetRectToDraw();
 	iPoint mousePosition;
 	App->input->GetMousePosition(mousePosition.x, mousePosition.y);
 
-	if (mousePosition.x > position.x && mousePosition.x < position.x + rectToDraw.w && mousePosition.y > position.y && mousePosition.y < position.y + rectToDraw.h)
+	if (mousePosition.x > position.x - marginX && mousePosition.x < position.x + rectToDraw.w + marginX && mousePosition.y > position.y - marginY && mousePosition.y < position.y + rectToDraw.h + marginY)
 		return true;
 	else
 		return false;
@@ -159,18 +159,45 @@ bool UIElement::IsMouseInsideElement()
 void UIElement::DragUIElement()
 {
 	App->input->GetMousePosition(mousePositionFinal.x, mousePositionFinal.y);
-	iPoint newPos = mousePositionFinal - mousePositionFirst;
+	iPoint movement = mousePositionFinal - mousePositionFirst;
 	if (parent == nullptr)
 	{
-		position += newPos;
+		position += movement;
 	}
 	else
 	{
-		MoveInParentLimitsX(newPos.x, newPos.y);
+		if (parent->type != SliderElement)
+		{
+
+			MoveInParentLimits(movement.x, movement.y);
+		}
+		else
+		{
+			int margin = MARGIN;
+			if (parent->IsMouseInsideElement(margin))
+			{
+				if (posX != -1 && parent->horizontalSlider == true )
+				{
+					position.x = posX;
+					posX = -1;
+				}
+				if (posY != -1 && parent->horizontalSlider == false)
+				{
+					position.y = posY;
+					posY = -1;
+				}
+				
+				MoveInParentLimits(movement.x, movement.y);
+			}
+			else
+			{
+				App->input->GetMousePosition(posX, posY);
+			}
+		}
 	}
 	for (p2List_item<UIElement*>* item = listChildren.start; item; item = item->next)
 	{
-		item->data->position += newPos;
+		item->data->position += movement;
 	}
 
 	mousePositionFirst = mousePositionFinal;
@@ -187,22 +214,13 @@ void UIElement::SetParentAndChildren(UIElement* children)
 	children->parent = this;
 }
 
-void UIElement::MoveInParentLimitsX(int movementX, int movementY)
+void UIElement::MoveInParentLimits(int movementX, int movementY)
 {
 	int newPosX = position.x + movementX;
 	if (newPosX > parent->GetPosition().x && newPosX + rectToDraw.w < parent->GetPosition().x + parent->GetRectToDraw().w)
 	{
 		position.x = newPosX;
 	}
-	int newPosY = position.y + movementY;
-	if (newPosY > parent->GetPosition().y && newPosY + rectToDraw.h < parent->GetPosition().y + parent->GetRectToDraw().h)
-	{
-		position.y = newPosY;
-	}
-
-}
-void UIElement::MoveInParentLimitsY(int movementY)
-{
 	int newPosY = position.y + movementY;
 	if (newPosY > parent->GetPosition().y && newPosY + rectToDraw.h < parent->GetPosition().y + parent->GetRectToDraw().h)
 	{
