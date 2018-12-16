@@ -280,7 +280,7 @@ bool j1Player::Update(float dt)
 	
 	//Horizontal movement
 
-	if(IsCharging != true && IsHurting != true){
+	if(IsCharging != true && IsHurting != true && jstate != GODMODE){
 
 		current_animation = &run;
 	

@@ -20,9 +20,9 @@
 Enemy_Walk::Enemy_Walk(int x, int y, SDL_Rect colliderRect) : Entity(x, y)
 {
 	
-	idle = App->tex->CreateAnimation("frog", "idle", true);
-	walk = App->tex->CreateAnimation("frog", "walk", true);
-	jump = App->tex->CreateAnimation("frog", "jump", true);
+	idle = App->tex->CreateAnimation("slime", "idle", true);
+	walk = App->tex->CreateAnimation("slime", "walk", true);
+	jump = App->tex->CreateAnimation("slime", "jump", true);
 	
 	zombiesound = App->audio->LoadFx("audio/fx/zombie.wav");
 

@@ -1,221 +1,27 @@
 <animations>
-  <player>
-    <idle>
-      <frame x="0" y="227" width="57" height="109"/>
-      <frame x="59" y="227" width="57" height="109"/>
-      <frame x="117" y="227" width="57" height="109"/>
-      <frame x="175" y="227" width="57" height="109"/>
-    </idle>
-    <speeds idle="10"/>
-  </player>
-  <crow>
+  <gargoil>
     <fly>
-      <frame x="8" y="110" width="32" height="27"/>
-      <frame x="60" y="98" width="27" height="40"/>
-      <frame x="102" y="117" width="35" height="20"/>
-      <frame x="157" y="118" width="26" height="27"/>
-      <frame x="200" y="121" width="32" height="18"/>
+      <frame x="422" y="542" width="136" height="125"/>
+      <frame x="238" y="527" width="173" height="152"/>
+      <frame x="65" y="519" width="173" height="190"/>
     </fly>
-    <attack>
-      <frame x="102" y="117" width="35" height="20"/>
-    </attack>
     <speeds fly="10" attack="10"/>
-  </crow>
-  <frog>
+  </gargoil>
+  <slime>
     <idle>
-      <frame x="13" y="58" width="35" height="28"/>
-      <frame x="174" y="60" width="35" height="28"/>
+      <frame x="63" y="47" width="95" height="67"/>
+      <frame x="169" y="41" width="96" height="73"/>
+      <frame x="271" y="50" width="96" height="64"/>
+      <frame x="376" y="44" width="96" height="70"/>
     </idle>
     <jump>
-      <frame x="18" y="16" width="32" height="26"/>
-      <frame x="61" y="19" width="32" height="23"/>
-      <frame x="103" y="11" width="32" height="32"/>
-      <frame x="146" y="8" width="34" height="33"/>
-      <frame x="186" y="11" width="32" height="32"/>
-      <frame x="226" y="19" width="32" height="23"/>
+      <frame x="54" y="145" width="95" height="69"/>
+      <frame x="160" y="145" width="100" height="70"/>
+      <frame x="273" y="146" width="103" height="69"/>
+      <frame x="380" y="146" width="107" height="69"/>
     </jump>
-    <attack>
-      <frame x="13" y="58" width="35" height="28"/>
-      <frame x="57" y="60" width="52" height="26"/>
-      <frame x="120" y="61" width="47" height="26"/>
-      <frame x="174" y="60" width="35" height="28"/>
-    </attack>
     <speeds idle="10" jump="10" attack="10"/>
-  </frog>
-  <wolf>
-    <idle>
-      <frame x="187" y="161" width="46" height="45"/>
-    </idle>
-    <walk>
-      <frame x="9" y="159" width="42" height="44"/>
-      <frame x="66" y="160" width="46" height="46"/>
-      <frame x="122" y="161" width="51" height="44"/>
-      <frame x="187" y="161" width="46" height="45"/>
-    </walk>
-    <attack>
-      <frame x="7" y="226" width="40" height="54"/>
-      <frame x="60" y="229" width="46" height="51"/>
-      <frame x="123" y="239" width="58" height="41"/>
-      <frame x="212" y="239" width="56" height="43"/>
-      <frame x="295" y="238" width="51" height="45"/>
-      <frame x="7" y="226" width="40" height="54"/>
-    </attack>
-    <speeds idle="10" jump="10" attack="10"/>
-  </wolf>
-  
-  
-    
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-    
-    
-    
-      
-      
-      
-      
-      
-      
-      
-      
-
-<girl>
-  <walkLeft>
-    <frame x="0" y="0" width="116" height="109"/>
-    <frame x="116" y="0" width="116" height="109"/>
-    <frame x="232" y="0" width="116" height="109"/>
-    <frame x="348" y="0" width="116" height="109"/>
-    <frame x="464" y="0" width="116" height="109"/>
-    <frame x="580" y="0" width="116" height="109"/>
-    <frame x="696" y="0" width="116" height="109"/>
-    <frame x="812" y="0" width="116" height="109"/>
-    <frame x="928" y="0" width="116" height="109"/>
-    <frame x="1044" y="0" width="116" height="109"/>
-   </walkLeft>
-  
-   <walkRight>
-    <frame x="0" y="109" width="116" height="109"/>
-    <frame x="116" y="109" width="116" height="109"/>
-    <frame x="232" y="109" width="116" height="109"/>
-    <frame x="348" y="109" width="116" height="109"/>
-    <frame x="464" y="109" width="116" height="109"/>
-    <frame x="580" y="109" width="116" height="109"/>
-    <frame x="696" y="109" width="116" height="109"/>
-    <frame x="812" y="109" width="116" height="109"/>
-    <frame x="928" y="109" width="116" height="109"/>
-    <frame x="1044" y="109" width="116" height="109"/>
-   </walkRight>
-  
-  <deadRight>
-    <frame x="0" y="218" width="122" height="124"/>
-    <frame x="122" y="218" width="122" height="124"/>
-    <frame x="244" y="218" width="122" height="124"/>
-    <frame x="366" y="218" width="122" height="124"/>
-    <frame x="488" y="218" width="122" height="124"/>
-    <frame x="610" y="218" width="122" height="124"/>
-    <frame x="732" y="218" width="122" height="124"/>
-    <frame x="854" y="218" width="122" height="124"/>
-    <frame x="976" y="218" width="122" height="124"/>
-    <frame x="1098" y="218" width="122" height="124"/>
-   </deadRight>
-
-  <deadLeft>
-    <frame x="0" y="984" width="122" height="124"/>
-    <frame x="122" y="984" width="122" height="124"/>
-    <frame x="244" y="984" width="122" height="124"/>
-    <frame x="366" y="984" width="122" height="124"/>
-    <frame x="488" y="984" width="122" height="124"/>
-    <frame x="610" y="984" width="122" height="124"/>
-    <frame x="732" y="984" width="122" height="124"/>
-    <frame x="854" y="984" width="122" height="124"/>
-    <frame x="976" y="984" width="122" height="124"/>
-    <frame x="1098" y="984" width="122" height="124"/>
-  </deadLeft>
-
-  <speeds walkRight="10" walkLeft ="10" deadRight="10" deadLeft="10"/>
-</girl>
-  
-<zombie>
-  <walkLeft>
-    <frame x="0" y="436" width="86" height="119"/>
-    <frame x="86" y="436" width="86" height="119"/>
-    <frame x="172" y="436" width="86" height="119"/>
-    <frame x="258" y="436" width="86" height="119"/>
-    <frame x="344" y="436" width="86" height="119"/>
-    <frame x="430" y="436" width="86" height="119"/>
-    <frame x="516" y="436" width="86" height="119"/>
-    <frame x="602" y="436" width="86" height="119"/>
-    <frame x="688" y="436" width="86" height="119"/>
-    <frame x="774" y="436" width="86" height="119"/>
-    </walkLeft>
-    
-   <walkRight>
-    <frame x="0" y="555" width="86" height="119"/>
-    <frame x="86" y="555" width="86" height="119"/>
-    <frame x="172" y="555" width="86" height="119"/>
-    <frame x="258" y="555" width="86" height="119"/>
-    <frame x="344" y="555" width="86" height="119"/>
-    <frame x="430" y="555" width="86" height="119"/>
-    <frame x="516" y="555" width="86" height="119"/>
-    <frame x="602" y="555" width="86" height="119"/>
-    <frame x="688" y="555" width="86" height="119"/>
-    <frame x="774" y="555" width="86" height="119"/>
-   </walkRight>
-  
-  <deadRight>
-    <frame x="0" y="674" width="146" height="104"/>
-    <frame x="146" y="674" width="146" height="104"/>
-    <frame x="292" y="674" width="146" height="104"/>
-    <frame x="438" y="674" width="146" height="104"/>
-    <frame x="584" y="674" width="146" height="104"/>
-    <frame x="730" y="674" width="146" height="104"/>
-    <frame x="876" y="674" width="146" height="104"/>
-    <frame x="1022" y="674" width="146" height="104"/>
-    <frame x="1168" y="674" width="146" height="104"/>
-    <frame x="1314" y="674" width="146" height="104"/>
-    </deadRight>
-  
-  <deadLeft>
-    <frame x="1314" y="873" width="146" height="104"/>
-    <frame x="1168" y="873" width="146" height="104"/>
-    <frame x="1022" y="873" width="146" height="104"/>
-    <frame x="876" y="873" width="146" height="104"/>
-    <frame x="730" y="873" width="146" height="104"/>
-    <frame x="584" y="873" width="146" height="104"/>
-    <frame x="438" y="873" width="146" height="104"/>
-    <frame x="292" y="873" width="146" height="104"/>
-    <frame x="146" y="873" width="146" height="104"/>
-    <frame x="0" y="873" width="146" height="104"/>
-  </deadLeft>
-  
-  <speeds walkRight="10" walkLeft ="10" deadRight="10" deadLeft="10"/>
-
-  </zombie>
- 
-  <coin>
-    <rotate>
-      <frame x="0" y="1113" width="54" height="54"/>
-      <frame x="54" y="1113" width="54" height="54"/>
-      <frame x="108" y="1113" width="54" height="54"/>
-      <frame x="162" y="1113" width="54" height="54"/>
-      <frame x="216" y="1113" width="54" height="54"/>
-      <frame x="270" y="1113" width="54" height="54"/>
-      <frame x="324" y="1113" width="54" height="54"/>
-      <frame x="378" y="1113" width="54" height="54"/>
-      <frame x="432" y="1113" width="54" height="54"/>
-      <frame x="486" y="1113" width="54" height="54"/>
-
-    </rotate>
-    <speeds rotate ="10"/>
-    </coin>
+  </slime>
 </animations>
 
 
