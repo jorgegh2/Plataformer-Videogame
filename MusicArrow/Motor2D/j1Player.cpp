@@ -117,14 +117,14 @@ j1Player::j1Player(int x, int y, SDL_Rect colliderRect) : Entity(x, y)
 	attack.PushBack({ 359, 1112, 136, 94 });
 	attack.PushBack({ 512, 1118, 130, 94 });
 	attack.loop = true;
-	attack.speed = 0.05f;
+	attack.speed = 0.02f;
 
 	//CHARGE FIREBALL
 
 	charge.PushBack({ 434, 1252, 102, 91 });
 	charge.PushBack({ 342, 1250, 77, 82 });
 	charge.loop = true;
-	charge.speed = 0.05f;
+	charge.speed = 0.1f;
 
 	// FIREBALL
 
@@ -239,7 +239,10 @@ bool j1Player::Start()
 	bool ret = true;
 	graphics = App->tex->Load("assets/Star/star.png");
 	
-	
+	//Set Lifes
+	player_lifes = 5;
+	//Set Charging Bar
+	chargingBar = 0;
 
 	ResetPlayer();
 
@@ -272,28 +275,14 @@ bool j1Player::Update(float dt)
 
 	float g = gravity * dt;
 	float speedDtX = speed.x * dt;
-	velocityX = 0;
-
-	
-	current_animation = &idle;
-
+	velocityX = speedDtX;
 	
 	//Horizontal movement
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && jstate != DEAD && jstate != GODMODE)
-	{
-		if (AllDistances.distanceNegativeX.Modulo < speedDtX && AllDistances.distanceNegativeX.nearestColliderType != COLLIDER_PLATAFORM)
-			position.x -= AllDistances.distanceNegativeX.Modulo;
+	if(IsCharging!= true){
 
-		else position.x -= speedDtX;
-
-		velocityX = -speedDtX;
 		current_animation = &run;
-
-
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && jstate != DEAD && jstate != GODMODE)
-	{
+	
 		if (AllDistances.distancePositiveX.Modulo < speedDtX && AllDistances.distancePositiveX.nearestColliderType != COLLIDER_PLATAFORM)
 		{
 			position.x += AllDistances.distancePositiveX.Modulo;
@@ -309,19 +298,40 @@ bool j1Player::Update(float dt)
 				}
 			}
 		}
-
-		else 
-			position.x += speedDtX;
-
-		velocityX = speedDtX;
-		current_animation = &run;
-
+		else position.x += speedDtX;
 
 	}
 
-	//Flip player sprite if x speed is negative
-	if (velocityX < 0)flip = SDL_FLIP_HORIZONTAL;
-	if (velocityX > 0)flip = SDL_FLIP_NONE;
+	////Flip player sprite if x speed is negative
+	//if (velocityX < 0)flip = SDL_FLIP_HORIZONTAL;
+	//if (velocityX > 0)flip = SDL_FLIP_NONE;
+
+	//hit enemies or get a hit
+		if (AllDistances.distancePositiveX.nearestColliderType == COLLIDER_ENEMY && AllDistances.distancePositiveX.Modulo == 0)
+		{
+
+			if (IsAttacking) 
+			{
+				//enemies dead animation and destroy
+			} 
+			else 
+			{
+				player_lifes -= 1;
+				current_animation = &hit;
+				current_animation->Reset();
+				App->audio->PlayFx(audio_jumping, 1);
+			
+			}
+			
+		}
+		if (AllDistances.distancePositiveX.nearestColliderType == COLLIDER_FLOOR && AllDistances.distancePositiveX.Modulo == 0)
+		{
+				player_lifes -= 1;
+				current_animation = &hit;
+				current_animation->Reset();
+				App->audio->PlayFx(audio_jumping, 1);
+
+		}
 
 	//PLAYER STATES
 	switch (jstate)
@@ -334,6 +344,13 @@ bool j1Player::Update(float dt)
 				
 		break;
 
+	case SJUMP:
+		timer.Reset();
+		speed.y = -1500 * dt/2;
+		jstate = ONAIR;
+
+		break;
+
 	case ONFLOOR:
 		
 
@@ -344,19 +361,87 @@ bool j1Player::Update(float dt)
 				current_animation->Reset();
 				App->audio->PlayFx(audio_jumping, 1);
 			}
-			else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-				jstate = JUMP;
-				current_animation = &jump;
+			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+			{
+				
+				IsCharging = true;
+				chargingBar += 20;
+				current_animation = &charge;
+				//current_animation->Reset();
+				App->audio->PlayFx(audio_jumping, 1);
+				if (chargingBar >= 100)
+				{
+					App->audio->PlayFx(audio_jumping, 1); // ring charge is completed
+
+				}
+				
+				
+			}
+			else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+			{
+
+				current_animation = &charge;
+
+			}
+			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
+			{
+
+				if (chargingBar >= 100)
+				{
+					chargingBar = 100;
+					jstate = FIREBALL;
+
+				}
+				else
+				{
+					jstate = ONFLOOR;
+				}
+
+			}
+			
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+			{
+				current_animation = &attack;
+				current_animation->Reset();
+				IsAttacking = true;
+				App->audio->PlayFx(audio_jumping, 1);
+			}
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+			{
+				
+				current_animation = &slide1;
 				current_animation->Reset();
 				App->audio->PlayFx(audio_jumping, 1);
 			}
-			else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-				jstate = JUMP;
-				current_animation = &jump;
+
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+			{
+				
+				current_animation = &slide2;
 				current_animation->Reset();
 				App->audio->PlayFx(audio_jumping, 1);
 			}
-			IsJumping = true;
+
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP)
+			{
+				
+				current_animation = &slide3;
+				current_animation->Reset();
+				App->audio->PlayFx(audio_jumping, 1);
+			}
+			
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+			{
+				jstate = SJUMP;
+				current_animation = &slide2;
+				current_animation->Reset();
+				App->audio->PlayFx(audio_jumping, 1);
+			}
+
+
+
+
+			
 			timer.Reset();
 		
 		break;
@@ -391,22 +476,16 @@ bool j1Player::Update(float dt)
 					position.y += speed.y;
 				}
 			}
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && IsJumping)
-			{
-
-				jstate = JUMP;
-				timer.Reset();
-				speed.y = -1500 * dt;
-				jstate = ONAIR;
-				current_animation = &jump;
-				current_animation->Reset();
-				App->audio->PlayFx(audio_jumping, 1);
-				IsJumping = false;
-
-			}
 
 			//DEAD condition
 			if (AllDistances.distancePositiveY.Modulo == 0 && AllDistances.distancePositiveY.nearestColliderType == COLLIDER_WATER)
+			{
+				jstate = DEAD;
+				timer.Reset();
+				App->audio->PlayFx(audio_dead, 1);
+				App->input->Disable();
+			}
+			else if (player_lifes == 0)
 			{
 				jstate = DEAD;
 				timer.Reset();
@@ -418,9 +497,30 @@ bool j1Player::Update(float dt)
 		
 		break;
 
-	case LANDING:
+	case HIT:
 
-		//current_animation = &fall;
+		current_animation = &hit;
+		speed.y = -1;
+		speed.y = speed.y + gravity * timer.ReadSec();
+		position.y += speed.y * timer.ReadSec();
+
+		break;
+
+	case FIREBALL:
+
+		current_animation = &fireball;
+		IsAttacking = true;
+		position.x += speedDtX *2;
+		chargingBar -= 5;
+
+		if (chargingBar <= 0)
+		{
+			chargingBar = 0;
+			jstate = ONAIR;
+			IsCharging = false;
+			IsAttacking = false;
+
+		}
 
 		break;
 
@@ -502,7 +602,7 @@ bool j1Player::Update(float dt)
 		int limit = -App->render->camera.x + App->render->camera.w;
 		if (position.x + collider->rect.w > offSet.w + offSet.x && limit < 13568)
 		{
-			App->render->camera.x = -(position.x * App->win->GetScale() - 423);
+			App->render->camera.x = -(position.x * App->win->GetScale() - 456);
 		}
 		else if (position.x < offSet.x && -App->render->camera.x > 1)
 		{
@@ -516,7 +616,7 @@ bool j1Player::Update(float dt)
 			}
 			else if (position.y + collider->rect.h > offSet.y + offSet.h && -App->render->camera.y + App->render->camera.h < 1645)
 			{
-				App->render->camera.y = -(position.y * App->win->GetScale() - 515);
+				App->render->camera.y = -(position.y * App->win->GetScale() - 527);
 			}
 		}
 
@@ -576,22 +676,26 @@ state j1Player::SetStateFromInt(int state_as_int)
 		break;
 
 	case 1:
-		player_state = ONFLOOR;
+		player_state = SJUMP;
 		break;
 
 	case 2:
-		player_state = ONAIR;
+		player_state = ONFLOOR;
 		break;
 
 	case 3:
-		player_state = LANDING;
+		player_state = ONAIR;
 		break;
 
 	case 4:
-		player_state = DEAD;
+		player_state = HIT;
 		break;
 
 	case 5:
+		player_state = DEAD;
+		break;
+
+	case 6:
 		player_state = GODMODE;
 		break;
 	}

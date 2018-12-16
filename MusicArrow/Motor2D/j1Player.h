@@ -15,10 +15,12 @@ struct SDL_Texture;
 
 enum state {
 
-	JUMP, 
+	JUMP,
+	SJUMP,
 	ONFLOOR, 
 	ONAIR, 
-	LANDING, 
+	HIT,
+	FIREBALL,
 	DEAD, 
 	GODMODE
 };
@@ -56,12 +58,15 @@ public:
 	
 	iPoint OriginPos;
 	
-	float velocityX; 
+	int velocityX;
+	int player_lifes;
+	int chargingBar;
 	Timer timer;
 
 	bool IsGodMode = false;
-
+	bool IsAttacking = false;
 	bool IsJumping = false;
+	bool IsCharging = false;
 
 
 	//----- Animations Awesome Game 2 ------
