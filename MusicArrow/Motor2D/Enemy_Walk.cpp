@@ -56,6 +56,26 @@ void Enemy_Walk::Move(float dt)
 	iPoint enemy_tiles_pos = App->map->WorldToMap(position.x, position.y);
 	iPoint player_tiles_pos = App->map->WorldToMap(App->entities->player->position.x, App->entities->player->position.y);
 
+	//hit enemies or get a hit
+	if (App->entities->player->AllDistances.distancePositiveX.nearestColliderType == COLLIDER_ENEMY && App->entities->player->AllDistances.distancePositiveX.Modulo <= 0)
+	{
+
+		if (App->entities->player->IsAttacking == true)
+		{
+			isDead = true;
+		}
+		else
+		{
+			App->entities->player->player_lifes -= 1;
+			App->entities->player->IsHurting = true;
+			App->entities->player->hurting = position.x;
+			App->entities->player->jstate = HIT;
+			
+
+		}
+
+	}
+
 
 	if (Agro && timer.ReadSec() >= 0.1)
 	{

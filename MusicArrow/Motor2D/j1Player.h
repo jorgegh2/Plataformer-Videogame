@@ -21,6 +21,7 @@ enum state {
 	ONAIR, 
 	HIT,
 	FIREBALL,
+	GIANT,
 	DEAD, 
 	GODMODE
 };
@@ -69,6 +70,7 @@ public:
 	bool IsJumping = false;
 	bool IsCharging = false;
 	bool IsHurting = false;
+	
 
 
 	//----- Animations Awesome Game 2 ------

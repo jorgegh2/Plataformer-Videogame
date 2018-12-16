@@ -313,15 +313,15 @@ bool j1Player::Update(float dt)
 
 			if (IsAttacking) 
 			{
-				//enemies dead animation and destroy
+				
 			} 
 			else 
 			{
-				player_lifes -= 1;
-				IsHurting = true;
+				/*player_lifes -= 1;
+				IsHurting = true;*/
 				current_animation = &hit;
-				hurting = position.x;
-				jstate = HIT;
+				/*hurting = position.x;
+				jstate = HIT;*/
 				App->audio->PlayFx(audio_jumping, 1);
 			
 			}
@@ -338,6 +338,11 @@ bool j1Player::Update(float dt)
 
 		}
 		if (player_lifes <= 0) jstate = DEAD;
+		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+		{
+
+			jstate = DEAD;
+		}
 
 	//PLAYER STATES
 	switch (jstate)
@@ -443,18 +448,13 @@ bool j1Player::Update(float dt)
 				current_animation->Reset();
 				App->audio->PlayFx(audio_jumping, 1);
 			}
-
-
-
-
+			
 			
 			timer.Reset();
 		
 		break;
 
 	case ONAIR:
-			
-		
 
 			speed.y = speed.y + g;
 		
