@@ -61,12 +61,14 @@ public:
 	int velocityX;
 	int player_lifes;
 	int chargingBar;
+	int hurting;
 	Timer timer;
 
 	bool IsGodMode = false;
 	bool IsAttacking = false;
 	bool IsJumping = false;
 	bool IsCharging = false;
+	bool IsHurting = false;
 
 
 	//----- Animations Awesome Game 2 ------
