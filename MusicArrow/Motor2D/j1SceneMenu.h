@@ -41,6 +41,10 @@ private:
 	UISlider* musicSlider = nullptr;
 	UISlider* fxSlider = nullptr;
 
+	UIImage* panelCredits = nullptr;
+	UILabel* Author1 = nullptr;
+	UILabel* Author2 = nullptr;
+
 	SDL_Texture* bg = nullptr;
 	SDL_Rect bgRect;
 

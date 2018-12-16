@@ -54,6 +54,14 @@ bool j1SceneMenu::Start()
 	panel->SetParentAndChildren(fxSlider);
 	panel->ChangeEnabled();
 
+	panelCredits = App->gui->CreateImage({ 500,400 }, { 3028,4,528, 653 });
+	Author1 = App->gui->CreateLabel({ 570, 475 }, "Author: Jorge Gemas Herencia", { 255,255,255,255 }, font);
+	Author2 = App->gui->CreateLabel({ 570, 550 }, "Author: Gerard Berenguer Pacheco", { 255,255,255,255 }, font);
+
+	panelCredits->SetParentAndChildren(Author1);
+	panelCredits->SetParentAndChildren(Author2);
+	panelCredits->ChangeEnabled();
+
 	////App->map->Load("Level2.tmx");
 
 	////Menu UI elements
@@ -101,6 +109,20 @@ bool j1SceneMenu::Update(float dt)
 	if (settingsButton->GetEvent() == MouseLeftClickEvent)
 	{
 		panel->ChangeEnabled();
+		if (panelCredits->isEnabled == true)
+		{
+			panelCredits->ChangeEnabled();
+		}
+	}
+
+	if (creditsButton->GetEvent() == MouseLeftClickEvent)
+	{
+		panelCredits->ChangeEnabled();
+		if (panel->isEnabled == true)
+		{
+			panel->ChangeEnabled();
+		}
+		//ShellExecuteA(NULL, "open", "https://github.com/jorgegh2/Plataformer-Videogame/wiki", NULL, NULL, SW_SHOWNORMAL);
 	}
 
 	return true;
@@ -108,6 +130,7 @@ bool j1SceneMenu::Update(float dt)
 
 bool j1SceneMenu::CleanUp()
 {
+	App->tex->UnLoad(bg);
 	App->gui->CleanUp();
 	return true;
 }
