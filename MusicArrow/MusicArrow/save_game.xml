@@ -5,30 +5,67 @@
 	<textures />
 	<audio />
 	<map />
+	<fade />
+	<collision />
+	<pathfinding />
 	<scene>
 		<level current_scene="scene_forest" />
 	</scene>
 	<scene_forest />
 	<scene_winter />
-	<fade />
-	<particles />
-	<collision />
 	<entities>
 		<player>
 			<position x="633" y="2773" />
 			<state current_state="1" />
-			<speed x="470" y="139.230011" />
+			<speed x="470" y="139" />
 		</player>
 		<enemyfly>
-			<position x="703.237427" y="2312" />
-			<speed x="1.44000006" y="1.44000006" />
+			<position x="638.999695" y="2539.79492" />
+			<speed x="3.20000005" y="3.20000005" />
 			<isDead isDead="false" />
 			<path currentpath="true" />
 			<now now="0" />
 			<movingleft movingleft="false" />
 		</enemyfly>
+		<enemywalk>
+			<position x="0" y="1589" />
+			<speed x="0.480000019" y="0.480000019" />
+			<speedjump speedjump="20" />
+			<gravity gravity="1" />
+			<isDead isDead="false" />
+			<path currentpath="false" />
+			<now now="0" />
+			<movingleft movingleft="true" />
+		</enemywalk>
+		<enemyfly>
+			<position x="638.999695" y="2539.79492" />
+			<speed x="3.20000005" y="3.20000005" />
+			<isDead isDead="false" />
+			<path currentpath="true" />
+			<now now="0" />
+			<movingleft movingleft="false" />
+		</enemyfly>
+		<enemywalk>
+			<position x="0" y="1589" />
+			<speed x="0.480000019" y="0.480000019" />
+			<speedjump speedjump="20" />
+			<gravity gravity="1" />
+			<isDead isDead="false" />
+			<path currentpath="false" />
+			<now now="0" />
+			<movingleft movingleft="true" />
+		</enemywalk>
+		<enemywalk>
+			<position x="0" y="1589" />
+			<speed x="0.480000019" y="0.480000019" />
+			<speedjump speedjump="20" />
+			<gravity gravity="1" />
+			<isDead isDead="false" />
+			<path currentpath="false" />
+			<now now="0" />
+			<movingleft movingleft="true" />
+		</enemywalk>
 	</entities>
-	<pathfinding />
 	<renderer>
 		<camera x="-216" y="-871" />
 	</renderer>
