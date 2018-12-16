@@ -37,8 +37,18 @@ bool j1SceneMenu::Start()
 	creditsButton = App->gui->CreateButton({ 1250,800 }, rects, "Credits", { 255, 255, 255, 255 }, font);
 	exitButton = App->gui->CreateButton({ 1250,1000 }, rects, "Exit", { 255, 255, 255, 255 }, font);
 
-	//Settings elements
-	//panel = App->gui->
+	//Settings elements 3091,61
+	panel = App->gui->CreateImage({ 500,400 }, { 3028,4,528, 653 });
+	music = App->gui->CreateLabel({ 570, 450 }, "Music:", {255,255,255,255}, font);
+	fx = App->gui->CreateLabel({ 570, 550 }, "Fx:", { 255,255,255,255 }, font);
+	musicSlider = App->gui->CreateSlider({ 570, 494 }, { 1738,650,394,11 }, {1738,687,17,17});
+	fxSlider = App->gui->CreateSlider({ 570, 594 }, { 1738,650,394,11 }, { 1738,687,17,17 });
+
+	panel->SetParentAndChildren(music);
+	panel->SetParentAndChildren(fx);
+	panel->SetParentAndChildren(musicSlider);
+	panel->SetParentAndChildren(fxSlider);
+	panel->ChangeEnabled();
 	return true;
 }
 
@@ -55,9 +65,9 @@ bool j1SceneMenu::Update(float dt)
 		return false;
 	}
 
-	if (playButton->GetEvent() == MouseLeftClickEvent)
+	if (settingsButton->GetEvent() == MouseLeftClickEvent)
 	{
-		App->fadeToBlack->FadeToBlack(this, App->map_forest);
+		panel->ChangeEnabled();
 	}
 
 	return true;

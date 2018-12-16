@@ -228,3 +228,14 @@ void UIElement::MoveInParentLimits(int movementX, int movementY)
 	}
 
 }
+
+void UIElement::ChangeEnabled()
+{
+	isEnabled = !isEnabled;
+
+	for (p2List_item<UIElement*>* item = listChildren.start; item; item = item->next)
+	{
+		item->data->isEnabled = !item->data->isEnabled;
+	}
+
+}

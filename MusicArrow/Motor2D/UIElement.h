@@ -42,6 +42,7 @@ public:
 	void SetParentAndChildren(UIElement* children);
 	void DragUIElement();
 	void MoveInParentLimits(int movementX, int);
+	void ChangeEnabled();
 
 protected:
 	ElementType type;

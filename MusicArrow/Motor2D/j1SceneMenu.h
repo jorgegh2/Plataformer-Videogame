@@ -36,6 +36,10 @@ private:
 	UIButton* exitButton = nullptr;
 
 	UIImage* panel = nullptr;
+	UILabel* music = nullptr;
+	UILabel* fx = nullptr;
+	UISlider* musicSlider = nullptr;
+	UISlider* fxSlider = nullptr;
 
 };
 

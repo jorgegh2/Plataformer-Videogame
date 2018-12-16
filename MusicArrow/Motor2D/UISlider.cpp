@@ -6,9 +6,10 @@ UISlider::UISlider(iPoint position, SDL_Rect barImageRect, SDL_Rect zamImageRect
 
 	bar = new UIImage(position, barImageRect, false, this);
 	SetParentAndChildren(bar);
-	position.x -= 5;//puntual
+	//position.y -= 5;//puntual
 	zam = new UIImage(position, zamImageRect, true, this);
 	SetParentAndChildren(zam);
+	horizontalSlider = true;
 }
 
 UISlider::~UISlider()
