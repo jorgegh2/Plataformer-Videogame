@@ -24,6 +24,7 @@
 #include "Brofiler/Brofiler.h"
 #include "j1Fonts.h"
 #include "j1Gui.h"
+#include "j1SceneMenu.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -48,6 +49,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	pathfinding = new j1PathFinding();
 	font = new j1Fonts();
 	gui = new j1Gui();
+	sceneMenu = new j1SceneMenu();
 	
 
 	AddModule(input);
@@ -63,12 +65,16 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(font);
 
 	// scene last
-	AddModule(gui);
+	
 	AddModule(scene);
+
 	AddModule(map_forest);
 	AddModule(map_winter);
+	AddModule(sceneMenu);
+	AddModule(gui);
 	AddModule(collision);
 	AddModule(entities);
+
 
 	// render last to swap buffer
 	AddModule(render);

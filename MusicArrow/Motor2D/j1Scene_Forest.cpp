@@ -22,6 +22,8 @@ j1Scene_Forest::~j1Scene_Forest() {}
 bool j1Scene_Forest::Awake(pugi::xml_node& config)
 {
 	App->map->Load(config.child("bgmusic").child("level1").attribute("source").as_string());
+	enabled = false;
+	active = false;
 	return true;
 }
 
@@ -30,7 +32,7 @@ bool j1Scene_Forest::Awake(pugi::xml_node& config)
 bool j1Scene_Forest::Start()
 {
 	App->map->Load("Level1.tmx");
-	
+	App->entities->player->Start();
 
 	int w, h;
 	uchar* data = NULL;

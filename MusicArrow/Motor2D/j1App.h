@@ -25,6 +25,7 @@ class j1Entities;
 class j1PathFinding;
 class j1Fonts;
 class j1Gui;
+class j1SceneMenu;
 
 
 class j1App
@@ -107,8 +108,9 @@ public:
 	j1Scene_Winter*		map_winter;
 	j1Entities*			entities;
 	j1PathFinding*		pathfinding;
-	j1Fonts*			font = NULL;
-	j1Gui*				gui = NULL;
+	j1Fonts*			font;
+	j1Gui*				gui;
+	j1SceneMenu*		sceneMenu;
 	
 
 private:
@@ -142,6 +144,6 @@ private:
 	
 };
 
-extern j1App* App; // No student is asking me about that ... odd :-S
+extern j1App* App; 
 
 #endif

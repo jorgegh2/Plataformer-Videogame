@@ -37,10 +37,6 @@ bool j1Entities::Start()
 {
 
 	sprites = App->tex->Load("assets/Enemies/enemies_spritesheet.png");
-	
-
-	
-	player->Start();
 
 	return true;
 }
