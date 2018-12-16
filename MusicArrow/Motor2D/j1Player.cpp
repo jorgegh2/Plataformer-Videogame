@@ -147,7 +147,7 @@ j1Player::j1Player(int x, int y, SDL_Rect colliderRect) : Entity(x, y)
 	hit.PushBack({ 45, 1398, 117, 128 });
 	hit.PushBack({ 208, 1399, 116, 136 });
 	hit.loop = true;
-	hit.speed = 0.05f;
+	hit.speed = 0.2f;
 
 
 	// DIE
@@ -243,6 +243,7 @@ bool j1Player::Start()
 	player_lifes = 5;
 	//Set Charging Bar
 	chargingBar = 0;
+	hurting = 0;
 
 	ResetPlayer();
 
@@ -279,7 +280,7 @@ bool j1Player::Update(float dt)
 	
 	//Horizontal movement
 
-	if(IsCharging!= true){
+	if(IsCharging != true && IsHurting != true){
 
 		current_animation = &run;
 	
@@ -317,8 +318,10 @@ bool j1Player::Update(float dt)
 			else 
 			{
 				player_lifes -= 1;
+				IsHurting = true;
 				current_animation = &hit;
-				current_animation->Reset();
+				hurting = position.x;
+				jstate = HIT;
 				App->audio->PlayFx(audio_jumping, 1);
 			
 			}
@@ -326,12 +329,15 @@ bool j1Player::Update(float dt)
 		}
 		if (AllDistances.distancePositiveX.nearestColliderType == COLLIDER_FLOOR && AllDistances.distancePositiveX.Modulo == 0)
 		{
-				player_lifes -= 1;
-				current_animation = &hit;
-				current_animation->Reset();
-				App->audio->PlayFx(audio_jumping, 1);
+			player_lifes -= 1;
+			IsHurting = true;
+			current_animation = &hit;
+			hurting = position.x;
+			jstate = HIT;
+			App->audio->PlayFx(audio_jumping, 1);
 
 		}
+		if (player_lifes <= 0) jstate = DEAD;
 
 	//PLAYER STATES
 	switch (jstate)
@@ -367,7 +373,7 @@ bool j1Player::Update(float dt)
 				IsCharging = true;
 				chargingBar += 20;
 				current_animation = &charge;
-				//current_animation->Reset();
+				
 				App->audio->PlayFx(audio_jumping, 1);
 				if (chargingBar >= 100)
 				{
@@ -500,9 +506,15 @@ bool j1Player::Update(float dt)
 	case HIT:
 
 		current_animation = &hit;
-		speed.y = -1;
-		speed.y = speed.y + gravity * timer.ReadSec();
-		position.y += speed.y * timer.ReadSec();
+		
+		position.x -= speedDtX * 2;
+
+		if (hurting - position.x > 300)
+		{
+			jstate = ONFLOOR;
+			IsHurting = false;
+
+		}
 
 		break;
 
@@ -692,10 +704,14 @@ state j1Player::SetStateFromInt(int state_as_int)
 		break;
 
 	case 5:
-		player_state = DEAD;
+		player_state = FIREBALL;
 		break;
 
 	case 6:
+		player_state = DEAD;
+		break;
+
+	case 7:
 		player_state = GODMODE;
 		break;
 	}
