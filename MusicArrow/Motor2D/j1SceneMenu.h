@@ -41,6 +41,9 @@ private:
 	UISlider* musicSlider = nullptr;
 	UISlider* fxSlider = nullptr;
 
+	SDL_Texture* bg = nullptr;
+	SDL_Rect bgRect;
+
 };
 
 #endif // __j1SCENE_WINTER_H__

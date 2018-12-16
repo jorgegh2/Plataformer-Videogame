@@ -32,7 +32,7 @@ bool j1Scene_Forest::Awake(pugi::xml_node& config)
 bool j1Scene_Forest::Start()
 {
 	App->map->Load("Level1.tmx");
-	App->entities->player->Start();
+	
 
 	int w, h;
 	uchar* data = NULL;

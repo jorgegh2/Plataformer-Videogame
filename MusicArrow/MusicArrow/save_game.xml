@@ -6,67 +6,78 @@
 	<audio />
 	<map />
 	<fade />
-	<collision />
 	<pathfinding />
+	<fonts />
 	<scene>
 		<level current_scene="scene_forest" />
 	</scene>
 	<scene_forest />
 	<scene_winter />
+	<j1SceneMenu />
+	<gui />
+	<collision />
 	<entities>
 		<player>
-			<position x="633" y="2773" />
-			<state current_state="1" />
-			<speed x="470" y="139" />
+			<position x="1303" y="2811.17065" />
+			<state current_state="7" />
+			<speed x="470" y="97.0910034" />
 		</player>
 		<enemyfly>
-			<position x="638.999695" y="2539.79492" />
-			<speed x="3.20000005" y="3.20000005" />
+			<position x="2024.20483" y="2562.0022" />
+			<speed x="6.80000019" y="6.80000019" />
 			<isDead isDead="false" />
 			<path currentpath="true" />
 			<now now="0" />
 			<movingleft movingleft="false" />
 		</enemyfly>
 		<enemywalk>
-			<position x="0" y="1589" />
-			<speed x="0.480000019" y="0.480000019" />
+			<position x="1599" y="2865" />
+			<speed x="1.0200001" y="1.0200001" />
 			<speedjump speedjump="20" />
 			<gravity gravity="1" />
 			<isDead isDead="false" />
 			<path currentpath="false" />
 			<now now="0" />
-			<movingleft movingleft="true" />
+			<movingleft movingleft="false" />
 		</enemywalk>
 		<enemyfly>
-			<position x="638.999695" y="2539.79492" />
-			<speed x="3.20000005" y="3.20000005" />
+			<position x="2171.00244" y="2692.19897" />
+			<speed x="6.80000019" y="6.80000019" />
 			<isDead isDead="false" />
 			<path currentpath="true" />
 			<now now="0" />
 			<movingleft movingleft="false" />
 		</enemyfly>
 		<enemywalk>
-			<position x="0" y="1589" />
-			<speed x="0.480000019" y="0.480000019" />
+			<position x="3512" y="2479" />
+			<speed x="1.0200001" y="1.0200001" />
 			<speedjump speedjump="20" />
 			<gravity gravity="1" />
 			<isDead isDead="false" />
 			<path currentpath="false" />
 			<now now="0" />
-			<movingleft movingleft="true" />
+			<movingleft movingleft="false" />
 		</enemywalk>
 		<enemywalk>
-			<position x="0" y="1589" />
-			<speed x="0.480000019" y="0.480000019" />
+			<position x="4728" y="2256" />
+			<speed x="1.0200001" y="1.0200001" />
 			<speedjump speedjump="20" />
 			<gravity gravity="1" />
 			<isDead isDead="false" />
 			<path currentpath="false" />
 			<now now="0" />
-			<movingleft movingleft="true" />
+			<movingleft movingleft="false" />
 		</enemywalk>
+		<enemyfly>
+			<position x="5688" y="1672" />
+			<speed x="6.80000019" y="6.80000019" />
+			<isDead isDead="false" />
+			<path currentpath="false" />
+			<now now="0" />
+			<movingleft movingleft="false" />
+		</enemyfly>
 	</entities>
 	<renderer>
-		<camera x="-216" y="-871" />
+		<camera x="-551" y="-830" />
 	</renderer>
 </game_state>

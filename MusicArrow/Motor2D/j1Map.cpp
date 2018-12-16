@@ -654,8 +654,8 @@ void j1Map::SetAllCollidersAndEntities()
 	{
 		if (item_object->data->Collider_type == COLLIDER_PLAYER)
 		{
-			App->entities->AddEntity(ENTITY_PLAYER, item_object->data->RectCollider.x, item_object->data->RectCollider.y, item_object->data->RectCollider);
-			
+			App->entities->AddEntity(ENTITY_PLAYER, item_object->data->RectCollider.x+1000, item_object->data->RectCollider.y, item_object->data->RectCollider);
+			App->entities->player->Start();
 		}
 		else if (item_object->data->Collider_type == COLLIDER_ENEMY && item_object->data->enemy_type == 0)
 		{
