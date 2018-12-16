@@ -28,7 +28,7 @@ j1Player::j1Player(int x, int y, SDL_Rect colliderRect) : Entity(x, y)
 	graphics = NULL;
 	current_animation = NULL;
 	collider = App->collision->AddCollider(colliderRect, COLLIDER_PLAYER, nullptr); 
-	OriginPos = { collider->rect.x, collider->rect.y };
+	OriginPos = { x, y };
 	
 
 	//------ New Animations ------
