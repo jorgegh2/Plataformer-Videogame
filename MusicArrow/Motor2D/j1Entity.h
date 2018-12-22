@@ -13,7 +13,7 @@ enum Direction { up = 0, down, left, right, nextLevel, death };
 
 class Entity
 {
-protected:
+public:
 
 	float gravity = 1.0f;
 	float speed_jump = 0;

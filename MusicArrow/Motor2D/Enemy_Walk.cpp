@@ -57,7 +57,7 @@ void Enemy_Walk::Move(float dt)
 	iPoint player_tiles_pos = App->map->WorldToMap(App->entities->player->position.x, App->entities->player->position.y);
 
 	//hit enemies or get a hit
-	if (App->entities->player->AllDistances.distancePositiveX.nearestColliderType == COLLIDER_ENEMY && App->entities->player->AllDistances.distancePositiveX.Modulo <= 0)
+	/*if (App->entities->player->AllDistances.distancePositiveX.nearestColliderType == COLLIDER_ENEMY && App->entities->player->AllDistances.distancePositiveX.Modulo <= 0)
 	{
 
 		if (App->entities->player->IsAttacking == true)
@@ -74,12 +74,18 @@ void Enemy_Walk::Move(float dt)
 
 		}
 
-	}
+	}*/
+
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+		ShowPath = !ShowPath;
+
+	if (ShowPath)
+		DrawPath();
 
 
 	if (Agro && timer.ReadSec() >= 0.1)
 	{
-		//App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
+		App->pathfinding->CreatePathManhattan(enemy_tiles_pos, player_tiles_pos, enemy_path);
 
 	}
 	else {
@@ -108,15 +114,15 @@ void Enemy_Walk::Move(float dt)
 			Dead();
 
 		}
-		else if (enemy_tiles_pos.x <= enemy_path[i].x && position.x < tileInMap.x && movement[right] == true) {
-			position.x += speed.x;
-			animation = &walk;
+		else if (enemy_tiles_pos.x < enemy_path[i].x && position.x < tileInMap.x && movement[right] == true) {
+			position.x += speed.x*2;
 			current_in_path = true;
+			animation = &jump;
 		}
-		else if (enemy_tiles_pos.x >= enemy_path[i].x && position.x > tileInMap.x && movement[left] == true) {
-			position.x -= speed.x;
-			animation = &walk;
+		else if (enemy_tiles_pos.x > enemy_path[i].x && position.x > tileInMap.x && movement[left] == true) {
+			position.x -= speed.x*2;
 			current_in_path = true;
+			animation = &jump;
 		}
 		else {
 			current_in_path = false;
@@ -157,6 +163,17 @@ void Enemy_Walk::CalculateGravity(float dt)
 					speed_jump = 0;
 				}
 			
+}
+
+void Enemy_Walk::DrawPath()
+{
+	for (int i = 0; i < enemy_path.Count(); i++)
+	{
+		iPoint p = App->map->MapToWorld(enemy_path[i].x, enemy_path[i].y);
+
+		SDL_Rect quad = { p.x, p.y, App->map->data.tile_width, App->map->data.tile_height };
+		App->render->DrawQuad(quad, 255, 0, 255, 255);
+	}
 }
 
 void Enemy_Walk::NormalizeAnimations(float dt) 

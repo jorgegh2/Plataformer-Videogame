@@ -33,7 +33,10 @@ public:
 	void Move(float dt);
 	bool isDead = false;
 
+	bool ShowPath = false;
+
 	int i = 0; // pathcount
+	void DrawPath();
 	bool current_in_path = false;
 	p2DynArray<iPoint> enemy_path;
 

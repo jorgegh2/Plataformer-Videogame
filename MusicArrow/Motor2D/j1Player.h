@@ -21,7 +21,6 @@ enum state {
 	ONAIR, 
 	HIT,
 	FIREBALL,
-	GIANT,
 	DEAD, 
 	GODMODE
 };
@@ -65,6 +64,7 @@ public:
 	int hurting;
 	Timer timer;
 
+	bool IsPaused = false;
 	bool IsGodMode = false;
 	bool IsAttacking = false;
 	bool IsJumping = false;

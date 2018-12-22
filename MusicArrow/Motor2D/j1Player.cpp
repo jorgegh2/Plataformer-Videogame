@@ -317,11 +317,11 @@ bool j1Player::Update(float dt)
 			} 
 			else 
 			{
-				/*player_lifes -= 1;
-				IsHurting = true;*/
+				player_lifes -= 1;
+				IsHurting = true;
 				current_animation = &hit;
-				/*hurting = position.x;
-				jstate = HIT;*/
+				hurting = position.x;
+				jstate = HIT;
 				App->audio->PlayFx(audio_jumping, 1);
 			
 			}
@@ -337,12 +337,37 @@ bool j1Player::Update(float dt)
 			App->audio->PlayFx(audio_jumping, 1);
 
 		}
+
 		if (player_lifes <= 0) jstate = DEAD;
 		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 		{
 
 			jstate = DEAD;
 		}
+
+
+		//PAUSE FUNCTION
+
+		/*if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && IsPaused == false)
+		
+		{
+			speed = { 0,0 };
+			speedDtX = 0;
+			position.x = position.x;
+			position.y = position.y;
+			gravity = 0;
+			IsPaused = true;
+
+		}
+		if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && IsPaused == true)
+
+		{
+			speed = { 470,0 };
+			speedDtX = speed.x * dt;
+			gravity = 63;
+			IsPaused = true;
+
+		}*/
 
 	//PLAYER STATES
 	switch (jstate)
@@ -388,12 +413,7 @@ bool j1Player::Update(float dt)
 				
 				
 			}
-			else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
-			{
-
-				current_animation = &charge;
-
-			}
+			
 			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
 			{
 
@@ -415,6 +435,13 @@ bool j1Player::Update(float dt)
 				current_animation = &attack;
 				current_animation->Reset();
 				IsAttacking = true;
+				App->audio->PlayFx(audio_jumping, 1);
+			}
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
+			{
+				current_animation = &run;
+				current_animation->Reset();
+				IsAttacking = false;
 				App->audio->PlayFx(audio_jumping, 1);
 			}
 			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
@@ -546,11 +573,19 @@ bool j1Player::Update(float dt)
 		speed.y = speed.y + gravity * timer.ReadSec();
 		position.y += speed.y * timer.ReadSec();
 
+		App->audio->PlayFx(audio_finishdead, 1);
+		ResetPlayer();
+
 		if (position.y > (-App->render->camera.y + App->render->camera.h)*2)
 		{
 			App->audio->PlayFx(audio_finishdead, 1);
 			ResetPlayer();
 		}
+		/*else if (player_lifes <= 0)
+		{
+			App->audio->PlayFx(audio_finishdead, 1);
+			ResetPlayer();
+		}*/
 			break;
 
 	case GODMODE:
