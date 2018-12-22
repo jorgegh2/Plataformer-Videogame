@@ -56,6 +56,7 @@ public:
 	bool isEnabled = true;
 	p2List<UIElement*> listChildren;
 	iPoint position;
+	bool disabled = false;//to blit a black quad.
 };
 
 #endif

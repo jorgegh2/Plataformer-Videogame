@@ -241,7 +241,7 @@ public:
 			return false;
 
 		char* p1 = str + begin;
-		char* p2 = str + end ;
+		char* p2 = str + end;
 
 		while(*p1++ = *p2++);
 

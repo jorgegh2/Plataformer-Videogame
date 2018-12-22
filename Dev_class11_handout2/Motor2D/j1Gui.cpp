@@ -127,22 +127,25 @@ UIImage* j1Gui::CreateImage(iPoint position, SDL_Rect rectImage, bool dragable)
 	return entity;
 }
 
-void j1Gui::CreateLabel(iPoint position, p2SString text, SDL_Color color, _TTF_Font* font, bool dragable)
+UILabel* j1Gui::CreateLabel(iPoint position, p2SString text, SDL_Color color, _TTF_Font* font, bool dragable)
 {
 	UILabel* entity = new UILabel(position, text, color, font, dragable);
 	GuiEntities.add(entity);
+	return entity;
 }
 
-void j1Gui::CreateButton(iPoint position, SDL_Rect rectToDraw[], p2SString text, SDL_Color color, _TTF_Font* font, bool dragable)
+UIButton* j1Gui::CreateButton(iPoint position, SDL_Rect rectToDraw[], p2SString text, SDL_Color color, _TTF_Font* font, bool dragable)
 {
 	UIButton* entity = new UIButton(position, rectToDraw, text, color, font, dragable);
 	GuiEntities.add(entity);
+	return entity;
 }
 
-void j1Gui::CreateBoxText(iPoint position, SDL_Rect rectImage, p2SString text, SDL_Color color, _TTF_Font* font, bool dragable)
+UIBoxText* j1Gui::CreateBoxText(iPoint position, SDL_Rect rectImage, p2SString text, SDL_Color color, _TTF_Font* font, bool dragable)
 {
 	UIBoxText* entity = new UIBoxText(position, rectImage, text, color, font, dragable);
 	GuiEntities.add(entity);
+	return entity;
 }
 
 UISlider* j1Gui::CreateSlider(iPoint position, SDL_Rect barImageRect, SDL_Rect zamImageRect, bool dragable)

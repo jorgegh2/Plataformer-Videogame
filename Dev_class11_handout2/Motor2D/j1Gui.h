@@ -13,7 +13,6 @@
 #define CURSOR_WIDTH 2
 #define MAX_GUI_ENTITIES 50
 
-// TODO 1: Create your structure of classes
 class UIImage;
 class UILabel;
 struct _TTF_Font;
@@ -50,19 +49,15 @@ public:
 	//Draw all Gui's entities
 	void DrawAll();
 
-	// TODO 2: Create the factory methods
 	// Gui creation functions
-	
 	UIImage* CreateImage(iPoint position, SDL_Rect rectImage, bool dragable = false);
-	void CreateLabel(iPoint position, p2SString text, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL, bool dragable = false);
-	void CreateButton(iPoint position, SDL_Rect[], p2SString text = nullptr, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL, bool dragable = false);
-	void CreateBoxText(iPoint position, SDL_Rect rectImage, p2SString text = nullptr, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL, bool dragable = false);
+	UILabel* CreateLabel(iPoint position, p2SString text, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL, bool dragable = false);
+	UIButton* CreateButton(iPoint position, SDL_Rect[], p2SString text = nullptr, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL, bool dragable = false);
+	UIBoxText* CreateBoxText(iPoint position, SDL_Rect rectImage, p2SString text = nullptr, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL, bool dragable = false);
 	UISlider* CreateSlider(iPoint position, SDL_Rect barImageRect, SDL_Rect zamImageRect, bool dragable = false);
-	
-	//void SortByDrawOrder();
+
 	SDL_Texture* GetAtlas() const;
-	//bool DeleteUIElements();
-	//bool needOrderList;
+
 
 
 private:
@@ -71,7 +66,6 @@ private:
 	p2SString atlas_file_name;
 	p2List<UIElement*> GuiEntities;
 	p2List_item<UIElement*>* item;
-	//UIElement* GuiEntities[MAX_GUI_ENTITIES];//cambiar again
 	//bool drawDebug;
 
 };

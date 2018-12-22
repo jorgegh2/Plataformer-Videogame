@@ -87,9 +87,7 @@ void UIElement::PreUpdate()
 		{
 			App->input->GetMousePosition(mousePositionFirst.x, mousePositionFirst.y);
 		}
-		posX = mousePositionFirst.x;
-		posY = mousePositionFirst.y;
-
+	
 		break;
 
 	case MouseLeftClickPressed:

@@ -37,6 +37,7 @@ bool j1SceneMenu::Start()
 	SDL_Rect rects[3] = { { 438,497,392,102 },{ 1305,497,392,102 },{ 2172,497,392,102 } };
 	playButton = App->gui->CreateButton({ 1250,200 }, rects, "Play", { 255, 255, 255, 255 }, font);
 	continueButton = App->gui->CreateButton({ 1250,400 }, rects, "Continue", { 255, 255, 255, 255 }, font);
+	continueButton->disabled = true;
 	settingsButton = App->gui->CreateButton({ 1250,600 }, rects, "Settings", { 255, 255, 255, 255 }, font);
 	creditsButton = App->gui->CreateButton({ 1250,800 }, rects, "Credits", { 255, 255, 255, 255 }, font);
 	exitButton = App->gui->CreateButton({ 1250,1000 }, rects, "Exit", { 255, 255, 255, 255 }, font);
@@ -99,6 +100,19 @@ bool j1SceneMenu::Update(float dt)
 	if (playButton->GetEvent() == MouseLeftClickEvent)
 	{
 		App->fadeToBlack->FadeToBlack(this, App->map_forest);
+	}
+
+	if (isLoad)
+	{
+		continueButton->disabled = false;
+		if (continueButton->GetEvent() == MouseLeftClickEvent)
+		{
+			App->LoadGame("save_game.xml");
+		}
+	}
+	else
+	{
+		continueButton->disabled = true;
 	}
 
 	if (exitButton->GetEvent() == MouseLeftClickEvent)

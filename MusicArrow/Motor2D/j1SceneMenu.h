@@ -3,7 +3,10 @@
 
 #include "j1Module.h"
 
-
+class UIButton;
+class UIImage;
+class UILabel;
+class UISlider;
 
 class j1SceneMenu : public j1Module
 {
@@ -47,6 +50,9 @@ private:
 
 	SDL_Texture* bg = nullptr;
 	SDL_Rect bgRect;
+
+public: 
+	bool isLoad = false;
 
 };
 

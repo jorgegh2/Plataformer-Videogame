@@ -6,6 +6,7 @@
 #include "p2SString.h"
 #include "j1App.h"
 #include "j1Input.h"
+#include "j1Render.h"
 
 UIButton::UIButton(iPoint position, SDL_Rect rectToDraw[], p2SString text, SDL_Color color, _TTF_Font* font, bool dragable, UIElement* parent, bool isEnabled) : UIElement(ButtonElement, position, parent, isEnabled, dragable, rectToDraw[0])
 {
@@ -31,27 +32,30 @@ UIButton::~UIButton()
 
 void UIButton::Update(float dt)
 {
-	if (GetEvent() == MouseLeftClickPressed && dragable == true)
+	if (!disabled)
 	{
-		DragUIElement();
+		if (GetEvent() == MouseLeftClickPressed && dragable == true)
+		{
+			DragUIElement();
+		}
+
+		if (GetEvent() == MouseEnterEvent || buttonImage->GetEvent() == MouseLeftClickLeave)
+		{
+			buttonImage->setRectToDraw(rects[1]);
+		}
+
+		else if (GetEvent() == MouseLeaveEvent)
+		{
+			buttonImage->setRectToDraw(rects[0]);
+		}
+
+		else if (GetEvent() == MouseLeftClickEvent)
+		{
+			buttonImage->setRectToDraw(rects[2]);
+		}
 	}
-
-	if (GetEvent() == MouseEnterEvent || buttonImage->GetEvent() == MouseLeftClickLeave)
-	{
-		buttonImage->setRectToDraw(rects[1]);
-	}
-
-	else if (GetEvent() == MouseLeaveEvent)
-	{
-		buttonImage->setRectToDraw(rects[0]);
-	}
-
-	else if (GetEvent() == MouseLeftClickEvent)
-	{
-		buttonImage->setRectToDraw(rects[2]);
-	}
-
-
-
+	
 }
+
+
 

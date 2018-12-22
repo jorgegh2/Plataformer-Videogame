@@ -18,11 +18,14 @@ public:
 	virtual ~UIButton();
 	void Update(float dt);
 
+
+
 private:
 	UIImage * buttonImage = nullptr;
 	UILabel* buttonLabel = nullptr;
 	SDL_Rect rects[3];
 	EventElement Event = NoEventElement;
+	
 
 };
 

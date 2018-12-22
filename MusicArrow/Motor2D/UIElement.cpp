@@ -29,7 +29,7 @@ UIElement::~UIElement()
 
 void UIElement::Draw(SDL_Texture* UItexture)
 {
-	if (type != ButtonElement && type != BoxTextElement && type != SliderElement && UItexture != nullptr)
+	if (type != ButtonElement && type != BoxTextElement && type != SliderElement && UItexture != nullptr)  // only blit their children. Button, boxText ans Slider don't have anything to blit.
 	{
 		if (!App->render->Blit(UItexture, position.x, position.y, &rectToDraw))
 		{
@@ -44,6 +44,11 @@ void UIElement::Draw(SDL_Texture* UItexture)
 		{
 			item->data->Draw(item->data->GetUITexture());
 		}
+	}
+
+	if (disabled)
+	{
+		App->render->DrawQuad({ position.x, position.y, rectToDraw.w, rectToDraw.h }, 0, 0, 0, 80);
 	}
 }
 

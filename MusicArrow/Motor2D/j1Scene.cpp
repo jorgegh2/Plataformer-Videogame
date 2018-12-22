@@ -15,6 +15,7 @@
 #include "j1Player.h"
 #include "j1Entities.h"
 #include "j1Pathfinding.h"
+#include "j1SceneMenu.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -52,9 +53,11 @@ bool j1Scene::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame("save_game.xml");
 
-	if(App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+	{
 		App->SaveGame("save_game.xml");
-
+		App->sceneMenu->isLoad = true;
+	}
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		App->render->camera.y += 313 * dt;
 
@@ -108,8 +111,10 @@ bool j1Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	{
 		ret = false;
+	}
 
 	return ret;
 }
