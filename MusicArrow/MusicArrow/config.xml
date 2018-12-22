@@ -34,7 +34,7 @@
     <player>
       <vars>
         <speed speedX="470" speedY="0"></speed>
-        <myGravity value="63"></myGravity>
+        <myGravity value="100"></myGravity>
       </vars>
       <fxsound>
         <jump source="audio/fx/jump.wav"></jump> 
