@@ -5,7 +5,7 @@
 #include "p2Point.h"
 #include "p2List.h"
 
-#define MARGIN 20;
+#define MARGIN 20
 
 struct SDL_Texture;
 

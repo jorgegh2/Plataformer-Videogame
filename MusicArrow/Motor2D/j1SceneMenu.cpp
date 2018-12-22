@@ -8,6 +8,7 @@
 #include "j1Scene_Winter.h"
 #include "j1Textures.h"
 #include "j1Render.h"
+#include "j1Audio.h"
 
 j1SceneMenu::j1SceneMenu()
 {
@@ -46,8 +47,8 @@ bool j1SceneMenu::Start()
 	panel = App->gui->CreateImage({ 500,400 }, { 3028,4,528, 653 });
 	music = App->gui->CreateLabel({ 570, 450 }, "Music:", {255,255,255,255}, font);
 	fx = App->gui->CreateLabel({ 570, 550 }, "Fx:", { 255,255,255,255 }, font);
-	musicSlider = App->gui->CreateSlider({ 570, 494 }, { 1738,650,394,11 }, {1738,687,17,17});
-	fxSlider = App->gui->CreateSlider({ 570, 594 }, { 1738,650,394,11 }, { 1738,687,17,17 });
+	musicSlider = App->gui->CreateSlider({ 570, 494 }, { 1738,650,394,11 }, {1738,687,17,17}, true);
+	fxSlider = App->gui->CreateSlider({ 570, 594 }, { 1738,650,394,11 }, { 1738,687,17,17 }, true);
 
 	panel->SetParentAndChildren(music);
 	panel->SetParentAndChildren(fx);
@@ -97,11 +98,14 @@ bool j1SceneMenu::Update(float dt)
 {
 	
 	App->render->Blit(bg, 0, 0, &bgRect);
+
+	//Play button
 	if (playButton->GetEvent() == MouseLeftClickEvent)
 	{
 		App->fadeToBlack->FadeToBlack(this, App->map_forest);
 	}
 
+	//Continue button
 	if (isLoad)
 	{
 		continueButton->disabled = false;
@@ -115,29 +119,43 @@ bool j1SceneMenu::Update(float dt)
 		continueButton->disabled = true;
 	}
 
+	//Settings button
+	if (settingsButton->GetEvent() == MouseLeftClickEvent)
+		{
+			panel->ChangeEnabled();
+			if (panelCredits->isEnabled == true)
+			{
+				panelCredits->ChangeEnabled();
+			}
+		}
+
+	//Settings panel
+	//	App->audio->SetVolumeMusic(maxValue*p);
+	
+	App->audio->SetVolumeMusic(MIX_MAX_VOLUME * musicSlider->ValueBetween0and1());
+
+	
+
+	//Credits button
+	if (creditsButton->GetEvent() == MouseLeftClickEvent)
+		{
+			panelCredits->ChangeEnabled();
+			if (panel->isEnabled == true)
+			{
+				panel->ChangeEnabled();
+			}
+			//ShellExecuteA(NULL, "open", "https://github.com/jorgegh2/Plataformer-Videogame/wiki", NULL, NULL, SW_SHOWNORMAL);
+		}
+
+	//Exit button
 	if (exitButton->GetEvent() == MouseLeftClickEvent)
 	{
 		return false;
 	}
 
-	if (settingsButton->GetEvent() == MouseLeftClickEvent)
-	{
-		panel->ChangeEnabled();
-		if (panelCredits->isEnabled == true)
-		{
-			panelCredits->ChangeEnabled();
-		}
-	}
+	
 
-	if (creditsButton->GetEvent() == MouseLeftClickEvent)
-	{
-		panelCredits->ChangeEnabled();
-		if (panel->isEnabled == true)
-		{
-			panel->ChangeEnabled();
-		}
-		//ShellExecuteA(NULL, "open", "https://github.com/jorgegh2/Plataformer-Videogame/wiki", NULL, NULL, SW_SHOWNORMAL);
-	}
+	
 
 	return true;
 }

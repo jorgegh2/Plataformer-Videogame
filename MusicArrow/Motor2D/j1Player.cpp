@@ -247,14 +247,6 @@ bool j1Player::Start()
 
 	ResetPlayer();
 
-	//Load background music
-	const char* path = "audio/music/musicstage1.wav";
-
-	//Play background music
-	App->audio->PlayMusic(path);
-
-	
-
 	return ret;
 }
 

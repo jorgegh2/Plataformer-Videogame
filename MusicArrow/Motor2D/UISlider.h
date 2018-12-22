@@ -7,11 +7,13 @@
 class UISlider : public UIElement
 {
 public:
-	UISlider(iPoint position, SDL_Rect barImage, SDL_Rect zamImage, bool dragable, UIElement* parent = nullptr, bool isEnabled = true);
+	UISlider(iPoint position, SDL_Rect barImage, SDL_Rect zamImage, bool horizontalSlider, bool dragable, UIElement* parent = nullptr, bool isEnabled = true);
 	virtual ~UISlider();
 
 	void PreUpdate();
-	void SetValueSlider(UIElement* element, int& valueToChange, int maxValue);
+	void SetPositionBySlider(UIElement* element, int& valueToChange, int maxValue);
+	void SetValueBySlider(int maxValue);
+	float ValueBetween0and1();
 
 private:
 	UIImage * bar = nullptr;

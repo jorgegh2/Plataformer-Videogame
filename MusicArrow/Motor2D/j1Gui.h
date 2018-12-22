@@ -51,7 +51,7 @@ public:
 	UILabel* CreateLabel(iPoint position, p2SString text, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL, bool dragable = false);
 	UIButton* CreateButton(iPoint position, SDL_Rect[], p2SString text = nullptr, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL, bool dragable = false);
 	UIBoxText* CreateBoxText(iPoint position, SDL_Rect rectImage, p2SString text = nullptr, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL, bool dragable = false);
-	UISlider* CreateSlider(iPoint position, SDL_Rect barImageRect, SDL_Rect zamImageRect, bool dragable = false);
+	UISlider* CreateSlider(iPoint position, SDL_Rect barImageRect, SDL_Rect zamImageRect, bool horizontalSlider = false, bool dragable = false);
 
 	SDL_Texture* GetAtlas() const;
 

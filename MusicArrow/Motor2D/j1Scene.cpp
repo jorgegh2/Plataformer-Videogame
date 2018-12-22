@@ -38,6 +38,12 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
+	//Load background music
+	const char* path = "audio/music/musicstage1.wav";
+
+	//Play background music
+	App->audio->PlayMusic(path);
+
 	return true;
 }
 

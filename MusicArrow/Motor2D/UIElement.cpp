@@ -124,6 +124,11 @@ void UIElement::Update(float dt)
 	{
 		DragUIElement();
 	}
+	else
+	{
+		posX = -1;
+		posY = -1;
+	}
 }
 
 
@@ -177,8 +182,8 @@ void UIElement::DragUIElement()
 		}
 		else
 		{
-			int margin = MARGIN;
-			if (parent->IsMouseInsideElement(margin))
+			
+			if (parent->IsMouseInsideElement(MARGIN) && horizontalSlider == false || parent->IsMouseInsideElement(0, MARGIN) && horizontalSlider == true)
 			{
 				if (posX != -1 && parent->horizontalSlider == true)
 				{

@@ -3,6 +3,8 @@
 
 #include "j1Module.h"
 
+#define MIX_MAX_VOLUME 128
+
 class UIButton;
 class UIImage;
 class UILabel;

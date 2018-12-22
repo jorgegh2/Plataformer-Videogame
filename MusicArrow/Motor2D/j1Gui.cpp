@@ -142,9 +142,9 @@ UIBoxText* j1Gui::CreateBoxText(iPoint position, SDL_Rect rectImage, p2SString t
 	return entity;
 }
 
-UISlider* j1Gui::CreateSlider(iPoint position, SDL_Rect barImageRect, SDL_Rect zamImageRect, bool dragable)
+UISlider* j1Gui::CreateSlider(iPoint position, SDL_Rect barImageRect, SDL_Rect zamImageRect, bool horizontalSlider, bool dragable)
 {
-	UISlider* entity = new UISlider(position, barImageRect, zamImageRect, dragable);
+	UISlider* entity = new UISlider(position, barImageRect, zamImageRect, horizontalSlider, dragable);
 	GuiEntities.add(entity);
 	return entity;
 }
