@@ -16,11 +16,8 @@ struct SDL_Texture;
 enum state {
 
 	JUMP,
-	SJUMP,
 	ONFLOOR, 
 	ONAIR, 
-	HIT,
-	FIREBALL,
 	DEAD, 
 	GODMODE
 };

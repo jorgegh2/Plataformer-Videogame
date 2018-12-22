@@ -266,13 +266,13 @@ bool j1Player::Update(float dt)
 {
 	BROFILER_CATEGORY("PlayerUpdate", Profiler::Color::Beige);
 
-	float g = gravity * dt;
-	float speedDtX = speed.x * dt;
+	float g = gravity * dt * 1.5;
+	float speedDtX = speed.x * dt * 2;
 	velocityX = speedDtX;
 	
 	//Horizontal movement
 
-	if(IsCharging != true && IsHurting != true && jstate != GODMODE){
+	if(jstate != GODMODE){
 
 		current_animation = &run;
 	
@@ -295,71 +295,51 @@ bool j1Player::Update(float dt)
 
 	}
 
-	////Flip player sprite if x speed is negative
-	//if (velocityX < 0)flip = SDL_FLIP_HORIZONTAL;
-	//if (velocityX > 0)flip = SDL_FLIP_NONE;
+	//Flip player sprite if x speed is negative
+	if (velocityX < 0)flip = SDL_FLIP_HORIZONTAL;
+	if (velocityX > 0)flip = SDL_FLIP_NONE;
 
-	//hit enemies or get a hit
+	//Dead Conditions
 		if (AllDistances.distancePositiveX.nearestColliderType == COLLIDER_ENEMY && AllDistances.distancePositiveX.Modulo == 0)
 		{
-
-			if (IsAttacking) 
-			{
-				
-			} 
-			else 
-			{
-				player_lifes -= 1;
-				IsHurting = true;
-				current_animation = &hit;
-				hurting = position.x;
-				jstate = HIT;
-				App->audio->PlayFx(audio_jumping, 1);
-			
-			}
-			
+			jstate = DEAD;
+			timer.Reset();
+			App->audio->PlayFx(audio_dead, 1);
+			App->input->Disable();
+		}
+		if (AllDistances.distancePositiveY.nearestColliderType == COLLIDER_ENEMY && AllDistances.distancePositiveY.Modulo == 0)
+		{
+			jstate = DEAD;
+			timer.Reset();
+			App->audio->PlayFx(audio_dead, 1);
+			App->input->Disable();
+		}
+		if (AllDistances.distanceNegativeY.nearestColliderType == COLLIDER_ENEMY && AllDistances.distanceNegativeY.Modulo == 0)
+		{
+			jstate = DEAD;
+			timer.Reset();
+			App->audio->PlayFx(audio_dead, 1);
+			App->input->Disable();
 		}
 		if (AllDistances.distancePositiveX.nearestColliderType == COLLIDER_FLOOR && AllDistances.distancePositiveX.Modulo == 0)
 		{
-			player_lifes -= 1;
-			IsHurting = true;
-			current_animation = &hit;
-			hurting = position.x;
-			jstate = HIT;
-			App->audio->PlayFx(audio_jumping, 1);
-
-		}
-
-		if (player_lifes <= 0) jstate = DEAD;
-		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
-		{
-
 			jstate = DEAD;
+			timer.Reset();
+			App->audio->PlayFx(audio_dead, 1);
+			App->input->Disable();
+		}
+		if (AllDistances.distancePositiveY.Modulo == 0 && AllDistances.distancePositiveY.nearestColliderType == COLLIDER_WATER)
+		{
+			jstate = DEAD;
+			timer.Reset();
+			App->audio->PlayFx(audio_dead, 1);
+			App->input->Disable();
 		}
 
 
 		//PAUSE FUNCTION
 
-		/*if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && IsPaused == false)
 		
-		{
-			speed = { 0,0 };
-			speedDtX = 0;
-			position.x = position.x;
-			position.y = position.y;
-			gravity = 0;
-			IsPaused = true;
-
-		}
-		if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && IsPaused == true)
-
-		{
-			speed = { 470,0 };
-			speedDtX = speed.x * dt;
-			gravity = 63;
-			IsPaused = true;
-
-		}*/
 
 	//PLAYER STATES
 	switch (jstate)
@@ -372,13 +352,6 @@ bool j1Player::Update(float dt)
 				
 		break;
 
-	case SJUMP:
-		timer.Reset();
-		speed.y = -1500 * dt/2;
-		jstate = ONAIR;
-
-		break;
-
 	case ONFLOOR:
 		
 
@@ -389,40 +362,41 @@ bool j1Player::Update(float dt)
 				current_animation->Reset();
 				App->audio->PlayFx(audio_jumping, 1);
 			}
-			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-			{
-				
-				IsCharging = true;
-				chargingBar += 20;
-				current_animation = &charge;
-				
-				App->audio->PlayFx(audio_jumping, 1);
-				if (chargingBar >= 100)
-				{
-					App->audio->PlayFx(audio_jumping, 1); // ring charge is completed
 
-				}
-				
-				
-			}
+			//if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+			//{
+			//	
+			//	IsCharging = true;
+			//	chargingBar += 20;
+			//	current_animation = &charge;
+			//	
+			//	App->audio->PlayFx(audio_jumping, 1);
+			//	if (chargingBar >= 100)
+			//	{
+			//		App->audio->PlayFx(audio_jumping, 1); // ring charge is completed
+
+			//	}
+			//	
+			//	
+			//}
+			//
+			//if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
+			//{
+
+			//	if (chargingBar >= 100)
+			//	{
+			//		chargingBar = 100;
+			//		jstate = FIREBALL;
+
+			//	}
+			//	else
+			//	{
+			//		jstate = ONFLOOR;
+			//	}
+
+			//}
 			
-			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
-			{
-
-				if (chargingBar >= 100)
-				{
-					chargingBar = 100;
-					jstate = FIREBALL;
-
-				}
-				else
-				{
-					jstate = ONFLOOR;
-				}
-
-			}
-			
-			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 			{
 				current_animation = &attack;
 				current_animation->Reset();
@@ -436,36 +410,26 @@ bool j1Player::Update(float dt)
 				IsAttacking = false;
 				App->audio->PlayFx(audio_jumping, 1);
 			}
-			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-			{
-				
-				current_animation = &slide1;
-				current_animation->Reset();
-				App->audio->PlayFx(audio_jumping, 1);
-			}
 
 			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 			{
-				
+				collider->rect.h = 90;
+				collider->rect.w = 130;
 				current_animation = &slide2;
 				current_animation->Reset();
 				App->audio->PlayFx(audio_jumping, 1);
+				
 			}
-
 			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP)
 			{
-				
-				current_animation = &slide3;
-				current_animation->Reset();
-				App->audio->PlayFx(audio_jumping, 1);
-			}
-			
-			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-			{
-				jstate = SJUMP;
+				collider->rect.h = 180;
+				collider->rect.w = 130;
+				position.y -= 90;
+
 				current_animation = &slide2;
 				current_animation->Reset();
 				App->audio->PlayFx(audio_jumping, 1);
+
 			}
 			
 			
@@ -502,58 +466,10 @@ bool j1Player::Update(float dt)
 				}
 			}
 
-			//DEAD condition
-			if (AllDistances.distancePositiveY.Modulo == 0 && AllDistances.distancePositiveY.nearestColliderType == COLLIDER_WATER)
-			{
-				jstate = DEAD;
-				timer.Reset();
-				App->audio->PlayFx(audio_dead, 1);
-				App->input->Disable();
-			}
-			else if (player_lifes == 0)
-			{
-				jstate = DEAD;
-				timer.Reset();
-				App->audio->PlayFx(audio_dead, 1);
-				App->input->Disable();
-			}
-
 			current_animation = &jump;
 		
 		break;
 
-	case HIT:
-
-		current_animation = &hit;
-		
-		position.x -= speedDtX * 2;
-
-		if (hurting - position.x > 300)
-		{
-			jstate = ONFLOOR;
-			IsHurting = false;
-
-		}
-
-		break;
-
-	case FIREBALL:
-
-		current_animation = &fireball;
-		IsAttacking = true;
-		position.x += speedDtX *2;
-		chargingBar -= 5;
-
-		if (chargingBar <= 0)
-		{
-			chargingBar = 0;
-			jstate = ONAIR;
-			IsCharging = false;
-			IsAttacking = false;
-
-		}
-
-		break;
 
 	case DEAD:
 
@@ -573,11 +489,6 @@ bool j1Player::Update(float dt)
 			App->audio->PlayFx(audio_finishdead, 1);
 			ResetPlayer();
 		}
-		/*else if (player_lifes <= 0)
-		{
-			App->audio->PlayFx(audio_finishdead, 1);
-			ResetPlayer();
-		}*/
 			break;
 
 	case GODMODE:
@@ -715,30 +626,18 @@ state j1Player::SetStateFromInt(int state_as_int)
 		break;
 
 	case 1:
-		player_state = SJUMP;
-		break;
-
-	case 2:
 		player_state = ONFLOOR;
 		break;
 
-	case 3:
+	case 2:
 		player_state = ONAIR;
 		break;
 
-	case 4:
-		player_state = HIT;
-		break;
-
-	case 5:
-		player_state = FIREBALL;
-		break;
-
-	case 6:
+	case 3:
 		player_state = DEAD;
 		break;
 
-	case 7:
+	case 4:
 		player_state = GODMODE;
 		break;
 	}
