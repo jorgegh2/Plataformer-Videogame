@@ -27624,7 +27624,7 @@
     <property name="Ctype" type="int" value="1"/>
    </properties>
   </object>
-  <object id="9" x="8061.33" y="2220.61" width="253.21" height="765.636">
+  <object id="9" x="8067.33" y="2221.94" width="253.21" height="765.636">
    <properties>
     <property name="Ctype" type="int" value="0"/>
    </properties>
@@ -27794,7 +27794,7 @@
     <property name="Ctype" type="int" value="4"/>
    </properties>
   </object>
-  <object id="49" x="255.03" y="2684.24" width="77" height="110">
+  <object id="49" x="303.03" y="2488.24" width="130" height="180">
    <properties>
     <property name="CPlayerType" type="int" value="5"/>
    </properties>

@@ -33,82 +33,55 @@ j1Player::j1Player(int x, int y, SDL_Rect colliderRect) : Entity(x, y)
 
 	//------ New Animations ------
 
-	// IDLE1
+	// IDLE
 
-	idle.PushBack({ 46, 68, 77, 110 });
-	idle.PushBack({ 136, 72, 94, 108 });
-	idle.PushBack({ 242, 72, 94, 111 });
-	idle.PushBack({ 350, 68, 88, 110 });
-	idle.PushBack({ 447, 71, 94, 107 });
+	idle.PushBack({ 27, 43, 134, 181 });
+	idle.PushBack({ 575, 51, 126, 189 });
+	idle.PushBack({ 739, 61, 131, 186 });
+	idle.PushBack({ 929, 54, 132, 178 });
+	idle.PushBack({ 1453, 59, 138, 188 });
+	idle.PushBack({ 1636, 55, 134, 184 });
 	idle.loop = true;
 	idle.speed = 0.2f;
 
-	// IDLE2
-
-	idle2.PushBack({ 46, 221, 77, 110 });
-	idle2.PushBack({ 142, 218, 94, 108 });
-	idle2.PushBack({ 247, 214, 94, 111 });
-	idle2.PushBack({ 349, 215, 89, 111 });
-	idle2.PushBack({ 461, 215, 94, 108 });
-	idle2.loop = true;
-	idle2.speed = 0.2f;
-
-
+	
 	// RUN
 
-	run.PushBack({ 46, 371, 105, 110 });
-	run.PushBack({ 180, 372, 77, 113 });
-	run.PushBack({ 292, 367, 99, 116 });
-	run.PushBack({ 411, 375, 100, 107 });
-	run.PushBack({ 534, 368, 71, 111 });
-	run.PushBack({ 630, 371, 99, 108 });
-	run.PushBack({ 741, 364, 127, 108 });
-	run.PushBack({ 889, 367, 127, 108 });
+	run.PushBack({ 27, 43, 134, 181 });
+	run.PushBack({ 191, 50, 147, 178 });
+	run.PushBack({ 367, 62, 150, 173 });
+	run.PushBack({ 575, 51, 126, 189 });
+	run.PushBack({ 739, 61, 131, 186 });
+	run.PushBack({ 929, 54, 132, 178 });
+	run.PushBack({ 1089, 55, 151, 182 });
+	run.PushBack({ 1262, 63, 156, 170 });
+	run.PushBack({ 1453, 59, 138, 188 });
+	run.PushBack({ 1636, 55, 134, 184 });
 	run.loop = true;
-	run.speed = 0.4f;
+	run.speed = 0.8f;
 
 
 	// JUMP
 
-	jump.PushBack({ 22, 508, 105, 127 });
-	jump.PushBack({ 144, 514, 97, 128 });
-	jump.PushBack({ 356, 525, 85, 94 });
-	jump.PushBack({ 463, 526, 86, 83 });
-	jump.PushBack({ 566, 550, 86, 63 });
-	jump.PushBack({ 692, 549, 85, 71 });
-	jump.PushBack({ 811, 545, 86, 74 });
-	jump.PushBack({ 932, 557, 88, 63 });
-	jump.PushBack({ 1049, 549, 91, 79 });
-	jump.PushBack({ 1171, 545, 85, 94 });
-	jump.PushBack({ 1277, 536, 113, 117 });
+	jump.PushBack({ 575, 51, 126, 189 });
+	jump.PushBack({ 27, 43, 134, 181 });
+	jump.PushBack({ 43, 302, 124, 120 });
+	jump.PushBack({ 204, 308, 130, 126 });
+	jump.PushBack({ 565, 304, 128, 129 });
+	jump.PushBack({ 916, 313, 136, 129 });
+	jump.PushBack({ 1105, 306, 126, 130 });
+	jump.PushBack({ 1282, 302, 135, 137 });
+	jump.PushBack({ 1262, 63, 156, 170 });
+	jump.PushBack({ 1453, 59, 138, 188 });
+	jump.PushBack({ 1636, 55, 134, 184 });
 	jump.loop = false;
-	jump.speed = 0.3f;
+	jump.speed = 0.5f;
 
-	// SLIDE 1
+	// SLIDE
 
-	slide1.PushBack({ 46, 665, 108, 116 });
-	slide1.PushBack({ 174, 660, 116, 118 });
-	slide1.PushBack({ 313, 665, 117, 124 });
-	slide1.PushBack({ 453, 676, 116, 94 });
+	slide1.PushBack({ 1468, 301, 172, 126 });
 	slide1.loop = false;
 	slide1.speed = 0.05f;
-
-	// SLIDE 2
-
-	slide2.PushBack({ 46, 829, 116, 94 });
-	slide2.PushBack({ 175, 829, 94, 93 });
-	slide2.PushBack({ 289, 823, 83, 105 });
-	slide2.PushBack({ 395, 830, 94, 93 });
-	slide2.PushBack({ 509, 834, 116, 94 });
-	slide2.loop = true;
-	slide2.speed = 0.05f;
-
-	// SLIDE 3
-
-	slide3.PushBack({ 50, 960, 108, 91 });
-	slide3.PushBack({ 188, 959, 97, 91 });
-	slide3.loop = false;
-	slide3.speed = 0.05f;
 
 	// ATTACK
 
@@ -118,36 +91,6 @@ j1Player::j1Player(int x, int y, SDL_Rect colliderRect) : Entity(x, y)
 	attack.PushBack({ 512, 1118, 130, 94 });
 	attack.loop = true;
 	attack.speed = 0.02f;
-
-	//CHARGE FIREBALL
-
-	charge.PushBack({ 434, 1252, 102, 91 });
-	charge.PushBack({ 342, 1250, 77, 82 });
-	charge.loop = true;
-	charge.speed = 0.1f;
-
-	// FIREBALL
-
-	fireball.PushBack({ 566, 1273, 161, 60 });
-	fireball.PushBack({ 739, 1278, 150, 61 });
-	fireball.PushBack({ 898, 1281, 149, 61 });
-	fireball.loop = true;
-	fireball.speed = 0.05f;
-
-	//OUT FIREBALL
-
-	outfire.PushBack({ 1091, 1266, 85, 94 });
-	outfire.PushBack({ 1197, 1257, 113, 117 });
-	outfire.loop = false;
-	outfire.speed = 0.05f;
-
-
-	// HIT
-
-	hit.PushBack({ 45, 1398, 117, 128 });
-	hit.PushBack({ 208, 1399, 116, 136 });
-	hit.loop = true;
-	hit.speed = 0.2f;
 
 
 	// DIE
@@ -159,40 +102,6 @@ j1Player::j1Player(int x, int y, SDL_Rect colliderRect) : Entity(x, y)
 	die.PushBack({ 986, 1420, 160, 72 });
 	die.loop = false;
 	die.speed = 0.15f;
-
-
-	// TO GIANT
-
-	giant1.PushBack({ 1180, 1773, 100, 109 });
-	giant1.PushBack({ 1289, 1779, 83, 100 });
-	giant1.PushBack({ 1389, 1758, 99, 120 });
-	giant1.PushBack({ 1505, 1717, 133, 161 });
-	giant1.PushBack({ 1655, 1655, 184, 223 });
-	giant1.loop = false;
-	giant1.speed = 0.15f;
-
-	// TO NORMAL
-
-	giant3.PushBack({ 1655, 1655, 184, 223 });
-	giant3.PushBack({ 1505, 1717, 133, 161 });
-	giant3.PushBack({ 1389, 1758, 99, 120 });
-	giant3.PushBack({ 1289, 1779, 83, 100 });
-	giant3.PushBack({ 1180, 1773, 100, 109 });
-	giant3.loop = false;
-	giant3.speed = 0.15f;
-
-	// GIANT
-
-	giant2.PushBack({ 49, 1550, 193, 316 });
-	giant2.PushBack({ 281, 1550, 207, 309 });
-	giant2.PushBack({ 527, 1556, 229, 310 });
-	giant2.PushBack({ 781, 1550, 213, 316 });
-	giant2.PushBack({ 63, 1920, 192, 317 });
-	giant2.PushBack({ 296, 1913, 207, 324 });
-	giant2.PushBack({ 556, 1913, 247, 330 });
-	giant2.PushBack({ 849, 1920, 213, 309 });
-	giant2.loop = false;
-	giant2.speed = 0.15f;
 
 
 	//-------------------------------------
@@ -237,14 +146,7 @@ bool j1Player::Start()
 {
 	LOG("Loading player textures");
 	bool ret = true;
-	graphics = App->tex->Load("assets/Star/star.png");
-	
-	//Set Lifes
-	player_lifes = 5;
-	//Set Charging Bar
-	chargingBar = 0;
-	hurting = 0;
-
+	graphics = App->tex->Load("assets/Hero/hero_sprite.png");
 	ResetPlayer();
 
 	return ret;
@@ -274,11 +176,13 @@ bool j1Player::Update(float dt)
 
 	if(jstate != GODMODE){
 
-		current_animation = &run;
+		current_animation = &idle;
+		
 	
 		if (AllDistances.distancePositiveX.Modulo < speedDtX && AllDistances.distancePositiveX.nearestColliderType != COLLIDER_PLATAFORM)
 		{
 			position.x += AllDistances.distancePositiveX.Modulo;
+			current_animation = &idle;
 			if (AllDistances.distancePositiveX.nearestColliderType == COLLIDER_FINISH_LEVEL)
 			{
 				if (App->scene->current_scene == "scene_forest")
@@ -291,7 +195,11 @@ bool j1Player::Update(float dt)
 				}
 			}
 		}
-		else position.x += speedDtX;
+		else if (IsRunning == true)
+		{
+			current_animation = &run;
+			position.x += speedDtX;
+		}
 
 	}
 
@@ -337,7 +245,7 @@ bool j1Player::Update(float dt)
 		}
 
 
-		//PAUSE FUNCTION
+		//PAUSE FUNCTION ----------------
 
 		
 
@@ -361,6 +269,7 @@ bool j1Player::Update(float dt)
 				current_animation = &jump;
 				current_animation->Reset();
 				App->audio->PlayFx(audio_jumping, 1);
+				IsRunning = true;
 			}
 
 			//if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
@@ -395,41 +304,43 @@ bool j1Player::Update(float dt)
 			//	}
 
 			//}
+
+			//Attack movement
 			
-			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+			/*if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 			{
 				current_animation = &attack;
 				current_animation->Reset();
 				IsAttacking = true;
 				App->audio->PlayFx(audio_jumping, 1);
 			}
-			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
+			 else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
 			{
 				current_animation = &run;
 				current_animation->Reset();
 				IsAttacking = false;
 				App->audio->PlayFx(audio_jumping, 1);
-			}
+			}*/
 
 			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 			{
-				collider->rect.h = 90;
-				collider->rect.w = 130;
-				current_animation = &slide2;
-				current_animation->Reset();
-				App->audio->PlayFx(audio_jumping, 1);
+				
+					collider->rect.w = 90;
+					collider->rect.h = 126;
+					
+					current_animation = &slide1;
+					current_animation->Reset();
+					App->audio->PlayFx(audio_jumping, 1);
+				
 				
 			}
-			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP)
-			{
-				collider->rect.h = 180;
+			else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP) {
+
+				
 				collider->rect.w = 130;
+				collider->rect.h = 180;
 				position.y -= 90;
-
-				current_animation = &slide2;
-				current_animation->Reset();
-				App->audio->PlayFx(audio_jumping, 1);
-
+				
 			}
 			
 			

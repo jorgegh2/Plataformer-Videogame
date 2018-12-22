@@ -56,37 +56,24 @@ public:
 	iPoint OriginPos;
 	
 	int velocityX;
-	int player_lifes;
-	int chargingBar;
-	int hurting;
 	Timer timer;
 
 	bool IsPaused = false;
 	bool IsGodMode = false;
 	bool IsAttacking = false;
+	bool IsRunning = false;
+
 	bool IsJumping = false;
-	bool IsCharging = false;
-	bool IsHurting = false;
 	
 
 
 	//----- Animations Awesome Game 2 ------
 
 	Animation idle;
-	Animation idle2;
 	Animation run;
 	Animation jump;
 	Animation slide1;
-	Animation slide2;
-	Animation slide3;
 	Animation attack;
-	Animation charge;
-	Animation fireball;
-	Animation outfire;
-	Animation hit;
-	Animation giant1;
-	Animation giant2;
-	Animation giant3;
 	Animation die;
 
 	//---------------------
