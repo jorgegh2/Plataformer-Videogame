@@ -40,6 +40,11 @@ bool j1Scene::Start()
 {
 	//Load background music
 	const char* path = "audio/music/musicstage1.wav";
+	const char* rollover = "audio/fx/rollover1.wav";
+	const char* click = "audio/fx/click1.wav";
+
+	audio_rollover = App->audio->LoadFx(rollover);
+	audio_click = App->audio->LoadFx(click);
 
 	//Play background music
 	App->audio->PlayMusic(path);

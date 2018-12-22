@@ -88,6 +88,7 @@ void UIElement::PreUpdate()
 
 		Event = MouseLeftClickPressed;
 		mousePositionFirst = { 0,0 };
+
 		if (dragable == true)
 		{
 			App->input->GetMousePosition(mousePositionFirst.x, mousePositionFirst.y);

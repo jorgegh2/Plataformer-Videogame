@@ -53,6 +53,8 @@ private:
 	SDL_Texture* bg = nullptr;
 	SDL_Rect bgRect;
 
+	
+
 public: 
 	bool isLoad = false;
 

@@ -40,7 +40,7 @@ bool j1Gui::PreUpdate()
 {
 	for (item = GuiEntities.start; item; item = item->next)
 	{
-		if (item->data->isEnabled)
+		if (item->data->isEnabled && !item->data->disabled)//isEnabled if the element exist but disabled if exist but don't work.)
 		{
 			item->data->PreUpdate();
 
@@ -62,7 +62,7 @@ bool j1Gui::Update(float dt)
 
 	for (item = GuiEntities.start; item; item = item->next)
 	{
-		if (item->data->isEnabled)
+		if (item->data->isEnabled && !item->data->disabled)//isEnabled if the element exist but disabled if exist but don't work.
 		{
 			item->data->Update(dt);
 			for (p2List_item<UIElement*>* item2 = item->data->listChildren.start; item2; item2 = item2->next)

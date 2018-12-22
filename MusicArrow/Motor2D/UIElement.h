@@ -57,6 +57,8 @@ public:
 	p2List<UIElement*> listChildren;
 	iPoint position;
 	bool disabled = false;//to blit a black quad.
+
+
 };
 
 #endif

@@ -82,18 +82,5 @@ float UISlider::ValueBetween0and1()
 	{
 		valueBetween0and1 = (float)(relativePosition.y) / (float)(bar->GetRectToDraw().h - zam->GetRectToDraw().h);
 	}
-
-
 	return valueBetween0and1;
 }
-
-//void UISlider::Update(float dt)
-//{
-//	if (zam->GetEvent() == MouseLeftClickPressed && zam->dragable == true)
-//	{
-//		bool o = zam->isEnabled;
-//	}
-//}
-
-
-

@@ -7,6 +7,9 @@
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Render.h"
+#include "j1Scene.h"
+#include "j1Audio.h"
+
 
 UIButton::UIButton(iPoint position, SDL_Rect rectToDraw[], p2SString text, SDL_Color color, _TTF_Font* font, bool dragable, UIElement* parent, bool isEnabled) : UIElement(ButtonElement, position, parent, isEnabled, dragable, rectToDraw[0])
 {
@@ -32,8 +35,7 @@ UIButton::~UIButton()
 
 void UIButton::Update(float dt)
 {
-	if (!disabled)
-	{
+	
 		if (GetEvent() == MouseLeftClickPressed && dragable == true)
 		{
 			DragUIElement();
@@ -42,6 +44,7 @@ void UIButton::Update(float dt)
 		if (GetEvent() == MouseEnterEvent || buttonImage->GetEvent() == MouseLeftClickLeave)
 		{
 			buttonImage->setRectToDraw(rects[1]);
+			App->audio->PlayFx(App->scene->audio_rollover);
 		}
 
 		else if (GetEvent() == MouseLeaveEvent)
@@ -52,8 +55,8 @@ void UIButton::Update(float dt)
 		else if (GetEvent() == MouseLeftClickEvent)
 		{
 			buttonImage->setRectToDraw(rects[2]);
+			App->audio->PlayFx(App->scene->audio_click);
 		}
-	}
 	
 }
 

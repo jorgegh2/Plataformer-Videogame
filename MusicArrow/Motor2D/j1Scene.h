@@ -37,7 +37,9 @@ public:
 	bool Save(pugi::xml_node&) const;
 
 	p2SString current_scene;
-	int yey = 0;
+
+	uint audio_rollover;
+	uint audio_click;
 private:
 };
 
