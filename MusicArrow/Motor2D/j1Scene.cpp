@@ -55,8 +55,8 @@ bool j1Scene::Start()
 	panelInGame = App->gui->CreateImage({ 500,400 }, { 3028,4,528, 917 });
 
 	resumeButton = App->gui->CreateButton({ 575,450 }, App->sceneMenu->rects, "Resume", { 255, 255, 255, 255 }, App->sceneMenu->font);
-	saveButton = App->gui->CreateButton({ 575,600 }, App->sceneMenu->rects, "Credits", { 255, 255, 255, 255 }, App->sceneMenu->font);
-	loadButton = App->gui->CreateButton({ 575,750 }, App->sceneMenu->rects, "Exit", { 255, 255, 255, 255 }, App->sceneMenu->font);
+	saveButton = App->gui->CreateButton({ 575,600 }, App->sceneMenu->rects, "Save", { 255, 255, 255, 255 }, App->sceneMenu->font);
+	loadButton = App->gui->CreateButton({ 575,750 }, App->sceneMenu->rects, "Load", { 255, 255, 255, 255 }, App->sceneMenu->font);
 
 	music = App->gui->CreateLabel({ 570, 950 }, "Music:", { 255,255,255,255 }, App->sceneMenu->font);
 	fx = App->gui->CreateLabel({ 570, 1050 }, "Fx:", { 255,255,255,255 }, App->sceneMenu->font);
@@ -125,12 +125,23 @@ bool j1Scene::Update(float dt)
 	}
 
 	App->map->Draw();
-
+	//Menu
 	if (resumeButton->GetEvent() == MouseLeftClickEvent)
 	{
 		PauseOrResume();
 	}
 	
+	if (saveButton->GetEvent() == MouseLeftClickEvent)
+	{
+		App->SaveGame("save_game.xml");
+		App->sceneMenu->isLoad = true;
+	}
+
+	if (loadButton->GetEvent() == MouseLeftClickEvent)
+	{
+		App->LoadGame("save_game.xml");
+	}
+
 	int x, y;
 
 	if (App->map_forest->active == true)
