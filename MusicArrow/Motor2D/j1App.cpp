@@ -204,7 +204,14 @@ void j1App::PrepareUpdate()
 	frame_count++;
 	last_sec_frame_count++;
 
-	dt = frame_time.ReadSec();
+	if (!isPaused)
+	{
+		dt = frame_time.ReadSec();
+	}
+	else
+	{
+		dt = 0;
+	}
 	frame_time.Reset();
 }
 

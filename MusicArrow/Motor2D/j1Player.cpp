@@ -167,47 +167,51 @@ bool j1Player::CleanUp()
 bool j1Player::Update(float dt)
 {
 	BROFILER_CATEGORY("PlayerUpdate", Profiler::Color::Beige);
+	if (App->isPaused)
+	{
+		App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), flip);
+		return true;
+	}
+		float g = gravity * dt * 1.5;
+		float speedDtX = speed.x * dt * 2;
+		velocityX = speedDtX;
 
-	float g = gravity * dt * 1.5;
-	float speedDtX = speed.x * dt * 2;
-	velocityX = speedDtX;
-	
-	//Horizontal movement
+		//Horizontal movement
 
-	if(jstate != GODMODE){
+		if (jstate != GODMODE) {
 
-		current_animation = &idle;
-		
-	
-		if (AllDistances.distancePositiveX.Modulo < speedDtX && AllDistances.distancePositiveX.nearestColliderType != COLLIDER_PLATAFORM)
-		{
-			position.x += AllDistances.distancePositiveX.Modulo;
 			current_animation = &idle;
-			if (AllDistances.distancePositiveX.nearestColliderType == COLLIDER_FINISH_LEVEL)
+
+
+			if (AllDistances.distancePositiveX.Modulo < speedDtX && AllDistances.distancePositiveX.nearestColliderType != COLLIDER_PLATAFORM)
 			{
-				if (App->scene->current_scene == "scene_forest")
+				position.x += AllDistances.distancePositiveX.Modulo;
+				current_animation = &idle;
+				if (AllDistances.distancePositiveX.nearestColliderType == COLLIDER_FINISH_LEVEL)
 				{
-					App->fadeToBlack->FadeToBlack(App->map_forest, App->map_winter);
-				}
-				else
-				{
-					App->fadeToBlack->FadeToBlack(App->map_winter, App->map_forest);
+					if (App->scene->current_scene == "scene_forest")
+					{
+						App->fadeToBlack->FadeToBlack(App->map_forest, App->map_winter);
+					}
+					else
+					{
+						App->fadeToBlack->FadeToBlack(App->map_winter, App->map_forest);
+					}
 				}
 			}
+			else if (IsRunning == true)
+			{
+				current_animation = &run;
+				position.x += speedDtX;
+			}
+
 		}
-		else if (IsRunning == true)
-		{
-			current_animation = &run;
-			position.x += speedDtX;
-		}
 
-	}
+		//Flip player sprite if x speed is negative
+		if (velocityX < 0)flip = SDL_FLIP_HORIZONTAL;
+		if (velocityX > 0)flip = SDL_FLIP_NONE;
 
-	//Flip player sprite if x speed is negative
-	if (velocityX < 0)flip = SDL_FLIP_HORIZONTAL;
-	if (velocityX > 0)flip = SDL_FLIP_NONE;
-
-	//Dead Conditions
+		//Dead Conditions
 		if (AllDistances.distancePositiveX.nearestColliderType == COLLIDER_ENEMY && AllDistances.distancePositiveX.Modulo == 0)
 		{
 			jstate = DEAD;
@@ -247,21 +251,21 @@ bool j1Player::Update(float dt)
 
 		//PAUSE FUNCTION ----------------
 
-		
+
 
 	//PLAYER STATES
-	switch (jstate)
-	{
+		switch (jstate)
+		{
 
-	case JUMP:
-		timer.Reset();
-		speed.y = -1500*dt;
-		jstate = ONAIR;
-				
-		break;
+		case JUMP:
+			timer.Reset();
+			speed.y = -1500 * dt;
+			jstate = ONAIR;
 
-	case ONFLOOR:
-		
+			break;
+
+		case ONFLOOR:
+
 
 			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 			{
@@ -306,7 +310,7 @@ bool j1Player::Update(float dt)
 			//}
 
 			//Attack movement
-			
+
 			/*if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 			{
 				current_animation = &attack;
@@ -324,34 +328,34 @@ bool j1Player::Update(float dt)
 
 			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 			{
-				
-					collider->rect.w = 90;
-					collider->rect.h = 126;
-					
-					current_animation = &slide1;
-					current_animation->Reset();
-					App->audio->PlayFx(audio_jumping, 1);
-				
-				
+
+				collider->rect.w = 90;
+				collider->rect.h = 126;
+
+				current_animation = &slide1;
+				current_animation->Reset();
+				App->audio->PlayFx(audio_jumping, 1);
+
+
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP) {
 
-				
+
 				collider->rect.w = 130;
 				collider->rect.h = 180;
 				position.y -= 90;
-				
+
 			}
-			
-			
+
+
 			timer.Reset();
-		
-		break;
 
-	case ONAIR:
+			break;
 
-			speed.y = speed.y + g;
-		
+		case ONAIR:
+
+			speed.y = speed.y + (gravity *1.5*dt);
+
 
 			if (speed.y >= 0)
 			{
@@ -378,36 +382,36 @@ bool j1Player::Update(float dt)
 			}
 
 			current_animation = &jump;
-		
-		break;
 
-
-	case DEAD:
-
-		current_animation = &die;
-		
-		collider->SetPos(-1000, -1000);
-
-		speed.y = -1;
-		speed.y = speed.y + gravity * timer.ReadSec();
-		position.y += speed.y * timer.ReadSec();
-
-		App->audio->PlayFx(audio_finishdead, 1);
-		ResetPlayer();
-
-		if (position.y > (-App->render->camera.y + App->render->camera.h)*2)
-		{
-			App->audio->PlayFx(audio_finishdead, 1);
-			ResetPlayer();
-		}
 			break;
 
-	case GODMODE:
 
-		
-		collider->SetPos(-1000, -1000);
+		case DEAD:
+
+			current_animation = &die;
+
+			collider->SetPos(-1000, -1000);
+
+			speed.y = -1;
+			speed.y = speed.y + gravity * timer.ReadSec();
+			position.y += speed.y * timer.ReadSec();
+
+			App->audio->PlayFx(audio_finishdead, 1);
+			ResetPlayer();
+
+			if (position.y > (-App->render->camera.y + App->render->camera.h) * 2)
+			{
+				App->audio->PlayFx(audio_finishdead, 1);
+				ResetPlayer();
+			}
+			break;
+
+		case GODMODE:
+
+
+			collider->SetPos(-1000, -1000);
 			App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), flip);
-		
+
 
 			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 			{
@@ -430,61 +434,60 @@ bool j1Player::Update(float dt)
 				App->render->camera.y -= speedDtX * App->win->GetScale();
 			}
 
-			
-		
+
+
 			break;
-	}
+		}
 
-	//GOD MODE
+		//GOD MODE
 
-	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && !IsGodMode) {
-		jstate = GODMODE;
-		IsGodMode = true;
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && IsGodMode)
-	{
-		jstate = ONAIR;
-		IsGodMode = false;
-		timer.Reset();
-	}
-
-
-	//OffSet Camera
-	if (jstate!= GODMODE)
-	{
-
-		if (AllDistances.distancePositiveY.Modulo != 0.0f && jstate != DEAD) jstate = ONAIR;
-
-		if (jstate != DEAD) collider->SetPos(position.x, position.y);
-
-		App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), flip);
-		SDL_Rect offSet{ (-App->render->camera.x / App->win->GetScale()) + 200, (-App->render->camera.y / App->win->GetScale()) + 600, 800, 600 };
-		
-		int limit = -App->render->camera.x + App->render->camera.w;
-		if (position.x + collider->rect.w > offSet.w + offSet.x && limit < 13568)
+		if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && !IsGodMode) {
+			jstate = GODMODE;
+			IsGodMode = true;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && IsGodMode)
 		{
-			App->render->camera.x = -(position.x * App->win->GetScale() - 456);
+			jstate = ONAIR;
+			IsGodMode = false;
+			timer.Reset();
 		}
-		else if (position.x < offSet.x && -App->render->camera.x > 1)
+
+
+		//OffSet Camera
+		if (jstate != GODMODE)
 		{
-			App->render->camera.x = -(position.x * App->win->GetScale() - 100);
-		}
 
-		if (jstate != DEAD) {
-			if (position.y < offSet.y)
+			if (AllDistances.distancePositiveY.Modulo != 0.0f && jstate != DEAD) jstate = ONAIR;
+
+			if (jstate != DEAD) collider->SetPos(position.x, position.y);
+
+			App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), flip);
+			SDL_Rect offSet{ (-App->render->camera.x / App->win->GetScale()) + 200, (-App->render->camera.y / App->win->GetScale()) + 600, 800, 600 };
+
+			int limit = -App->render->camera.x + App->render->camera.w;
+			if (position.x + collider->rect.w > offSet.w + offSet.x && limit < 13568)
 			{
-				App->render->camera.y = -(position.y * App->win->GetScale() - 300);
+				App->render->camera.x = -(position.x * App->win->GetScale() - 456);
 			}
-			else if (position.y + collider->rect.h > offSet.y + offSet.h && -App->render->camera.y + App->render->camera.h < 1645)
+			else if (position.x < offSet.x && -App->render->camera.x > 1)
 			{
-				App->render->camera.y = -(position.y * App->win->GetScale() - 527);
+				App->render->camera.x = -(position.x * App->win->GetScale() - 100);
 			}
+
+			if (jstate != DEAD) {
+				if (position.y < offSet.y)
+				{
+					App->render->camera.y = -(position.y * App->win->GetScale() - 300);
+				}
+				else if (position.y + collider->rect.h > offSet.y + offSet.h && -App->render->camera.y + App->render->camera.h < 1645)
+				{
+					App->render->camera.y = -(position.y * App->win->GetScale() - 527);
+				}
+			}
+
+
+
 		}
-
-	
-
-	}
-	
 	
 	return true;
 }

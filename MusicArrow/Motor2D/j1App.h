@@ -112,7 +112,7 @@ public:
 	j1Gui*				gui;
 	j1SceneMenu*		sceneMenu;
 	
-
+	bool				isPaused = false;
 private:
 
 	p2List<j1Module*>	modules;
