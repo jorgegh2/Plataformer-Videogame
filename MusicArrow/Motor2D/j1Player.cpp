@@ -249,7 +249,7 @@ bool j1Player::Update(float dt)
 
 		//SCORE CONDITIONS
 
-		if (AllDistances.distancePositiveX.Modulo == 0 && AllDistances.distancePositiveX.nearestColliderType == COLLIDER_OBJECT)
+		/*if (AllDistances.distancePositiveX.Modulo == 0 && AllDistances.distancePositiveX.nearestColliderType == COLLIDER_OBJECT)
 		{
 			App->entities->IsDead = true;
 			score += 100;
@@ -275,7 +275,7 @@ bool j1Player::Update(float dt)
 			App->entities->DestroyEntities();
 			App->audio->PlayFx(audio_dead, 1);
 
-		}
+		}*/
 
 
 
