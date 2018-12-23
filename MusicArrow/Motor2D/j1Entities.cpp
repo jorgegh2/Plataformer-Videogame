@@ -11,6 +11,7 @@
 #include "j1Map.h"
 #include "Enemy_Walk.h"
 #include "Enemy_Tree.h"
+#include "Enemy_Ball.h"
 #include "Object_Coin.h"
 #include "p2Log.h"
 #include "Brofiler\Brofiler.h"
@@ -239,7 +240,7 @@ void j1Entities::SpawnEntity(const EntityInfo& info)
 			entities[i] = new Enemy_Walk(info.x, info.y, info.colliderRect);
 			break;
 		case ENTITY_TYPES::ENEMY_BALL:
-			entities[i] = new Enemy_Walk(info.x, info.y, info.colliderRect);
+			entities[i] = new Enemy_Ball(info.x, info.y, info.colliderRect);
 			break;
 		case ENTITY_TYPES::ENEMY_TREE:
 			entities[i] = new Enemy_Tree(info.x, info.y, info.colliderRect);

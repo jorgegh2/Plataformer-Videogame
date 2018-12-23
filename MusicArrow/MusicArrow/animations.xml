@@ -49,6 +49,13 @@
     </idle>
     <speeds idle="10"/>
   </coin>
+  <ball>
+    <idle>
+      <frame x="595" y="762" width="127" height="127"/>
+      <frame x="754" y="768" width="115" height="115"/>
+    </idle>
+    <speeds idle="1"/>
+  </ball>
 </animations>
 
 
