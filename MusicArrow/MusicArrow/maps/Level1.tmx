@@ -27882,7 +27882,7 @@
     <property name="EnemyType" type="int" value="1"/>
    </properties>
   </object>
-  <object id="70" x="6161.58" y="2647.39" width="265" height="265">
+  <object id="70" x="6161.58" y="2647.39" width="197" height="265">
    <properties>
     <property name="CEnemyType" type="int" value="6"/>
     <property name="EnemyType" type="int" value="4"/>

@@ -57,6 +57,8 @@ public:
 	
 	int velocityX;
 	int deadcont = 0;
+	int score = 0;
+	int coins = 0;
 	Timer timer;
 
 	bool IsPaused = false;
@@ -65,6 +67,7 @@ public:
 	bool IsRunning = false;
 
 	bool IsJumping = false;
+
 	
 
 

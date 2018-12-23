@@ -27,6 +27,7 @@ struct EntityInfo
 	SDL_Rect colliderRect;
 	ENTITY_TYPES type = ENTITY_TYPES::NO_TYPE;
 	int x, y;
+	
 };
 
 class j1Entities : public j1Module
@@ -43,13 +44,15 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 	bool ResetEntities();
+	bool DestroyEntities();
 
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
 	bool AddEntity(ENTITY_TYPES type, int x, int y, SDL_Rect colliderRect);
 
-
+	bool IsDead = false;
+	bool IsPlayer = false;
 	j1Player* player = nullptr;
 
 private:

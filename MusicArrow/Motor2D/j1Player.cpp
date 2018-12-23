@@ -3,6 +3,7 @@
 #include "j1Input.h"
 #include "j1Player.h"
 #include "j1Collision.h"
+#include "j1Entities.h"
 #include "Time.h"
 #include "p2Log.h"
 #include "j1Map.h"
@@ -245,8 +246,35 @@ bool j1Player::Update(float dt)
 			App->input->Disable();
 		}
 
+		//SCORE CONDITIONS
 
-		//PAUSE FUNCTION ----------------
+		if (AllDistances.distancePositiveX.Modulo == 0 && AllDistances.distancePositiveX.nearestColliderType == COLLIDER_OBJECT)
+		{
+			App->entities->IsDead = true;
+			score += 100;
+			coins++;
+			App->entities->DestroyEntities();
+			App->audio->PlayFx(audio_dead, 1);
+			
+		}
+		if (AllDistances.distancePositiveY.Modulo == 0 && AllDistances.distancePositiveY.nearestColliderType == COLLIDER_OBJECT)
+		{
+			App->entities->IsDead = true;
+			score += 100;
+			coins++;
+			App->entities->DestroyEntities();
+			App->audio->PlayFx(audio_dead, 1);
+
+		}
+		if (AllDistances.distanceNegativeY.Modulo == 0 && AllDistances.distanceNegativeY.nearestColliderType == COLLIDER_OBJECT)
+		{
+			App->entities->IsDead = true;
+			score += 100;
+			coins++;
+			App->entities->DestroyEntities();
+			App->audio->PlayFx(audio_dead, 1);
+
+		}
 
 
 
@@ -397,7 +425,6 @@ bool j1Player::Update(float dt)
 			{
 				
 				ResetPlayer();
-				
 				deadcont = 0;
 				speed.x = 470;
 				
@@ -407,7 +434,6 @@ bool j1Player::Update(float dt)
 			{
 				
 				ResetPlayer();
-				
 				deadcont = 0;
 				speed.x = 470;
 			}

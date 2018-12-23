@@ -18,6 +18,7 @@ public:
 	float gravity = 1.0f;
 	float speed_jump = 0;
 	fPoint speed = {0.0f, 0.0f};
+	bool IsDeadEntity = false;
 
 	
 
@@ -28,7 +29,7 @@ public:
 	bool death = false;
 	uint enemy;
 	Collider* collider = nullptr;
-	bool isPlayer = false;
+	bool isPlayer;
 	bool movement[4] = { true,true,true,true };
 	int now = 0;
 

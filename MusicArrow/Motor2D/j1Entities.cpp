@@ -259,6 +259,39 @@ void j1Entities::SpawnEntity(const EntityInfo& info)
 	}
 }
 
+bool j1Entities::DestroyEntities()
+{
+	BROFILER_CATEGORY("DestroyEntities", Profiler::Color::Pink);
+
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	{
+		if (entities[i] != nullptr)
+		{
+			if (App->entities->IsDead == true && entities[i]->isPlayer == false)
+			{
+				entities[i]->collider->to_delete = true;
+				delete entities[i];
+				entities[i] = nullptr;
+
+			}
+		}
+	}
+
+	/*for (uint i = 0; i < MAX_ENTITIES; ++i)
+	{
+		if (entities[i] != nullptr)
+		{
+			if (entities[i]->death == true && entities[i]->isPlayer == false) {
+				delete entities[i];
+				entities[i] = nullptr;
+			}
+		}
+	}*/
+
+
+	return true;
+
+}
 
 bool j1Entities::Load(pugi::xml_node& data)
 {
