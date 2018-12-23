@@ -142,8 +142,6 @@ bool j1Entities::PostUpdate()
 		}
 	}
 
-	DestroyEntities();
-
 	return true;
 }
 

@@ -30,37 +30,9 @@ Object_Score::Object_Score(int x, int y, SDL_Rect colliderRect) : Entity(x, y)
 void Object_Score::Move(float dt)
 {
 	BROFILER_CATEGORY("Object_ScoreMove", Profiler::Color::Gray);
-
-	//SCORE CONDITIONS
-
-		if (AllDistances.distanceNegativeX.Modulo <= 0 && AllDistances.distanceNegativeX.nearestColliderType == COLLIDER_PLAYER)
-		{
-			isDead = true;
-			App->entities->player->score += 100;
-			App->audio->PlayFx(coin_sound, 1);
-
-		}
-		if (AllDistances.distancePositiveY.Modulo <= 0 && AllDistances.distancePositiveY.nearestColliderType == COLLIDER_OBJECT)
-		{
-			isDead = true;
-			App->entities->player->score += 100;
-			App->audio->PlayFx(coin_sound, 1);
-
-		}
-		if (AllDistances.distanceNegativeY.Modulo <= 0 && AllDistances.distanceNegativeY.nearestColliderType == COLLIDER_OBJECT)
-		{
-			isDead = true;
-			App->entities->player->score += 100;
-			App->audio->PlayFx(coin_sound, 1);
-
-		}
 	
 }
 
-void Object_Score::Dead()
-{
-	
-}
 
 bool Object_Score::Save(pugi::xml_node& data) const
 {
