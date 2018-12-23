@@ -33,9 +33,11 @@ bool j1SceneMenu::Start()
 {
 	//App->map->Load("Level2.tmx");
 
-	//Menu UI elements
 	_TTF_Font* font = App->font->Load("fonts/kenvector_future/kenvector_future.ttf");
 	SDL_Rect rects[3] = { { 438,497,392,102 },{ 1305,497,392,102 },{ 2172,497,392,102 } };
+
+	//Menu UI elements
+
 	playButton = App->gui->CreateButton({ 1250,200 }, rects, "Play", { 255, 255, 255, 255 }, font);
 	continueButton = App->gui->CreateButton({ 1250,400 }, rects, "Continue", { 255, 255, 255, 255 }, font);
 	continueButton->disabled = true;
@@ -43,7 +45,7 @@ bool j1SceneMenu::Start()
 	creditsButton = App->gui->CreateButton({ 1250,800 }, rects, "Credits", { 255, 255, 255, 255 }, font);
 	exitButton = App->gui->CreateButton({ 1250,1000 }, rects, "Exit", { 255, 255, 255, 255 }, font);
 
-	//Settings elements 3091,61
+	//Settings elements 
 	panel = App->gui->CreateImage({ 500,400 }, { 3028,4,528, 653 });
 	music = App->gui->CreateLabel({ 570, 450 }, "Music:", {255,255,255,255}, font);
 	fx = App->gui->CreateLabel({ 570, 550 }, "Fx:", { 255,255,255,255 }, font);
@@ -56,6 +58,7 @@ bool j1SceneMenu::Start()
 	panel->SetParentAndChildren(fxSlider);
 	panel->ChangeEnabled();
 
+	//Credits elements 
 	panelCredits = App->gui->CreateImage({ 500,400 }, { 3028,4,528, 653 });
 	Author1 = App->gui->CreateLabel({ 570, 475 }, "Author: Jorge Gemas Herencia", { 255,255,255,255 }, font);
 	Author2 = App->gui->CreateLabel({ 570, 550 }, "Author: Gerard Berenguer Pacheco", { 255,255,255,255 }, font);
@@ -130,11 +133,11 @@ bool j1SceneMenu::Update(float dt)
 		}
 
 	//Settings panel
-	//	App->audio->SetVolumeMusic(maxValue*p);
 	
 	App->audio->SetVolumeMusic(MIX_MAX_VOLUME * musicSlider->ValueBetween0and1());
 
-	
+	App->audio->SetVolumeFx(MIX_MAX_VOLUME * fxSlider->ValueBetween0and1());
+
 
 	//Credits button
 	if (creditsButton->GetEvent() == MouseLeftClickEvent)

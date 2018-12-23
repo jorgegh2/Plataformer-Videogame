@@ -182,7 +182,10 @@ void j1Audio::SetVolumeMusic(int value)
 	Mix_VolumeMusic(value);
 }
 
-//void j1Audio::SetVolumeFx(int value)
-//{
-//	Mix_VolumeChunk()
-//}
+void j1Audio::SetVolumeFx(int value)
+{
+	for (p2List_item<Mix_Chunk*>* item = fx.start; item; item = item->next)
+	{
+		Mix_VolumeChunk(item->data, value);
+	}
+}
