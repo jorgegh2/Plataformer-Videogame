@@ -281,18 +281,6 @@ bool j1Entities::DestroyEntities()
 		}
 	}
 
-	/*for (uint i = 0; i < MAX_ENTITIES; ++i)
-	{
-		if (entities[i] != nullptr)
-		{
-			if (entities[i]->death == true && entities[i]->isPlayer == false) {
-				delete entities[i];
-				entities[i] = nullptr;
-			}
-		}
-	}*/
-
-
 	return true;
 
 }
