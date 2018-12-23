@@ -209,7 +209,8 @@ bool j1Player::Update(float dt)
 		if (velocityX < 0)flip = SDL_FLIP_HORIZONTAL;
 		if (velocityX > 0)flip = SDL_FLIP_NONE;
 
-		//Dead Conditions
+		//DEAD CONDITIONS
+
 		if (AllDistances.distancePositiveX.nearestColliderType == COLLIDER_ENEMY && AllDistances.distancePositiveX.Modulo == 0)
 		{
 			jstate = DEAD;

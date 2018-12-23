@@ -13,6 +13,7 @@
 #include "Enemy_Tree.h"
 #include "Enemy_Ball.h"
 #include "Object_Coin.h"
+#include "Object_Score.h"
 #include "p2Log.h"
 #include "Brofiler\Brofiler.h"
 #include "j1FadeToBlack.h"
@@ -252,9 +253,12 @@ void j1Entities::SpawnEntity(const EntityInfo& info)
 		case ENTITY_TYPES::OBJECT_COIN:
 			entities[i] = new Object_Coin(info.x, info.y, info.colliderRect);
 			break;
+		case ENTITY_TYPES::OBJECT_SCORE:
+			entities[i] = new Object_Score(info.x, info.y, info.colliderRect);
+			break;
 		}
 
-		entities[i]->Awake(config);
+		entities[i]->Awake(config); 
 
 	}
 }

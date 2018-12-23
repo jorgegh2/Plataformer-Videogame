@@ -679,10 +679,14 @@ void j1Map::SetAllCollidersAndEntities()
 		{
 			App->entities->AddEntity(OBJECT_COIN, item_object->data->RectCollider.x, item_object->data->RectCollider.y, item_object->data->RectCollider);
 		}
+		else if (item_object->data->Collider_type == COLLIDER_OBJECT && item_object->data->enemy_type == 6)
+		{
+			App->entities->AddEntity(OBJECT_SCORE, item_object->data->RectCollider.x, item_object->data->RectCollider.y, item_object->data->RectCollider);
+		}
 
 
 
-		else App->collision->AddCollider(item_object->data->RectCollider, item_object->data->Collider_type, nullptr);
+		else App->collision->AddCollider(item_object->data->RectCollider, item_object->data->Collider_type, nullptr); 
 	}
 }
 

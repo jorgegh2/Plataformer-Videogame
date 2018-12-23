@@ -28,7 +28,7 @@ Enemy_Ball::Enemy_Ball(int x, int y, SDL_Rect colliderRect) : Entity(x, y)
 	originalpos.y = position.y = y;
 
 
-	collider = App->collision->AddCollider(colliderRect, COLLIDER_OBJECT, App->entities);
+	collider = App->collision->AddCollider(colliderRect, COLLIDER_ENEMY, App->entities);
 	timer.Reset();
 }
 
