@@ -95,13 +95,10 @@ j1Player::j1Player(int x, int y, SDL_Rect colliderRect) : Entity(x, y)
 
 	// DIE
 
-	die.PushBack({ 370, 1401, 136, 127 });
-	die.PushBack({ 521, 1401, 116, 113 });
-	die.PushBack({ 652, 1378, 132, 117 });
-	die.PushBack({ 808, 1434, 160, 66 });
-	die.PushBack({ 986, 1420, 160, 72 });
-	die.loop = false;
-	die.speed = 0.15f;
+	die.PushBack({ 71, 1066, 97, 104 });
+	die.PushBack({ 207, 1052, 122, 119 });
+	die.loop = true;
+	die.speed = 0.10f;
 
 
 	//-------------------------------------
@@ -388,22 +385,44 @@ bool j1Player::Update(float dt)
 
 		case DEAD:
 
+			deadcont += 5;
+			speed.x = 0;
+			current_animation->Reset();
 			current_animation = &die;
-
 			collider->SetPos(-1000, -1000);
-
-			speed.y = -1;
-			speed.y = speed.y + gravity * timer.ReadSec();
-			position.y += speed.y * timer.ReadSec();
-
 			App->audio->PlayFx(audio_finishdead, 1);
-			ResetPlayer();
+			
 
-			if (position.y > (-App->render->camera.y + App->render->camera.h) * 2)
+			if (deadcont >= 100) 
 			{
-				App->audio->PlayFx(audio_finishdead, 1);
+				
 				ResetPlayer();
+				
+				deadcont = 0;
+				speed.x = 470;
+				
+			
 			}
+			else if (position.y > (-App->render->camera.y + App->render->camera.h) * 2)
+			{
+				
+				ResetPlayer();
+				
+				deadcont = 0;
+				speed.x = 470;
+			}
+
+			//ResetPlayer();
+
+			//App->fadeToBlack->FadeToDead();
+			/*speed.y = -1;
+			speed.y = speed.y + gravity * timer.ReadSec();
+			position.y += speed.y * timer.ReadSec();*/
+
+			/*App->audio->PlayFx(audio_finishdead, 1);
+			ResetPlayer();*/
+
+			
 			break;
 
 		case GODMODE:

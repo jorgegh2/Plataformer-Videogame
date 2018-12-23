@@ -87,13 +87,13 @@ void j1Map::Draw()
 
 		}
 
-		if (App->entities->player->velocityX > 0)
+		if (App->entities->player->velocityX > 0 && App->isPaused == false)
 		{
 
 			item_imgLayer->data->position_x -= speedLayer;
 
 		}
-		else if (App->entities->player->velocityX < 0)
+		else if (App->entities->player->velocityX < 0 && App->isPaused == false)
 		{
 
 			item_imgLayer->data->position_x += speedLayer;
@@ -641,6 +641,8 @@ COLLIDER_TYPE j1Map::DefineType(int type_as_int)
 		return COLLIDER_PLAYER;
 	case 6:
 		return COLLIDER_ENEMY;
+	case 7:
+		return COLLIDER_OBJECT;
 	default:
 		return COLLIDER_NONE;
 	}
@@ -665,6 +667,20 @@ void j1Map::SetAllCollidersAndEntities()
 		{
 			App->entities->AddEntity(ENEMY_WALK, item_object->data->RectCollider.x, item_object->data->RectCollider.y, item_object->data->RectCollider);
 		}
+		else if (item_object->data->Collider_type == COLLIDER_ENEMY && item_object->data->enemy_type == 3)
+		{
+			App->entities->AddEntity(ENEMY_BALL, item_object->data->RectCollider.x, item_object->data->RectCollider.y, item_object->data->RectCollider);
+		}
+		else if (item_object->data->Collider_type == COLLIDER_ENEMY && item_object->data->enemy_type == 4)
+		{
+			App->entities->AddEntity(ENEMY_TREE, item_object->data->RectCollider.x, item_object->data->RectCollider.y, item_object->data->RectCollider);
+		}
+		else if (item_object->data->Collider_type == COLLIDER_OBJECT && item_object->data->enemy_type == 5)
+		{
+			App->entities->AddEntity(OBJECT_COIN, item_object->data->RectCollider.x, item_object->data->RectCollider.y, item_object->data->RectCollider);
+		}
+
+
 
 		else App->collision->AddCollider(item_object->data->RectCollider, item_object->data->Collider_type, nullptr);
 	}

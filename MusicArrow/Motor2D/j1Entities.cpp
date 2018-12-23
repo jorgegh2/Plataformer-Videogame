@@ -10,6 +10,7 @@
 #include "Enemy_Fly.h"
 #include "j1Map.h"
 #include "Enemy_Walk.h"
+#include "Enemy_Tree.h"
 #include "p2Log.h"
 #include "Brofiler\Brofiler.h"
 #include "j1FadeToBlack.h"
@@ -236,12 +237,18 @@ void j1Entities::SpawnEntity(const EntityInfo& info)
 		case ENTITY_TYPES::ENEMY_WALK:
 			entities[i] = new Enemy_Walk(info.x, info.y, info.colliderRect);
 			break;
+		case ENTITY_TYPES::ENEMY_BALL:
+			entities[i] = new Enemy_Walk(info.x, info.y, info.colliderRect);
+			break;
+		case ENTITY_TYPES::ENEMY_TREE:
+			entities[i] = new Enemy_Tree(info.x, info.y, info.colliderRect);
+			break;
 		case ENTITY_TYPES::ENTITY_PLAYER:
 			entities[i] = player = new j1Player(info.x,info.y, info.colliderRect);
 			entities[i]->isPlayer = true;
 			break;
-		case ENTITY_TYPES::COIN:
-			
+		case ENTITY_TYPES::OBJECT_COIN:
+			entities[i] = new Enemy_Walk(info.x, info.y, info.colliderRect);
 			break;
 		}
 
@@ -249,6 +256,7 @@ void j1Entities::SpawnEntity(const EntityInfo& info)
 
 	}
 }
+
 
 bool j1Entities::Load(pugi::xml_node& data)
 {

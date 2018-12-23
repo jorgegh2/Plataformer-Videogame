@@ -56,6 +56,7 @@ public:
 	iPoint OriginPos;
 	
 	int velocityX;
+	int deadcont = 0;
 	Timer timer;
 
 	bool IsPaused = false;

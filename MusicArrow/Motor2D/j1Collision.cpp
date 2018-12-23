@@ -158,7 +158,7 @@ void j1Collision::DebugDraw()
 	if (debug == false)
 		return;
 
-	Uint8 alpha = 80;
+	Uint8 alpha = 60;
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		if (colliders[i] == nullptr)
@@ -177,6 +177,9 @@ void j1Collision::DebugDraw()
 			break; 
 		case COLLIDER_ENEMY: // red
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
+		case COLLIDER_OBJECT: // red
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 255, alpha);
 			break;
 		case COLLIDER_PLATAFORM: // yellow
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
@@ -257,6 +260,8 @@ COLLIDER_TYPE j1Collision::DefineType(int type_as_int)
 		return COLLIDER_PLAYER;
 	case 6:
 		return COLLIDER_ENEMY;
+	case 7:
+		return COLLIDER_OBJECT;
 	default:
 		return COLLIDER_NONE;
 	}

@@ -33,6 +33,16 @@
     </jump>
     <speeds idle="10" jump="10" attack="10"/>
   </slime>
+  <tree>
+    <walk>
+      <frame x="12" y="1283" width="265" height="263"/>
+      <frame x="315" y="1285" width="268" height="264"/>
+      <frame x="616" y="1279" width="265" height="268"/>
+      <frame x="315" y="1285" width="268" height="264"/>
+      <frame x="12" y="1283" width="265" height="263"/>
+    </walk>
+    <speeds walk="1"/>
+  </tree>
 </animations>
 
 
