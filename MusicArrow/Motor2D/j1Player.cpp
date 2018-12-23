@@ -438,17 +438,6 @@ bool j1Player::Update(float dt)
 				deadcont = 0;
 				speed.x = 470;
 			}
-
-			//ResetPlayer();
-
-			//App->fadeToBlack->FadeToDead();
-			/*speed.y = -1;
-			speed.y = speed.y + gravity * timer.ReadSec();
-			position.y += speed.y * timer.ReadSec();*/
-
-			/*App->audio->PlayFx(audio_finishdead, 1);
-			ResetPlayer();*/
-
 			
 			break;
 
@@ -618,4 +607,5 @@ void j1Player::ResetPlayer()
 
 	jstate = ONAIR;
 	current_animation = &idle;
+	
 }
