@@ -248,5 +248,13 @@ void j1Scene::BackMainMenu() const
 	else
 		App->fadeToBlack->FadeToBlack(App->map_winter, App->sceneMenu);
 
-	PauseOrResume();
+	resumeButton->ChangeEnabled();
+	saveButton->ChangeEnabled();
+	loadButton->ChangeEnabled();
+	mainMenu->ChangeEnabled();
+	music->ChangeEnabled();
+	fx->ChangeEnabled();
+	musicSlider->ChangeEnabled();
+	fxSlider->ChangeEnabled();
+	panelInGame->ChangeEnabled();
 }

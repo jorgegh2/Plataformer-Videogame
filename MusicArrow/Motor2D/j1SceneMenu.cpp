@@ -98,9 +98,9 @@ bool j1SceneMenu::Start()
 	settingsButton->ChangeEnabled();
 	creditsButton->ChangeEnabled();
 	exitButton->ChangeEnabled();
-	if (!panel->disabled)
+	if (panel->isEnabled)
 		panel->ChangeEnabled();
-	if (!panelCredits->disabled)
+	if (panelCredits->isEnabled)
 		panelCredits->ChangeEnabled();
 
 	App->render->camera.x = bgRect.x;
@@ -182,9 +182,9 @@ bool j1SceneMenu::CleanUp()
 	creditsButton->ChangeEnabled();
 	exitButton->ChangeEnabled();
 
-	if(panel->disabled)
+	if(panel->isEnabled)
 		panel->ChangeEnabled();
-	if(panelCredits->disabled)
+	if(panelCredits->isEnabled)
 		panelCredits->ChangeEnabled();
 
 	return true;
