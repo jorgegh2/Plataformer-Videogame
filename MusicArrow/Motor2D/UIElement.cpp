@@ -6,7 +6,7 @@
 #include "UIImage.h"
 #include "j1Gui.h"
 #include "j1Input.h"
-
+#include "j1Window.h"
 UIElement::UIElement(ElementType type, iPoint position, UIElement* parent, bool isEnabled, bool dragable, SDL_Rect rectToDraw)
 {
 	this->position = position;
@@ -17,13 +17,6 @@ UIElement::UIElement(ElementType type, iPoint position, UIElement* parent, bool 
 	this->dragable = dragable;
 }
 
-//UIElement::UIElement(ElementType type, iPoint position, bool isEnabled)
-//{
-//	this->position = position;
-//	this->rectToDraw = rectToDraw;
-//	this->type = type;
-//}
-
 UIElement::~UIElement()
 {}
 
@@ -31,7 +24,7 @@ void UIElement::Draw(SDL_Texture* UItexture)
 {
 	if (type != ButtonElement && type != BoxTextElement && type != SliderElement && UItexture != nullptr)  // only blit their children. Button, boxText ans Slider don't have anything to blit.
 	{
-		if (App->render->Blit(UItexture, position.x, position.y, &rectToDraw))
+		if (!App->render->Blit(UItexture, position.x, position.y, &rectToDraw, true))
 		{
 			LOG("ERROR to blit a Gui Entity!");
 		}
@@ -130,6 +123,7 @@ void UIElement::Update(float dt)
 		posX = -1;
 		posY = -1;
 	}
+
 }
 
 
