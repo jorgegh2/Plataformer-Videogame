@@ -441,7 +441,10 @@ bool j1Player::Update(float dt)
 				deadcont = 0;
 				speed.x = 470;
 			}
-			
+			if (player_lifes < 0)
+			{
+				App->scene->BackMainMenu();
+			}
 			break;
 
 		case GODMODE:

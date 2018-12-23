@@ -54,6 +54,8 @@ void Object_Score::Move(float dt)
 			App->audio->PlayFx(coin_sound, 1);
 
 		}
+
+
 	
 }
 

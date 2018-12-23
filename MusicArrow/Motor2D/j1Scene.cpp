@@ -151,21 +151,7 @@ bool j1Scene::Update(float dt)
 	//Main menu button
 	if (mainMenu->GetEvent() == MouseLeftClickEvent)
 	{
-		if(App->map_forest->active == true)
-			App->fadeToBlack->FadeToBlack(App->map_forest, App->sceneMenu);
-
-		else 
-			App->fadeToBlack->FadeToBlack(App->map_winter, App->sceneMenu);
-
-		resumeButton->ChangeEnabled();
-		saveButton->ChangeEnabled();
-		loadButton->ChangeEnabled();
-		mainMenu->ChangeEnabled();
-		music->ChangeEnabled();
-		fx->ChangeEnabled();
-		musicSlider->ChangeEnabled();
-		fxSlider->ChangeEnabled();
-		panelInGame->ChangeEnabled();
+		BackMainMenu();
 	}
 
 	//music slider
@@ -252,4 +238,15 @@ void j1Scene::PauseOrResume() const
 	musicSlider->ChangeEnabled();
 	fxSlider->ChangeEnabled();
 	panelInGame->ChangeEnabled();
+}
+
+void j1Scene::BackMainMenu() const
+{
+	if (App->map_forest->active == true)
+		App->fadeToBlack->FadeToBlack(App->map_forest, App->sceneMenu);
+
+	else
+		App->fadeToBlack->FadeToBlack(App->map_winter, App->sceneMenu);
+
+	PauseOrResume();
 }
