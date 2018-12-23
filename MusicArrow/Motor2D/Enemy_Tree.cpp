@@ -46,9 +46,6 @@ void Enemy_Tree::Move(float dt)
 	if(App->entities->player->position.x - position.x > 0)
 	position.x += speed.x;
 
-	if (App->entities->player->position.x - position.x < 0)
-		position.x -= speed.x;
-
 	CalculateGravity(dt);
 }
 

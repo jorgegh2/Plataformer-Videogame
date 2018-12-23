@@ -43,6 +43,12 @@
     </walk>
     <speeds walk="1"/>
   </tree>
+  <coin>
+    <idle>
+      <frame x="82" y="780" width="98" height="96"/>
+    </idle>
+    <speeds idle="10"/>
+  </coin>
 </animations>
 
 

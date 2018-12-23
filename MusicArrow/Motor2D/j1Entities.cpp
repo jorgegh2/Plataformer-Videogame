@@ -11,6 +11,7 @@
 #include "j1Map.h"
 #include "Enemy_Walk.h"
 #include "Enemy_Tree.h"
+#include "Object_Coin.h"
 #include "p2Log.h"
 #include "Brofiler\Brofiler.h"
 #include "j1FadeToBlack.h"
@@ -248,7 +249,7 @@ void j1Entities::SpawnEntity(const EntityInfo& info)
 			entities[i]->isPlayer = true;
 			break;
 		case ENTITY_TYPES::OBJECT_COIN:
-			entities[i] = new Enemy_Walk(info.x, info.y, info.colliderRect);
+			entities[i] = new Object_Coin(info.x, info.y, info.colliderRect);
 			break;
 		}
 

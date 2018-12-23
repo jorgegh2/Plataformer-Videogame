@@ -44,21 +44,6 @@
         <finishdead source="audio/fx/finishdead.wav"></finishdead> 
         <stageclear source="audio/fx/stageclear.wav"></stageclear>
       </fxsound>
-      <playercontrols>
-        <moveleft input="4"></moveleft> 
-        <moveright input="7"></moveright>
-        <moverup input="26"></moverup>
-        <movedown input="22"></movedown>
-        <jump input="44"></jump> 
-        <dash input="13"></dash> 
-        <specialmove input="14"></specialmove> 
-      </playercontrols>
-      <cameracontrols>
-        <moveleft input="80"></moveleft> 
-        <moveright input="79"></moveright>
-        <moveup input="82"></moveup> 
-        <movedown input="81"></movedown> 
-      </cameracontrols>
     </player>
   </entities>
 </config>
