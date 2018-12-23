@@ -59,6 +59,7 @@ public:
 	int deadcont = 0;
 	int score = 0;
 	int coins = 0;
+	int player_lifes = 3;
 	Timer timer;
 
 	bool IsPaused = false;

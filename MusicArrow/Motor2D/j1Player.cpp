@@ -427,6 +427,7 @@ bool j1Player::Update(float dt)
 			{
 				
 				ResetPlayer();
+				player_lifes--;
 				deadcont = 0;
 				speed.x = 470;
 				
@@ -436,6 +437,7 @@ bool j1Player::Update(float dt)
 			{
 				
 				ResetPlayer();
+				player_lifes--;
 				deadcont = 0;
 				speed.x = 470;
 			}
