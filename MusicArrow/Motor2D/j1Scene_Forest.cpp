@@ -9,6 +9,7 @@
 #include "j1Player.h"
 #include "j1Entities.h"
 #include "j1Pathfinding.h"
+#include "j1Fonts.h"
 
 
 j1Scene_Forest::j1Scene_Forest() : j1Module()

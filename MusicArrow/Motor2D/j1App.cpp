@@ -65,15 +65,15 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(font);
 
 	// scene last
-	
-	AddModule(scene);
-
+	AddModule(sceneMenu);
 	AddModule(map_forest);
 	AddModule(map_winter);
-	AddModule(sceneMenu);
-	AddModule(gui);
+	AddModule(scene);
+
 	AddModule(collision);
+	
 	AddModule(entities);
+	AddModule(gui);
 
 
 	// render last to swap buffer

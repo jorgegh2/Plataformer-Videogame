@@ -41,7 +41,7 @@ void UIButton::Update(float dt)
 			DragUIElement();
 		}
 
-		if (GetEvent() == MouseEnterEvent || buttonImage->GetEvent() == MouseLeftClickLeave)
+		if (GetEvent() == MouseEnterEvent)
 		{
 			buttonImage->setRectToDraw(rects[1]);
 			App->audio->PlayFx(App->scene->audio_rollover);

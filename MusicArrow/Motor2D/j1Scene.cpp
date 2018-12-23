@@ -16,6 +16,9 @@
 #include "j1Entities.h"
 #include "j1Pathfinding.h"
 #include "j1SceneMenu.h"
+#include "j1Gui.h"
+#include "j1Fonts.h"
+
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -27,7 +30,7 @@ j1Scene::~j1Scene()
 {}
 
 // Called before render is available
-bool j1Scene::Awake()
+bool j1Scene::Awake(pugi::xml_node& node)
 {
 	LOG("Loading Scene");
 	bool ret = true;
@@ -39,7 +42,7 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	//Load background music
-	const char* path = "audio/music/musicstage1.wav";
+	const char* musicPath = "audio/music/musicstage1.wav";
 	const char* rollover = "audio/fx/rollover1.wav";
 	const char* click = "audio/fx/click1.wav";
 
@@ -47,7 +50,29 @@ bool j1Scene::Start()
 	audio_click = App->audio->LoadFx(click);
 
 	//Play background music
-	App->audio->PlayMusic(path);
+	App->audio->PlayMusic(musicPath);
+
+	panelInGame = App->gui->CreateImage({ 500,400 }, { 3028,4,528, 917 });
+
+	resumeButton = App->gui->CreateButton({ 575,450 }, App->sceneMenu->rects, "Resume", { 255, 255, 255, 255 }, App->sceneMenu->font);
+	saveButton = App->gui->CreateButton({ 575,600 }, App->sceneMenu->rects, "Credits", { 255, 255, 255, 255 }, App->sceneMenu->font);
+	loadButton = App->gui->CreateButton({ 575,750 }, App->sceneMenu->rects, "Exit", { 255, 255, 255, 255 }, App->sceneMenu->font);
+
+	music = App->gui->CreateLabel({ 570, 950 }, "Music:", { 255,255,255,255 }, App->sceneMenu->font);
+	fx = App->gui->CreateLabel({ 570, 1050 }, "Fx:", { 255,255,255,255 }, App->sceneMenu->font);
+	musicSlider = App->gui->CreateSlider({ 570, 1000 }, { 1738,650,394,11 }, { 1738,687,17,17 }, true);
+	fxSlider = App->gui->CreateSlider({ 570, 1100 }, { 1738,650,394,11 }, { 1738,687,17,17 }, true);
+	
+	// hide all by default
+	resumeButton->ChangeEnabled();
+	saveButton->ChangeEnabled();
+	loadButton->ChangeEnabled();
+	music->ChangeEnabled();
+	fx->ChangeEnabled();
+	musicSlider->ChangeEnabled();
+	fxSlider->ChangeEnabled();
+	panelInGame->ChangeEnabled();
+
 
 	return true;
 }
@@ -80,6 +105,7 @@ bool j1Scene::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x -= 313 * dt;
+
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
 		if (App->map_forest->active == true)
@@ -100,16 +126,18 @@ bool j1Scene::Update(float dt)
 
 	App->map->Draw();
 
+	if (resumeButton->GetEvent() == MouseLeftClickEvent)
+	{
+		PauseOrResume();
+	}
 	
 	int x, y;
-	App->input->GetMousePosition(x, y);
-	//iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
 
 	if (App->map_forest->active == true)
 	{
 		current_scene = App->map_forest->name.GetString();
 	}
-	else
+	else if(App->map_forest->active == true)
 	{
 		current_scene = App->map_winter->name.GetString();
 	}
@@ -121,11 +149,13 @@ bool j1Scene::Update(float dt)
 bool j1Scene::PostUpdate()
 {
 	bool ret = true;
-
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-	{
-		App->isPaused = !App->isPaused;
-	}
+	//if (current_scene == App->map_forest->name.GetString() || current_scene == App->map_winter->name.GetString())
+	//{
+		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		{
+			PauseOrResume();
+		}
+	//}
 
 	return ret;
 }
@@ -164,4 +194,18 @@ bool j1Scene::Save(pugi::xml_node& node) const
 		scene.append_attribute("current_scene") = App->map_winter->name.GetString();
 	}
 	return true;
+}
+
+void j1Scene::PauseOrResume() const
+{
+	App->isPaused = !App->isPaused;
+
+	resumeButton->ChangeEnabled();
+	saveButton->ChangeEnabled();
+	loadButton->ChangeEnabled();
+	music->ChangeEnabled();
+	fx->ChangeEnabled();
+	musicSlider->ChangeEnabled();
+	fxSlider->ChangeEnabled();
+	panelInGame->ChangeEnabled();
 }

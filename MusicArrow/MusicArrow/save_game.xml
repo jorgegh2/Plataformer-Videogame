@@ -8,16 +8,16 @@
 	<fade />
 	<pathfinding />
 	<fonts />
+	<j1SceneMenu />
+	<scene_forest />
+	<scene_winter />
 	<scene>
 		<level current_scene="scene_winter" />
 	</scene>
-	<scene_forest />
-	<scene_winter />
-	<j1SceneMenu />
-	<gui />
 	<collision />
 	<entities />
 	<renderer>
 		<camera x="0" y="0" />
 	</renderer>
+	<gui />
 </game_state>

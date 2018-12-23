@@ -31,7 +31,7 @@ void UIElement::Draw(SDL_Texture* UItexture)
 {
 	if (type != ButtonElement && type != BoxTextElement && type != SliderElement && UItexture != nullptr)  // only blit their children. Button, boxText ans Slider don't have anything to blit.
 	{
-		if (!App->render->Blit(UItexture, position.x, position.y, &rectToDraw))
+		if (App->render->Blit(UItexture, position.x, position.y, &rectToDraw))
 		{
 			LOG("ERROR to blit a Gui Entity!");
 		}
@@ -242,10 +242,11 @@ void UIElement::MoveInParentLimits(int movementX, int movementY)
 void UIElement::ChangeEnabled()
 {
 	isEnabled = !isEnabled;
-
+	Event = NoEventElement;
 	for (p2List_item<UIElement*>* item = listChildren.start; item; item = item->next)
 	{
 		item->data->isEnabled = !item->data->isEnabled;
+		Event = NoEventElement;
 	}
 
 }

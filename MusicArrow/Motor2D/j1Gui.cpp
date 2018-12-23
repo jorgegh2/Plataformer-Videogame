@@ -75,10 +75,15 @@ bool j1Gui::Update(float dt)
 		}
 	}
 
-	DrawAll();
+	
 	return true;
 }
 
+bool j1Gui::PostUpdate()
+{
+	DrawAll();
+	return true;
+}
 // Called before quitting
 bool j1Gui::CleanUp()
 {

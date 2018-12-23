@@ -3,7 +3,17 @@
 
 #include "j1Module.h"
 
+#include "j1Fonts.h"
+
+
+
+
 struct SDL_Texture;
+class UIImage;
+class UIButton;
+class UILabel;
+class UISlider;
+
 
 class j1Scene : public j1Module
 {
@@ -15,7 +25,7 @@ public:
 	virtual ~j1Scene();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(pugi::xml_node& node);
 
 	// Called before the first frame
 	bool Start();
@@ -36,11 +46,29 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
+	void PauseOrResume() const;
+
 	p2SString current_scene;
 
 	uint audio_rollover;
 	uint audio_click;
+
+	
+
 private:
+
+	UIImage* panelInGame = nullptr;
+
+
+	UIButton* resumeButton = nullptr;
+	UIButton* saveButton = nullptr;
+	UIButton* loadButton = nullptr;
+
+	UILabel* music = nullptr;
+	UILabel* fx = nullptr;
+	UISlider* musicSlider = nullptr;
+	UISlider* fxSlider = nullptr;
+
 };
 
 #endif // __j1SCENE_H__

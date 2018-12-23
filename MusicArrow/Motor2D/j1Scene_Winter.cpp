@@ -20,7 +20,7 @@ j1Scene_Winter::~j1Scene_Winter() {}
 
 bool j1Scene_Winter::Awake(pugi::xml_node& node)
 {
-	App->map->Load(node.child("bgmusic").child("level2").attribute("source").as_string());
+	//App->map->Load(node.child("bgmusic").child("level2").attribute("source").as_string());
 	enabled = false;
 	active = false;
 	return true;
