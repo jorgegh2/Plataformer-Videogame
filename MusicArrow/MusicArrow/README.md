@@ -6,11 +6,9 @@
 
 S: Slide
 
-D: Attack
-
-A: Charged Attack
-
 Space: Jump
+
+ESC: Game Pause and in game menu
 
 
 ### Debug Keys:
