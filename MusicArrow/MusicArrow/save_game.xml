@@ -12,18 +12,12 @@
 	<scene_forest />
 	<scene_winter />
 	<scene>
-		<level current_scene="scene_forest" />
+		<level current_scene="scene_winter" />
 	</scene>
 	<collision />
-	<entities>
-		<player>
-			<position x="5109.01904" y="2439.65015" />
-			<state current_state="2" />
-			<speed x="470" y="10.8000011" />
-		</player>
-	</entities>
+	<entities />
 	<gui />
 	<renderer>
-		<camera x="-2098" y="-855" />
+		<camera x="0" y="0" />
 	</renderer>
 </game_state>

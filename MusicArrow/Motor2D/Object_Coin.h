@@ -22,7 +22,6 @@ public:
 	bool Save(pugi::xml_node& config) const;
 	bool Load(pugi::xml_node& config);
 	void Move(float dt);
-	bool isDead = false;
 	bool isPlayer = false;
 
 	Timer timer;

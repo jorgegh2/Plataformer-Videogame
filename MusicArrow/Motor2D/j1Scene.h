@@ -63,6 +63,7 @@ private:
 	UIButton* resumeButton = nullptr;
 	UIButton* saveButton = nullptr;
 	UIButton* loadButton = nullptr;
+	UIButton* mainMenu = nullptr;
 
 	UILabel* music = nullptr;
 	UILabel* fx = nullptr;

@@ -273,7 +273,7 @@ bool j1Entities::DestroyEntities()
 	{
 		if (entities[i] != nullptr)
 		{
-			if (App->entities->IsDead == true && entities[i]->isPlayer == false)
+			if (entities[i]->isDead == true && entities[i]->isPlayer == false)
 			{
 				entities[i]->collider->to_delete = true;
 				delete entities[i];

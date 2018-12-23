@@ -98,8 +98,13 @@ bool j1SceneMenu::Start()
 	settingsButton->ChangeEnabled();
 	creditsButton->ChangeEnabled();
 	exitButton->ChangeEnabled();
-	panel->ChangeEnabled();
-	panelCredits->ChangeEnabled();
+	if (!panel->disabled)
+		panel->ChangeEnabled();
+	if (!panelCredits->disabled)
+		panelCredits->ChangeEnabled();
+
+	App->render->camera.x = bgRect.x;
+	App->render->camera.y = bgRect.y;
 
 	return true;
 }

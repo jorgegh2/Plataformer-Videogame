@@ -57,10 +57,7 @@ void Object_Score::Move(float dt)
 	
 }
 
-void Object_Score::Dead()
-{
-	
-}
+
 
 bool Object_Score::Save(pugi::xml_node& data) const
 {

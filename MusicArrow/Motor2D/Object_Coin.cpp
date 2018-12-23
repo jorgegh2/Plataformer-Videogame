@@ -36,7 +36,7 @@ void Object_Coin::Move(float dt)
 {
 	BROFILER_CATEGORY("Object_CoinMove", Profiler::Color::Gray);
 	if (AllDistances.distanceNegativeX.nearestColliderType == COLLIDER_PLAYER && AllDistances.distanceNegativeX.Modulo <= 0)
-		death = true;
+		isDead = true;
 	animation = &idle;
 }
 

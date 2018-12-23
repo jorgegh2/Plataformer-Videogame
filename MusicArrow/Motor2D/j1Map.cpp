@@ -244,6 +244,7 @@ bool j1Map::CleanUp()
 	map_file.reset();
 
 	App->collision->AllCollidersToDelete();
+	App->entities->ResetEntities();
 	
 	return true;
 }

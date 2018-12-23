@@ -57,16 +57,18 @@ bool j1Scene::Start()
 	resumeButton = App->gui->CreateButton({ 575,450 }, App->sceneMenu->rects, "Resume", { 255, 255, 255, 255 }, App->sceneMenu->font);
 	saveButton = App->gui->CreateButton({ 575,600 }, App->sceneMenu->rects, "Save", { 255, 255, 255, 255 }, App->sceneMenu->font);
 	loadButton = App->gui->CreateButton({ 575,750 }, App->sceneMenu->rects, "Load", { 255, 255, 255, 255 }, App->sceneMenu->font);
+	mainMenu = App->gui->CreateButton({ 575,900 }, App->sceneMenu->rects, "Main Menu", { 255, 255, 255, 255 }, App->sceneMenu->font);
 
-	music = App->gui->CreateLabel({ 570, 950 }, "Music:", { 255,255,255,255 }, App->sceneMenu->font);
-	fx = App->gui->CreateLabel({ 570, 1050 }, "Fx:", { 255,255,255,255 }, App->sceneMenu->font);
-	musicSlider = App->gui->CreateSlider({ 570, 1000 }, { 1738,650,394,11 }, { 1738,687,17,17 }, true);
-	fxSlider = App->gui->CreateSlider({ 570, 1100 }, { 1738,650,394,11 }, { 1738,687,17,17 }, true);
+	music = App->gui->CreateLabel({ 570, 1050 }, "Music:", { 255,255,255,255 }, App->sceneMenu->font);
+	fx = App->gui->CreateLabel({ 570, 1150 }, "Fx:", { 255,255,255,255 }, App->sceneMenu->font);
+	musicSlider = App->gui->CreateSlider({ 570, 1100 }, { 1738,650,394,11 }, { 1738,687,17,17 }, true);
+	fxSlider = App->gui->CreateSlider({ 570, 1200 }, { 1738,650,394,11 }, { 1738,687,17,17 }, true);
 	
 	// hide all by default
 	resumeButton->ChangeEnabled();
 	saveButton->ChangeEnabled();
 	loadButton->ChangeEnabled();
+	mainMenu->ChangeEnabled();
 	music->ChangeEnabled();
 	fx->ChangeEnabled();
 	musicSlider->ChangeEnabled();
@@ -126,21 +128,51 @@ bool j1Scene::Update(float dt)
 
 	App->map->Draw();
 	//Menu
+	
+	//resume button
 	if (resumeButton->GetEvent() == MouseLeftClickEvent)
 	{
 		PauseOrResume();
 	}
-	
+
+	//save button
 	if (saveButton->GetEvent() == MouseLeftClickEvent)
 	{
 		App->SaveGame("save_game.xml");
 		App->sceneMenu->isLoad = true;
 	}
 
+	//load button
 	if (loadButton->GetEvent() == MouseLeftClickEvent)
 	{
 		App->LoadGame("save_game.xml");
 	}
+
+	//Main menu button
+	if (mainMenu->GetEvent() == MouseLeftClickEvent)
+	{
+		if(App->map_forest->active == true)
+			App->fadeToBlack->FadeToBlack(App->map_forest, App->sceneMenu);
+
+		else 
+			App->fadeToBlack->FadeToBlack(App->map_winter, App->sceneMenu);
+
+		resumeButton->ChangeEnabled();
+		saveButton->ChangeEnabled();
+		loadButton->ChangeEnabled();
+		mainMenu->ChangeEnabled();
+		music->ChangeEnabled();
+		fx->ChangeEnabled();
+		musicSlider->ChangeEnabled();
+		fxSlider->ChangeEnabled();
+		panelInGame->ChangeEnabled();
+	}
+
+	//music slider
+	App->audio->SetVolumeMusic(MIX_MAX_VOLUME * musicSlider->ValueBetween0and1());
+
+	//Fx sldier
+	App->audio->SetVolumeFx(MIX_MAX_VOLUME * fxSlider->ValueBetween0and1());
 
 	int x, y;
 
@@ -148,7 +180,7 @@ bool j1Scene::Update(float dt)
 	{
 		current_scene = App->map_forest->name.GetString();
 	}
-	else if(App->map_forest->active == true)
+	else if(App->map_winter->active == true)
 	{
 		current_scene = App->map_winter->name.GetString();
 	}
@@ -214,6 +246,7 @@ void j1Scene::PauseOrResume() const
 	resumeButton->ChangeEnabled();
 	saveButton->ChangeEnabled();
 	loadButton->ChangeEnabled();
+	mainMenu->ChangeEnabled();
 	music->ChangeEnabled();
 	fx->ChangeEnabled();
 	musicSlider->ChangeEnabled();

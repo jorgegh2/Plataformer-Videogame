@@ -30,6 +30,7 @@ public:
 	uint enemy;
 	Collider* collider = nullptr;
 	bool isPlayer;
+	bool isDead = false;
 	bool movement[4] = { true,true,true,true };
 	int now = 0;
 
