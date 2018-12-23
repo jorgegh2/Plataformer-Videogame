@@ -35,6 +35,8 @@ Object_Coin::Object_Coin(int x, int y, SDL_Rect colliderRect) : Entity(x, y)
 void Object_Coin::Move(float dt)
 {
 	BROFILER_CATEGORY("Object_CoinMove", Profiler::Color::Gray);
+	if (AllDistances.distanceNegativeX.nearestColliderType == COLLIDER_PLAYER && AllDistances.distanceNegativeX.Modulo <= 0)
+		death = true;
 	animation = &idle;
 }
 

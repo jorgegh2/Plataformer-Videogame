@@ -176,7 +176,11 @@ bool j1SceneMenu::CleanUp()
 	settingsButton->ChangeEnabled();
 	creditsButton->ChangeEnabled();
 	exitButton->ChangeEnabled();
-	panel->ChangeEnabled();
-	panelCredits->ChangeEnabled();
+
+	if(panel->disabled)
+		panel->ChangeEnabled();
+	if(panelCredits->disabled)
+		panelCredits->ChangeEnabled();
+
 	return true;
 }
