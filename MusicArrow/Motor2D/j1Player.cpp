@@ -202,6 +202,7 @@ bool j1Player::Update(float dt)
 				current_animation = &run;
 				position.x += speedDtX;
 			}
+		
 
 		}
 

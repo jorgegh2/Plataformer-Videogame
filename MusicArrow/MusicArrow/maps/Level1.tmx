@@ -11216,7 +11216,7 @@
     <property name="EnemyType" type="int" value="3"/>
    </properties>
   </object>
-  <object id="95" x="6655.62" y="2818.35" width="127" height="127">
+  <object id="95" x="6779.86" y="2813.26" width="127" height="127">
    <properties>
     <property name="CEnemyType" type="int" value="6"/>
     <property name="EnemyType" type="int" value="3"/>
@@ -11228,7 +11228,7 @@
     <property name="EnemyType" type="int" value="6"/>
    </properties>
   </object>
-  <object id="97" x="6672" y="2702.67" width="96" height="96">
+  <object id="97" x="6798.27" y="2707.73" width="96" height="96">
    <properties>
     <property name="CEnemyType" type="int" value="7"/>
     <property name="EnemyType" type="int" value="6"/>
